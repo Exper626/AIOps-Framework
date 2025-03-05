@@ -10,6 +10,7 @@ from chromadb.utils import embedding_functions
 import torch
 
 
+
 def device() -> str:
     return "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -24,6 +25,11 @@ def filePaths(source : str) -> list:
     elif source == "network":
         folder_path = "Data/network/*"  
         return [f for f in glob.glob(folder_path) if not f.endswith('/')]
+
+
+
+def imageToWords():
+    raise NotImplemented;
 
 
 
@@ -93,40 +99,3 @@ def vector_database_get_chunks(topic : str):
 
     return collection
 
-
-
-def retrieve_relavent_chunks(user_query, collection, embedding_model = "all-MiniLM-L6-v2" , top_k = 3):
-
-    embedding_model = SentenceTransformer(embedding_model).to(device())
-    user_query_embedding = embedding_model.encode([user_query])[0]
-    results = collection.query(query_embeddings = [user_query_embedding.tolist()], n_results = top_k)
-    
-    return results["documents"], results["ids"]
-
-
-
-def ollama_response(user_query :str, collection, embedding_model = "all-MiniLM-L6-v2", top_k = 3, langauge_model = "llama3.2:1b" ) -> str:
-
-    relavent_chunks, relavent_ids = retrieve_relavent_chunks(user_query, collection=collection, top_k=top_k, embedding_model=embedding_model)
-    # context = "\n".join(relavent_chunks)
-    response = ollama.chat(model= langauge_model , messages=[{"role":"user", "content":f"{relavent_chunks}\n\n{user_query}"}],stream=True)
-
-
-    full_response = ""
-    for chunk in response:
-        full_response += chunk["message"]["content"]
-        print(chunk["message"]["content"], end="", flush=True)  # Print content as it arrives
-
-    return full_response 
-
-if __name__ == "__main__":
-
-    filepath = filePaths("company")
-    text = tokenizer(filepath)
-    embeddings, chunks = embedding_text("company", text)
-    collection = vector_database_create_chunks("company", embeddings, chunks)
-
-
-    while True:
-        user_input = input("Enter your question here >> ")
-        response   = ollama_response(user_query = "What is mobitel company is known for", collection=collection)
