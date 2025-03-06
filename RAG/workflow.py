@@ -1,46 +1,13 @@
-# Evaluation, proof reading, answer generation, summarization, sentiment analysis, contenet classification
-import langgraph
-from langgraph.graph import StateGraph
+from llama_cpp import Llama
 import ollama
 
-
-
-def generate_answer()   
-
-
+llama_model_locations = { "gemma": "C:\\Users\\ashwinir\\.ollama\\models\\blobs\\sha256-7462734796d67c40ecec2ca98eddf970e171dbb6b370e43fd633ee75b69abe1b")
+}
 
 
 
 
-
-
-
-
-
-def retrieve_relavent_chunks(user_query, collection, embedding_model = "all-MiniLM-L6-v2" , top_k = 3):
-
-    embedding_model = SentenceTransformer(embedding_model).to(device())
-    user_query_embedding = embedding_model.encode([user_query])[0]
-    results = collection.query(query_embeddings = [user_query_embedding.tolist()], n_results = top_k)
-    
-    return results["documents"], results["ids"]
-
-
-
-
-def ollama_response(user_query :str, collection, embedding_model = "all-MiniLM-L6-v2", top_k = 3, langauge_model = "llama3.2:1b" ) -> str:
-
-    relavent_chunks, relavent_ids = retrieve_relavent_chunks(user_query,collection=collection,top_k=top_k, embedding_model=embedding_model)
-    response = ollama(model= langauge_model , messages=[{"role":"user", "content":f"{relavent_chunks}\n\n{user_query}"}],stream=True)
-
-    full_response = ""
-
-    for chunk in response:
-        full_response += chunk["message"]["content"]
-        print(chunk["message"]["content"], end="", flush=True)  
-
-    return full_response 
-
-
-
+llm = Llama(model_path="")
+output = llm(user_query)
+print(output['choices'][0]['text'])
 

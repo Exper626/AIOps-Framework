@@ -29,7 +29,15 @@ def filePaths(source : str) -> list:
 
 
 def imageToWords():
-    raise NotImplemented;
+    raise NotImplementedError()
+
+
+
+def webloader():
+    raise NotImplementedError()
+
+
+
 
 
 
