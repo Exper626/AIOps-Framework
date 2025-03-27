@@ -21,14 +21,19 @@ class LlmRouter():
 	def researcher(self) -> Agent:
 		return Agent(
 			config=self.agents_config['researcher'],
-			verbose=True
+			verbose=True,
+			# llm="llama3.2:1b"
 		)
 
 	@agent
 	def reporting_analyst(self) -> Agent:
 		return Agent(
 			config=self.agents_config['reporting_analyst'],
-			verbose=True
+			verbose=True,
+			# llm=LLM(model="ollama/llama3.2:1b", base_url="http://localhost:11434"),
+						# llm="llama3.2:1b"
+
+
 		)
 
 	# To learn more about structured task outputs, 

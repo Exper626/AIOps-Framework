@@ -12,6 +12,7 @@ import torch
 
 
 def device() -> str:
+    """CPU or GPU"""
     return "cuda" if torch.cuda.is_available() else "cpu"
 
 
@@ -38,10 +39,8 @@ def webloader():
 
 
 
-
-
-
-def tokenizer(fileList : list) -> str:
+def tokenizer(topic : str , fileList : list) -> str:
+    """Extracting all the word in the pdf files"""
 
     text = ""
 
@@ -49,7 +48,7 @@ def tokenizer(fileList : list) -> str:
         reader = PdfReader(filePath)
         text += "\n".join([page.extract_text() for page in reader.pages if page.extract_text()])
 
-    with open("Tokens.txt" , "w", encoding="utf-8") as file:
+    with open(f"{topic}.txt" , "w", encoding="utf-8") as file:
         file.write(text)
 
     return text 
@@ -57,6 +56,7 @@ def tokenizer(fileList : list) -> str:
 
 
 def embedding_text(topic : str , text : str, sentence_transformer = "all-MiniLM-L6-v2", chunk_size = 500) -> tuple[np.ndarray, list]:
+    """All words into mathematical vector representation"""
 
     embedding_model = SentenceTransformer(sentence_transformer).to(device())
 
@@ -71,15 +71,11 @@ def embedding_text(topic : str , text : str, sentence_transformer = "all-MiniLM-
 
 
 
-def vector_database_create_chunks(topic: str , embeddings : np.array, chunks: list, distance_metric="cosine", steps=100, 
-                                  maximum_no_neighbours = 16, size_of_candidate = 100, no_of_threads = None, candidate_list=100):
+def vector_database_create_chunks(topic: str , embeddings : np.array, chunks: list, sentence_transformer = "all-MiniLM-L6-v2", distance_metric="cosine", steps=100, maximum_no_neighbours = 16, size_of_candidate = 100, no_of_threads = None, candidate_list=100):
+    """Vectorized words into different chunks and adding it to vector database"""
 
-
-    embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
     chroma_client = chromadb.PersistentClient(path="./chroma_db")
-
-
-    embedding_function = embedding_functions.SentenceTransformerEmbeddingFunction(model_name="all-MiniLM-L6-v2")
+    embedding_function = embedding_functions.SentenceTransformerEmbeddingFunction(model_name= sentence_transformer )
 
     collection = chroma_client.get_or_create_collection(
                         name = topic, embedding_function = embedding_function, 
@@ -91,19 +87,13 @@ def vector_database_create_chunks(topic: str , embeddings : np.array, chunks: li
     for i, chunk in enumerate(chunks):
         collection.add(ids=[str(i)], documents = [chunk], embeddings = [embeddings[i].tolist()])
 
+    print(collection , ">>>>> Before returning")
     return collection
 
 
-
-def vector_database_get_chunks(topic : str):
-    
-    chroma_client = chromadb.PersistentClient(path="./chroma_db")
-    
-    try:
-        collection = chroma_client.get_collection(topic)
-    
-    except Exception as e:
-        return e
-
-    return collection
-
+if __name__ == "__main__":
+    a = filePaths("company")
+    b = tokenizer("company", a)
+    c, d = embedding_text("company", b)
+    e = vector_database_create_chunks("company", c, d)
+    print(e)
