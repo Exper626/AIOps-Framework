@@ -1,8 +1,0 @@
-ollama
-chromadb
-pypdf
-tiktoken
-numpy
-pandas
-argparse
-colorama
