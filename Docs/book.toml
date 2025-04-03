@@ -1,0 +1,6 @@
+[book]
+authors = ["Manith Ratnayake"]
+language = "en"
+multilingual = false
+src = "src"
+title = "RAG System"
