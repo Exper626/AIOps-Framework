@@ -16,18 +16,24 @@
 
 
 
+## Embedding 
+- Max tokens
+- Dimension
+
+embedding for 5 tokens and 100 tokens are dimensions are same - compressing lot of info
+
 
 ## Indexing Technqiues
-1. LSH
-2. HNSW
-3. IVF
+1. LSH - Locality-Sensitive Hashing
+2. HNSW - Hierarchical Navigable Small World
+3. IVF - Inverted File Index 
 
 Used to organize the embedding vectors
 
 
 ## Retrival algorithms
 1. ANN
-2. KNN
+2. KNN - Top K 
 3. Hybrid Search
 
 
@@ -41,39 +47,87 @@ Before searching relavent vectors need to format user Question for better Retriv
 # CAG (Cache Augmented Generation)
 * RAG vs CAG 
 
-In CAG all the necessary instructions are ready as an key value pair. 
-It uses context window for this 
-    
+It loads whole data into model - now LLMs have large context windows
+
 
 # GraphRAG
-- microsoft 
+High Accuracy but need to do multiple LLM calls, this makes it slow
+
+- Microsoft Graph Rag - Requires a API key Ollama is not supproted yet
 - neo4j
-
-
-* Expensive because multiple LLM calls
 
 
 # LightRAG
 * Much more effective than GraphRAG
 
 
+## Contextual Retrieval
+
+![](Image4.PNG)
+
+
+## Late Chunking
+
+![](Image5.PNG)
+
+
+
+# Image To Text conversion in RAG
+
+### OCR (Optical Character Recognition)
+
+### ColPali
+Vision LLM : Can capture the text in the images : multimodels
+
+
 # KAG (Knowledge Augmented Graph)
 It built on OpenSPG engine solve RAG and GraphRAG limitation
 
-# LLM Agents frameworks
+# LLM AI Agents frameworks
 
-- CrewAI
-- PydanticAI
+- CrewAI :: Agents, Crew, Process, Tasks
+- PydanticAI 
+
+** Pydantic is used for data validation 
+ex: name : str = "Manith" 
+
+
 - Autogen
 - LlamaIndex
-- LangChain
+- LangGraph
 
 
-DSPY (declarative self improving python)
+### DSPY (declarative self improving python)
 - Not LLM prompting, programtically prompting
 
 
-MCP (Model Context Protocol)
+## RAPTOR  (Retrival Abstractive Processing Tree Organized Retrieval)
+
+RAPTOR is RAG framework
+RAG - Relies on chunks
+RAPTOR - Bottom up approach -> Clustering and summarizing chunks
+
+
+
+## ColBERT (Contextualized Late Interaction over BERT)
+- Efficent than traditional RAG
+
+
+** Research papers are available for above every method with comparision and evaluations
+
+
+## Evaluating RAG systems
+### RAGAS (Retrieval Augmented Generation Assessment)
+
+Metrics 
+- Faithfulness
+- Context Recall
+- Answer relavency
+
+
+# MCP (Model Context Protocol)
 - Anthropic for common protocol
 
-ex: Coding activities
+Components in MCP Server
+![](Image6.PNG)
+
