@@ -91,7 +91,7 @@ It built on OpenSPG engine solve RAG and GraphRAG limitation
 ** Pydantic is used for data validation 
 ex: name : str = "Manith" 
 
-
+- Phidata
 - Autogen
 - LlamaIndex
 - LangGraph
@@ -130,4 +130,8 @@ Metrics
 
 Components in MCP Server
 ![](Image6.PNG)
+
+
+# LLM Router
+![](Capture8.PNG)
 
