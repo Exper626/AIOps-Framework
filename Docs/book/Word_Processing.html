@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Chapter 1 - RAG System</title>
+        <title>Data Prepraration - RAG System</title>
 
 
         <!-- Custom HTML head -->
@@ -152,113 +152,24 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="basic-rag-system"><a class="header" href="#basic-rag-system">Basic RAG System</a></h1>
-<p><img src="Image1.PNG" alt="" /></p>
-<h2 id="problems-in-system"><a class="header" href="#problems-in-system">Problems in system</a></h2>
-<ol>
-<li>When separting to fixed token chunks, it loses the relavent infomration
-ex: 1 paragraph 250 word and 2nd paragraph 300 words, if we set chunk size to fixed we are unable to capture meaning</li>
-</ol>
-<p>** Numerical data representation will be wrong**</p>
-<h1 id="vector-databases"><a class="header" href="#vector-databases">Vector Databases</a></h1>
-<p><img src="Image2.png" alt="" /></p>
+                        <h1 id="data-prepraration"><a class="header" href="#data-prepraration">Data Prepraration</a></h1>
 <ul>
-<li>FAISS only vector search algorithm not as a vector database functionalities</li>
+<li>OCR (Optical Character Recognition)</li>
+<li>ColPali - Vision LLM : Can capture the text in the images : multimodels</li>
 </ul>
-<h2 id="embedding"><a class="header" href="#embedding">Embedding</a></h2>
-<ul>
-<li>Max tokens</li>
-<li>Dimension</li>
-</ul>
-<p>embedding for 5 tokens and 100 tokens are dimensions are same - compressing lot of info</p>
-<h2 id="indexing-technqiues"><a class="header" href="#indexing-technqiues">Indexing Technqiues</a></h2>
-<ol>
-<li>LSH - Locality-Sensitive Hashing</li>
-<li>HNSW - Hierarchical Navigable Small World</li>
-<li>IVF - Inverted File Index</li>
-</ol>
-<p>Used to organize the embedding vectors</p>
-<h2 id="retrival-algorithms"><a class="header" href="#retrival-algorithms">Retrival algorithms</a></h2>
-<ol>
-<li>ANN</li>
-<li>KNN - Top K</li>
-<li>Hybrid Search</li>
-</ol>
-<p>Before searching relavent vectors need to format user Question for better Retrival from vector database</p>
-<p><img src="Image3.PNG" alt="" /></p>
-<h1 id="cag-cache-augmented-generation"><a class="header" href="#cag-cache-augmented-generation">CAG (Cache Augmented Generation)</a></h1>
-<ul>
-<li>RAG vs CAG</li>
-</ul>
-<p>It loads whole data into model - now LLMs have large context windows</p>
-<h1 id="graphrag"><a class="header" href="#graphrag">GraphRAG</a></h1>
-<p>High Accuracy but need to do multiple LLM calls, this makes it slow</p>
-<ul>
-<li>Microsoft Graph Rag - Requires a API key Ollama is not supproted yet</li>
-<li>neo4j</li>
-</ul>
-<h1 id="lightrag"><a class="header" href="#lightrag">LightRAG</a></h1>
-<ul>
-<li>Much more effective than GraphRAG</li>
-</ul>
-<h2 id="contextual-retrieval"><a class="header" href="#contextual-retrieval">Contextual Retrieval</a></h2>
-<p><img src="Image4.PNG" alt="" /></p>
-<h2 id="late-chunking"><a class="header" href="#late-chunking">Late Chunking</a></h2>
-<p><img src="Image5.PNG" alt="" /></p>
-<h1 id="image-to-text-conversion-in-rag"><a class="header" href="#image-to-text-conversion-in-rag">Image To Text conversion in RAG</a></h1>
-<h3 id="ocr-optical-character-recognition"><a class="header" href="#ocr-optical-character-recognition">OCR (Optical Character Recognition)</a></h3>
-<h3 id="colpali"><a class="header" href="#colpali">ColPali</a></h3>
-<p>Vision LLM : Can capture the text in the images : multimodels</p>
-<h1 id="kag-knowledge-augmented-graph"><a class="header" href="#kag-knowledge-augmented-graph">KAG (Knowledge Augmented Graph)</a></h1>
-<p>It built on OpenSPG engine solve RAG and GraphRAG limitation</p>
-<h1 id="llm-ai-agents-frameworks"><a class="header" href="#llm-ai-agents-frameworks">LLM AI Agents frameworks</a></h1>
-<ul>
-<li>CrewAI :: Agents, Crew, Process, Tasks</li>
-<li>PydanticAI</li>
-</ul>
-<p>** Pydantic is used for data validation
-ex: name : str = "Manith"</p>
-<ul>
-<li>Phidata</li>
-<li>Autogen</li>
-<li>LlamaIndex</li>
-<li>LangGraph</li>
-</ul>
-<h3 id="dspy-declarative-self-improving-python"><a class="header" href="#dspy-declarative-self-improving-python">DSPY (declarative self improving python)</a></h3>
-<ul>
-<li>Not LLM prompting, programtically prompting</li>
-</ul>
-<h2 id="raptor--retrival-abstractive-processing-tree-organized-retrieval"><a class="header" href="#raptor--retrival-abstractive-processing-tree-organized-retrieval">RAPTOR  (Retrival Abstractive Processing Tree Organized Retrieval)</a></h2>
-<p>RAPTOR is RAG framework
-RAG - Relies on chunks
-RAPTOR - Bottom up approach -&gt; Clustering and summarizing chunks</p>
-<h2 id="colbert-contextualized-late-interaction-over-bert"><a class="header" href="#colbert-contextualized-late-interaction-over-bert">ColBERT (Contextualized Late Interaction over BERT)</a></h2>
-<ul>
-<li>Efficent than traditional RAG</li>
-</ul>
-<p>** Research papers are available for above every method with comparision and evaluations</p>
-<h2 id="evaluating-rag-systems"><a class="header" href="#evaluating-rag-systems">Evaluating RAG systems</a></h2>
-<h3 id="ragas-retrieval-augmented-generation-assessment"><a class="header" href="#ragas-retrieval-augmented-generation-assessment">RAGAS (Retrieval Augmented Generation Assessment)</a></h3>
-<p>Metrics</p>
-<ul>
-<li>Faithfulness</li>
-<li>Context Recall</li>
-<li>Answer relavency</li>
-</ul>
-<h1 id="mcp-model-context-protocol"><a class="header" href="#mcp-model-context-protocol">MCP (Model Context Protocol)</a></h1>
-<ul>
-<li>Anthropic for common protocol</li>
-</ul>
-<p>Components in MCP Server
-<img src="Image6.PNG" alt="" /></p>
-<h1 id="llm-router"><a class="header" href="#llm-router">LLM Router</a></h1>
-<p><img src="Capture8.PNG" alt="" /></p>
+<h2 id="custom-embedding-model"><a class="header" href="#custom-embedding-model">Custom Embedding Model</a></h2>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="Simple_RAG.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
 
+                            <a rel="next prefetch" href="Advace_Rag.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -266,7 +177,13 @@ RAPTOR - Bottom up approach -&gt; Clustering and summarizing chunks</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="Simple_RAG.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
+                    <a rel="next prefetch" href="Advace_Rag.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>

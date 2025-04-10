@@ -1,42 +1,15 @@
-# Basic RAG System
-
-![](Image1.PNG)
-
-## Problems in system
-
-1. When separting to fixed token chunks, it loses the relavent infomration
- ex: 1 paragraph 250 word and 2nd paragraph 300 words, if we set chunk size to fixed we are unable to capture meaning
-
-** Numerical data representation will be wrong**
-
-# Vector Databases
-
-![](Image2.png)
-*  FAISS only vector search algorithm not as a vector database functionalities
+# Advance RAG Methods
 
 
 
-## Embedding 
-- Max tokens
-- Dimension
+### Problems in Simple Approach
 
-embedding for 5 tokens and 100 tokens are dimensions are same - compressing lot of info
-
-
-## Indexing Technqiues
-1. LSH - Locality-Sensitive Hashing
-2. HNSW - Hierarchical Navigable Small World
-3. IVF - Inverted File Index 
-
-Used to organize the embedding vectors
+When separting to fixed token chunks, it loses the relavent infomration
+ex: 1 paragraph 250 word and 2nd paragraph 300 words, if we set chunk size to fixed we are unable to capture meaning
+Numerical data representation will be wrong
 
 
-## Retrival algorithms
-1. ANN
-2. KNN - Top K 
-3. Hybrid Search
-
-
+## Tip for RAG
 
 Before searching relavent vectors need to format user Question for better Retrival from vector database
 
@@ -44,29 +17,37 @@ Before searching relavent vectors need to format user Question for better Retriv
 
 
 
-# CAG (Cache Augmented Generation)
-* RAG vs CAG 
-
-It loads whole data into model - now LLMs have large context windows
 
 
-# GraphRAG
+## Different Way for RAG
+
+### CAG (Cache Augmented Generation)
+
+RAG - Loads only the relavent information to the LLM
+
+CAG - It loads whole data into model - now LLMs have large context windows
+
+
+### GraphRAG
 High Accuracy but need to do multiple LLM calls, this makes it slow
 
 - Microsoft Graph Rag - Requires a API key Ollama is not supproted yet
 - neo4j
 
 
-# LightRAG
+### LightRAG
 * Much more effective than GraphRAG
 
 
-## Contextual Retrieval
+
+## Optimized Ways to do RAG
+
+### Contextual Retrieval
 
 ![](Image4.PNG)
 
 
-## Late Chunking
+### Late Chunking
 
 ![](Image5.PNG)
 
@@ -123,15 +104,4 @@ Metrics
 - Faithfulness
 - Context Recall
 - Answer relavency
-
-
-# MCP (Model Context Protocol)
-- Anthropic for common protocol
-
-Components in MCP Server
-![](Image6.PNG)
-
-
-# LLM Router
-![](Capture8.PNG)
 
