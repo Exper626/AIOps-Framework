@@ -7,9 +7,9 @@ import re
 
 
 # Connect to Neo4j (update credentials as needed)
-NEO4J_URI = "bolt://localhost:7687"
+NEO4J_URI = "bolt://localhost:7689"
 NEO4J_USER = "neo4j"
-NEO4J_PASSWORD = "PerfLog55@12345"  # replace with your Neo4j password
+NEO4J_PASSWORD = "Manith@12345"
 
 driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
 
@@ -31,13 +31,33 @@ def ollamaModelConnection(prompt):
             model="deepseek-r1:latest",  # Replace with your model's name
             messages=[
                 {
-                    "role": "system",
-                    "content": (
-                        "You are a helpful assistant that converts natural language questions "
-                        "into Cypher queries for a Neo4j graph. "
-                        "Only return raw Cypher query output (no markdown/code block, no explanation). "
-                        "Your output goes directly to a graph database (Neo4j), so accuracy and formatting are crucial."
-                    )
+#                     "role": "system",
+#                     "content": (
+#             "You are a helpful assistant that converts natural language questions into Cypher queries for a Neo4j graph. "
+#             "Only return raw Cypher query output (no markdown/code block, no explanation). "
+#             "Your output goes directly to a graph database (Neo4j), so accuracy and formatting are crucial."
+#             "these are the records : _id,  employee_id, name, department, date, check_in, check_out, status "
+#             "For example :  HR ---> relationshp : works in, Bob ---> relationshp : attended ----> 3"
+#             "For example : Department node has <elementId>	4:4f6324bd-cc71-48ae-85aa-4fff81a8659b:1 <id>1 name HR"
+#             "For example : Employee node has<elementId>	4:4f6324bd-cc71-48ae-85aa-4fff81a8659b:5 <id>5 id E004 name	David"
+# "For example : Attendance node has <elementId>	4:4f6324bd-cc71-48ae-85aa-4fff81a8659b:15 <id>	15 date 4 inTime	09:00 month 04 outTime	17:00"
+#                     )
+
+        "role": "system",
+"content": ("You are a helpful assistant that converts natural language questions into Cypher queries for a Neo4j graph. "
+                    "Only return raw Cypher query output. Do not include explanations, markdown, or formatting. "
+                    "The Cypher will be sent directly to the Neo4j database, so accuracy is critical. "
+                    "Schema information: \n"
+                    "- Node Types:\n"
+                    "    * Department: { name }\n"
+                    "    * Employee: { id, name }\n"
+                    "    * Attendance: { date, inTime, outTime, month }\n"
+                    "- Relationships:\n"
+                    "    * (e:Employee)-[:WORKS_IN]->(d:Department)\n"
+                    "    * (e:Employee)-[:ATTENDED]->(a:Attendance)\n"
+"MATCH (e:Employee {name: 'Alice'})-[:attended]->(a:Attendance) RETURN a.date, a.inTime, a.outTime, a.month"
+                )
+                    
                 },
                 {"role": "user", "content": prompt}
             ]
@@ -60,6 +80,7 @@ def ollamaModelConnection(prompt):
         if not query.upper().startswith(("MATCH", "CREATE", "MERGE", "RETURN", "CALL", "WITH", "OPTIONAL MATCH")):
             raise ValueError(f"Model output may not be a valid Cypher query:\n{query}")
 
+        print("The query is : ", query)
         return query
 
     except Exception as e:
@@ -121,7 +142,7 @@ def get(filter_query: dict = {}):
 
 
 
-#--------------------------------------------------------------------------------------------------------------
+#############  User Interface ---------------------------------------------------------------------------------
 
 # Streamlit UI
 st.title("Employee Attendance System")
@@ -132,16 +153,23 @@ connectToMongoDB()
 st.header("Natural Language to Cypher Query (Ollama)")
 nl_query = st.text_area("Type your query in natural language:", "")
 
+
+
 if st.button("Generate & Run Cypher Query"):
     if nl_query.strip():
         cypher_query = ollamaModelConnection(nl_query)
         st.subheader("Generated Cypher Query:")
         st.code(cypher_query, language='cypher')
-
-        # Run the Cypher query
+        
         result = run_cypher_query(cypher_query)
-        st.subheader("Query Result:")
-        st.json(result)
+
+        # Convert result to pretty-printed string
+        import pprint
+        result_text = pprint.pformat(result, indent=2)
+
+        # Display the result in a read-only text area
+        st.text_area("Query Result", result_text, height=300, disabled=True)
+
     else:
         st.warning("Please enter a query first.")
 

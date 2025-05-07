@@ -8,7 +8,7 @@ class MDBookSidebarScrollbox extends HTMLElement {
         super();
     }
     connectedCallback() {
-        this.innerHTML = '<ol class="chapter"><li class="chapter-item expanded "><a href="Simple_RAG.html"><strong aria-hidden="true">1.</strong> Basic RAG</a></li><li class="chapter-item expanded "><a href="Word_Processing.html"><strong aria-hidden="true">2.</strong> Data Prepraration</a></li><li class="chapter-item expanded "><a href="Advace_Rag.html"><strong aria-hidden="true">3.</strong> Advance RAG Methods</a></li><li class="chapter-item expanded "><a href="Final_RAG.html"><strong aria-hidden="true">4.</strong> Final RAG</a></li></ol>';
+        this.innerHTML = '<ol class="chapter"><li class="chapter-item expanded "><a href="Simple_RAG.html"><strong aria-hidden="true">1.</strong> Basic RAG</a></li><li class="chapter-item expanded "><a href="Word_Processing.html"><strong aria-hidden="true">2.</strong> Data Prepraration</a></li><li class="chapter-item expanded "><a href="Advace_Rag.html"><strong aria-hidden="true">3.</strong> Advance RAG Methods</a></li><li class="chapter-item expanded "><a href="Final_RAG.html"><strong aria-hidden="true">4.</strong> RAG Router</a></li><li class="chapter-item expanded "><a href="Optim.html"><strong aria-hidden="true">5.</strong> Other Optimizations</a></li></ol>';
         // Set the current, active page, and reveal it if it's hidden
         let current_page = document.location.href.toString().split("#")[0];
         if (current_page.endsWith("/")) {

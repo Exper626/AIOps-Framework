@@ -222,27 +222,27 @@ Numerical data representation will be wrong</p>
 <p>Before searching relavent vectors need to format user Question for better Retrival from vector database</p>
 <p><img src="Image3.PNG" alt="" /></p>
 <h2 id="different-way-for-rag"><a class="header" href="#different-way-for-rag">Different Way for RAG</a></h2>
-<h3 id="cag-cache-augmented-generation"><a class="header" href="#cag-cache-augmented-generation">CAG (Cache Augmented Generation)</a></h3>
+<h3 id="1-cag-cache-augmented-generation"><a class="header" href="#1-cag-cache-augmented-generation">1. CAG (Cache Augmented Generation)</a></h3>
 <p>RAG - Loads only the relavent information to the LLM</p>
 <p>CAG - It loads whole data into model - now LLMs have large context windows</p>
-<h3 id="graphrag"><a class="header" href="#graphrag">GraphRAG</a></h3>
+<h3 id="2-graphrag"><a class="header" href="#2-graphrag">2. GraphRAG</a></h3>
 <p>High Accuracy but need to do multiple LLM calls, this makes it slow</p>
 <ul>
 <li>Microsoft Graph Rag - Requires a API key Ollama is not supproted yet</li>
 <li>neo4j</li>
 </ul>
-<h3 id="lightrag"><a class="header" href="#lightrag">LightRAG</a></h3>
+<h3 id="3-lightrag"><a class="header" href="#3-lightrag">3. LightRAG</a></h3>
 <ul>
 <li>Much more effective than GraphRAG</li>
 </ul>
 <h2 id="optimized-ways-to-do-rag"><a class="header" href="#optimized-ways-to-do-rag">Optimized Ways to do RAG</a></h2>
-<h3 id="contextual-retrieval"><a class="header" href="#contextual-retrieval">Contextual Retrieval</a></h3>
+<h3 id="1-contextual-retrieval"><a class="header" href="#1-contextual-retrieval">1. Contextual Retrieval</a></h3>
 <p><img src="Image4.PNG" alt="" /></p>
-<h3 id="late-chunking"><a class="header" href="#late-chunking">Late Chunking</a></h3>
+<h3 id="2-late-chunking"><a class="header" href="#2-late-chunking">2. Late Chunking</a></h3>
 <p><img src="Image5.PNG" alt="" /></p>
 <h1 id="image-to-text-conversion-in-rag"><a class="header" href="#image-to-text-conversion-in-rag">Image To Text conversion in RAG</a></h1>
-<h3 id="ocr-optical-character-recognition"><a class="header" href="#ocr-optical-character-recognition">OCR (Optical Character Recognition)</a></h3>
-<h3 id="colpali"><a class="header" href="#colpali">ColPali</a></h3>
+<h3 id="1-ocr-optical-character-recognition"><a class="header" href="#1-ocr-optical-character-recognition">1. OCR (Optical Character Recognition)</a></h3>
+<h3 id="2-colpali"><a class="header" href="#2-colpali">2. ColPali</a></h3>
 <p>Vision LLM : Can capture the text in the images : multimodels</p>
 <h1 id="kag-knowledge-augmented-graph"><a class="header" href="#kag-knowledge-augmented-graph">KAG (Knowledge Augmented Graph)</a></h1>
 <p>It built on OpenSPG engine solve RAG and GraphRAG limitation</p>
@@ -283,6 +283,33 @@ RAPTOR - Bottom up approach -&gt; Clustering and summarizing chunks</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="llm-router"><a class="header" href="#llm-router">LLM Router</a></h1>
 <p><img src="Capture8.PNG" alt="" />
 ** Subject to changes in future **</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="other-optimizations"><a class="header" href="#other-optimizations">Other Optimizations</a></h1>
+<h4 id="1-proximal-policy-optimization-ppo"><a class="header" href="#1-proximal-policy-optimization-ppo">1. Proximal Policy Optimization (PPO)</a></h4>
+<ul>
+<li>Fine-tune the LLM based on reward signals</li>
+</ul>
+<h4 id="2-mixture-of-experts-moe"><a class="header" href="#2-mixture-of-experts-moe">2. Mixture of Experts (MoE)</a></h4>
+<ul>
+<li>Instead of one big model doing everything, route each input to the best set of experts dynamical</li>
+</ul>
+<h4 id="3-group-relative-policy-optimization-grpo"><a class="header" href="#3-group-relative-policy-optimization-grpo">3. Group Relative Policy Optimization (GRPO)</a></h4>
+<ul>
+<li>Extends the Policy Optimization framework to improve how policies are learned in environments where there are multiple agents or multiple strategies that need to be optimized together.</li>
+</ul>
+<h4 id="4-knowledge-distiliation"><a class="header" href="#4-knowledge-distiliation">4. Knowledge Distiliation</a></h4>
+<ul>
+<li>Transfer knowledge from a larger, more complex model (often referred to as the teacher model) to a smaller, more efficient model (the student model).</li>
+</ul>
+<h1 id="model-finetuning-techniques"><a class="header" href="#model-finetuning-techniques">Model Finetuning Techniques</a></h1>
+<h4 id="1-lora"><a class="header" href="#1-lora">1. LoRA</a></h4>
+<h4 id="2-dora"><a class="header" href="#2-dora">2. DORA</a></h4>
+<h4 id="3-lora"><a class="header" href="#3-lora">3. LoRA+</a></h4>
+<h4 id="4-unsloth"><a class="header" href="#4-unsloth">4. Unsloth</a></h4>
+<h4 id="5-neft"><a class="header" href="#5-neft">5. NEFT</a></h4>
+<h2 id="llm-inference-platforms"><a class="header" href="#llm-inference-platforms">LLM Inference platforms</a></h2>
+<h4 id="1-runpod"><a class="header" href="#1-runpod">1. Runpod</a></h4>
+<h4 id="2-aws"><a class="header" href="#2-aws">2. AWS</a></h4>
+<h4 id="3-lambda-labs"><a class="header" href="#3-lambda-labs">3. Lambda Labs</a></h4>
 
                     </main>
 

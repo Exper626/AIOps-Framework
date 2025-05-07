@@ -21,33 +21,33 @@ Before searching relavent vectors need to format user Question for better Retriv
 
 ## Different Way for RAG
 
-### CAG (Cache Augmented Generation)
+### 1. CAG (Cache Augmented Generation)
 
 RAG - Loads only the relavent information to the LLM
 
 CAG - It loads whole data into model - now LLMs have large context windows
 
 
-### GraphRAG
+### 2. GraphRAG
 High Accuracy but need to do multiple LLM calls, this makes it slow
 
 - Microsoft Graph Rag - Requires a API key Ollama is not supproted yet
 - neo4j
 
 
-### LightRAG
+### 3. LightRAG
 * Much more effective than GraphRAG
 
 
 
 ## Optimized Ways to do RAG
 
-### Contextual Retrieval
+### 1. Contextual Retrieval
 
 ![](Image4.PNG)
 
 
-### Late Chunking
+### 2. Late Chunking
 
 ![](Image5.PNG)
 
@@ -55,9 +55,9 @@ High Accuracy but need to do multiple LLM calls, this makes it slow
 
 # Image To Text conversion in RAG
 
-### OCR (Optical Character Recognition)
+### 1. OCR (Optical Character Recognition)
 
-### ColPali
+### 2. ColPali
 Vision LLM : Can capture the text in the images : multimodels
 
 
