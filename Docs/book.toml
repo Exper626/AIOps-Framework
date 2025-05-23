@@ -3,4 +3,4 @@ authors = ["Manith Ratnayake"]
 language = "en"
 multilingual = false
 src = "src"
-title = "RAG System"
+title = "LLM Ops"

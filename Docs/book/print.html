@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>RAG System</title>
+        <title>LLM Ops</title>
         <meta name="robots" content="noindex">
 
 
@@ -121,7 +121,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">RAG System</h1>
+                    <h1 class="menu-title">LLM Ops</h1>
 
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -153,7 +153,77 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="basic-rag"><a class="header" href="#basic-rag">Basic RAG</a></h1>
+                        <h1 id="model-finetuning-techniques"><a class="header" href="#model-finetuning-techniques">Model Finetuning Techniques</a></h1>
+<h2 id="peft-parameter-efficient-fine-tuning-"><a class="header" href="#peft-parameter-efficient-fine-tuning-">PEFT (Parameter Efficient Fine Tuning )</a></h2>
+<p>Below are some technqiues belong to this</p>
+<h4 id="1-lora-low-rank-adaptation"><a class="header" href="#1-lora-low-rank-adaptation">1. LoRA (Low Rank Adaptation)</a></h4>
+<ul>
+<li>Freezing the model then train only the new dataset</li>
+</ul>
+<h4 id="2-dora-weighted-decomposed-low-rank-adaptation"><a class="header" href="#2-dora-weighted-decomposed-low-rank-adaptation">2. DoRA (Weighted-Decomposed Low-Rank Adaptation)</a></h4>
+<ul>
+<li>Developed by NVIDIA Research</li>
+<li>Stated outperform LoRA and replacement to the LoRA</li>
+</ul>
+<h4 id="3-unsloth"><a class="header" href="#3-unsloth">3. Unsloth</a></h4>
+<ul>
+<li>An Organization : which found different ways to optimize model</li>
+<li>Using some tricks to make LLM training 2x and 70% memory less training</li>
+<li>Can be only trained on a single gpu</li>
+<li>Can be only trained on only Llama and other limited models available only</li>
+</ul>
+<h4 id="4-qlora-qunatized-lora"><a class="header" href="#4-qlora-qunatized-lora">4. QLORA (Qunatized LoRA)</a></h4>
+<ul>
+<li>Freeze the model then qunatized it ex: 32 bit --&gt; 16 bit then train the new dataset on 32 bit</li>
+</ul>
+<h4 id="5-qdora"><a class="header" href="#5-qdora">5. QDoRA</a></h4>
+<ul>
+<li>Just like LoRA with qunatized this is DoRA with qunatized</li>
+<li>Outperform QLoRA</li>
+</ul>
+<h4 id="5-lora"><a class="header" href="#5-lora">5. LoRA+</a></h4>
+<ul>
+<li>Just change the optimizer</li>
+</ul>
+<h4 id="6-neft-noisy-embeddings-improve-finetuning"><a class="header" href="#6-neft-noisy-embeddings-improve-finetuning">6. NEFT (Noisy Embeddings Improve Finetuning)</a></h4>
+<ul>
+<li>Adding gaussian noise : appreciate high level rather than low level granularity</li>
+</ul>
+<hr />
+<h4 id="preference-optimization"><a class="header" href="#preference-optimization">Preference Optimization</a></h4>
+<ul>
+<li>Hard to define single "correct answer"</li>
+<li>allows the model to learn from comparision rather than labels</li>
+</ul>
+<h3 id="sft-self-finetuning"><a class="header" href="#sft-self-finetuning">SFT (Self Finetuning)</a></h3>
+<ul>
+<li>Label inputs  [ex: prompt, response]</li>
+</ul>
+<h3 id="rlhf-reinforcement-learning-from-human-feedback"><a class="header" href="#rlhf-reinforcement-learning-from-human-feedback">RLHF (Reinforcement Learning from Human Feedback)</a></h3>
+<ul>
+<li>Broad paradigm</li>
+</ul>
+<h3 id="ppo-proximal-policy-optimization"><a class="header" href="#ppo-proximal-policy-optimization">PPO (Proximal Policy Optimization)</a></h3>
+<ul>
+<li>Popular RL algorithm widely used to fine tune a LLM</li>
+<li>1 base model , policy model and reward model</li>
+</ul>
+<h3 id="dpo-direct-preference-optimization"><a class="header" href="#dpo-direct-preference-optimization">DPO (Direct Preference Optimization)</a></h3>
+<ul>
+<li>Newer technqiue designed to simplify Preference Optimization, not use full capability of RL</li>
+<li>1 base model and a policy model : not separate ; same</li>
+</ul>
+<h3 id="model-quantized"><a class="header" href="#model-quantized">model quantized</a></h3>
+<p>AWQ - inference only
+GPTQ - inference only
+GGUF - inference only
+BitsAndBytes - Can be trained and inference</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="vision-llm"><a class="header" href="#vision-llm">Vision LLM</a></h1>
+<p>An LLM capable of processing both text and images</p>
+<ul>
+<li>LLava , Meta, Qwen</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="basic-rag"><a class="header" href="#basic-rag">Basic RAG</a></h1>
 <p><img src="Image1.PNG" alt="" /></p>
 <h2 id="problems-in-system"><a class="header" href="#problems-in-system">Problems in system</a></h2>
 <ol>
@@ -300,12 +370,6 @@ RAPTOR - Bottom up approach -&gt; Clustering and summarizing chunks</p>
 <ul>
 <li>Transfer knowledge from a larger, more complex model (often referred to as the teacher model) to a smaller, more efficient model (the student model).</li>
 </ul>
-<h1 id="model-finetuning-techniques"><a class="header" href="#model-finetuning-techniques">Model Finetuning Techniques</a></h1>
-<h4 id="1-lora"><a class="header" href="#1-lora">1. LoRA</a></h4>
-<h4 id="2-dora"><a class="header" href="#2-dora">2. DORA</a></h4>
-<h4 id="3-lora"><a class="header" href="#3-lora">3. LoRA+</a></h4>
-<h4 id="4-unsloth"><a class="header" href="#4-unsloth">4. Unsloth</a></h4>
-<h4 id="5-neft"><a class="header" href="#5-neft">5. NEFT</a></h4>
 <h2 id="llm-inference-platforms"><a class="header" href="#llm-inference-platforms">LLM Inference platforms</a></h2>
 <h4 id="1-runpod"><a class="header" href="#1-runpod">1. Runpod</a></h4>
 <h4 id="2-aws"><a class="header" href="#2-aws">2. AWS</a></h4>

@@ -24,20 +24,10 @@
 
 
 
-# Model Finetuning Techniques
-
-
-
-#### 1. LoRA 
-#### 2. DORA
-#### 3. LoRA+
-#### 4. Unsloth
-#### 5. NEFT
-
-
-
 ## LLM Inference platforms
 
 #### 1. Runpod
 #### 2. AWS
 #### 3. Lambda Labs
+
+
