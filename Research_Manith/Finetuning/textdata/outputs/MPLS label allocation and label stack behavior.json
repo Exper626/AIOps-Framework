@@ -1,0 +1,62 @@
+[
+  {
+    "prompt": "How does an LSR allocate labels for Forwarding Equivalence Classes (FECs) in an MPLS network?",
+    "response": "An LSR allocates labels to FECs by binding a unique 20-bit label value to each FEC. This allocation is typically performed using protocols like LDP or RSVP-TE. Labels are assigned downstream and propagated upstream, ensuring each router along the LSP has the correct label mapping for the FEC."
+  },
+  {
+    "prompt": "What is the difference between downstream unsolicited and downstream-on-demand label distribution in MPLS?",
+    "response": "Downstream unsolicited (DU) label distribution allows an LSR to advertise label bindings to neighbors without explicit requests, commonly used in LDP. Downstream-on-demand (DoD) requires an upstream LSR to request a label binding before the downstream LSR provides it, as seen in RSVP-TE for traffic-engineered LSPs."
+  },
+  {
+    "prompt": "How does the label stack behave when a packet enters an MPLS network?",
+    "response": "When a packet enters an MPLS network, the ingress LSR imposes a label stack by pushing one or more labels onto the packet. The top label corresponds to the LSP, and additional labels may be added for hierarchical routing (e.g., VPNs or traffic engineering). The stack is processed hop-by-hop."
+  },
+  {
+    "prompt": "What is the significance of the bottom-of-stack (S) bit in an MPLS label?",
+    "response": "The bottom-of-stack (S) bit in an MPLS label indicates whether the current label is the last in the stack. If set to 1, it signals that no further labels follow, allowing the LSR to process the underlying payload (e.g., IP header) after popping this label."
+  },
+  {
+    "prompt": "How does label swapping work in an MPLS network?",
+    "response": "Label swapping involves an LSR replacing the top label in the stack with a new label based on its Label Forwarding Information Base (LFIB). The incoming label is looked up, swapped with the outgoing label, and the packet is forwarded to the next hop."
+  },
+  {
+    "prompt": "What role does the Label Distribution Protocol (LDP) play in label allocation?",
+    "response": "LDP dynamically exchanges label information between LSRs to establish LSPs. It maps FECs to labels, advertises bindings to neighbors, and ensures consistent label assignments across the network. LDP operates using TCP port 646 and UDP port 646 for discovery."
+  },
+  {
+    "prompt": "How does Penultimate Hop Popping (PHP) affect label stack behavior?",
+    "response": "PHP allows the penultimate LSR in an LSP to pop the top label before forwarding the packet to the egress LSR. This reduces processing overhead at the egress by leaving only the innermost label (or IP header) for final processing."
+  },
+  {
+    "prompt": "What are the two label retention modes in MPLS, and how do they differ?",
+    "response": "Liberal label retention stores all received label bindings, even from non-next-hop LSRs, enabling faster convergence. Conservative label retention only stores bindings from the active next hop, saving memory but requiring re-signaling during path changes."
+  },
+  {
+    "prompt": "How does the control plane interact with the data plane in MPLS label allocation and forwarding?",
+    "response": "The control plane (using LDP/RSVP-TE) establishes label bindings and populates the LFIB. The data plane uses the LFIB to forward packets by examining the top label, swapping or popping it based on the forwarding entry, and updating the label stack accordingly."
+  },
+  {
+    "prompt": "How does label stacking support traffic engineering in MPLS networks?",
+    "response": "Label stacking enables hierarchical LSPs by adding multiple labels to a packet. For example, a traffic-engineered LSP may carry a VPN packet with an outer label for the TE tunnel and an inner label for the VPN. This allows flexible path control and service integration."
+  },
+  {
+    "prompt": "What happens to the Time-to-Live (TTL) field in an MPLS label stack during packet forwarding?",
+    "response": "When a label is pushed, the TTL from the IP header is copied into the label's TTL field. Each LSR decrements the label's TTL as it forwards the packet. If the TTL reaches zero, the packet is discarded to prevent looping."
+  },
+  {
+    "prompt": "How are labels allocated in an MPLS network using L3VPNs?",
+    "response": "In MPLS L3VPNs, two labels are used: the inner label (VPN label) is assigned by the egress PE router to identify the VRF, while the outer label (transport label) is allocated via LDP or RSVP-TE to route the packet through the MPLS core."
+  },
+  {
+    "prompt": "What is the structure of an MPLS label, and how does it influence label stack behavior?",
+    "response": "An MPLS label is 32 bits long, containing a 20-bit label value, 3-bit traffic class (QoS), 1-bit bottom-of-stack (S) bit, and 8-bit TTL. The S bit determines if the label is the last in the stack, guiding popping operations during forwarding."
+  },
+  {
+    "prompt": "How does label merging work in MPLS networks?",
+    "response": "Label merging allows multiple incoming labels from different LSRs to be mapped to a single outgoing label at a downstream LSR. This reduces label usage and LFIB entries but requires careful handling to avoid conflicts in label-switched paths."
+  },
+  {
+    "prompt": "What is the purpose of the Label Information Base (LIB) and Label Forwarding Information Base (LFIB) in MPLS?",
+    "response": "The LIB stores all label bindings received from neighbors, while the LFIB contains the active label forwarding entries selected based on routing decisions. The LFIB is populated by the control plane and used by the data plane for packet forwarding."
+  }
+]

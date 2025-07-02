@@ -1,0 +1,1103 @@
+Juniper Networks, Inc. is an American multinational corporation headquartered in Sunnyvale, California. 
+The company develops and markets networking products, including routers, switches, network management software, 
+network security products, and software-defined networking technology.
+
+
+Dramatically improve network operations with the industry’s most scalable, programmable, and resilient routers.
+Juniper's comprehensive portfolio of best-of-breed routers offer unparalleled capacity, agility, and operational
+consistency with the end-to-end automation required for service-aware networks that power today’s hyperconnected world.
+
+
+
+ACX Series Routers
+
+High-performance ACX Series Routers serve metro access, aggregation, and data center use cases. 
+They are energy-efficient, MEF 3.0 compliant, and support 5G high-precision timing and synchronization.
+
+
+The latest ACX routers, the ACX7000 family, are multiservice routers ideal for cloud metro deployments.
+Select ACX7000 platforms incorporate adaptive power innovation that saves you between 20 and 50 percent in energy costs. 
+Paragon Active Assurance and zero trust security are embedded for assured, secure service experiences, and Juniper Paragon™ 
+Automation support reduces device onboarding time from hours to minutes.
+
+
+
+ACX7020
+Part of the ACX7000 family, this cloud metro router provides leading access performance in an industrial-rated 1-U footprint. 
+Ideal for service providers, enterprises, and wholesale environments, it delivers premium customer and user experiences.
+
+Form factor	
+Compact 1 U
+23.5-cm depth
+
+Throughput	
+100 Gbps
+
+Port density	
+4 x 1/10/25GbE + 16 x 1/10GbE
+
+
+
+ACX7024 and ACX7024X
+Part of the ACX7000 family, the routers provide leading access performance in an industrial-rated or high-scale 1-U footprint. 
+Ideal for service providers, enterprises, and wholesale environments, they help deliver premium customer and user experiences.
+
+Form factor	
+Compact 1 U
+24-cm depth
+
+Throughput	
+360 Gbps
+
+Port density	
+24 x 1/10/25GbE + 4 x 100GbE
+
+
+
+
+ACX7100
+
+The ACX7100, part of the ACX7000 family, delivers high density and performance in a compact, 1 U footprint. 
+Ideal for service provider, large enterprise, wholesale, and data center applications, it helps operators deliver premium 
+customer and user experiences.
+
+Form factor	
+Compact 1 U, with 59.49-cm depth
+
+Throughput	
+Up to 4.8 Tbps
+
+Port density	
+ACX7100-48L: 48 x 10/25/50GbE
+
+6 x 400GbE
+
+
+ 
+
+ACX7100-32C: 32 x 40/100GbE
+
+4 x 400GbE
+
+ACX7332 and ACX7348
+Part of the ACX7300 line, the ACX7332 and ACX7348 are compact, environmentally rated routers designed for multiservice applications.
+They combine a fixed, redundant platform with three bays of modularity for customization, scalability, high availability, and 
+exceptional performance.
+
+Form factor	
+Compact 3 U
+
+29-cm depth
+
+Throughput	
+2.4 Tbps
+
+Port density	
+ACX7332 – Fixed: 32 x 1/10/25GbE, 8 x 100GbE
+3 x I/O bays: 2 x 800G bays, 1 x 400G bay
+
+ACX7348 – Fixed: 48 x 1/10/25GbE, 8 x 100GbE
+3 x I/O bays: 2 x 800G bays, 1 x 400G bay
+
+
+
+ACX7509
+The ACX7509, part of the ACX7000 family, is a high-availability, power-efficient, and modular 5 U platform. Ideal for service providers,
+data centers, and large enterprises, it helps network operators deliver differentiated customer experiences. 
+
+Form factor	
+5 U, with 60-cm depth
+
+Throughput	
+4.8 Tbps
+
+Port density	
+20 x 1/10/25/50GbE
+  4 x 200/400GbE
+16 x 40/100GbE 
+
+
+
+
+ACX710
+The ACX710 1U router is a hardened multiservice solution that delivers the performance, capacity, and features needed to provide
+universal metro access and aggregation services. It offers a high-density, cost-optimized metro solution in a compact footprint.
+
+
+Hardened platform with 320-Gbps switching capacity 
+MEF 3.0-certified
+24 1/10GbE ports
+4 40/100GbE ports
+
+
+
+
+
+ACX5400
+The ACX5400 Series of 1U routers provide power-efficient metro aggregation and support full IP/MPLS functionality.
+They deliver the performance required for efficient 1/10GbE-to-100GbE metro aggregation, MACsec security, and packet-optical convergence.
+
+Up to 48 1GbE or 10GbE ports
+Up to 6 100GbE ports
+MEF 3.0-certified
+MACsec encryption
+
+
+
+
+
+MX304
+The MX304 Universal Routing Platform delivers massive scale and efficiency for space- and power-constrained environments. 
+It is a carrier-grade, multiservice platform with extensive automation capabilities enabling operators to meet constantly expanding
+bandwidth, subscriber, and service demands. The MX304 Universal Routing Platform delivers 4.8 Tbps of system capacity in a 2 RU unit
+and supports 96 x 10 or 25 GbE, 48 x 40, 50, or 100 GbE, or 12 x 400 GbE interfaces in a single chassis.
+
+4.8 Tbps throughput
+Power & space efficiency – 2 RU
+Density – 96 x 10/25 GbE, 48 x 40/50/100, 12 x 400 GbE
+Rich multiservice edge, timing features
+
+
+
+
+
+MX204
+The SDN-enabled MX204 Universal Routing Platform provides a modular, automated, carrier-grade solution for service providers 
+and enterprises. The compact platform brings 400 Gbps capacity and a full feature set to space and power constrained environments.
+
+400 Gbps capacity
+Space and power efficiency – 1 RU
+Full service suite – 1:1 NAT, firewall
+Rich multiservice edge features
+
+
+
+
+
+
+Juniper and Corero Joint DDoS Protection Solution
+Juniper and Corero DDoS protection combines packet-level traffic inspection with the power of infrastructure-based enforcement.
+ It automates real-time attack mitigation at the network edge at speeds up to 40 Tbps.
+
+Automated DDoS mitigation in seconds at line rate that scales from 50 Gbps to 40 Tbps
+Advanced Protection from “Carpet Bombing” attacks
+5G DDoS visibility with GPRS Tunneling Protocol (GTP) payload inspection, as well as ability to inspect network traffic within GRE,
+VXLAN and IP-IP tunnels
+Multi-Tenant Portal for as a Service offerings or views by department within an enterprise
+
+
+
+
+MX10004 and MX10008
+The MX10004 and MX10008 Universal Routing Platforms deliver unprecedented scale for service provider and cloud operators,
+enabling advanced business and residential multi-service edge services with a cloud-optimized form factor, and superior 
+cost-per-bit economics. The MX10004 and MX10008 are SDN-enabled, delivering up to 76.8 Tbps of system capacity in 4, 8, or 16 slot 
+chassis supporting dense 100 GbE, 400 GbE, and, in the future, 800 GbE interfaces. These carrier-grade platforms have extensive
+automation capabilities.
+
+Up to 76.8 Tbps capacity
+4 or 8 slots
+Dense 100 GbE and 400 GbE
+800 GbE ready
+Rich multiservice edge, timing features
+
+
+
+
+
+MX2020
+The SDN-enabled MX2020 Universal Routing Platform is a high-capacity, carrier-grade, multiservice edge platform with extensive 
+automation capabilities to help service providers and cloud operators address long-term bandwidth, subscriber, and services growth.
+The MX2020 Universal Routing Platform delivers 80 Tbps of system capacity and supports up to 800 x 100GbE or 160 x 400GbE
+interfaces in a single chassis.
+
+80 Tbps capacity with 20 slots
+Dense 100/400 GbE
+Inline MACsec at 10/40/100 GbE with no penalties
+Rich multiservice edge, timing features
+
+
+
+
+MX2010
+The SDN-enabled MX2010 Universal Routing Platform is a high-capacity, carrier-grade, multiservice edge platform with extensive 
+automation capabilities that enables operators to address long-term bandwidth, subscriber, and services growth. The MX2010 Universal 
+Routing Platform delivers 40 Tbps of system capacity and supports up to 400 x 100GbE or 80 x 400GbE interfaces in a single chassis.
+
+40 Tbps capacity with 10 slots
+Dense 100/400 GbE
+Inline MACsec at 10/40/100 GbE with no penalties
+Rich multiservice edge, timing features
+
+
+
+
+
+MX2008
+The SDN-enabled MX2008 Universal Routing Platform is a high-capacity, carrier-grade, multiservice edge platform enabling operators to address growing bandwidth, subscriber, and services demands. The MX2008 Universal Routing Platform delivers 16 Tbps of system capacity and supports up to 960 x 10 GbE and 160 x 100 GbE interfaces in a single chassis.
+
+40 Tbps capacity with 10 slots
+Dense 10/40/100 GbE
+Investment protection – shared MPCs across family
+Rich multiservice edge, timing features
+
+
+
+
+
+MX960
+
+The SDN-enabled MX960 Universal Routing Platform is a high performance, carrier-grade, multiservice edge platform with 
+unprecedented scale for service provider and cloud applications. The MX960 enables inline MACsec support without performance 
+penalties on 10, 40 GbE and 100 GbE, and delivers 12 Tbps of system capacity in a 12 slot chassis supporting dense 100 GbE,
+ 400 GbE interfaces. Similar to the other MX Series Universal Router Platforms, the MX960 has extensive carrier-grade capabilities.
+
+12 Tbps, 12-slot chassis
+Dense 100/400 GbE
+Inline MACsec at 10/40/100 GbE with no penalties
+Rich multiservice edge, timing features
+
+
+
+
+
+MX480
+
+The SDN-enabled MX480 Universal Routing Platform offers unprecedented scale for service provider and cloud applications,
+enabling the delivery of advanced business and residential multi-service edge services. The MX480 Universal Routing Platform
+delivers 7.5 Tbps of system capacity that supports inline MACsec without performance penalties for 10/40/100 GbE interfaces. 
+It is also a carrier-grade platform with extensive automation capabilities.
+
+7.5 Tbps, 6-slot chassis
+Dense 100/400 GbE
+Inline MACsec at 10/40/100 GbE with no penalties
+Rich multiservice edge, timing features
+
+
+
+
+
+MX240
+The SDN-enabled MX240 Universal Routing Platform delivers unprecedented scale for advanced business 
+and residential multi-service edge applications and services requiring power and space efficiency. 
+The MX240 Universal Routing Platform has 3 Tbps of capacity in a 5 RU, 3 slot chassis, and delivers 
+inline MACsec without performance penalties on 10 GbE, 40 GbE and 100 GbE interfaces.
+
+3 Tbps, 3-slot chassis
+Inline MACsec at 10/40/100 GbE with no penalties
+Power & space efficiency – 5 RU
+Rich multiservice edge, timing features
+
+
+
+
+
+PTX Series Packet Transport Routers
+
+PTX Series Routers form the foundation of the world’s largest WAN and data center architectures. 
+Powered by the latest generation of Juniper’s custom Express family ASICs, they’re cloud-optimized to enable smooth
+400G and 800G migrations. They are versatile, high-performance, and sustainable platforms built for longevity in the most demanding
+environments.
+
+The routers offer native 400G and 800G inline MACsec, deep buffering, flexible filtering, and a reliable network operating system 
+engineered for high-performance environments. The PTX10000 router family supports a broad spectrum of WAN and data center use cases
+including core, peering, data center interconnect, data center edge, metro aggregation, and AI data center networking. 
+Discover what 400G and 800G mass scale in the cloud can offer with the PTX routing family of products.
+
+
+
+
+
+PTX10002-36QDD
+The PTX10002-36QDD is a high-capacity, space- and power-optimized routing platform. Leveraging an impressive 28.8 Tbps 
+throughput capacity in a ultra-compact 2U fixed form factor, this class-leading platform, driven by the Juniper Express 5 ASIC, 
+delivers dense 100GbE/400GbE/800GbE connectivity for highly scalable routing use cases for provider and enterprise WAN and data
+center networks.
+
+36 ports of 800GE, 72 ports of 400GE
+28.8 Tbps forwarding capacity
+800GE inline MACsec
+5th generation of Express silicon
+
+
+
+
+
+PTX10004, PTX10008, PTX10016
+
+The modular PTX10004, PTX10008, and PTX10016 Packet Transport Routers directly address the massive bandwidth demands placed on 
+networks today and in the foreseeable future. They bring ultra-high port density, native 400GE and 800GE inline MACsec, 
+and latest generation ASIC investment to the most demanding WAN and data center architectures.
+
+28.8Tbps capacity per line card
+10M FIB, 100K+ SR tunnels
+SRv6, BIER, HQoS, INT-MD
+Native 400G and 800G inline MAC-sec
+Ultra-high 400GE and 800GE port density
+
+
+
+
+
+PTX10003
+The PTX10003 Packet Transport Router offers on-demand scalability for critical core and peering functions. With high-density
+100GbE, 200GbE, and 400GbE ports, operators can meet high-volume demands with efficiency, programmability, 
+and performance at scale.
+
+High-density platform
+100GbE and 400GbE interfaces
+Compact 3 U form factor
+100GbE inline MACsec on all ports
+
+
+
+
+
+PTX10001-36MR
+
+The PTX10001-36MR is a high-capacity, space- and power-optimized routing and switching platform. It delivers 9.6 Tbps of
+throughput and 10.8 Tbps of I/O capacity in a 1 U, fixed form factor. Based on the Juniper Express 4 ASIC, the platform
+provides dense 100GbE and 400GbE connectivity for highly scalable routing and switching in cloud, service provider, and 
+enterprise networks and data centers.
+
+400GbE inline MACsec
+4th generation silicon
+Scale up and scale out
+9.6-Tbps forwarding capacity
+
+
+
+
+
+CTP Series Platforms
+
+These platforms (designed for USA and Australian markets) give time-division multiplexing (TDM) and serial and
+analog circuit-based applications reliable and efficient access to next-generation IP networks with cost, redundancy,
+and efficiency advantages.
+
+
+
+
+CTP2056
+The CTP2056 Circuit to Packet Platform bridges legacy and IP worlds for circuit-switched applications. 
+Designed for U.S. and Australian markets, this 4 U rack-mountable chassis offers maximum flexibility with up to 56
+circuit emulation interfaces.
+
+Up to 56 circuit emulation interfaces
+Serial, T1/E1, and 4WTO 
+Analog interface options
+Redundant 250W power supply
+Web-based management system
+
+
+
+
+
+CTP2024
+
+The CTP2024 Circuit to Packet Platform bridges legacy and IP worlds for circuit-switched applications. 
+Designed for the U.S. and Australian markets, this 2 U rack-mountable chassis supports up to 24 circuit emulation interfaces
+and optional redundant power.
+
+Up to 24 circuit emulation interfaces
+Serial, T1/E1, and 4WTO 
+Analog interface options
+250W power supply
+Web-based management system
+
+
+
+
+CTP2008
+
+The CTP2008 Circuit to Packet Platform bridges legacy and IP worlds for circuit-switched applications. 
+Designed for the U.S. and Australian markets, this 1 U rack-mountable chassis supports up to eight software-configurable
+circuit emulation interfaces.
+
+Up to 8 circuit emulation interfaces
+Serial, T1/E1, and 4WTO 
+Analog interface options
+250W power supply
+Web-based management system
+
+
+
+
+CTP151
+The CTP151 Circuit to Packet Platform bridges the legacy and IP worlds for circuit-switched applications. 
+Designed for the U.S. and Australian markets, this 1U rack-mountable chassis provides up to eight circuit emulation interfaces.
+
+Up to 8 T1/E1 interfaces
+150W power supply
+Up to 8 serial interfaces
+Web-based management system
+
+
+
+
+CTP150
+
+The CTP150 Circuit to Packet Platform bridges legacy and IP worlds for circuit-switched applications.
+Designed for the U.S. and Australian markets, this 1U rack-mountable chassis provides four to eight circuit emulation interfaces.
+
+Up to  8 T1/E1 interfaces
+100W power supply
+Up to 8 serial interfaces
+Web-based management system
+
+
+
+
+
+JRR200 Route Reflector Appliance
+
+
+The JRR200 Route Reflector Appliance provides an ideal solution for large service provider, data center, 
+and enterprise networks that require large routing tables.
+
+
+
+
+
+The JRR200 Route Reflector Appliance provides an ideal solution for service provider, data center, and enterprise networks that
+require large routing tables. It delivers 10-GbE connectivity in a compact form factor optimized for space- and power-constrained 
+environments. You can simplify your network and reduce operating costs for a broad range of use cases, including cloud services and
+distributed metro and data center networks.
+The JRR200 appliance features the Junos OS control plane for feature-rich BGP control. You don’t have to choose between 
+customized servers and hypervisor software or maintain separate hardware and software support.
+With support for Zero Touch Provisioning (ZTP), the JRR200 also makes provisioning new deployments quicker and simple
+
+
+Key Features
+
+64-Gbps Packet Forwarding
+20GbE WAN
+Support for 50 Million RIB Entries
+10 x 1/10GbE Ports
+
+
+
+
+Juniper Session Smart Router
+
+Our software-defined router provides a flexible, application-aware network fabric that meets stringent enterprise performance, 
+security, and availability requirements. Its Next-Generation Firewall (NGFW) features enable selective enforcement of attack detection
+and prevention techniques on network traffic.
+
+_______________________________________________
+
+Juniper Session Smart Router
+
+Powering Juniper’s SD-WAN (software-defined wide area network) solution, the Session Smart™ Router is designed to connect users with 
+exceptional experiences. Built on an application-aware, Zero Trust secure network fabric, it meets the most stringent enterprise
+performance, security, and availability requirements.
+The Session Smart Router overcomes the inherent inefficiencies of conventional solutions with a tunnel-free architecture 
+that enables improved performance, fast deployments, and cost savings. For flexible deployments, the software solution can 
+run on customer premises equipment (CPE), data center network servers, and in the cloud. It is managed centrally using either 
+the AI-driven Juniper Mist™ Cloud or the Juniper Session Smart Conductor platform.
+
+Key Features
+
+Application-aware routing
+Fail-safe service delivery
+Orchestration and automation
+Zero Trust security
+Centralized management
+Enhanced security IPS/IDS and URL filtering
+
+_______________________________________________
+
+
+SRX Series Firewalls
+
+Protect your network edge, data center, and cloud applications with Juniper’s next-generation physical, virtual, 
+and containerized firewalls. They’re all managed via Juniper Security Director Cloud for a unified management experience and 
+consistent security policy enforcement.
+
+Juniper SRX Series Firewalls are an integral part of the Juniper Connected Security portfolio, which protects your network edge, 
+data center network, and cloud applications. Powered by the Junos operating system, the firewalls are available in physical, virtual,
+and containerized form factors. They’re all managed by Juniper Security Director Cloud for a unified management experience and 
+consistent security policy enforcement across your hybrid network.
+SRX Series Firewalls are the industry’s most effective against threats. They offer AI-driven protection, accurately predicting 
+intrusions, malware, and other threats and stopping them before they stop your business.
+
+
+_______________________________________________
+
+
+SRX5800
+The massive performance and scalability of the SRX5800 next-generation firewall make it ideal for securing large enterprise
+data centers, service provider infrastructure, and public sector networks.
+
+Firewall performance (max)	
+3.36 Tbps
+
+IPS performance	
+638 Gbps
+
+VPN performance	
+699 Gbps
+
+Maximum concurrent sessions	
+338 million
+
+
+_______________________________________________
+
+
+SRX300
+
+SRX300 next-generation firewall connects and secures small branch or retail offices and consolidates security, SD-WAN,
+routing, and switching in a small desktop device.
+
+Firewall performance (max)	
+1.9 Gbps
+
+IPS performance	
+200 Mbps
+
+VPN performance	
+336 Mbps
+
+Maximum concurrent sessions	
+64,000
+
+
+_______________________________________________
+
+
+SRX320
+SRX320 next-generation firewall connects and secures small branch or retail offices and consolidates security, routing, 
+switching, and WAN connectivity in a small desktop device.
+
+Firewall performance (max)	
+1.9 Gbps
+
+IPS performance	
+200 Mbps
+
+VPN performance	
+336 Mbps
+
+Maximum concurrent sessions	
+64,000
+
+
+_______________________________________________
+
+
+SRX340
+The SRX340 next-generation firewall connects and secures midsized, distributed enterprise branch offices. It consolidates security, 
+routing, switching, and WAN connectivity in a convenient 1U form factor.
+
+Firewall performance (max)	
+4.7 Gbps
+
+IPS performance	
+400 Mbps
+
+VPN performance	
+733 Mbps
+
+Maximum concurrent sessions	
+256,000
+
+_______________________________________________
+
+
+
+SRX345
+The SRX345 next-generation firewall is well suited for midsized and large distributed enterprise branch offices. It consolidates
+security, routing, switching, and WAN connectivity in a 1U form factor.
+
+Firewall performance (max)	
+5 Gbps
+
+IPS performance	
+600 Mbps
+
+VPN performance	
+977 Mbps
+
+Maximum concurrent sessions	
+375,000
+
+
+_______________________________________________
+
+
+SRX380
+The SRX380 next-generation firewall is a high-performance, secure SD-WAN gateway with superior and reliable WAN connectivity.
+It integrates security, routing, and switching for distributed enterprise offices in a single device.
+
+Firewall performance (max)	
+20 Gbps
+
+IPS performance	
+2 Gbps
+
+VPN performance	
+4.4 Gbps
+
+Maximum concurrent sessions	
+380,000
+
+_______________________________________________
+
+
+SRX550
+The SRX550 next-generation firewall is ideal for securing midsized and large branch locations.
+
+Firewall performance (max)	
+7 Gbps
+
+IPS performance	
+800 Mbps
+
+VPN performance	
+1 Gbps
+
+Maximum concurrent sessions	
+375,000
+
+_______________________________________________
+
+vSRX
+The vSRX Virtual Firewall provides uncompromised flexibility, security effectiveness, and performance in Amazon Web Services (AWS),
+Microsoft Azure, Google Cloud Platform, IBM Cloud, and Oracle Cloud environments.
+
+Virtual CPU	
+17
+
+Memory	
+32/64 GB
+
+Firewall performance (max)	
+200 Gbps (VMware)/200 Gbps (KVM)
+
+Maximum concurrent sessions	
+12/28 million
+
+_______________________________________________
+
+cSRX
+
+The highly agile cSRX Container Firewall offers advanced security services to improve visibility and secure applications 
+running in containers and microservices.
+
+Virtual CPU	
+2
+
+Memory	
+4 GB
+
+Firewall performance (max)	
+11.9 Gbps
+
+Maximum concurrent sessions	
+512,000
+
+_______________________________________________
+
+
+SRX1600
+The SRX1600 1 U, next-generation firewall protects enterprise campus networks and serves as a perimeter firewall in
+small and midsized data centers. It's power-efficient, delivers 24 Gbps firewall throughput per rack unit, and supports 
+line-rate MACsec encryption.
+
+Firewall performance (max)	
+24 Gbps
+
+IPS performance	
+21 Gbps
+
+VPN performance	
+18 Gbps
+
+Maximum concurrent sessions	
+2 Million
+
+
+_______________________________________________
+
+
+
+SRX2300
+The power-efficient, 1 U SRX2300 Firewall protects small and midsized campus, data center, and regional headquarters networks.
+It delivers 39 Gbps firewall throughput per rack unit, supports line-rate MACsec, and operationalizes zero trust networkwide.
+
+Firewall performance (max)	
+39 Gbps
+
+IPS performance	
+35 Gbps
+
+VPN performance	
+36 Gbps
+
+Maximum concurrent sessions	
+5 Million
+
+
+_______________________________________________
+
+
+SRX4300
+The SRX4300 is a power-efficient, 1 U next-generation firewall that protects small and midsized campus, data center, and
+regional headquarters networks. It's compact, delivers up to 90 Gbps firewall throughput per rack unit, and supports MACsec at line rate.
+
+Firewall performance (max)	
+90 Gbps
+
+IPS performance	
+45 Gbps
+
+VPN performance	
+75 Gbps
+
+Maximum concurrent sessions	
+10 Million
+
+
+_______________________________________________
+
+
+
+SRX4700
+The SRX4700 power-efficient, 1 U next-generation firewall (NGFW) delivers the industry’s highest firewall performance at throughput
+speeds of up to 1.4 Tbps per rack unit. It also supports 400 Gbps wire-speed MACsec to safeguard data in motion. 
+
+Firewall performance (max)	
+1.4 Tbps
+
+IPS performance	
+110 Gbps
+
+VPN performance	
+90 Gbps
+
+Maximum concurrent sessions	
+60 million
+
+
+_______________________________________________
+
+
+SRX1500
+The SRX1500 is a high-performance, low-latency, next-generation firewall and security services gateway that protects mission-critical
+networks at enterprise campuses, regional headquarters, and large branch offices.
+
+Firewall performance (max)	
+9.2 Gbps
+
+IPS performance	
+3.3 Gbps
+
+VPN performance	
+4.5 Gbps
+
+Maximum concurrent sessions	
+2 million
+
+
+_______________________________________________
+
+
+SRX4100
+SRX4100 is a high-performance, low-latency, next-generation firewall for small and mid-sized enterprise campuses and data centers,
+and regional headquarters.
+
+Firewall performance (max)	
+40 Gbps
+
+IPS performance	
+13.9 Gbps
+
+VPN performance	
+14.8 Gbps
+
+Maximum concurrent sessions	
+5 million
+
+
+_______________________________________________
+
+
+SRX4200
+SRX4200 is a high-performance, low-latency, next-generation firewall for small and midsized enterprise campuses and data centers, 
+and regional headquarters.
+
+Firewall performance (max)	
+80 Gbps
+
+IPS performance	
+27.7 Gbps
+
+VPN performance	
+29.6 Gbps
+
+Maximum concurrent sessions	
+10 million
+
+_______________________________________________
+
+
+SRX4600
+
+SRX4600 is a next-generation firewall that protects mission-critical data 
+center and campus networks for enterprises, service providers, and cloud providers.
+
+Firewall performance (max)	
+400 Gbps
+
+IPS performance	
+38 Gbps
+
+VPN performance	
+75.26 Gbps
+
+Maximum concurrent sessions	
+60 million
+
+_______________________________________________
+
+SRX5400
+
+SRX5400 is a next-generation firewall ideal for securing large enterprise data centers, service provider infrastructure, and public 
+sector networks.
+
+Firewall performance (max)	
+960 Gbps
+
+IPS performance	
+172 Gbps
+
+VPN performance	
+188 Gbps
+
+Maximum concurrent sessions	
+
+
+_______________________________________________
+
+
+SRX5600
+
+The capability of the SRX5600 next-generation firewall to scale with network growth makes it ideal for securing large 
+enterprise data centers, service provider infrastructure, and public sector networks.
+
+Firewall performance (max)	
+1.44 Tbps
+
+IPS performance	
+245 Gbps
+
+VPN performance	
+269 Gbps
+
+Maximum concurrent sessions	
+182 million
+
+
+_______________________________________________
+
+
+Packet Optical
+
+Juniper's single-box Packet Optical convergence solutions help operators simplify operations, lower transport costs,
+and tap new revenue opportunities.
+
+_______________________________________________
+
+
+ACX5400 Line of Universal Metro Routers
+
+Front with Top view of ACX Series 5448 Router
+The ACX5400 Series of 1U routers provide power-efficient metro aggregation and support full IP/MPLS functionality. 
+They deliver the performance required for efficient 1/10GbE-to-100GbE metro aggregation, MACsec security, and packet-optical convergence.
+
+
+_______________________________________________
+
+
+ACX6000 Line of Universal Metro Routers
+
+Front with top view of ACX Series 6160 Router
+The ACX6000 1U routers offer a dense solution for converging IP and optical transport. They provide Open ROADM-compliant transponder 
+functionality for metro, cloud connect, and distributed access architecture (DAA)/R-PHY deployments.
+
+
+_______________________________________________
+
+MX240 Universal Routing Platform
+
+Front with Top View of MX 240 Router
+The SDN-enabled MX240 Universal Routing Platform delivers unprecedented scale for advanced business and residential multi-service edge applications and services requiring power and space efficiency. The MX240 Universal Routing Platform has 3 Tbps of capacity in a 5 RU, 3 slot chassis, and delivers inline MACsec without performance penalties on 10 GbE, 40 GbE and 100 GbE interfaces.
+
+_______________________________________________
+
+
+MX480 Universal Routing Platform
+
+Front with Top View of MX 480 Router
+The SDN-enabled MX480 Universal Routing Platform offers unprecedented scale for service provider and cloud applications, 
+enabling the delivery of advanced business and residential multi-service edge services. The MX480 Universal Routing Platform
+delivers 7.5 Tbps of system capacity that supports inline MACsec without performance penalties for 10/40/100 GbE interfaces. 
+It is also a carrier-grade platform with extensive automation capabilities.
+
+_______________________________________________
+
+
+MX960 Universal Routing Platform
+
+Front with Top View of MX 960 Router
+The SDN-enabled MX960 Universal Routing Platform is a high performance, carrier-grade, multiservice edge platform with unprecedented
+scale for service provider and cloud applications. The MX960 enables inline MACsec support without performance penalties 
+on 10, 40 GbE and 100 GbE, and delivers 12 Tbps of system capacity in a 12 slot chassis supporting dense 100 GbE, 400 GbE interfaces. 
+Similar to the other MX Series Universal Router Platforms, the MX960 has extensive carrier-grade capabilities.
+
+
+The SDN-enabled MX960 Universal Routing Platform brings field-proven performance and scale to the world’s largest service provider, cable, mobile, and data center networks. It’s packed with highly scalable routing, switching, security, and service features that enable revenue-generating applications. It can help you consolidate networks and services with support for Flexible Ethernet (FlexE), diverse Layer 2 and Layer 3 VPN services, and advanced broadband network gateway (BNG) functions.
+Powered by the Junos operating system and programmable Juniper Trio 5 silicon, the MX960 is deployed in mission-critical service provider and enterprise networks worldwide. It helps network operators digitally transform their networks—and their business—to keep pace with rapidly changing market conditions.
+
+Key Features
+12 Tbps, 12-slot chassis
+Dense 100/400 GbE
+Inline MACsec at 10/40/100 GbE with no penalties
+Rich multiservice edge, timing features
+
+Features + Benefits
+
+    High Scale and Density
+    Scales through 12 Tbps with support for 24 400GbE interfaces and 120 100GbE interfaces, to provide long-term investment protection.
+
+    Space Efficient
+    Offers excellent ratio of size to capacity and density, bringing new efficiency to a variety of applications.
+
+    Rich MultiService Edge Features
+    Supports BNG, business edge, consumer edge, peering, SDN gateway, data center and cloud edge, and metro aggregation functions.
+
+    Service Integration
+    Integrates many services—including carrier-grade NAT, stateful firewall, and deep packet inspection—in a single platform, to address a wide range of applications and support efficient network and service consolidation.
+
+    SDN-Enabled
+    Integrates seamlessly with standards-based SDN controllers such as the Contrail Cloud platform, making the  MX960 an ideal anchor point for service chains that include physical and virtual elements.
+
+    Built-In Encryption
+    Draws on best-in-class Juniper Trio 5 silicon to perform MACsec encryption without sacrificing performance.
+
+    Edge Threat Intelligence
+    Uses SecIntel, Juniper’s security intelligence feed, to identify and block malicious traffic at the edge. Customize policies on the MX router to protect command-and-control (C&C) servers, as well as create custom whitelists and blacklists.
+
+_______________________________________________
+
+
+PTX10004, PTX10008, and PTX10016 Packet Transport Routers
+
+Front with Top View of PTX 10016 Router
+The modular PTX10004, PTX10008, and PTX10016 Packet Transport Routers directly address the massive bandwidth demands placed on
+networks today and in the foreseeable future. They bring ultra-high port density, native 400GE and 800GE inline MACsec, and 
+latest generation ASIC investment to the most demanding WAN and data center architectures.
+
+_______________________________________________
+
+
+QFX10008 and QFX10016 Switches
+
+QFX10008 and QFX10016 Switches support the most demanding data center, campus, and routing environments. 
+With our custom silicon Q5 ASICs, deep buffers, and up to 96 Tbps throughput, these switches deliver flexibility and capacity 
+for long-term investment protection.
+
+QFX10008 and QFX10016 switches offer a highly scalable network foundation to support demanding data center, campus, and routing environments. Using our custom silicon Q5 ASICs, the switches include deep buffers and 1GbE/10GbE/40GbE/100GbE/200GbE interface options. With up to 96 Tbps throughput and an extensive set of line cards that support rich Layer 2 and Layer 3 services, they provide long-term investment protection.
+Architectural flexibility means you’ll never be locked into a proprietary solution. The switches operate in diverse network environments, including spine-and-leaf fabrics and EVPN-VXLAN overlay architectures.
+Manage your QFX100008 and QFX10016 with turnkey Juniper Apstra intent-based networking software, which automates the entire network lifecycle to simplify design, deployment, and operations and provides closed-loop assurance.
+
+Key Features
+
+Use Case: Data Center Fabric Spine
+
+Chassis Options:
+
+QFX10008: 13 U chassis, up to 8 line cards
+QFX10016: 21 U chassis, up to 16 line cards
+Port Density:
+
+QFX10000-30C-M: 30 x 100/40GbE, MACsec-enabled
+QFX10000-30C: 30 x 100/40GbE
+QFX10000-36Q: 36 x 40GbE or 12 x 100GbE
+QFX10000-60S-6Q: 60 x 1/10GbE with 6 x 40GbE or 2 x 100GbE
+QFX10000-12C-DWDM: 6 x 200Gbps
+Throughput: Up to 96 Tbps (bidirectional)
+Deep Buffers: 100 ms per port
+Precision Time Protocol (PTP)
+
+
+_______________________________________________
+
+
+JCO400 Coherent Optical Transceivers
+
+400G ZR/ZR+ and 0dBm coherent DWDM pluggable transceivers are essential to any metro network modernization strategy.
+Juniper’s JCO400 series delivers best-in-class performance and innovative software integrations to simplify the configuration
+and management of a converged packet-optical architecture.
+
+
+JCO400 Coherent Pluggable Transceivers help operators achieve their capital, operational, and user experience goals. As a core component of the Juniper Converged Optical Routing Architecture (CORA), this innovative series is essential to the transformation strategies of both service providers and cloud operators  transitioning to packet-optical convergence (IP-over-DWDM), 400G, and beyond.
+JCO400 series optics minimize TCO through industry-leading power efficiency, operational simplicity, an open architecture, and an integrated DWDM design. Juniper 400ZR and 400G OpenZR+ coherent optics, including 0dBm optics, are supported by 400G platforms in Juniper ACX Series, MX Series, and PTX Series routers, as well as in Juniper QFX Series Switches. Ideal for access, edge, core, data center, and cloud use cases, the transceivers support an open and interoperable networking ecosystem.
+
+
+Key Features
+
+    Form factor: QSFP56-DD
+    Speed/mode: 1 x 100 GbE, 2 x 100 GbE, 3 x 100 GbE, 4 x 100 GbE, 1 x 400 GbE
+    Distance: 40 km to 2,000+ km
+
+
+    Features + Benefits
+    Industry-Leading Power Efficiency
+    Best-in-class power efficiency in an optimized form factor suits a range of metro, edge, and core network use cases, including data center interconnect (DCI), mobile backhaul, next-gen packet cores, IP-over-DWDM solutions, and more.
+
+    Operational Simplicity
+    JCO400 series optics are fully integrated into Junos OS and Junos OS Evolved for simple and flexible configuration, performance monitoring, and end-to-end testing of the optical elements of the network.
+
+    Streamlined Multivendor Management
+    Juniper supports standardized OpenConfig models for vendor-agnostic management of 400G coherent optics, easing integration, deployment, and network maintenance.
+
+    Open and Interoperable
+    JCO400 series optics support flexible configurations and channelized modes that comply with Optical Internetworking Forum (OIF) 400ZR and OpenZR+ Multi-Source Agreement (MSA) Group specifications. 
+
+    Go-To Expertise
+    As an active contributing member of the OIF, OpenZR+, and other key communities contributing to the standardization of optical solutions, Juniper is working at the forefront of building open and interoperable networking ecosystems. Our standards-compliant, multivendor environment diversifies and stabilizes the component supply chain to ensure product availability and improve lead times.
+
+_______________________________________________
+
+
+Juniper Cloud-Native Router
+
+The Cloud-Native Router takes full advantage of container economics and operational efficiencies, giving service providers the flexibility they need to deploy 5G. The performant, software-based router combines Juniper’s proven routing technology, the Junos OS containerized routing protocol daemon (cRPD), and Contrail vRouter DPDK forwarding plane for x86 processors. It integrates seamlessly with the Kubernetes Container Network Interface (CNI) framework.
+The router complements Juniper’s physical routers with advanced networking features for cloud-native environments where space, power, and cooling are limited. Based on the same Junos OS routing technology, hybrid physical and virtual networks provide a single experience end to end. The Cloud-Native Router is a key component in the 5G Distributed Radio Access Network (D-RAN) and in 5G Core data centers hosted in hyperscaler cloud environments.
+
+Key Features
+
+Proven Junos OS routing
+Performant forwarding plane
+Kubernetes CNI-compliant
+Light footprint
+
+
+Features + Benefits
+
+    Advanced Service Integration
+    Easily integrate cloud-native, advanced Junos OS networking services into cloud applications, accelerating development and increasing reliability. The router is designed to support service providers with Layer-3 VPNs, MPLS, dynamic service configuration, fault detection, high-availability configurations, dynamic routing protocols, and more. 
+
+    Fast Packet Processing
+    The Contrail vRouter DPDK forwarding plane enables high packet throughput for enhanced router performance.
+
+    Light Footprint
+    Deployable anywhere compute resources are available, the router takes advantage of fragmented resources, making it ideal for cloud-native deployments. 
+
+    Deployment Simplicity
+    The Cloud-Native Router works seamlessly in NetOps 2.0 environments and can also be managed using traditional network operations methods.
+
+
+

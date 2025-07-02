@@ -1,0 +1,512 @@
+Cisco Systems, Inc. is an American multinational digital communications technology conglomerate corporation 
+headquartered in San Jose, California. Cisco develops, manufactures, and sells networking hardware, software, 
+telecommunications equipment and other high-technology services and products.
+
+
+​Cisco Catalyst 8300 Series Edge Platforms​
+Get SASE-ready with SD-WAN, cloud-native agility, multilayer security, flexible routing, and edge intelligence. 
+
+
+
+Build a WAN edge that's flexible and secure, with optimized 5G, SD-WAN, software-defined routing, and multicloud access.
+
+See more to solve more
+Spot application issues and get actionable insights across the internet, cloud, and software as a service (SaaS) with built-in Cisco Catalyst SD-WAN Analytics and Cisco ThousandEyes solutions.
+
+Layer your security
+Gain industry-leading multilayered protection—and move to secure access service edge (SASE) with SD-WAN for on-premises and cloud-delivered security.  
+
+​Get advanced connectivity​
+Transform your branch with 5G connectivity and other cutting-edge wireless network standards.
+
+Automate with ease
+Accelerate your network rollout and simplify your operations in a visualized manner with Cisco Catalyst SD-WAN Manager. 
+
+
+
+Catalyst 8300-1N1S-6T
+
+​1 rack unit, 6 x 1G WAN
+Cisco Catalyst SD-WAN-enabled, 5G/LTE-ready modular enterprise branch router with 1 x PIM, 1 x NIM, and 1 x SM slot
+
+10G IP throughput
+2G SD-WAN throughput
+4 x RJ-45 + 2 x SFP embedded ports, up to 1G WAN
+Dual power supplies
+
+
+
+
+Catalyst 8300-1N1S-4T2X
+
+1 rack unit, 10G WAN
+Cisco Catalyst SD-WAN-enabled, 5G/LTE-ready modular enterprise branch router with 1 x PIM, 1 x NIM, and 1 x SM slot
+
+12G IP throughput
+5G SD-WAN throughput
+4 x RJ-45 + 2 x SFP+ embedded ports, up to 10G WAN
+Dual power supplies
+
+
+
+
+Catalyst 8300-2N2S-6T
+
+​2 rack unit, 6 x 1G WAN
+Cisco Catalyst SD-WAN-enabled, 5G/LTE-ready modular enterprise branch router with 1 x PIM, 2 x NIM, and 2 x SM slots
+
+10G IP throughput
+2G SD-WAN throughput
+4 x RJ-45 + 2 x SFP embedded ports, up to 1G WAN
+Dual power supplies
+
+
+
+
+Catalyst 8300-2N2S-4T2X
+
+​2 rack unit, 10G WAN​
+Cisco Catalyst SD-WAN-enabled, 5G/LTE-ready modular enterprise branch router with 1 x PIM, 2 x NIM, and 2 x SM slots
+
+12G IP throughput
+5G SD-WAN throughput
+​4 x RJ-45 + 2 x SFP+ embedded ports, up to 10G WAN​​
+Dual power supplies
+ 
+
+
+
+
+Cisco Catalyst 8200 Series Edge Platforms
+Move to secure access service edge (SASE) with secure and scalable SD-WAN and intelligent multicloud connectivity. 
+
+
+
+
+C8200-1N-4T
+
+1 rack unit, 4 x 1G WAN
+Catalyst SD-WAN modular router for small and midsize branches that need higher throughput
+
+8 CPU cores
+Up to 32 GB of DRAM
+1G SD-WAN throughput
+SD-WAN Manager, Cisco Catalyst Center management, programmable APIs
+
+
+
+
+C8200L-1N-4T
+
+1 rack unit, 4 x 1G WAN
+Catalyst SD-WAN modular router for small branches with SASE-compliant, cloud-based security requirements
+
+4 CPU cores
+Up to 32 GB of DRAM
+500-Mbps SD-WAN throughput
+SD-WAN Manager, Cisco Catalyst Center management, programmable APIs
+
+
+
+
+Cisco 1000 Series Integrated Services Routers 
+Boost performance with advanced security, multicloud access, and wireless capability—in one device. 
+
+
+
+ISR 1100-4G/6G
+
+Cisco IOS XE software
+Cisco Catalyst SD-WAN
+4–6 Gigabit Ethernet WAN/LAN ports
+
+
+ISR 1101
+
+Cisco IOS XE software
+Cisco Catalyst SD-WAN
+4 Gigabit Ethernet WAN/LAN ports
+Pluggable LTE
+
+
+ISR 1109
+
+Cisco IOS XE software
+Cisco Catalyst SD-WAN
+2–4 Gigabit Ethernet WAN/LAN ports
+Dual pluggable LTE
+
+
+ISR 111x
+
+Cisco IOS XE software
+Cisco Catalyst SD-WAN
+4–8 Gigabit Ethernet WAN/LAN ports
+Power over Ethernet (PoE)
+
+
+ISR 1111X
+
+Cisco IOS XE software
+Cisco Catalyst SD-WAN security
+8 Gigabit Ethernet WAN/LAN ports
+Power over Ethernet (PoE)
+
+
+ISR 1120
+
+Cisco IOS XE software
+Cisco Catalyst SD-WAN security
+8 Gigabit Ethernet WAN/LAN ports
+Pluggable LTE, Wi-Fi, and DSL options
+
+
+ISR 1131
+
+Cisco IOS XE software
+Cisco Catalyst SD-WAN security
+8 Gigabit Ethernet WAN/LAN ports
+Wi-Fi 6 with pluggable 5G options
+
+
+
+ISR 1160
+
+Cisco IOS XE software
+Cisco Catalyst SD-WAN security
+8 Gigabit Ethernet WAN/LAN ports
+Pluggable LTE option
+
+
+
+
+Cisco Meraki MX security and SD-WAN appliances
+Build a complete SD-branch on a cloud-first platform with secure SD-WAN, access, and IoT.
+
+
+
+
+
+Fixed wireless access devices
+Deliver secure, reliable, and scalable connectivity for remote and branch offices.
+
+Catalyst CG522-E
+Access cloud and enterprise applications at the highest speed possible with 5G connectivity.
+
+3.3-Gbps sub-6 GHz 5G
+Dual SIM
+
+
+Cisco Catalyst
+
+Catalyst CG418-E
+Connect your users and devices to trusted cloud and enterprise applications with 4G LTE Advanced Pro.
+
+1.2-Gbps LTE Advanced Pro
+Dual SIM, single radio
+
+
+
+
+Cisco Meraki
+
+
+Meraki MG51
+Get robust, scalable, and always-on 5G connectivity for large branch or campus.
+
+Cat 20 sub-6
+Up to 2 Gbps Multigigabit Ethernet
+
+
+
+Meraki MG41
+Provide your mid-sized branch with fast, resilient performance for primary or backup connectivity.
+
+Cat 18 4G LTE Advanced Pro
+Up to 1.2 Gbps Gigabit Ethernet
+
+
+
+
+Meraki MG21
+Rely on robust, always-on fixed wireless access for standard backup.
+
+Cat 6 4G LTE Advanced
+Up to 300 Mbps Ethernet
+
+
+
+Cisco remote worker gateways
+Experience reliable connectivity with enterprise Wi-Fi access at home without the need for a VPN.
+
+Catalyst CG113-4GW6
+Wi-Fi 6 router (802.11ax) + Cat 7 LTE 
+1 x 2.5 Gigabit Ethernet (GE) WAN/LAN port and 2 x 1 GE LAN ports with 4G LTE failover
+SD-WAN Manager for centralized management and web interface for device configuration
+Integrated with Catalyst SD-WAN Remote Access
+
+
+Catalyst CG113-W6
+Wi-Fi 6 router (802.11ax)
+1 x 2.5 GE WAN/LAN port and 2 x 1 GE LAN ports
+SD-WAN Manager for centralized management and web interface for device configuration
+Integrated with Catalyst SD-WAN Remote Access
+
+
+Cisco Meraki Z4
+Wi-Fi 6 router (802.11ax)
+Managed through the Meraki dashboard
+L3/L7 Stateful Firewall
+Meraki AutoVPN
+
+
+Cisco Meraki Z4C
+Wi-Fi 6 router and Cat 12 LTE modem
+Managed through the Meraki dashboard
+L3/L7 Stateful Firewall
+Meraki AutoVPN
+
+
+
+Industrial
+
+
+
+Cisco Catalyst IR1100 Rugged Series Routers
+Securely connect remote industrial operations with this rugged, compact, and modular SD-WAN-enabled router.
+
+
+P-5GS6-R16SA-GL
+
+5G sub-6-GHz module (New)
+Next-generation 5G supporting standalone (SA) and non-standalone (NSA) for both public and private networks.
+eSIM-ready. Massive capacity and performance with lower latency. (CBRS/Private LTE-enabled and FirstNet Capable certification.)
+
+
+P-LTEA7-NA/EAL/JP
+
+Cat-7 LTE module (New)
+Cat-7 LTE for North America, Europe, Japan, and Latin America.
+
+300 Mbps and 150 Mbps
+
+
+
+P-LTE-MNA
+
+Cat-4 LTE module
+FirstNet Capable cat-4 LTE multicarrier module for the U.S. (MNA) and cat-4 LTE for other countries.
+
+150 Mbps and 50 Mbps
+
+
+
+P-LTE-450
+
+450 MHz LTE module
+Get expansive geographical coverage, greater resiliency, and deep indoor signal penetration.
+
+37.5 Mbps and 12.5 Mbps
+
+
+
+Cisco Catalyst IR1800 Rugged Series Routers
+Speed digitization at the mobile edge, with high performance and industry-leading flexibility.
+
+
+Models
+
+Catalyst IR1833-K9
+
+PoE+ and redundant cellular
+2 cellular slots, 1 Wi-Fi slot
+2 RS232 ports
+CAN bus, PoE+, ADR GNSS slot, SSD slot
+4-GB memory
+
+
+
+Catalyst IR1835-K9
+
+More connectivity, security, and compute
+Faster processor
+2 cellular slots, 1 Wi-Fi slot
+CAN bus, PoE+, ADR GNSS slot, SSD slot
+4 digital I/O ports
+1 RS232 and 1 RS232/485 combo port
+8-GB memory
+
+
+
+Modules
+
+P-5GS6-R16SA-GL
+
+5G sub-6-GHz module (New)
+Next-generation 5G supporting standalone (SA) and non-standalone (NSA) for both public and private networks. eSIM-ready. Massive capacity and performance with lower latency. (CBRS/Private LTE-enabled and FirstNet Capable certification.)
+Up to 3.3 Gbps and 500 Mbps
+
+
+
+P-LTEA7-NA/EAL/JP
+
+Cat-7 LTE module (New)
+Cat-7 LTE for North America, Europe, Japan, and Latin America.
+300 Mbps and 150 Mbps
+
+
+
+P-LTE-MNA
+
+Cat-4 LTE module
+Get FirstNet Capable cat-4 LTE multicarrier North America module (MNA) for the U.S. and cat-4 LTE for other countries.
+150 Mbps and 50 Mbps
+
+
+WP-WIFI6
+
+Wi-Fi 6 module
+Add powerful Wi-Fi capabilities to the Catalyst IR1800 Rugged Series Router without adding space in a cabinet.
+
+
+
+IRM-GNSS-ADR
+
+Dead reckoning GNSS module
+Get accurate estimates of a vehicle’s position by using data from the vehicle’s CAN bus.
+
+
+
+
+
+Cisco Catalyst IR8100 Heavy Duty Series Routers
+​​Unite your outdoor edge with this IP67-rated and SD-WAN-enabled router that’s fully modular.
+
+
+Models
+
+IR8140H-K9
+
+Without PoE
+1 GE copper
+1 GE fiber/SFP
+3 additional I/O slots
+AC-powered
+12V DC for external devices
+
+
+IR8140H-P-K9
+
+With PoE
+1 GE copper with PoE output
+1 GE fiber/SFP
+3 additional I/O slots
+AC-powered
+12V DC for external devices
+
+
+Modules
+
+
+IRMH-5GS6-GL
+
+5G sub-6-GHz module
+Next-generation 5G supporting private 5G SA networks. Massive capacity and performance with lower latency. CBRS/Private LTE-enabled and FirstNet Capable certification.
+
+Up to 3.3 Gbps and 400 Mbps
+
+
+
+IRMH-LTEA-LA
+
+Cat 6 LTE module
+Cat 6 LTE for North America, Europe, Japan, and Latin America.
+
+150 Mbps and 50 Mbps
+
+
+IRMH-LTEA-EA
+
+Cat 6 LTE module
+Cat 6 LTE for North America, Europe, Japan, and Latin America.
+
+150 Mbps and 50 Mbps
+
+
+
+IRMH-LTEA-EA-900
+
+Cat 6 LTE module
+Includes 900-MHz filter for co-existence with IRMH-WPAN-NA module. Cat 6 LTE for North America, Europe, Japan, and Latin America.
+
+150 Mbps and 50 Mbps
+
+
+
+IRMH-LTE-MNA
+
+Cat 4 LTE module
+Includes 900-MHz filter for co-existence with IRMH-WPAN-NA module. FirstNet Capable Cat 4 LTE multicarrier North America module (MNA) for the United States and Cat 4 LTE for other countries.
+
+100 Mbps and 50 Mbps
+
+
+IRMH-WPAN-NA
+
+WPAN Wi-SUN module
+Wi-SUN FAN 1.0-certified with Wi-SUN FAN 1.1 certification coming soon.
+
+
+Cisco Catalyst IR8300 Rugged Series Routers
+Deliver peak industrial networking and SD-WAN performance with rugged all-in-one routing and switching.
+
+
+
+Designed to withstand extreme temperatures, the Catalyst IR8300 Rugged Series Router is built for utility substations, rail trackside, roadways and intersections, and more.
+
+Built-in, advanced security
+Get the best of both worlds, with routing and security consolidated. Access next-generation firewall capabilities: malware protection, URL filtering, intrusion prevention system (IPS), intrusion detection system (IDS), and much more.
+
+More functionality in less cabinet space
+With dual WAN uplinks, 12 LAN ports, Universal Power Over Ethernet (Cisco UPOE) technology, modularity to make future upgrades simple, and support for edge application advanced timing, the Catalyst IR8300 Rugged Series maximizes functionality in minimal space.
+
+Reduced total cost of ownership
+Speed up performance, get scale, and unlock value by integrating routing, security, and switching in one platform.
+
+Make upgrades easy with modules for public and private 5G, LTE, advanced timing, and much more.
+
+Substation and timing compliance
+Reliably and precisely synchronize network resources that host highly time-sensitive applications. The Catalyst IR8300 Rugged Series Router is also certified to meet substation compliance standards, including IEC 61850 and IEEE 1613.
+
+P-5GS6-R16SA-GL
+
+5G sub-6-GHz module (New)
+Next-generation 5G supporting standalone and non-standalone modes for both public and private networks. eSIM-ready. Massive capacity and performance with lower latency. (CBRS and Private LTE-enabled with FirstNet Capable certification.)
+
+
+
+P-LTEA7-NA/EAL/JP
+
+Cat 7 LTE module (New)
+Cat 7 LTE for North America, Europe, Japan, and Latin America.
+
+300 Mbps and 150 Mbps
+
+
+P-LTE-MNA
+
+Cat 4 LTE module
+FirstNet Capable Cat 4 LTE multicarrier North America (MNA) module for the United States and Cat 4 LTE for other countries.
+
+150 Mbps and 50 Mbps
+
+
+IRM-TIMING-MOD
+
+Timing module
+Advanced time-synchronization and distribution support for mission-critical applications; includes support for NTP, PTP, PRP, IRIG-B, and GNSS.
+
+Stratum 3E holdover performance accurate to 100 ns
+
+
+

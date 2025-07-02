@@ -1,0 +1,42 @@
+[
+  {
+    "prompt": "What are the main differences between NetConf and RESTConf in network device provisioning?",
+    "response": "NetConf uses XML for data encoding and operates over SSH, while RESTConf uses JSON or XML with HTTP/HTTPS. NetConf supports atomic configuration commits, whereas RESTConf leverages RESTful principles with CRUD operations."
+  },
+  {
+    "prompt": "How does SNMP differ from RESTConf in terms of data encoding and transport protocol?",
+    "response": "SNMP uses BER or SNMPv3's encryption for data encoding and operates over UDP, while RESTConf uses JSON/XML with HTTP/HTTPS. RESTConf provides more structured data models using YANG compared to SNMP's MIB-based approach."
+  },
+  {
+    "prompt": "Explain the role of YANG models in NetConf and RESTConf APIs.",
+    "response": "YANG models define the data structure and operations for NetConf and RESTConf, enabling standardized configuration and state data exchange. They allow clients to understand device capabilities and interact with hierarchical data."
+  },
+  {
+    "prompt": "What are the advantages of using RESTConf over traditional SNMP for network management?",
+    "response": "RESTConf offers better scalability, supports modern web technologies like HTTP/JSON, and provides a structured data model via YANG. It simplifies integration with DevOps tools compared to SNMP's legacy MIB-based polling."
+  },
+  {
+    "prompt": "Describe the security mechanisms employed by NetConf and SNMPv3.",
+    "response": "NetConf uses SSH for encryption and authentication. SNMPv3 adds security through user-based authentication (MD5/SHA) and encryption (DES/AES), ensuring data integrity and privacy over UDP."
+  },
+  {
+    "prompt": "Which protocol would you choose for real-time network monitoring and why?",
+    "response": "SNMP is preferred for real-time monitoring due to its lightweight UDP transport and efficient polling mechanism. RESTConf or NetConf may introduce latency due to HTTP/SSH overhead and are more suited for configuration tasks."
+  },
+  {
+    "prompt": "How does NetConf handle configuration changes and commits?",
+    "response": "NetConf uses a candidate configuration database where changes are staged. A commit operation applies changes atomically to the running configuration, allowing rollbacks if needed, ensuring consistent device states."
+  },
+  {
+    "prompt": "What are the typical use cases for SNMP in network provisioning?",
+    "response": "SNMP is commonly used for monitoring device status, collecting performance metrics, and triggering traps for events. It's less common for provisioning configurations, where NetConf/RESTConf are preferred for structured updates."
+  },
+  {
+    "prompt": "Compare the operations supported by NetConf (like <get>, <edit-config>) with SNMP operations like GET and SET.",
+    "response": "NetConf operations include <get>, <edit-config>, and <commit> for structured configuration management. SNMP uses GET, SET, and TRAP for simple data retrieval, modification, and asynchronous alerts."
+  },
+  {
+    "prompt": "How does RESTConf leverage HTTP methods for network device provisioning?",
+    "response": "RESTConf maps CRUD operations to HTTP methods: GET (retrieve data), POST/PUT (create/update configurations), DELETE (remove resources). This aligns with web standards, simplifying API integration and automation."
+  }
+]
