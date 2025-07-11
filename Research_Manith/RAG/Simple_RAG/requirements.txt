@@ -1,1 +1,0 @@
-!pip install pypdf chromadb langchain langchain-community sentence-transformers

@@ -1,1 +1,7 @@
-### 📙 Please refer "Concepts.pdf" file in the root directory to learn about different methods about Finetuning, RAG, Agents
+# AI OPS Framework 
+
+Designing AI systems on 
+
+- SLT Mobitel Data
+- Networking 
+- Telecommunication  
