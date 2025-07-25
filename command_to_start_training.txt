@@ -1,0 +1,2 @@
+# Language
+!torchrun --nproc_per_node 2  /kaggle/input/multigpu/train.py
