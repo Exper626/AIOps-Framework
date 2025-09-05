@@ -1,0 +1,23 @@
+[SPEZ_TKS(SLTNTX)]
+Router:
+  - Router4 (Model: 2911)
+  - Connected to Switch7
+
+Switch:
+  - Switch7 (Model: 2950-24)
+  - Connected to Router4
+  - Connected to PC25
+  - Connected to PC2
+  - Connected to PC22
+
+PC:
+  - PC25 (Model: PC-PT)
+  - Connected to Switch7
+
+PC:
+  - PC2 (Model: PC-PT)
+  - Connected to Switch7
+
+PC:
+  - PC22 (Model: PC-PT)
+  - Connected to Switch7

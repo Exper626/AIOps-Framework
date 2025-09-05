@@ -1,0 +1,3 @@
+[SPEZ_TKS(SLTNTX)]
+Switch:
+    - Switch12 (Model: 2960-24TT)

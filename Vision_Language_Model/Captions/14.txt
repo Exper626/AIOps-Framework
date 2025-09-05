@@ -1,0 +1,4 @@
+[SPEZ_TKS(SLTNTX)]
+Multilayer Switch:
+    - Multilayer Switch12 (Model: 3650-24PS)
+

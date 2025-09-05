@@ -1,0 +1,3 @@
+[SPEZ_TKS(SLTNTX)]
+Router:
+    -  Router10 (Model: 2620XM)

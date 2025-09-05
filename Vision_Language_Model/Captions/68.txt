@@ -1,0 +1,9 @@
+[SPEZ_TKS(SLTNTX)]
+Switch:
+    - Switch12 (Model: 2960-24TT)
+
+Switch:
+    - Switch5 (Model: 2960-24TT)
+
+Switch:
+    - Switch6 (Model: Switch-PT)

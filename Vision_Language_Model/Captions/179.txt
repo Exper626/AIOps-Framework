@@ -1,0 +1,28 @@
+[SPEZ_TKS(SLTNTX)]
+Switch:
+    - Switch18 (Model: 2950T-24)
+    - Connected to PC37
+    - Connected to PC34
+    - Connected to Switch19
+
+Switch:
+    - Switch19 (Model: 2950T-24)
+    - Connected to PC35
+    - Connected to PC36
+    - Connected to Switch18
+
+PC:
+    - PC37 (Model: PC-PT)
+    - Connected to Switch18
+
+PC:
+    - PC34 (Model: PC-PT)
+    - Connected to Switch18
+
+PC:
+    - PC35 (Model: PC-PT)
+    - Connected to Switch19
+
+PC:
+    - PC36 (Model: PC-PT)
+    - Connected to Switch19

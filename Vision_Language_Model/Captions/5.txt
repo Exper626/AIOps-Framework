@@ -1,0 +1,3 @@
+[SPEZ_TKS(SLTNTX)]
+switch
+    : Switch6 (Model: Switch-PT)

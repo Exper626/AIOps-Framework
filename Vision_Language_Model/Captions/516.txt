@@ -1,0 +1,28 @@
+[SPEZ_TKS(SLTNTX)]
+Router:
+    - Router0 (Model: 2621XM, IP: 192.168.1.1)
+    - Connected to Router1 (S0/0/0)
+    - Connected to Switch0 (F0/2)
+
+Router:
+    - Router1 (Model: 2811, IP: 192.168.12.11)
+    - Connected to Router0 (S0/0/0)
+    - Connected to Switch1 (F0/2)
+
+Switch:
+    - Switch0 (Model: 2950T-24)
+    - Connected to Router0 (F0/2)
+    - Connected to PC0 (F0/1)
+
+Switch:
+    - Switch1 (Model: 2950T-24)
+    - Connected to Router1 (F0/2)
+    - Connected to PC1 (F0/1)
+
+PC:
+    - PC0 (Model: PC-PT, IP: 192.168.1.22)
+    - Connected to Switch0 (F0/1)
+
+PC:
+    - PC1 (Model: PC-PT, IP: 192.168.12.30)
+    - Connected to Switch1 (F0/1)

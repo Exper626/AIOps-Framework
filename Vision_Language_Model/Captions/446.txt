@@ -1,0 +1,13 @@
+[SPEZ_TKS(SLTNTX)]
+Switch:
+    - Switch3 (Model: 2950T-24)
+    - Connected to PC6
+    - Connected to PC7
+
+PC:
+    - PC6 (Model: PC-PT, IP: 192.168.1.5)
+    - Connected to Switch3
+
+PC:
+    - PC7 (Model: PC-PT, IP: 192.168.1.4)
+    - Connected to Switch3

@@ -1,0 +1,3 @@
+[SPEZ_TKS(SLTNTX)]
+Router:
+    -  Router5 (Model: Router-PT-Empty)

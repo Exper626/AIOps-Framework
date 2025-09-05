@@ -1,0 +1,6 @@
+[SPEZ_TKS(SLTNTX)]
+PC:
+    - PC7 (Model: PC-PT)
+
+PC:
+    - PC10 (Model: PC-PT)

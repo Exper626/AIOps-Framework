@@ -1,0 +1,13 @@
+[SPEZ_TKS(SLTNTX)]
+Switch:
+    - Switch4 (Model: 2950-24)
+    - Connected to PC8
+    - Connected to PC9
+
+PC:
+    - PC8 (Model: PC-PT, IP: 192.168.2.1)
+    - Connected to Switch4
+
+PC:
+    - PC9 (Model: PC-PT, IP: 192.16.2.2)
+    - Connected to Switch4

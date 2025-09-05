@@ -1,0 +1,45 @@
+[SPEZ_TKS(SLTNTX)]
+Router:
+  - Router8 (Model: 1841)
+  - Connected to Switch20
+  - Connected to Switch7
+
+Switch:
+  - Switch20 (Model: 2950T-24)
+  - Connected to Router8
+  - Connected to Switch7
+  - Connected to PC10
+  - Connected to PC4
+  - Connected to PC7
+
+Switch:
+  - Switch7 (Model: 2950-24)
+  - Connected to Router8
+  - Connected to Switch20
+  - Connected to PC2
+  - Connected to PC22
+  - Connected to PC25
+
+PC:
+  - PC10 (Model: PC-PT)
+  - Connected to Switch20
+
+PC:
+  - PC4 (Model: PC-PT)
+  - Connected to Switch20
+
+PC:
+  - PC7 (Model: PC-PT)
+  - Connected to Switch20
+
+PC:
+  - PC2 (Model: PC-PT)
+  - Connected to Switch7
+
+PC:
+  - PC22 (Model: PC-PT)
+  - Connected to Switch7
+
+PC:
+  - PC25 (Model: PC-PT)
+  - Connected to Switch7

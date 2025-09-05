@@ -1,0 +1,30 @@
+# Dataset change code
+
+
+report_to="tensorboard"
+checkpointing_steps = 50 
+max_training_steps = 2000
+
+
+push_to_hub = 
+
+use kaggle kaggle no collab
+
+!curl -LsSf https://astral.sh/uv/install.sh | sh
+
+
+!pip uninstall torch torchvision torchaudio -y
+
+!pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+
+
+export UV_LINK_MODE=copy
+!pip install -qU diffusers accelerate huggingface_hub bitsandbytes sentencepiece torch pandas numpy tqdm transformers protobuf accelerate fastparquet pyarrow datasets peft torchvision --active
+
+
+
+
+
+
+
+

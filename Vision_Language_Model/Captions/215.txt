@@ -1,0 +1,18 @@
+[SPEZ_TKS(SLTNTX)]
+Switch:
+    - Switch2 (Model: 2950T-24)
+    - Connected to PC3
+    - Connected to Router9
+    - Connected to PC2
+
+PC:
+    - PC3 (Model: PC-PT)
+    - Connected to Switch2
+
+PC:
+    - PC2 (Model: PC-PT)
+    - Connected to Switch2
+
+Router:
+    - Router9 (Model: 2621XM)
+    - Connected to Switch2

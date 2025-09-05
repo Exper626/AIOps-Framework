@@ -1,0 +1,43 @@
+[SPEZ_TKS(SLTNTX)]
+Router:
+    - Router0 (Model: 2621XM)
+    - Connected to Switch0
+    - Connected to Switch17
+
+Switch:
+    - Switch0 (Model: 2950-24)
+    - Connected to PC44
+    - Connected to PC3
+    - Connected to PC18
+    - Connected to Router0
+
+Switch:
+    - Switch17 (Model: 2950-24)
+    - Connected to PC43
+    - Connected to PC36
+    - Connected to PC38
+    - Connected to Router0
+
+PC:
+    - PC44 (Model: PC-PT)
+    - Connected to Switch0
+
+PC:
+    - PC3 (Model: PC-PT)
+    - Connected to Switch0
+
+PC:
+    - PC18 (Model: PC-PT)
+    - Connected to Switch0
+
+PC:
+    - PC43 (Model: PC-PT)
+    - Connected to Switch17
+
+PC:
+    - PC36 (Model: PC-PT)
+    - Connected to Switch17
+
+PC:
+    - PC38 (Model: PC-PT)
+    - Connected to Switch17

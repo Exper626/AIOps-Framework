@@ -1,0 +1,12 @@
+[SPEZ_TKS(SLTNTX)]
+Server:
+ - Server14 (Model: Server-PT)
+ - Not Connected
+
+Server:
+ - Server8 (Model: Server-PT)
+ - Not Connected
+
+Server:
+ - Server12 (Model: Server-PT)
+ - Not Connected

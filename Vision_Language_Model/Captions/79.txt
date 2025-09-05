@@ -1,0 +1,9 @@
+[SPEZ_TKS(SLTNTX)]
+Router:
+    - Router8 (Model: 1841) 
+
+Router:
+    - Router2 (Model: 2911) 
+
+Router:
+    - Router1 (Model: CGR1240) 

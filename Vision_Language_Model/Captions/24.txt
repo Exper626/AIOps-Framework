@@ -1,0 +1,3 @@
+[SPEZ_TKS(SLTNTX)]
+Router:
+    -  Router6 (Model: 1841)

@@ -1,0 +1,26 @@
+[SPEZ_TKS(SLTNTX)]
+Router:
+    - Router3 (Model: 2911)
+    - Connected to Switch20
+
+Switch:
+    - Switch20 (Model: 2960T-24)
+    - Connected to Router3
+    - Connected to PC9
+    - Connected to PC22
+    - Connected to PC2
+
+PC:
+    - PC9 (Model: PC-PT)
+    - Connected to Switch20
+
+PC:
+    - PC22 (Model: PC-PT)
+    - Connected to Switch20
+
+PC:
+    - PC2 (Model: PC-PT)
+    - Connected to Switch20
+
+PC:
+    - PC38 (Model: PC-PT)  Partially visible

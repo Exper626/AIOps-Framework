@@ -1,0 +1,18 @@
+[SPEZ_TKS(SLTNTX)]
+Router:
+    - Router1 (Model: CGR1240)
+    - Connected to Switch2
+
+Switch:
+    - Switch2 (Model: 2950T-24)
+    - Connected to Router1
+    - Connected to PC6
+    - Connected to PC17
+
+PC:
+    - PC6 (Model: PC-PT)
+    - Connected to Switch2
+
+PC:
+    - PC17 (Model: PC-PT)
+    - Connected to Switch2

@@ -1,0 +1,18 @@
+[SPEZ_TKS(SLTNTX)]
+Switch:
+    - Switch8 (Model: 2950-24)
+    - Connected to PC7
+    - Connected to PC3
+    - Connected to PC10
+
+PC:
+    - PC7 (Model: PC-PT)
+    - Connected to Switch8
+
+PC:
+    - PC3 (Model: PC-PT)
+    - Connected to Switch8
+
+PC:
+    - PC10 (Model: PC-PT)
+    - Connected to Switch8

@@ -1,0 +1,13 @@
+[SPEZ_TKS(SLTNTX)]
+Switch:
+    - Switch6 (Model: Switch-PT)
+    - Connected to PC3
+    - Connected to PC8
+
+PC:
+    - PC3 (Model: PC-PT)
+    - Connected to Switch6
+
+PC:
+    - PC8 (Model: PC-PT)
+    - Connected to Switch6

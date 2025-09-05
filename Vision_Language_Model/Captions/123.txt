@@ -1,0 +1,18 @@
+[SPEZ_TKS(SLTNTX)]
+Switch:
+    - Switch10 (Model: 2960-24TT)
+    - Connected to PC9
+    - Connected to PC10
+    - Connected to PC7
+
+PC:
+    - PC9 (Model: PC-PT)
+    - Connected to Switch10
+
+PC:
+    - PC10 (Model: PC-PT)
+    - Connected to Switch10
+
+PC:
+    - PC7 (Model: PC-PT)
+    - Connected to Switch10

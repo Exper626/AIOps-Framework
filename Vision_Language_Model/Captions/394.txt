@@ -1,0 +1,24 @@
+[SPEZ_TKS(SLTNTX)]
+
+Switch:
+    - Switch2 (Model: 2950T-24)
+    - Connected to Server11
+    - Connected to PC3
+    - Connected to PC10
+    - Connected to PC6
+
+Server:
+    - Server11 (Model: Server-PT)
+    - Connected to Switch2
+
+PC:
+    - PC3 (Model: PC-PT)
+    - Connected to Switch2
+
+PC:
+    - PC10 (Model: PC-PT)
+    - Connected to Switch2
+
+PC:
+    - PC6 (Model: PC-PT)
+    - Connected to Switch2

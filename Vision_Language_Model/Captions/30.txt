@@ -1,0 +1,3 @@
+[SPEZ_TKS(SLTNTX)]
+Router:
+    -  Router11 (Model: 1941)

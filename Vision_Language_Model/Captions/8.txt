@@ -1,0 +1,3 @@
+[SPEZ_TKS(SLTNTX)]
+Multilayer Switch:
+    -  Multilayer Switch7 (Model: 3560-24PS)

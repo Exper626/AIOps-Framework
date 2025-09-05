@@ -1,0 +1,18 @@
+[SPEZ_TKS(SLTNTX)]
+Switch:
+    - Switch4 (Model: 2950-24)
+    - Connected to Router3
+    - Connected to PC5
+    - Connected to PC14
+
+Router:
+    - Router3 (Model: 2620XM)
+    - Connected to Switch4
+
+PC:
+    - PC5 (Model: PC-PT, IP: 192.168.109.7)
+    - Connected to Switch4
+
+PC:
+    - PC14 (Model: PC-PT, IP: 192.168.109.8)
+    - Connected to Switch4

@@ -1,0 +1,9 @@
+[SPEZ_TKS(SLTNTX)]
+Router:
+    - Router3 (Model: 2911)
+
+Router:
+    - Router6 (Model: 1841)
+
+Router:
+    - Router5 (Model: Router-PT-Empty)

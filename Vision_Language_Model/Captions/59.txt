@@ -1,0 +1,6 @@
+[SPEZ_TKS(SLTNTX)]
+Switch:
+    - Switch9 (Model: 2950T-24)
+
+Switch:
+    - Switch10 (Model: 2960-24TT)

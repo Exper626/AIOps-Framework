@@ -1,0 +1,35 @@
+[SPEZ_TKS(SLTNTX)]
+Router:
+    - Router11 (Model: 1941)
+    - Connected to Switch8
+    - Connected to Switch9
+Switch:
+    - Switch8 (Model: 2960-24)
+    - Connected to Router11
+    - Connected to PC40
+    - Connected to PC14
+    - Connected to PC6
+Switch:
+    - Switch9 (Model: 2950T-24)
+    - Connected to Router11
+    - Connected to PC9
+    - Connected to PC32
+    - Connected to PC0
+PC:
+    - PC40 (Model: PC-PT)
+    - Connected to Switch8
+PC:
+    - PC14 (Model: PC-PT)
+    - Connected to Switch8
+PC:
+    - PC6 (Model: PC-PT)
+    - Connected to Switch8
+PC:
+    - PC9 (Model: PC-PT)
+    - Connected to Switch9
+PC:
+    - PC32 (Model: PC-PT)
+    - Connected to Switch9
+PC:
+    - PC0 (Model: PC-PT)
+    - Connected to Switch9

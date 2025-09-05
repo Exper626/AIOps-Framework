@@ -1,0 +1,28 @@
+[SPEZ_TKS(SLTNTX)]
+Switch:
+    - Switch2 (Model: 2950-24)
+    - Connected to PC29 (F0/10)
+    - Connected to PC11 (F0/9)
+    - Connected to Switch6 (Dashed Line)
+
+Switch:
+    - Switch6 (Model: 2950-24)
+    - Connected to PC12 (F0/8)
+    - Connected to PC21 (F0/4)
+    - Connected to Switch2 (Dashed Line)
+
+PC:
+    - PC29 (Model: PC-PT, IP: 192.168.3.122)
+    - Connected to Switch2
+
+PC:
+    - PC11 (Model: PC-PT, IP: 192.168.3.124)
+    - Connected to Switch2
+
+PC:
+    - PC12 (Model: PC-PT, IP: 192.169.3.119)
+    - Connected to Switch6
+
+PC:
+    - PC21 (Model: PC-PT, IP: 192.168.3.120)
+    - Connected to Switch6

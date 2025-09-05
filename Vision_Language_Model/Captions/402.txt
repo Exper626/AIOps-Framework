@@ -1,0 +1,28 @@
+[SPEZ_TKS(SLTNTX)]
+Switch:
+    - Switch1 (Model: 2950T-24)
+    - Connected to Router0
+    - Connected to Server10
+    - Connected to PC12
+    - Connected to PC2
+    - Connected to PC1
+
+Router:
+    - Router0 (Model: 2621XM)
+    - Connected to Switch1
+
+Server:
+    - Server10 (Model: Server-PT)
+    - Connected to Switch1
+
+PC:
+    - PC12 (Model: PC-PT)
+    - Connected to Switch1
+
+PC:
+    - PC2 (Model: PC-PT)
+    - Connected to Switch1
+
+PC:
+    - PC1 (Model: PC-PT)
+    - Connected to Switch1
