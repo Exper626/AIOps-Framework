@@ -8,7 +8,7 @@ export const Greeting = () => (
       initial={{ opacity: 0, y: 10 }}
       transition={{ delay: 0.35, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
-      Nawaloka AI Assistant
+      Sri Lanka Telecom Network Assistant
     </motion.div>
     <motion.div
       animate={{ opacity: 1, y: 0 }}
@@ -16,7 +16,7 @@ export const Greeting = () => (
       initial={{ opacity: 0, y: 10 }}
       transition={{ delay: 0.5, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
-        Trusted healthcare through technical excellence and patient-centered care.
+      Ask network questions, analyze topology images, or generate network diagrams.
     </motion.div>
   </div>
 );
