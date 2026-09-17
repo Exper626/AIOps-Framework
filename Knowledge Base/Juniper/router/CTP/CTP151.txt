@@ -1,0 +1,7 @@
+https://www.juniper.net/us/en/products/routers/ctp-series.html
+
+The CTP151 Circuit to Packet Platform bridges the legacy and IP worlds for circuit-switched applications. Designed for the U.S. and Australian markets, this 1U rack-mountable chassis provides up to eight circuit emulation interfaces.
+Up to 8 T1/E1 interfaces
+150W power supply
+Up to 8 serial interfaces
+Web-based management system

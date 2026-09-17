@@ -1,0 +1,24 @@
+https://www.cisco.com/site/us/en/products/networking/switches/c9550-series-smart-switches/index.html
+
+C9550-24L4CD
+
+Compact fixed core platform with high-speed connectivity.
+24 × SFP56 ports (50/25/10/1G) 
+4 × QSFP-DD uplinks (400/100/40G)
+Fixed aggregation and core deployments 
+
+
+C9550-48L4CD
+
+Balanced density for enterprise core and aggregation.
+48 × SFP56 ports (50/25/10/1G) 
+4 × QSFP-DD uplinks (400/100/40G)
+Fixed core and distribution deployments 
+
+
+C9550-96L4D
+
+Highest-density fixed core platform in the series.
+96 × SFP56 ports (50/25/10/1G) 
+4 × QSFP-DD uplinks (400/100/40G)
+Up to 6.4 Tbps switching capacity 

@@ -1,0 +1,12 @@
+https://www.juniper.net/us/en/products/routers/acx-series.html
+
+Part of the ACX7300 line, the ACX7332 and ACX7348 routers are compact, environmentally rated routers designed for multiservice applications. They combine a fixed, redundant platform with three bays of modularity for customization, scalability, high availability, and exceptional performance.
+
+Form factor
+Compact 3 U 29-cm depth
+
+Throughput
+ACX7332 – Fixed: 32 x 1/10/25GbE, 8 x 100GbE
+3 x I/O bays: 2 x 800G bays, 1 x 400G bay
+ACX7348 – Fixed: 48 x 1/10/25GbE, 8 x 100GbE
+3 x I/O bays: 2 x 800G bays, 1 x 400G bay

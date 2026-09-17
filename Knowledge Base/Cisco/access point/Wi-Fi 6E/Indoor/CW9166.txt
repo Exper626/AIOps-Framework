@@ -1,0 +1,6 @@
+https://www.cisco.com/c/en/us/products/collateral/wireless/catalyst-9166-series-access-points/catalyst-9166-series-access-points-ds.html
+
+Ultra-high-performance Wi-Fi 6E for large, mission-critical deployments with integrated omnidirectional antenna
+4x4:4 MU-MIMO (2.4 GHz, 5 GHz and 6 GHz)
+Integrated Bluetooth Low Energy®/IoT, band steering, and XOR Radio, which allows dual 5 GHz usage
+5 Gbps multigigabit Ethernet, USB

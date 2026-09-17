@@ -1,0 +1,5 @@
+Large-branch secure router for up to 2500 users
+10 Gbps firewall throughput
+WAN: 4 ports
+LAN: 6 ports 
+

@@ -1,0 +1,14 @@
+https://buy.hpe.com/us/en/networking/juniper-solutions/juniper-switching-solutions/juniper-ap45-high-performance-access-point/p/1014919982
+
+The Juniper AP45 brings the performance and patented virtual Bluetooth LE (vBLE) technology of the Juniper AP43 to the 6GHz band for enterprises needing increased channel widths and capacity. Juniper AI solutions for Wi-Fi 6E optimize operator and user experiences with secure, near-real-time client-to-cloud automation, insight, and actions.
+
+Deployment
+Indoor
+Wi-Fi Standard
+802.11ax (Wi-Fi 6): 4x4:4
+Wi-Fi Tri-Band
+Yes; Dedicated Fourth Radio
+Antenna Options
+Internal, External
+Virtual Bluetooth LE
+Yes

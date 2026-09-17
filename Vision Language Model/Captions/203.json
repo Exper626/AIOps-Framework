@@ -1,0 +1,38 @@
+{
+  "routers": [
+    {
+      "name": "Router6",
+      "model": "1841",
+      "connected_to": [
+        "Switch0"
+      ]
+    }
+  ],
+  "switches": [
+    {
+      "name": "Switch0",
+      "model": "2950-24",
+      "connected_to": [
+        "Router6",
+        "PC1",
+        "PC6"
+      ]
+    }
+  ],
+  "pcs": [
+    {
+      "name": "PC1",
+      "model": "PC-PT",
+      "connected_to": [
+        "Switch0"
+      ]
+    },
+    {
+      "name": "PC6",
+      "model": "PC-PT",
+      "connected_to": [
+        "Switch0"
+      ]
+    }
+  ]
+}

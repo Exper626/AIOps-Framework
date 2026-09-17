@@ -1,0 +1,97 @@
+https://www.cisco.com/site/us/en/products/networking/switches/c9610-series-smart-switches/index.html
+
+Cisco C9610 10-slot modular chassis
+
+Optimized modular core for resiliency at scale with the industry's most comprehensive security.
+51.2 Tbps switching capacity, 6.4 Tbps per slot
+400G to 10G multigigabit port options
+High availability with N+N/N+1 power redundancy
+Platinum-rated AC and DC power supplies
+
+
+
+Cisco C9610 SUP-3XL supervisor module
+
+Optimized for secure and highly available high-speed campus core deployments.
+Cisco Silicon One K100 ASIC with HBM
+Up to 51.2 Tbps per chassis, 6.4 Tbps per slot
+Supports 400G QSFP-DD, enhanced app hosting
+High availability support with SVL, SSO, ISSU, GIR
+
+
+Cisco C9610 SUP-3 supervisor module
+
+Optimized to reimagine connections, reinforce security, and redefine the experience for the hybrid workforce big and small.
+Cisco Silicon One K100 ASIC
+Up to 51.2 Tbps per chassis, 6.4 Tbps per slot
+Supports 400G QSFP-DD
+High availability support with SVL, SSO, ISSU, GIR
+
+
+Cisco C9610 Series 32-port 100G/40G, 2-port 400G line card
+
+Optimized for secure, high-density 100G core deployments.
+32 ports of 100G/40G QSFP28, 2 ports 400G/200G/100G
+6.4 Tbps non-blocking bandwidth
+Up to 256 ports 100G line rate
+
+
+Catalyst 9600X 32-port 100G line card
+
+Optimized for secure, high-density 100G core deployments.
+32 ports of 100G/40G QSFP28, 2 ports 400G/200G/100G 
+6.4 Tbps non-blocking bandwidth
+Up to 256 ports 100G line rate
+10G/25G/50G SFP breakout support
+
+
+
+Cisco C9610 40-port 50G/25G/10G SFP56, 2-port 400G and 100G line card
+
+Flexible and high density.
+40 ports multi-rate 50G/25G/10G, 2 ports 400G, 2 ports 100G
+6.4 Tbps non-blocking, 2 ports 400G, 2 ports 100G
+Up to 320 ports 25G/50G line rate
+
+
+Cisco C9610 Line Card Adapter for C9600 line cards
+
+Optional adapter for C9600-LC or C9600X-LC modules to operate in a C9610R chassis
+Converts C9606R backplane connectors to C9610R
+Fits securely in the C9610R chassis
+Converts side-to-side airflow to front-to-back airflow in C9610R chassis
+
+
+
+Catalyst 9600 48-port 10G multigigabit line card
+
+Collapsed core deployments and server connectivity.
+48 ports of multi-rate 10G/5G/2.5G multigigabit copper
+48 ports non-blocking 10G
+Up to 384 ports 10G line rate
+
+
+
+Catalyst 9600X 40-port 50G/25G line card
+
+Flexibility and high density.
+40 ports of multi-rate 50G/25G/10G, 2 ports 400G, 2 ports 100G
+6.4 Tbps non-blocking, 2 ports 400G and 2 ports 100G
+Up to 320 ports 50G line rate
+
+
+Catalyst 9600 48-port 25G/10G line card
+Fiber to the edge and high-speed services deployments.
+48 ports of dual-rate 25G/10G SFP28
+48 ports 25G/10G non-blocking
+Up to 384 ports 25G line rate
+
+
+
+Catalyst 9600 24-port 100G/40G line card
+
+Helps support transition to higher density 100G core.
+24 ports of 100G/40G QSFP28
+24 ports 100G or 40G non-blocking
+Up to 192 ports 100G line rate
+10G/25G/50G SFP breakout support

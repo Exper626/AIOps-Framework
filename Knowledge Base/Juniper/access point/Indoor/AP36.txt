@@ -1,0 +1,14 @@
+https://buy.hpe.com/us/en/networking/juniper-solutions/juniper-switching-solutions/juniper-ap36-high-performance-access-point/p/1014921395
+
+The AP36 is Juniper’s performance-tier Wi-Fi 7 (802.11be) access point, offering streamlined connectivity for efficient deployments across diverse enterprise environments. With a tri-radio, tri-band (2.4 GHz, 5 GHz, and 6 GHz) design and a dedicated scanning radio, it delivers resilient performance and an accessible path to next-generation wireless for campus, retail, and business settings.
+
+Deployment
+Indoor
+Wi-Fi Standard
+802.11be (Wi-Fi 7): 4x4:4
+Wi-Fi Tri-Band
+Yes; dedicated fourth radio
+Antenna Options
+Internal
+Omni BLE
+Yes

@@ -1,0 +1,5 @@
+https://documentation.meraki.com/Wireless/Product_Information/Overviews_and_Datasheets/MR44_Datasheet
+
+Wi-Fi 6 with multigigabit Ethernet and dedicated security radio
+4×4:4 UL/DL MU-MIMO and OFDMA
+1 Gbps Ethernet

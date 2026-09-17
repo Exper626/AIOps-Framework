@@ -1,0 +1,46 @@
+https://www.cisco.com/site/us/en/products/collateral/networking/sdwan-routers/8000-secure-routers/8300-series-secure-routers-ds.html
+
+Overview
+Cisco 8300 Series Secure Routers deliver secure networking simplified. Powered by the all-new secure networking processor and the unified Cisco secure networking platform, the Cisco 8300 Series Secure Routers deliver robust, platform-level security, advanced performance engineering through routing and SD-WAN, and on-premises, infrastructure-as-code, or cloud management flexibility that enables businesses to seamlessly scale and grow. Each class of secure routers is designed to deliver risk reduction, enhanced reliability, and future readiness.
+
+Platform highlights
+Cisco 8300 Series Secure Routers are engineered for large branch locations and provide scalable, high-throughput connectivity with embedded platform-level security. With hardware-native assurance, post-quantum cryptography, and unified infrastructure as code, the Cisco 8300 Series enables large branches to support bandwidth-intensive applications and evolving threat landscapes with confidence.
+
+
+Use cases:
+Secure routing or SD-WAN for thousands of users/devices
+High-throughput, secure connectivity for bandwidth-intensive applications
+Network segmentation for compliance purposes
+Advanced threat protection for mission-critical operations
+
+
+
+Key features
+Hardware accelerated security and networking
+Dedicated secure networking processor for fast cryptography and deep packet inspection
+Hardware acceleration ensures high throughput with robust threat protection
+
+Integrated branch connectivity
+Combines NGFW security, routing, and SD-WAN in one unified platform
+Simplifies branch infrastructure and management with all-in-one secure access
+
+Secure networking with PQC readiness
+Future-proofs branch security with advanced, quantum-resistant encryption
+
+Offload AI and ML tasks for faster response
+Hardware acceleration for AI and ML tasks
+Optimized for faster AI and ML computation
+
+Fanless model for large branches
+Quiet, reliable, fanless SKU ideal for noise-sensitive or space-constrained sites
+Reduced moving parts for lower maintenance and enhanced durability
+
+
+
+
+Models and specifications
+The Cisco 8300 Series Secure Routers offer both fixed and modular configurations to meet diverse networking needs and include three models: Cisco 8375-E-G2, Cisco 8355-G2 and 8355-G2-MX. Learn more about the 8355-G2-MX.
+C8375-E-G2 is a modular platform with 1 SM and 1 NIM slot plus 2 x 10 Gbps SFP/SFP+ and 4 x 2.5G multigigabit RJ45 ports.
+
+
+

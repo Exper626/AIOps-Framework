@@ -1,0 +1,8 @@
+https://www.juniper.net/us/en/products/switches/qfx-series.html
+
+The QFX5200 line offers line-rate, low-latency 10/25/40/50/100GbE switches for building large, standards-based fabrics. QFX5200 Switches are an optimal choice for spine-and-leaf fabric deployments in the data center as well as metro use cases.
+Use Case: Data Center Fabric Leaf/Spine
+Port Density:
+QFX5200-48Y: 48 x 10/25GbE SFP+/SFP28 and 6 x 40/100GbE QSFP+/QSFP28
+QFX5200-32C/-S: 32 x 40/100GbE QSFP+/QSFP28
+Throughput: Up to 3.6/6.4 Tbps (bidirectional)

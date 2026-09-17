@@ -1,0 +1,7 @@
+https://www.cisco.com/c/en/us/products/collateral/wireless/catalyst-9100ax-access-points/wireless-9176-series-acc-point-ds.html
+
+High-performance Wi-Fi 7 internal directional antenna
+
+4x4:4 MU-MIMO (2.4 GHz, 5 GHz, and 6 GHz), flexible configuration
+Integrated Bluetooth Low Energy®/IoT, GNSS/GPS, ultra-wideband and dedicated scan radio
+10 Gbps multigigabit Ethernet

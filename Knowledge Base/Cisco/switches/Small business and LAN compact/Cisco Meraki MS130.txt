@@ -1,0 +1,81 @@
+https://www.cisco.com/site/us/en/products/networking/switches/meraki-switches/index.html
+
+Compact switch
+
+MS130-8
+Layer 2 compact switch with optional PoE+
+8x 1 GbE with 2 SFP ports
+Optional 2x 2.5 GbE mGig ports with 2x 10G SFP+ uplinks
+
+MS130-12X
+Layer 2 compact switch with mGig and 10G SFP+
+8 GbE + 4x 2.5 GbE ports
+2x 10G SFP+
+
+
+
+Access switch
+
+
+MS130-24
+Powerful full-size layer 2 switch with optional PoE+ and mGig with SFP+
+24x 1 GbE with 4 SFP ports
+Optional 6x 2.5 GbE mGig ports with 4x 10G SFP+
+
+
+MS130-48
+Powerful full-size layer 2 switch with optional PoE+ and mGig with SFP+
+48x 1 GbE with 4 SFP ports
+Optional 8x 2.5 GbE mGig and 4x 10G SFP+ ports
+
+MS150
+Layer 2 switches with up to 60W PoE++, shallow depth, and mGig options
+12 models available
+24/48 port, multiple speed, and power options
+
+
+
+Catalyst 9300-M
+High-performance layer 3 switches with up to 90W PoE and mGig options.
+Wide range of speed options
+Fixed or modular uplinks models
+
+
+
+MS210-24
+Layer 2 switch with optional PoE+.
+24 × 1G port models
+4 x 1G SFP uplinks
+
+
+
+MS210-48
+Layer 2 switch with optional PoE+.
+48 × 1G port models
+4 x 1G SFP uplinks
+
+
+MS225-24
+Layer 2 switch with optional PoE+.    
+24 × 1G port models
+4 × 10G SFP+ uplinks
+
+
+MS225-48
+Layer 2 switch with optional PoE+.
+48 × 1G port models
+4 × 10G SFP+ uplinks
+
+
+
+MS125-24
+Layer 2 switch with optional PoE+.
+24 × 1G port models
+4 × 10G SFP+ uplinks
+
+
+
+MS125-48
+Layer 2 switch with optional PoE+.
+48 × 1G port models
+4 × 10G SFP+ uplinks

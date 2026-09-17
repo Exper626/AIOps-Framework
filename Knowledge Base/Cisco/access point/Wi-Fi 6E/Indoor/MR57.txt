@@ -1,0 +1,6 @@
+https://documentation.meraki.com/Wireless/Product_Information/Overviews_and_Datasheets/MR57_Datasheet
+
+Ultra-high-performance Wi-Fi 6E
+4x4:4 MU-MIMO (2.4 GHz, 5 GHz, 6 GHz)
+Integrated Bluetooth Low Energy®/IoT and scanning radio
+Dual 5 Gbps multigigabit Ethernet ports, USB

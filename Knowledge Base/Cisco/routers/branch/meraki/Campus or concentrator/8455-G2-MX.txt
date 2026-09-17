@@ -1,0 +1,6 @@
+https://www.cisco.com/site/us/en/products/networking/sdwan-routers/meraki-security-appliances/mx8455g2.html
+
+Campus or VPN connector secure router for up to 15,000 users
+20 Gbps firewall throughput
+Multi-WAN: 2 ports
+LAN: 8 ports

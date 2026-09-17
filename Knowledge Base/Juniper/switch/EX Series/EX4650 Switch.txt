@@ -1,0 +1,3 @@
+https://www.hpe.com/us/en/juniper-ex-series-switches.html
+
+Compact, high-performance 10GbE/25GbE/100GbE switch designed for midsize to large campus distribution networks, delivering rich telemetry for AI-driven automation and service assurance. Cloud-ready and ZTP-enabled, it integrates with Juniper Wired Assurance for streamlined onboarding, configuration, and real-time operational visibility.

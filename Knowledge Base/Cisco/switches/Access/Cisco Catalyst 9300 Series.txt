@@ -1,0 +1,115 @@
+https://www.cisco.com/site/us/en/products/networking/switches/catalyst-9300-series-switches/index.html
+
+Catalyst 9300X copper models
+
+48-port 10G, multigigabit, 90W PoE
+C9300X-48HX. Built for secure Wi-Fi 6/6E high-speed access and beyond, with 90W PoE for Cisco smart building deployments. 48-port 10GBASE-T, 10G/5G/2.5G/1G/100M multigigabit. Based on Cisco UADP 2.0sec ASIC, with 100G hardware-based IPsec. Orderable with Meraki cloud-management experience.
+
+48-port 10G, multigigabit, data
+C9300X-48TX. Built for secure Wi-Fi 6/6E high-speed access and beyond. 48-port 10GBASE-T, 10G/5G/2.5G/1G/100M multigigabit, data only. Based on Cisco UADP 2.0sec ASIC, with 100G hardware-based IPsec. Orderable with Meraki cloud-management experience.
+
+40-port 5G, 8-port 10G, multigigabit, 90W PoE
+C9300X-48HXN. Built for secure Wi-Fi 6/6E high-speed access and beyond, with 90W PoE for Cisco smart building deployments. 40-port 5G/2.5G/1G/100M multigigabit, 8-port 10GBASE-T, 10G/5G/2.5G/1G/100M multigigabit. Based on Cisco UADP 2.0sec ASIC, with 100G hardware-based IPsec. Orderable with Meraki cloud-management experience.
+
+24-port 10G, multigigabit, 90W PoE
+C9300X-24HX. Built for secure Wi-Fi 6/6E high-speed access and beyond, with 90W PoE for Cisco smart building deployments. 24-port 10GBASE-T, 10G/5G/2.5G/1G multigigabit, 1000M/100M. Based on Cisco UADP 2.0sec ASIC, with 100G hardware-based IPsec. Orderable with Meraki cloud-management experience.
+
+
+
+Catalyst 9300X fiber models
+
+24-port 25G fiber
+C9300X-24Y. Higher density fiber models for campus access and distribution. 24-port 25G/10G/1G (SFP28). Based on Cisco UADP 2.0sec ASIC, with 100G hardware-based IPsec. Orderable with Meraki cloud-management experience.
+
+12-port 25G fiber
+C9300X-12Y. 25G fiber models for campus access and branch. 12-port 25G/10G/1G (SFP28). Based on Cisco UADP 2.0sec ASIC, with 100G hardware-based IPsec. Orderable with Meraki cloud-management experience.
+
+
+
+Catalyst 9300 high-performance models
+
+48-port 1G, 60W PoE, high performance
+C9300-48UB. Built with double buffers, MAC and IP scale, and higher access control list (ACL) scale. 48-port 1G/100M/10M, 60W PoE. Based on Cisco UADP 2.0XL ASIC.
+
+24-port 1G, 60W PoE, high performance
+C9300-24UB. Built with double buffers, MAC and IP scale, and higher access control list (ACL) scale. 24-port 1G/100M/10M, 60W PoE. Based on Cisco UADP 2.0XL ASIC.
+
+24-port 5G multigigabit, 60W PoE, high performance
+C9300-24UXB. Built with double buffers, MAC and IP scale, and higher access control list (ACL) scale. 24-port 5G/2.5G/1G/100M multigigabit, 60W PoE. Based on Cisco UADP 2.0XL ASIC.
+
+
+
+
+Catalyst 9300 90W PoE models
+
+24-port 1G, 90W PoE
+C9300-24H. Optimized for wired and wireless converged access, with 24-port 1G/100M, 90W PoE. 40G, 25G, 10G, 1G fiber and 10G multigigabit copper modular uplink options. Based on Cisco UADP 2.0 ASIC.
+
+48-port 1G, 90W PoE
+C9300-48H. Optimized for wired and wireless converged access, with 48-port 1G/100M, 90W PoE. 40G, 25G, 10G, 1G fiber and 10G multigigabit copper modular uplink options. Based on Cisco UADP 2.0 ASIC.
+
+
+
+
+Catalyst 9300 60W PoE models
+24/48-port 1G, 60W PoE
+C9300-24U, C9300-48U. Optimized for wired and wireless converged access, with 24- and 48-port 1G/100M, 60W PoE. 40G, 25G, 10G, 1G fiber and 10G multigigabit copper modular uplink options. Based on Cisco UADP 2.0 ASIC. Orderable with Meraki cloud-management experience.
+
+24-port 10G, multigigabit, 60W PoE
+C9300-24UX. Built for secure Wi-Fi 6/6E high-speed access and beyond. 24-port 10GBASE-T, 10G/5G/2.5G/1G/100M multigigabit, 60W PoE. 40G, 25G, 10G, 1G fiber and 10G multigigabit copper modular uplink options. Based on Cisco UADP 2.0 ASIC. Orderable with Meraki cloud-management experience.
+
+36-port 2.5G, 12-port 10G, multigigabit, 60W PoE
+C9300-48UXM. Built for secure Wi-Fi 6/6E high-speed access. 36-port 2.5G/1G/100M multigigabit, 12-port 10GBASE-T, 10G/5G/2.5G/1G/100M multigigabit, 60W PoE. 40G, 25G, 10G, 1G fiber and 10G multigigabit copper modular uplink options. Based on Cisco UADP 2.0 ASIC. Orderable with Meraki cloud-management experience.
+
+48-port 5G multigigabit
+C9300-48UN. Built for secure Wi-Fi 6/6E high-speed access. 48-port 5G/2.5G/1G/100M multigigabit, 60W PoE. 40G, 25G, 10G, 1G fiber and 10G multigigabit copper modular uplink options. Based on Cisco UADP 2.0 ASIC. Orderable with Meraki cloud-management experience.
+
+
+
+Catalyst 9300 1G models
+
+24/48-port 1G copper, data only
+C9300-24T, C9300-48T. 24- and 48-port 1G/100M copper, data only. 40G, 25G, 10G, 1G fiber and 10G multigigabit copper modular uplink options. Based on Cisco UADP 2.0 ASIC. Orderable with Meraki cloud-management experience.
+
+24/48-port 1G copper, 30W PoE
+C9300-24P, C9300-48P. 24- and 48-port 1G/100M copper, 30W PoE. 40G, 25G, 10G, 1G fiber and 10G multigigabit copper modular uplink options. Based on Cisco UADP 2.0 ASIC. Orderable with Meraki cloud-management experience.
+
+24/48-port 1G SFP
+C9300-24S, C9300-48S. 24- and 48-port 1G SFP. 40G, 25G, 10G, 1G fiber and 10G multigigabit copper modular uplink options. Based on Cisco UADP 2.0 ASIC. Orderable with Meraki cloud-management experience.
+
+
+
+Catalyst 9300L models
+
+24/48-port 1G copper, data only
+C9300L-24T-xx, C9300L-48T-xx. 24- and 48-port 1G/100M copper, data only. Four 10G (-4X) or 1G (-4G) fixed fiber uplink options. Based on Cisco UADP 2.0 ASIC. The 10G uplink models are orderable with Meraki cloud-management experience.
+
+24/48-port 1G copper, 30W PoE
+C9300L-24P-xx, C9300L-48P-xx. 24- and 48-port 1G/100M copper, 30W PoE. Four 10G (-4X) or 1G (-4G) fixed fiber uplink options. Based on Cisco UADP 2.0 ASIC. The 10G uplink models are orderable with Meraki cloud-management experience
+
+48-port 1G copper, full 30W PoE
+C9300L-48PF-4X, C9300L-48PF-4G. 48-port 1G/100M copper, 30W PoE. Four 10G (-4X) or 1G (-4G) fixed fiber uplink options. Based on Cisco UADP 2.0 ASIC. The 10G uplink models are orderable with Meraki cloud-management experience.
+
+24-port 1G copper, 60W PoE, 8-port multigigabit
+C9300L-24UXG-4X, C9300L-24UXG-2Q. 24-port 60W PoE, 8-port 10GBASE-T, 10G/5G/2.5G/1G/100M multigigabit, 16-port 1G. Four 10G (-4X) or two 40G (-2Q) fixed fiber uplink options. Based on Cisco UADP 2.0 ASIC. The 10G uplink models are orderable with Meraki cloud-management experience.
+
+48-port 1G copper, 60W PoE, 12-port multigigabit
+C9300L-48UXG-4X, C9300L-48UXG-2Q. 48-port 60W PoE, 12-port 10GBASE-T, 10G/5G/2.5G/1G/100M multigigabit, 36-port 1G. Four 10G (-4X) or two 40G (-2Q) fixed fiber uplink options. Based on Cisco UADP 2.0 ASIC. The 10G uplink models are orderable with Meraki cloud-management experience.
+
+48-port 1G copper, 60W PoE, 8-port multigigabit
+C9300L-48UX-4Y. 48-port 60W PoE, 8-port 10GBASE-T, 10G/5G/2.5G/1G/100M multigigabit, 40-port 1G. Two 25G fixed fiber uplinks. Based on Cisco UADP 2.0 ASIC. 
+
+
+
+
+Catalyst 9300LM models
+
+
+48-port 1G copper, data only
+C9300LM-48T-4Y. Shallow depth chassis. 48-port 1G/100M copper, data only. Four 25G fixed fiber uplinks. Based on Cisco UADP 2.0 ASIC. 
+
+24/48-port 1G copper, 60W PoE
+C9300LM-24U-4Y, C9300LM-48U-4Y. Shallow depth chassis. 24- and 48-port 1G/100M copper, 60W PoE. Four 25G fixed fiber uplinks. Based on Cisco UADP 2.0 ASIC. 
+
+48-port 1G copper, 60W PoE, 8-port 10G, multigigabit
+C9300LM-48UX-4Y. Shallow depth chassis. 48-port 60W PoE, 8-port 10GBASE-T, 10G/5G/2.5G/1G/100M multigigabit, 40-port 1G. Four 25G fixed fiber uplinks. Based on Cisco UADP 2.0 ASIC.

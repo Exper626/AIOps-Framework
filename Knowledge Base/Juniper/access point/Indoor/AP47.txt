@@ -1,0 +1,14 @@
+https://buy.hpe.com/us/en/networking/juniper-solutions/juniper-switching-solutions/juniper-ap47-high-performance-access-point/p/1014919978
+
+The AP47 Series is a four-radio, 802.11be Wi-Fi 7 access point, equipped with three four-spatial stream data serving radios and a dedicated fourth tri-band scanning radio. 802.11be brings Multi-Link Operation (MLO), Orthogonal Frequency Division Multiple Access (OFDMA), Multi-User Multiple Input Multiple Output (MU-MIMO), and BSS Coloring technologies, while offering performance at unprecedented levels to support new bandwidth-hungry applications and soaring device densities.
+
+Deployment
+Indoor
+Wi-Fi Standard
+802.11be (Wi-Fi 7): 4x4:4
+Wi-Fi Tri-Band
+Yes; dedicated fourth radio
+Antenna Options
+Internal / Directional / External
+Virtual Bluetooth LE
+Yes

@@ -1,0 +1,18 @@
+https://buy.hpe.com/us/en/networking/juniper-solutions/juniper-switching-solutions/juniper-ap43-high-performance-access-point/p/1014920002
+
+The Juniper AP43 high-performance Wi-Fi 6 (802.11ax) access point integrates patented virtual Bluetooth LE (vBLE) and Internet of Things (IoT) capabilities to deliver an unprecedented user experience.
+
+Deployment
+Indoor
+Wi-Fi Standard
+802.11ax (Wi-Fi 6): 4x4:4
+Wi-Fi Tri-Radio
+Yes
+Antenna Options
+Internal, External
+Virtual Bluetooth LE
+Yes
+IoT Interface
+Yes
+IoT Sensors
+Humidity, Pressure, Temperature

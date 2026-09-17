@@ -1,0 +1,7 @@
+https://www.cisco.com/site/us/en/products/networking/sdwan-routers/meraki-security-appliances/mx85.html
+
+Small-to-medium branch security and SD-WAN appliance for up to 250 users.
+
+1 Gbps firewall throughput
+WAN: 4 ports
+LAN: 10 ports

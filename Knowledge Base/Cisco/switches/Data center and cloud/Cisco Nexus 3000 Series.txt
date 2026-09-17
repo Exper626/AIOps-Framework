@@ -1,0 +1,25 @@
+https://www.cisco.com/site/us/en/products/networking/cloud-networking-switches/nexus-3000-switches/index.html
+
+Cisco Nexus 3600 Series switches
+Large buffer, programmable switches supporting 1G to 100G. Ideal for high-density environments.
+
+
+Nexus 3500 Series switches
+Low latency, 1RU switches supporting 1G to 40G. Ideal for high-frequency trading (HFT), and big data environments.
+
+
+Nexus 3400 Series switches
+High-bandwidth switches supporting 1G to 400G. Ideal for high-density web-scale and service-provider environments.
+
+
+Nexus 3200 Series switches
+High-density switches supporting 1G to 100G. Ideal for power-efficient, general-purpose deployments.
+
+
+Nexus 3100-Z Series switches
+Compact fixed switches supporting 1G to 100G. Ideal for versatile spine and leaf deployments.
+
+
+Nexus 3100-V Series switches
+Compact, power-efficient switches supporting 10G to 100G. Ideal for cost-effective, big data environments.
+

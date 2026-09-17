@@ -1,0 +1,7 @@
+https://www.cisco.com/c/en/us/products/collateral/wireless/catalyst-9120ax-series-access-points/datasheet-c78-742115.html
+
+Wi-Fi 6 for large to midsize deployments with internal antennas
+4x4:4 (2.4 GHz, 5 GHz)
+Cisco RF ASIC, and Integrated Bluetooth Low Energy®/IoT and scanning radiov
+Cisco FRA and Cisco CleanAir Technology
+2.5 Gbps multigigabit Ethernet

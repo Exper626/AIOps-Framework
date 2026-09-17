@@ -1,0 +1,7 @@
+https://www.cisco.com/c/en/us/products/collateral/wireless/catalyst-9100ax-access-points/nb-06-cat9136-access-point-ds-cte-en.html
+
+Wi-Fi 6E for large, high-density deployments
+4x4:4 MU-MIMO (2.4 GHz, 5 GHz, 6 GHz), 8x8:8 MU-MIMO (5 GHz)
+Integrated Bluetooth Low Energy®/IoT and scanning radio
+Dual-uplink 5 Gbps multigigabit Ethernet
+Embedded environmental sensors

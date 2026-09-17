@@ -1,0 +1,16 @@
+https://www.juniper.net/us/en/products/switches/qfx-series.html
+
+QFX10008 and QFX10016 Switches support the most demanding data center, campus, and routing environments. With our custom silicon Q5 ASICs, deep buffers, and up to 96 Tbps throughput, these switches deliver flexibility and capacity for long-term investment protection.
+Use Case: Data Center Fabric Spine
+Chassis Options:
+QFX10008: 13 U chassis, up to 8 line cards
+QFX10016: 21 U chassis, up to 16 line cards
+Port Density:
+QFX10000-30C-M: 30 x 100/40GbE, MACsec-enabled
+QFX10000-30C: 30 x 100/40GbE
+QFX10000-36Q: 36 x 40GbE or 12 x 100GbE
+QFX10000-60S-6Q: 60 x 1/10GbE with 6 x 40GbE or 2 x 100GbE
+QFX10000-12C-DWDM: 6 x 200Gbps
+Throughput: Up to 96 Tbps (bidirectional)
+Deep Buffers: 100 ms per port
+Precision Time Protocol (PTP)

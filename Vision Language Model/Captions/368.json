@@ -1,0 +1,7 @@
+{
+  "servers": [
+    {"name": "Server12", "model": "Server-PT", "connected_to": []},
+    {"name": "Server6", "model": "Server-PT", "connected_to": []},
+    {"name": "Server7", "model": "Server-PT", "connected_to": []}
+  ]
+}

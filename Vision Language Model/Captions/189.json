@@ -1,0 +1,14 @@
+{
+  "switches": [
+    {"name": "Switch17", "model": "2950T-24", "connected_to": ["PC27", "PC31", "PC29", "Switch14"]},
+    {"name": "Switch14", "model": "2950T-24", "connected_to": ["PC36", "PC28", "PC30", "Switch17"]}
+  ],
+  "pcs": [
+    {"name": "PC27", "model": "PC-PT", "connected_to": ["Switch17"]},
+    {"name": "PC31", "model": "PC-PT", "connected_to": ["Switch17"]},
+    {"name": "PC29", "model": "PC-PT", "connected_to": ["Switch17"]},
+    {"name": "PC36", "model": "PC-PT", "connected_to": ["Switch14"]},
+    {"name": "PC28", "model": "PC-PT", "connected_to": ["Switch14"]},
+    {"name": "PC30", "model": "PC-PT", "connected_to": ["Switch14"]}
+  ]
+}

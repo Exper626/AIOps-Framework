@@ -1,0 +1,5 @@
+Large-branch appliance for up to 750 users
+
+3 Gbps firewall throughput
+WAN: 4 ports
+LAN: 6 ports

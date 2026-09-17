@@ -1,0 +1,5 @@
+https://www.cisco.com/site/us/en/products/networking/sdwan-routers/meraki-security-appliances-virtual/vmx-small.html
+
+Small virtual appliance image for public and private clouds
+AWS, Azure, Alibaba Cloud, GCP, Cisco NFVIS
+200 Mbps VPN throughput

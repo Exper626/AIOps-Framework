@@ -1,0 +1,38 @@
+{
+  "switches": [
+    {
+      "name": "Switch4",
+      "model": "2950-24",
+      "connected_to": [
+        "PC5",
+        "PC14",
+        "Router3"
+      ]
+    }
+  ],
+  "routers": [
+    {
+      "name": "Router3",
+      "model": "2620XM",
+      "connected_to": [
+        "Switch4"
+      ]
+    }
+  ],
+  "pcs": [
+    {
+      "name": "PC5",
+      "model": "PC-PT",
+      "connected_to": [
+        "Switch4"
+      ]
+    },
+    {
+      "name": "PC14",
+      "model": "PC-PT",
+      "connected_to": [
+        "Switch4"
+      ]
+    }
+  ]
+}

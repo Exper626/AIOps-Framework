@@ -1,0 +1,53 @@
+https://www.cisco.com/site/us/en/products/networking/sdwan-routers/meraki-security-appliances/mx8111g2.html#accordion-styled-a7b7d3009c-item-3167da13d8
+
+8111-G2-MX
+
+Small-branch secure router for up to 200 users
+2 Gbps firewall throughput
+WAN: 2 ports
+LAN: 4 port
+
+Highlights
+WAN: 2x 2.5 mGbE RJ45 (1x PoE+, 30W)
+LAN: 4x 1 GbE RJ45 (1x PoE, 45W)
+2 Gbps firewall throughput 
+1200 Mbps site-to-site VPN throughput 
+Supports up to 200 users
+
+
+
+SD-branch cloud platform
+Unified management for security, SD-WAN, Wi-Fi, switching, MDM, and IoT
+Centralized management via web-based dashboard or API
+True zero-touch provisioning
+Smartphone-like firmware updates
+
+
+Unified threat management
+Next-generation layer 7 firewall and content filtering
+Advanced Malware Protection (AMP) with Cisco Threat Grid
+Intrusion detection and prevention (IDS/IPS)
+Visibility of security events through an elegant security center GUI
+
+
+Cloud security
+Built-in SD-WAN connectivity to Cisco Umbrella global data centers
+Application prioritization
+SSL decryption/inspection, data loss prevention (DLP), CASB
+Remote browser isolation, granular app control, SaaS tenant restrictions
+
+
+
+Connectivity
+Layer 7 application optimization over self-healing Auto VPN (SD-WAN fabric)
+Extension of SD-WAN fabric to hybrid clouds and Cisco Umbrella
+Support for native IPsec or Cisco Secure Client remote client VPN
+
+
+
+Advanced analytics with ML
+Automatically applied Smart Thresholds to identify true app degradation
+At-a-glance performance of apps across the LAN, WAN, and app server
+Instant root-cause analysis of degradation with intelligent recommendations
+Status of multi-site uplinks in one view
+

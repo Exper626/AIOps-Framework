@@ -1,0 +1,6 @@
+https://www.cisco.com/c/en/us/products/collateral/wireless/catalyst-9163e-access-point/nb-06-cat-9163e-series-access-ds-cte-en.html
+
+Outdoor Wi-Fi 6E with external antennas
+2x2:2 MU-MIMO (2.4 GHz, 5 GHz, 6 GHz)
+Integrated Bluetooth Low Energy®/IoT and scanning radio
+2.5 Gbps multigigabit Ethernet

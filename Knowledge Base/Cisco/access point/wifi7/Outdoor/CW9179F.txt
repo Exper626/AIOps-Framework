@@ -1,0 +1,6 @@
+https://www.cisco.com/site/us/en/products/collateral/networking/wireless/access-points/catalyst-9100-series/wireless-9179f-access-point-ds.html
+
+Ultra-high-performance Wi-Fi 7 for high-density large public venues
+4x4:4 MU-MIMO (2.4 GHz, 5 GHz, 5 GHz, and 6 GHz)
+Integrated Bluetooth Low Energy®/IoT, GNSS/GPS and dedicated scan radio
+Switchable radio configurations, tailoring beams for optimal coverage in varied environments

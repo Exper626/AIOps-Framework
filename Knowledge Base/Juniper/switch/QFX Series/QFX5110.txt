@@ -1,0 +1,9 @@
+https://www.juniper.net/us/en/products/switches/qfx-series.html
+
+
+QFX5110 10/40GbE switches offer flexible deployment options and rich automation features for data center and campus deployments that require low-latency Layer 2/Layer 3 features and advanced EVPN-VXLAN capabilities. The QFX5110 provides universal building blocks for industry-standard architectures such as spine-and-leaf fabrics.
+Use Case: Data Center Fabric Leaf
+Port Density:
+QFX5110-48S: 48 x 1/10GbE SFP/SFP+ and 4 x 40/100GbE QSFP+/QSFP28
+QFX5110-32Q: 32 x 40GbE QSFP+; 20 x 40GbE QSFP+ and 4 x 100GbE QSFP28
+Throughput: Up to 1.76/2.56 Tbps

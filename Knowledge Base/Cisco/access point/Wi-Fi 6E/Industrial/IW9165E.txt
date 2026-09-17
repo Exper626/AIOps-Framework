@@ -1,0 +1,7 @@
+https://www.cisco.com/c/en/us/products/collateral/networking/industrial-wireless/catalyst-iw9165-series-ds.html
+
+DIN rail compact form factor for moving assets
+2x2:2 MU-MIMO (5 GHz, 5 GHz/6 GHz)
+Integrated Bluetooth Low Energy®/IoT
+5 Gbps multigigabit Ethernet, optional M12 converter
+EN50155

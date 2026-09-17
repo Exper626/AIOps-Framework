@@ -1,0 +1,21 @@
+https://www.cisco.com/site/us/en/products/networking/cloud-networking-switches/9300-series-smart-switches/index.html
+
+9324C-SE1U
+This model unifies data center networking and security.
+
+24 100G ports
+800G services throughput
+AMD DPUs
+Silicon One E100 ASIC
+Ideal for cloud-edge, zone-based segmentation, and Data Center Interconnect (DCI)
+
+
+
+9348Y2C6D-SE1U
+This model unifies data center networking and security.
+
+48-port 25G, 6-port 400G, 2-port 100G
+800G services throughput
+AMD DPUs
+Silicon One E100 ASIC
+Ideal for top of rack (ToR)

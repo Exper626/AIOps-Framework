@@ -1,0 +1,12 @@
+https://www.juniper.net/us/en/products/switches/qfx-series.html
+
+The QFX5130 line offers high-density, cost-optimized, 1-U, 400GbE and 100GbE fixed-configuration switches based on the Broadcom Trident 4 processor. It’s ideal for environments where cloud services are being added. With 10/25/40/100/400GbE interface options, the QFX5130 is an optimal choice for spine-and-leaf deployments in enterprise, service provider, and cloud provider environments.
+Use Cases: Data Center Fabric Spine
+Campus Distribution/Core
+Port Density:
+QFX5130-32CD/QFX5130E-32CD: 32 x 400GbE QSFP-DD/QSFP+/QSFP28 and 2 x 10GbE SFP+  
+Throughput: Up to 25.6 Tbps (bidirectional)
+QFX5130-48C: 48 x 100GbE SFP56-DD and 8 x 400GbE QSFP-DD  
+Throughput: Up to 16 Tbps (bidirectional)
+QFX5130-48CM: 48 x 100GbE SFP56-DD and 8 x 400GbE QSFP-DD
+Throughput: Upto 16 Tbps (Bidirectional) without MACsec and 9.6 Tbps (Bidirectional) with MACsec

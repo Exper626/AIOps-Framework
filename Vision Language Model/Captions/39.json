@@ -1,0 +1,7 @@
+{
+  "routers": [{"name": "Router6", "model": "1841", "connected_to": []}],
+  "multilayer_switches": [
+    {"name": "Multilayer Switch14", "model": "3650-24PS", "connected_to": []},
+    {"name": "Multilayer Switch10", "model": "3650-24PS", "connected_to": []}
+  ]
+}

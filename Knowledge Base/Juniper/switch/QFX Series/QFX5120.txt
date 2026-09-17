@@ -1,0 +1,11 @@
+https://www.juniper.net/us/en/products/switches/qfx-series.html
+
+The QFX5120 line offers 1/10/25/40/100GbE switches designed for data center, data center edge, data center interconnect and campus deployments with requirements for low-latency Layer 2/Layer 3 features and advanced EVPN-VXLAN capabilities.
+Use Case: Data Center Fabric Leaf/Spine, Campus Distribution/Core,  applications requiring MACsec
+Port Density:
+QFX5120-48T: 48 x 1/10GbE RJ-45 and 6 x 40/100GbE QSFP+/QSFP28
+QFX5120-48Y: 48 x 1/10/25GbE SFP/SFP+ and 8 x 40/100GbE QSFP+/QSFP28
+QFX5120-48YM: 48 x 1/10/25GbE SFP/SFP+ and 8 x 40/100GbE QSFP+/QSFP28
+QFX5120-32C: 32 x 40/100GbE QSFP+/QSFP28 and 2 x 10GbE SFP+
+Throughput: Up to 2.16/4/6.4 Tbps (bidirectional)
+MACsec: AES-256 encryption on all ports (QFX5120-48YM)

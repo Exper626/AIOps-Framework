@@ -1,0 +1,26 @@
+https://www.cisco.com/site/us/en/products/networking/switches/catalyst-9500-series-switches/index.html
+
+
+Catalyst 9500X models
+
+28-ports 100G, 8-ports 400G fiber
+C9500X-28C8D. High-density fiber models for campus core and distribution. 28-port 100G/40G (QSFP28) and 8-port 400G/200G/100G (QSFP-DD). Based on Cisco Silicon One Q200 ASIC.
+
+60-ports 50G, 4-ports 400G fiber
+C9500X-60L4D. High-density fiber models for campus distribution. 60-port 50G/25G (SFP56) and 4-port 400G/200G/100G (QSFP-DD). Based on Cisco Silicon One Q200 ASIC.
+
+
+
+Catalyst 9500 high performance models
+
+32-ports 100G/40G fiber
+C9500-32C. High-density fiber models for campus core and distribution. 32-port 100G/40G (QSFP28).  Based on Cisco UADP 3.0 ASIC.
+
+32-ports 40G or 16-ports 100G fiber
+C9500-32QC. Higher density fiber models for campus core and distribution. 32-port 40G (QSFP+) or 12-port 100G (QSFP28).  Based on Cisco UADP 3.0 ASIC.
+
+48-ports 25G/10G/1G, 4-ports 100G fiber
+C9500-48Y4C. High-density fiber models for campus distribution. 48-port 25G/10G/1G (SFP28) and 4-port 100G/40G (QSFP28). Based on Cisco UADP 3.0 ASIC.
+
+24-ports 25G/10G/1G, 4-ports 100G fiber
+C9500-24Y4C. High-density fiber models for campus distribution. 24-port 25G/10G/1G (SFP28) and 4-port 100G/40G (QSFP28). Based on Cisco UADP 3.0 ASIC.

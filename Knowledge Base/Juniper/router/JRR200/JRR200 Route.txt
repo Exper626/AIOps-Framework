@@ -1,0 +1,31 @@
+https://www.juniper.net/us/en/products/routers/jrr200-route-reflector-appliance.html
+
+The JRR200 Route Reflector Appliance provides an ideal solution for service provider, data center, and enterprise networks that require large routing tables. It delivers 10-GbE connectivity in a compact form factor optimized for space- and power-constrained environments. You can simplify your network and reduce operating costs for a broad range of use cases, including cloud services and distributed metro and data center networks.
+The JRR200 appliance features the Junos OS control plane for feature-rich BGP control. You don’t have to choose between customized servers and hypervisor software or maintain separate hardware and software support.
+With support for Zero Touch Provisioning (ZTP), the JRR200 also makes provisioning new deployments quicker and simpler.
+
+
+Key Features
+64-Gbps Packet Forwarding
+20GbE WAN
+Support for 50 Million RIB Entries
+10 x 1/10GbE Ports
+
+
+Features + Benefits
+
+High Reliability
+Get carrier-grade reliability for every application.
+
+Wire-Speed Performance
+Simplify network topologies and operations dramatically with local 1GbE wire speed.
+
+
+Massive Scalability
+Take advantage of dense 8 x 10GbE port capacity to support routing tables with up to 50 million RIB entries.
+
+
+Easy Deployment
+Simplify installations with a solution that combines virtual route reflector (VRR) software with compact, high-density Juniper hardware.
+
+

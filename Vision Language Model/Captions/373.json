@@ -1,0 +1,13 @@
+{
+  "switches": [
+    {"name": "Switch2", "model": "2950T-24", "connected_to": ["PC6", "PC7", "PC8", "Server11"]}
+  ],
+  "pcs": [
+    {"name": "PC6", "model": "PC-PT", "connected_to": ["Switch2"]},
+    {"name": "PC7", "model": "PC-PT", "connected_to": ["Switch2"]},
+    {"name": "PC8", "model": "PC-PT", "connected_to": ["Switch2"]}
+  ],
+  "servers": [
+    {"name": "Server11", "model": "Server-PT", "connected_to": ["Switch2"]}
+  ]
+}

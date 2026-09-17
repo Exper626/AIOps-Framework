@@ -1,0 +1,67 @@
+https://www.cisco.com/site/us/en/products/networking/sdwan-routers/1000-series-integrated-services-routers-isr/index.html
+
+
+ISR 1100-4G/6G
+Integrated firewall managed through Catalyst SD-WAN Manager or Cisco Security Cloud Control
+Cisco IOS XE software
+Cisco Catalyst SD-WAN
+4–6 Gigabit Ethernet WAN/LAN ports
+
+
+ISR 1101
+Integrated firewall managed through Catalyst SD-WAN Manager or Cisco Security Cloud Control
+Cisco IOS XE software
+Cisco Catalyst SD-WAN
+4 Gigabit Ethernet WAN/LAN ports
+Pluggable LTE
+
+
+ISR 1109
+Integrated firewall managed through Catalyst SD-WAN Manager or Cisco Security Cloud Control
+Cisco IOS XE software
+Cisco Catalyst SD-WAN
+2–4 Gigabit Ethernet WAN/LAN ports
+Dual pluggable LTE
+
+
+
+ISR 111x
+Integrated firewall managed through Catalyst SD-WAN Manager or Cisco Security Cloud Control
+Cisco IOS XE software
+Cisco Catalyst SD-WAN
+4–8 Gigabit Ethernet WAN/LAN ports
+Power over Ethernet (PoE)
+
+
+ISR 1111X
+Integrated NGFW managed through Catalyst SD-WAN Manager or Cisco Security Cloud Control
+Cisco IOS XE software
+8 Gigabit Ethernet WAN/LAN ports
+Power over Ethernet (PoE)
+
+
+ISR 1120
+Integrated NGFW managed through Catalyst SD-WAN Manager or Cisco Security Cloud Control
+Cisco IOS XE software
+8 Gigabit Ethernet WAN/LAN ports
+Pluggable LTE, Wi-Fi, and DSL options
+
+
+ISR 1131
+Integrated NGFW managed through Catalyst SD-WAN Manager or Cisco Security Cloud Control
+Cisco IOS XE software
+8 Gigabit Ethernet WAN/LAN ports
+Wi-Fi 6 with pluggable 5G options
+ 
+
+ISR 1160
+Integrated NGFW managed through Catalyst SD-WAN Manager or Cisco Security Cloud Control
+Cisco IOS XE software
+8 Gigabit Ethernet WAN/LAN ports
+Pluggable LTE option
+
+
+
+
+
+

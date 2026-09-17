@@ -1,0 +1,7 @@
+https://www.juniper.net/us/en/products/switches/qfx-series.html
+
+The QFX5230 Switch offers up to 400GbE interfaces to support high-speed, high-density, spine-and-leaf IP fabrics. Prime use cases include AI data center networks with AI/ML workloads where scalability, performance, and low latency are critical.
+Use Cases: Data center fabric spine, super spine (including AI data center networking), IP storage networking, and edge/data center interconnect (DCI)
+Port density:
+64 ports of QSFP56-DD 400GbE. Can use breakout for 128 × 200GbE, 256 × 100GbE, 256 × 25GbE, or 256 × 10GbE
+Throughput: Up to 51.2 Tbps (bidirectional)

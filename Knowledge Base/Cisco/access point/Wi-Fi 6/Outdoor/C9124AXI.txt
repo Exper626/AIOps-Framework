@@ -1,0 +1,6 @@
+https://www.cisco.com/c/en/us/products/collateral/wireless/catalyst-9100ax-access-points/nb-06-cat9124-ser-ap-ds-cte-en.html
+
+Wi-Fi 6 for outdoor deployments with internal ominidirectional antenna
+4x4:4(2.4 GHz, 5 GHz)
+Cisco RF ASIC, and integrated Bluetooth Low Energy®/IoT
+2.5 Gbps multigigabit Ethernet

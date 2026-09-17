@@ -1,0 +1,17 @@
+{
+  "routers": [
+    {"name": "Router11", "model": "1941", "connected_to": ["Switch11", "Switch8"]}
+  ],
+  "switches": [
+    {"name": "Switch11", "model": "2960-24TT", "connected_to": ["PC32", "PC0", "PC9", "Router11"]},
+    {"name": "Switch8", "model": "2950-24", "connected_to": ["PC40", "PC14", "PC6", "Router11"]}
+  ],
+  "pcs": [
+    {"name": "PC32", "model": "PC-PT", "connected_to": ["Switch11"]},
+    {"name": "PC0", "model": "PC-PT", "connected_to": ["Switch11"]},
+    {"name": "PC9", "model": "PC-PT", "connected_to": ["Switch11"]},
+    {"name": "PC40", "model": "PC-PT", "connected_to": ["Switch8"]},
+    {"name": "PC14", "model": "PC-PT", "connected_to": ["Switch8"]},
+    {"name": "PC6", "model": "PC-PT", "connected_to": ["Switch8"]}
+  ]
+}

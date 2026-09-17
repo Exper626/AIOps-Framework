@@ -1,0 +1,14 @@
+https://buy.hpe.com/us/en/networking/juniper-solutions/juniper-switching-solutions/juniper-ap63-high-performance-access-point/p/1014919966
+
+The Wi-Fi 6 (802.11ax) AP63 access point offers high-performance Wi-Fi to ensure business continuity and operation efficiency in outdoor environments.
+
+Deployment
+Outdoor
+Wi-Fi Standard
+802.11ax (Wi-Fi 6); 4x4:4
+Wi-Fi Tri-Radio
+Yes
+Antenna Options
+Internal, external
+Virtual Bluetooth LE
+Yes

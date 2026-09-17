@@ -1,0 +1,7 @@
+https://www.juniper.net/us/en/products/routers/mx-series.html
+
+Delivering 1.6 Tbps of fixed, high-density performance in a 1RU footprint, the MX301 is the compact workhorse for modern edge and inference networks. Powered by Juniper’s sixth-generation Trio silicon, it offers full multiservice edge features — routing, subscriber management, HQoS, security — with ultra-low latency and deterministic performance. Designed for deployments where space, power, and agility matter most, the MX301 gives you the capacity and simplicity to accelerate edge inference, mobile backhaul, small-scale cloud edge, and enterprise WAN services.
+1.6 Tbps throughput
+Power & space efficiency – 1 RU
+Density – 16 x 1/10/25/50GbE, 10 x 100GbE, 4 x 400 GbE
+Rich multiservice edge features

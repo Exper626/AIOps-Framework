@@ -1,0 +1,7 @@
+{
+  "multilayer_switches": [
+    {"name": "Multilayer Switch15", "model": "3650-24PS", "connected_to": []},
+    {"name": "Multilayer Switch9", "model": "3650-24PS", "connected_to": []},
+    {"name": "Multilayer Switch11", "model": "3650-24PS", "connected_to": []}
+  ]
+}

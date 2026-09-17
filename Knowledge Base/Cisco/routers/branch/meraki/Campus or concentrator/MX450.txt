@@ -1,0 +1,6 @@
+https://www.cisco.com/site/us/en/products/networking/sdwan-routers/meraki-security-appliances/mx450.html
+
+Large-branch, campus, or DC appliance for up to 10,000 users
+6 Gbps firewall throughput
+WAN: 2 ports
+LAN: 24 ports

@@ -1,0 +1,46 @@
+https://www.cisco.com/site/us/en/products/networking/switches/c9350-series-smart-switches/index.html
+
+C9350-48HX
+48-port 10G mGig and 90 W UPOE+ copper model
+
+Optimized for Wi-Fi 7 and the future-proof workplace. Delivers security, high-speed access, and PoE to power smart spaces.
+48 ports of 1G/2.5G/5G/10G multigigabit with full 90 W Cisco UPOE+
+Modular uplinks of 2- or 4-port dual-rate 100G/40G, or 8-port multi-rate 50G/25G/10G/1G
+Stackable up to 1.6 Tbps, SmartPower, enhanced app hosting
+Flexible management options for any deployment
+
+
+C9350-48TX
+48-port 10G mGig copper model
+Designed for lean branch deployments with Wi-Fi 7, AI-powered experiences, and requirements for high-speed access networking.
+48 ports of 1G/2.5G/5G/10G multigigabit, data
+Modular uplinks of 2- or 4-port dual-rate 100G/40G, or 8-port multi-rate 50G/25G/10G/1G
+Stackable up to 1.6 Tbps, SmartPower, enhanced app hosting
+Flexible management options for any deployment
+
+
+C9350-24/48U
+Cisco C9350 1G 60 W PoE models
+Gigabit speed, security, and UPoE for any workplace.
+24 or 48 ports of 1G and 60 W Cisco UPOE
+Modular uplinks of 2- or 4-port dual-rate 100G/40G, or 8-port multi-rate 50G/25G/10G/1G
+Stackable up to 1.6 Tbps, SmartPower, enhanced app hosting
+Flexible management options for any deployment
+
+
+C9350-24/48P
+Cisco C9350 Series Smart Switch 1G and 30 W PoE models
+Optimized for wired and wireless converged access
+24 or 48 ports of 1G and 30 W Cisco PoE+
+Modular uplinks of 2- or 4-port dual-rate 100G/40G, or 8-port multi-rate 50G/25G/10G/1G
+Stackable up to 1.6 Tbps, SmartPower, enhanced app hosting
+Flexible management options for any deployment
+
+
+C9350-24/48T
+Cisco C9350 Series Smart Switch 1G data models
+Power secure, business-critical branch sites
+24 or 48 ports of 1G
+Modular uplinks of 2- or 4-port dual-rate 100G/40G, or 8-port multi-rate 50G/25G/10G/1G
+Stackable up to 1.6 Tbps, SmartPower, enhanced app hosting
+Flexible management options for any deployment

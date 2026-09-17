@@ -1,0 +1,14 @@
+https://buy.hpe.com/us/en/networking/juniper-solutions/juniper-switching-solutions/juniper-ap64-high-performance-access-point/p/1014919986
+
+The Juniper AP64 is Juniper’s smallest ruggedized access point. Managed by Juniper Mist Cloud, the AP64 supports Wi-Fi 6E and is ideal for indoor or outdoor use cases that may require a weather-resistant or extended temperature access point.
+
+Deployment
+Indoor/outdoor
+Wi-Fi Standard
+802.11ax (Wi-Fi 6E): 2x2:2
+Wi-Fi Tri-Band
+Uses dedicated third radio for scanning
+Antenna Options
+Internal
+Omni BLE
+Yes

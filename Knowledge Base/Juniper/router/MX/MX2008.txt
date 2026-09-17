@@ -1,0 +1,7 @@
+https://www.juniper.net/us/en/products/routers/mx-series.html
+
+The SDN-enabled MX2008 Universal Routing Platform is a high-capacity, carrier-grade, multiservice edge platform enabling operators to address growing bandwidth, subscriber, and services demands. The MX2008 Universal Routing Platform delivers 16 Tbps of system capacity and supports up to 960 x 10 GbE and 160 x 100 GbE interfaces in a single chassis.
+40 Tbps capacity with 10 slots
+Dense 10/40/100 GbE
+Investment protection – shared MPCs across family
+Rich multiservice edge, timing features

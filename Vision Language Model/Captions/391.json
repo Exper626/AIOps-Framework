@@ -1,0 +1,46 @@
+{
+  "switches": [
+    {
+      "name": "Switch4",
+      "model": "2950-24",
+      "connected_to": [
+        "PC9",
+        "PC0",
+        "PC3",
+        "Server1"
+      ]
+    }
+  ],
+  "servers": [
+    {
+      "name": "Server1",
+      "model": "Server-PT",
+      "connected_to": [
+        "Switch4"
+      ]
+    }
+  ],
+  "pcs": [
+    {
+      "name": "PC9",
+      "model": "PC-PT",
+      "connected_to": [
+        "Switch4"
+      ]
+    },
+    {
+      "name": "PC0",
+      "model": "PC-PT",
+      "connected_to": [
+        "Switch4"
+      ]
+    },
+    {
+      "name": "PC3",
+      "model": "PC-PT",
+      "connected_to": [
+        "Switch4"
+      ]
+    }
+  ]
+}

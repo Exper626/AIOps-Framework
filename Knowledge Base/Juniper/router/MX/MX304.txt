@@ -1,0 +1,7 @@
+https://www.juniper.net/us/en/products/routers/mx-series.html
+
+The MX304 Universal Routing Platform delivers massive scale and efficiency for space- and power-constrained environments. It is a carrier-grade, multiservice platform with extensive automation capabilities enabling operators to meet constantly expanding bandwidth, subscriber, and service demands. The MX304 Universal Routing Platform delivers 4.8 Tbps of system capacity in a 2 RU unit and supports 96 x 10 or 25 GbE, 48 x 40, 50, or 100 GbE, or 12 x 400 GbE interfaces in a single chassis.
+4.8 Tbps throughput
+Power & space efficiency – 2 RU
+Density – 96 x 10/25 GbE, 48 x 40/50/100, 12 x 400 GbE
+Rich multiservice edge, timing features

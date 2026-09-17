@@ -1,0 +1,19 @@
+{
+  "servers": [
+    {
+      "name": "Server14",
+      "model": "Server-PT",
+      "connected_to": []
+    },
+    {
+      "name": "Server8",
+      "model": "Server-PT",
+      "connected_to": []
+    },
+    {
+      "name": "Server12",
+      "model": "Server-PT",
+      "connected_to": []
+    }
+  ]
+}

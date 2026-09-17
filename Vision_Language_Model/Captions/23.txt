@@ -1,3 +1,0 @@
-[SPEZ_TKS(SLTNTX)]
-Router:
-    -  Router4 (Model: 2911)

@@ -1,0 +1,14 @@
+https://www.juniper.net/us/en/products/routers/acx-series.html
+
+The ACX7509, part of the ACX7000 family, is a high-availability, power-efficient, and modular 5 U platform. Ideal for service providers, data centers, and large enterprises, it helps network operators deliver differentiated customer experiences. 
+
+Form factor
+5 U, with 60-cm depth
+
+Throughput
+4.8 Tbps
+
+Port density
+20 x 1/10/25/50GbE
+4 x 200/400GbE
+16 x 40/100GbE 

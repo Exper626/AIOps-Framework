@@ -1,0 +1,7 @@
+https://www.juniper.net/us/en/products/routers/mx-series.html
+
+The SDN-enabled MX960 Universal Routing Platform is a high performance, carrier-grade, multiservice edge platform with unprecedented scale for service provider and cloud applications. The MX960 enables inline MACsec support without performance penalties on 10, 40 GbE and 100 GbE, and delivers 12 Tbps of system capacity in a 12 slot chassis supporting dense 100 GbE, 400 GbE interfaces. Similar to the other MX Series Universal Router Platforms, the MX960 has extensive carrier-grade capabilities.
+12 Tbps, 12-slot chassis
+Dense 100/400 GbE
+Inline MACsec at 10/40/100 GbE with no penalties
+Rich multiservice edge, timing features

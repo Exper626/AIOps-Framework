@@ -1,0 +1,5 @@
+https://documentation.meraki.com/Wireless/Product_Information/Overviews_and_Datasheets/MR78_Datasheet
+
+Outdoor Wi-Fi 6 with internal antennas
+2×2:2 MU-MIMO and OFDMA
+1 Gbps Ethernet

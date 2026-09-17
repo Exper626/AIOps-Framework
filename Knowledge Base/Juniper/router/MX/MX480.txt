@@ -1,0 +1,7 @@
+https://www.juniper.net/us/en/products/routers/mx-series.html
+
+The SDN-enabled MX480 Universal Routing Platform offers unprecedented scale for service provider and cloud applications, enabling the delivery of advanced business and residential multi-service edge services. The MX480 Universal Routing Platform delivers 7.5 Tbps of system capacity that supports inline MACsec without performance penalties for 10/40/100 GbE interfaces. It is also a carrier-grade platform with extensive automation capabilities.
+7.5 Tbps, 6-slot chassis
+Dense 100/400 GbE
+Inline MACsec at 10/40/100 GbE with no penalties
+Inline MACsec at 10/40/100 GbE with no penalties

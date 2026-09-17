@@ -1,0 +1,14 @@
+https://buy.hpe.com/us/en/networking/wireless-devices/wlan-access-points/juniper-ap61-high-performance-access-point/p/1014920006
+
+The Juniper AP61 series are outdoor access points that support 802.11ac Wave 2 Wi-Fi, patented Bluetooth LE, and Internet of Things (IoT) integration.
+
+Deployment
+Outdoor
+Wi-Fi Standard
+802.11ac Wave 2 (4x4:4)
+Wi-Fi Tri-Radio
+Yes
+Antenna Options
+Internal, external
+Virtual Bluetooth LE
+Yes

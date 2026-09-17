@@ -1,0 +1,14 @@
+https://buy.hpe.com/us/en/networking/wireless-devices/wlan-access-points/juniper-ap21-high-performance-access-point/p/1014920014
+
+The Juniper AP21 is a high-performance access point that supports 802.11ac Wave 2 Wi-Fi and patented virtual Bluetooth LE.
+
+Deployment
+Indoor
+Wi-Fi Standard
+802.11ac Wave 2 2x2:2SS
+Wi-Fi Tri-Radio
+No
+Antenna Options
+Internal
+Virtual Bluetooth LE
+Yes

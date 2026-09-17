@@ -1,0 +1,7 @@
+https://www.cisco.com/c/en/us/products/collateral/wireless/catalyst-iw9167-series/cat-iw9167e-heavy-duty-ap-ds.html
+
+Outdoor Wi-Fi 6E with external antennas
+4x4:4 MU-MIMO (2.4 GHz, 5 GHz, 5 GHz/6 GHz)
+Integrated Bluetooth Low Energy®/IoT and scanning radio
+Dual uplink 5 Gbps multigigabit Ethernet, optional M12 converter
+EN50155

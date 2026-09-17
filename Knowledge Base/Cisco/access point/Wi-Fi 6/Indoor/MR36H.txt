@@ -1,0 +1,5 @@
+https://documentation.meraki.com/Wireless/Product_Information/Overviews_and_Datasheets/MR36H_Datasheet
+
+Wall plate Wi-Fi 6 for medium-density deployments
+2×2:2 UL/DL MU-MIMO and OFDMA
+1 Gbps Ethernet with 3 LAN ports

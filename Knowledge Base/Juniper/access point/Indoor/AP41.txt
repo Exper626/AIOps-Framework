@@ -1,0 +1,14 @@
+https://buy.hpe.com/us/en/networking/wireless-devices/wlan-access-points/juniper-ap41-high-performance-access-point/p/1014920010
+
+The Juniper AP41 series are high-performance 802.11ac Wave 2 access points with integrated patented virtual Bluetooth LE and Internet of Things (IoT).
+
+Deployment
+Indoor
+Wi-Fi Standard
+802.11ac Wave 2; 4x4:4SS
+Wi-Fi Tri-Radio
+Yes
+Antenna Options
+Internal, External
+Virtual Bluetooth LE
+Yes

@@ -1,0 +1,43 @@
+https://www.cisco.com/site/us/en/products/networking/switches/catalyst-9600-series-switches/index.html
+
+
+Chassis
+6-slot modular chassis
+C9606R. Modular core for resilience at scale, plus comprehensive security. 25.6 Tbps switching capacity, 6.4 Tbps per slot supporting 400G to 10G multigigabit. 
+
+Supervisor engines
+
+6.4 Tbps/slot supervisor, 400G QSFP-DD
+C9600X-SUP-2. Made for secure and highly available high-speed campus core deployments. Based on Cisco Silicone One Q200 ASIC, supports up to 6.4 Tbps per slot, up to 400G QSFP-DD, and 50G SFP56.
+
+2.4 Tbps/slot supervisor, 100G/25G
+C9600-SUP-1. Designed to reimagine connections, reinforce security, and redefine the hybrid workplace. Based on Cisco UADP 3.0 ASIC, supports up to 2.4 Tbps per slot, up to 100G QSFP28, and 25G SFP28.
+
+
+Catalyst 9600X fiber line cards
+
+30-port 100G/40G QSFP28 with 400G/200G/100G QSFP-DD fiber
+C9600X-LC-32CD. High-density fiber line cards for campus core. 30-port 100G/40G (QSFP28) and 2-port 400G/200G/100G (QSFP-DD). Up to 128 ports, non-blocking. C9600X-SUP-2 only.
+
+56-port 50G/25G/10G SFP56 with 100G QSFP28 fiber
+C9600X-LC-56YL4C. High-density fiber line cards for campus core and distribution. 56-port 50G/25G/10G (SFP56) and 4-port 100G (QSFP28). Up to 240 ports, non-blocking. C9600X-SUP-2 only.
+
+40-port 50G/25G/10G SFP56 with 400G QSFP-DD, 200G QSFP56 fiber
+C9600-LC-40YL4CD. High-density fiber line cards for campus core and distribution. 40-port 50G/25G/10G (SFP56) and 2-port 400G (QSFP-DD) and 2-port 200G (QSFP56) with C9600X-SUP-2. 40-port 25G/10G (SFP28) and 2-port 100G/40G (QSFP28) with C9600-SUP-1.
+
+
+
+Catalyst 9600 line cards
+
+
+24-port 100G/40G QSFP56 fiber
+C9600-LC-24C. Higher-density fiber line cards for evolving campus core. 24-port 100G/40G (QSFP28) with C9600X-SUP-2. 24-port 40G (QSFP+) or 12-port 100G (QSFP28) with C9600-SUP-1.
+
+48-port 50G/25G/10G SFP56 fiber
+C9600-LC-48YL. High-density 50G/25G fiber line cards for campus core and distribution. 48-port 50G/25G/10G (SFP56) with C9600X-SUP-2. 48-port 25G/10G/1G (SFP56) with C9600-SUP-1.
+
+48-port 10G multigigabit copper
+C9600-LC-48TX. High-density copper line cards for campus distribution. Built for secure Wi-Fi 6/6E and high-speed access. 48-port 10G with C9600X-SUP-2. 48-port 10G/5G/2.5G/1G multigigabit with C9600-SUP-1. 
+
+48-port 1G SFP fiber
+C9600-LC-48S. High-density 1G (SFP) fiber line cards for campus distribution. C9600-SUP-1 only.

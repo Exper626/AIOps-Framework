@@ -1,0 +1,14 @@
+https://buy.hpe.com/us/en/networking/juniper-solutions/juniper-switching-solutions/juniper-ap24-high-performance-access-point/p/1014919998
+
+The Juniper AP24 integrates 802.11ax, Mist AI™, and an omnidirectional Bluetooth LE antenna to automate network operations and boost performance in the 6-GHz band. The Wi-Fi 6E device helps optimize operator and user experiences with secure client-to-cloud automation, insight, and data-driven actions.
+
+Deployment
+Indoor
+Wi-Fi Standard
+802.11ax (Wi-Fi 6 / Wi-Fi 6E); 2x2:2
+Wi-Fi Tri-Band
+Yes (Dual-Band-Concurrent); Dedicated Third Radio
+Antenna Options
+Internal
+Omni BLE
+Yes

@@ -1,0 +1,14 @@
+https://buy.hpe.com/us/en/networking/wireless-devices/wlan-access-points/juniper-bt11-enterprise-grade-access-point/p/1014920018
+
+The Juniper BT11 is an enterprise-grade access point exclusively for Bluetooth Low Energy.
+
+Deployment
+Indoor
+Wi-Fi Standard
+N/A
+Wi-Fi Tri-Radio
+No
+Antenna Options
+Internal
+Virtual Bluetooth LE
+Yes

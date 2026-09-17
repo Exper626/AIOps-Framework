@@ -1,0 +1,7 @@
+https://www.cisco.com/c/en/us/products/wireless/business-200-series-access-points/index.html#~models
+
+4x4 MU-MIMO with four spatial streams
+802.11ac Wave 2 standard
+Two Gigabit-Ethernet (GE) ports with PoE support
+Simplified management with Cisco Business Mobile app
+Flexible deployment with Cisco Business 100 Series Mesh Extenders

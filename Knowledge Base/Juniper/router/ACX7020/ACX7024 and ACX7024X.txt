@@ -1,0 +1,12 @@
+https://www.juniper.net/us/en/products/routers/acx-series.html
+
+Part of the ACX7000 family, the routers provide leading access performance in an industrial-rated or high-scale 1-U footprint. Ideal for service providers, enterprises, and wholesale environments, they help deliver premium customer and user experiences.
+
+Form factor
+Compact 1 U 24-cm depth
+
+Throughput	
+360 Gbps
+
+Port density
+24 x 1/10/25GbE + 4 x 100GbE

@@ -1,0 +1,7 @@
+https://www.cisco.com/c/en/us/products/collateral/networking/wireless/access-points/wireless-9177-series-access-points-ds.html
+
+High-performance Wi-Fi 7 for high-density outdoors with external antenna connectors
+
+4x4:4 MU-MIMO (2.4 GHz, 5 GHz, and 6 GHz)
+Integrated Bluetooth Low Energy®/IoT, GNSS/GPS, and dedicated scan radio
+10 Gbps multigigabit Ethernet and a dual rate (1/10) Gbps SFP/SFP+ fiber port

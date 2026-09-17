@@ -1,0 +1,6 @@
+{
+  "routers": [
+    {"name": "Router9", "model": "2621XM", "connected_to": []},
+    {"name": "Router5", "model": "Router-PT-Empty", "connected_to": []}
+  ]
+}

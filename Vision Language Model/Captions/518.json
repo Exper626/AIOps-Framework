@@ -1,0 +1,54 @@
+{
+  "routers": [
+    {
+      "name": "Router3",
+      "model": "2620XM",
+      "connected_to": [
+        "Router14",
+        "Switch0"
+      ]
+    },
+    {
+      "name": "Router14",
+      "model": "2811",
+      "connected_to": [
+        "Router3",
+        "Switch1"
+      ]
+    }
+  ],
+  "switches": [
+    {
+      "name": "Switch0",
+      "model": "2950T-24",
+      "connected_to": [
+        "Router3",
+        "PC22"
+      ]
+    },
+    {
+      "name": "Switch1",
+      "model": "2950T-24",
+      "connected_to": [
+        "Router14",
+        "PC12"
+      ]
+    }
+  ],
+  "pcs": [
+    {
+      "name": "PC22",
+      "model": "PC-PT",
+      "connected_to": [
+        "Switch0"
+      ]
+    },
+    {
+      "name": "PC12",
+      "model": "PC-PT",
+      "connected_to": [
+        "Switch1"
+      ]
+    }
+  ]
+}

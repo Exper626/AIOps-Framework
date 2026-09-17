@@ -1,0 +1,7 @@
+https://www.juniper.net/us/en/products/routers/mx-series.html
+
+The SDN-enabled MX240 Universal Routing Platform delivers unprecedented scale for advanced business and residential multi-service edge applications and services requiring power and space efficiency. The MX240 Universal Routing Platform has 3 Tbps of capacity in a 5 RU, 3 slot chassis, and delivers inline MACsec without performance penalties on 10 GbE, 40 GbE and 100 GbE interfaces.
+3 Tbps, 3-slot chassis
+Inline MACsec at 10/40/100 GbE with no penalties
+Power & space efficiency – 5 RU
+Rich multiservice edge, timing features

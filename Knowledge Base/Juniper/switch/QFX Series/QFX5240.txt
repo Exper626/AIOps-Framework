@@ -1,0 +1,9 @@
+https://www.juniper.net/us/en/products/switches/qfx-series.html
+
+The QFX5240 line offers up to 800GbE interfaces to support AI Data Center Networking deployments with AI/ML workloads and other high-speed, high-density, spine-and-leaf IP fabrics where scalability, performance and low latency are critical. 
+Use Cases: AI data center leaf/spine, Data center fabric leaf/spine/super spine
+Port Density:
+QFX5240-64QD line: 64 ports of QSFP-DD 800GbE. Can use breakout for 128 × 400GbE, or 256 × 100GbE
+QFX5240-64OD line: 64 ports of OSFP 800GbE. Can use breakout for 128 × 400GbE, 256 × 100GbE, or 256 x 50GbE
+QFX5241-32OD: 32 ports of OSFP 800GbE. Can use breakout for 64 x 400GbE, 160 x 100GbE or 128 x 50GbE
+Throughput: Up to 102.4 Tbps (bidirectional)

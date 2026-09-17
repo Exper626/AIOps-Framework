@@ -1,0 +1,5 @@
+https://documentation.meraki.com/Wireless/Product_Information/Overviews_and_Datasheets/MR46_Datasheet
+
+High-density wireless
+4×4:4 UL/DL MU-MIMO and OFDMA
+2.5 Gbps multigigabit Ethernet

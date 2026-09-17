@@ -1,0 +1,38 @@
+https://www.cisco.com/site/us/en/products/networking/cloud-networking-switches/nexus-3550-series-switches/index.html
+
+Nexus 3550-T Programmable Network Platform
+Programmable 1RU switch with FPGA device for long-term enhancements, upgrades, and applications
+
+
+Nexus 3550-F Programmable Layer 2 Application Platform
+Full MAC learning Layer 2 switch with VLAN, Internet Group Management Protocol (IGMP) support, and low port-to-port latency
+
+
+Nexus 3550-F Programmable Multiplexer Switch
+Many-to-one aggregation (multiplexing) with minimum latencies of 39 nanoseconds port-to-port
+
+
+Nexus 3550-F High Precision Timestamping Switch
+Network tap and aggregation with 70-picosecond, high-precision time stamps and 32-GB deep buffers
+
+
+Nexus 3550-F Modular Layer 1 Matrix Switch
+Modular, ultra-low-latency Layer 1 switch for network tap, patch, and fan-out operations
+
+
+Nexus 3550-H High-density Layer 1-160 Switch
+Our highest-density Layer 1 switch for network monitoring, dynamic reconfiguration, and low-latency multicast
+
+
+Nexus 3550-H High-density Layer 1-144 Switch
+High-density Layer 1 switch for network monitoring, dynamic reconfiguration, and low-latency multicast
+
+
+
+
+
+
+
+
+
+

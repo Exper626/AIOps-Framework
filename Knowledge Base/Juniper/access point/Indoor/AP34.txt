@@ -1,0 +1,14 @@
+https://buy.hpe.com/us/en/networking/juniper-solutions/juniper-switching-solutions/juniper-ap34-high-performance-access-point/p/1014919970
+
+The Juniper AP34 integrates Mist AI for AX™ and an omnidirectional Bluetooth antenna to automate network operations and boost performance in the 6GHz band. The Wi-Fi 6E device helps optimize operator and user experiences with secure client-to-cloud automation, insight, and data-driven actions.
+
+Deployment
+Indoor
+Wi-Fi Standard
+802.11ax (Wi-Fi 6): 2x2:2
+Wi-Fi Tri-Band
+Yes; Dedicated Fourth Radio
+Antenna Options
+Internal
+Omni BLE
+Yes

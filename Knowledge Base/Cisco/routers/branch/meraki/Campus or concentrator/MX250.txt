@@ -1,0 +1,6 @@
+https://www.cisco.com/site/us/en/products/networking/sdwan-routers/meraki-security-appliances/mx250.html
+
+Large-branch, campus, or DC appliance for up to 2000 users
+4 Gbps firewall throughput
+WAN: 2 ports
+LAN: 24 ports

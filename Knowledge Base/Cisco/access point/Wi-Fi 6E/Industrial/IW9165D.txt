@@ -1,0 +1,6 @@
+https://www.cisco.com/c/en/us/products/collateral/networking/industrial-wireless/catalyst-iw9165-series-ds.html
+
+Outdoor Wi-Fi 6E with built-in directional antennas and optional external antennas
+2x2:2 MU-MIMO (5 GHz, 5 GHz/6 GHz)
+Integrated Bluetooth Low Energy®/IoT
+5 Gbps multigigabit Ethernet, optional M12 converter

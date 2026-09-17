@@ -1,0 +1,93 @@
+{
+  "switches": [
+    {
+      "name": "Switch7",
+      "model": "2950-24",
+      "connected_to": []
+    },
+    {
+      "name": "Switch11",
+      "model": "2960-24TT",
+      "connected_to": []
+    },
+    {
+      "name": "Switch2",
+      "model": "2950T-24",
+      "connected_to": [
+        "Router3",
+        "PC39",
+        "PC33",
+        "PC41"
+      ]
+    },
+    {
+      "name": "Switch17",
+      "model": "2950-24",
+      "connected_to": [
+        "Router3",
+        "PC1",
+        "PC23",
+        "PC29"
+      ]
+    }
+  ],
+  "routers": [
+    {
+      "name": "Router10",
+      "model": "2811",
+      "connected_to": []
+    },
+    {
+      "name": "Router3",
+      "model": "2911",
+      "connected_to": [
+        "Switch2",
+        "Switch17"
+      ]
+    }
+  ],
+  "pcs": [
+    {
+      "name": "PC39",
+      "model": "PC-PT",
+      "connected_to": [
+        "Switch2"
+      ]
+    },
+    {
+      "name": "PC33",
+      "model": "PC-PT",
+      "connected_to": [
+        "Switch2"
+      ]
+    },
+    {
+      "name": "PC41",
+      "model": "PC-PT",
+      "connected_to": [
+        "Switch2"
+      ]
+    },
+    {
+      "name": "PC1",
+      "model": "PC-PT",
+      "connected_to": [
+        "Switch17"
+      ]
+    },
+    {
+      "name": "PC23",
+      "model": "PC-PT",
+      "connected_to": [
+        "Switch17"
+      ]
+    },
+    {
+      "name": "PC29",
+      "model": "PC-PT",
+      "connected_to": [
+        "Switch17"
+      ]
+    }
+  ]
+}

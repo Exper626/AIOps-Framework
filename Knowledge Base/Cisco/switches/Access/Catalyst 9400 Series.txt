@@ -1,0 +1,85 @@
+https://www.cisco.com/site/us/en/products/networking/switches/catalyst-9400-series-switches/index.html#accordion-e0460c62fa-item-a8a15fd9e8
+
+
+Chassis 	
+
+4-slot modular chassis
+C9404R. Smaller modular chassis for enterprise-class branch and midsize access networks. High-availability power and fan redundancy.
+
+7-slot modular chassis
+C9407R. Midsize modular chassis for enterprise-class midsize to large access and distribution networks. High-availability power and fan redundancy. 
+
+10-slot modular chassis
+C9410R. Large modular chassis for enterprise-class midsize to large access and distribution networks. High-availability power and fan redundancy.
+
+
+Supervisor engines
+
+480 Gbps/slot supervisor, 100G/25G
+C9400X-SUP-2XL. Built for secure and highly available high-speed access, aggregation, and campus deployments. Up to 480 Gbps per slot, 100G/25G uplinks, and 100G IPsec on hardware.
+
+240 Gbps/slot supervisor, 100G/25G
+C9400X-SUP-2. Built for secure and highly available high-speed access, aggregation, and campus deployments. Up to 240 Gbps per slot, 100G/25G uplinks, and 100G IPsec on hardware. 
+
+240 Gbps/slot supervisor, 40G/25G/10G
+C9400-SUP-1XL-Y. Designed for flexible and secure access, aggregation, and branch deployments. Up to 240/120/80 Gbps per slot (4-, 7-, and 10-slot chassis options); 2 x 40G, 2 x 25G, or 8 x 10G uplinks.
+
+240 Gbps/slot supervisor, 40G/10G
+C9400-SUP-1XL. Designed for flexible and secure access, aggregation, and branch deployments. Up to 240/120/80 Gbps per slot (4-, 7-, and 10-slot chassis options); 2 x 40G, 8 x 10G uplinks. 
+
+
+
+Catalyst 9400X fiber line cards
+
+25G/10G SFP28 fiber
+C9400-LC-24XY. High-density fiber line cards for campus distribution. 20-port 25G (SFP28) and 4-port 10G (SFP+). C9400X-SUP-2/2XL only. 
+
+100G/40G QSFP28 fiber
+C9400-LC-12QC. High-density fiber line cards for campus distribution. 12-port 40G (QSFP+) or 4-port 100G (QSFP28) and 4-port 40G (QSFP+). C9400X-SUP-2/2XL only.
+
+
+
+
+Catalyst 9400X copper line cards
+
+48-port 10G multigigabit, 90W PoE copper
+C9400-LC-48HX. Built for secure Wi-Fi 6/6E high-speed access and beyond, with 90W Cisco UPOE+ smart building deployments. 48-port 10GBASE-T, 10G/5G/2.5G/1G multigigabit, 1000M/100M. Up to 384 ports, non-blocking, with SUP-2XL. 
+
+48-port 5G multigigabit, 90W PoE copper
+C9400-LC-48HN. Built for secure Wi-Fi 6/6E high-speed access and 90W Cisco UPOE+ smart building deployments. 48-port 5G/2.5G/1G multigigabit, 1000M/100M. Up to 384 ports, non-blocking, with SUP-2XL. 
+
+48-port 1G, 90W PoE copper
+C9400-LC-48H. High-density copper line cards for campus distribution. Built for secure access and 90W Cisco UPOE+. 48-port 1000M/100M/10M. Up to 384 ports, non-blocking. 
+
+48-port 10G multigigabit, 60W PoE copper
+C9400-LC-48UX. High-density copper line cards for campus distribution. Built for secure Wi-Fi 6/6E high-speed access and 60W Cisco UPOE. 24-port 10G/5G/2.5G/1G multigigabit; 24-port 1000M/100M. Up to 384 ports, non-blocking, with SUP-2XL. 
+
+
+
+
+Catalyst 9400 10G, 1G SFP+ line cards
+24-port 10G/1G SFP+ fiber
+C9400-LC-24XS. The foundation of a proactive enterprise network. 24-port 10G or 1G SFP+. Up to 192 ports, non-blocking. 
+
+48-port 10G/1G SFP+ fiber
+C9400-LC-48XS. The foundation of a proactive enterprise network. 48-port 10G or 1G SFP+. Up to 384 ports, non-blocking.
+
+24-port 1G SFP+ fiber
+C9400-LC-24S. The foundation of a proactive enterprise network. 24-port 1G SFP+. Up to 192 ports, non-blocking.
+
+48-port 1G SFP+ fiber
+C9400-LC-48S. The foundation of a proactive enterprise network. 48-port 1G SFP+. Up to 384 ports, non-blocking.
+
+
+
+
+Catalyst 9400 1G copper line cards
+
+48-port 1G, 60W PoE copper
+C9400-LC-48U. Enables secure connectivity that helps your network work for your business. 48-port 1G copper with 60W Cisco UPOE. Up to 384 ports, non-blocking.
+
+48-port 1G, 30W PoE copper
+C9400-LC-48P. Enables secure connectivity that helps your network work for your business. 48-port 1G copper with 30W PoE+. Up to 384 ports, non-blocking.
+
+48-port 1G, data copper
+C9400-LC-48T. Enables secure connectivity that helps your network work for your business. 48-port 1G copper data. Up to 384 ports, non-blocking.

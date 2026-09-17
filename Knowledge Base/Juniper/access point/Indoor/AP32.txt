@@ -1,0 +1,12 @@
+https://buy.hpe.com/us/en/networking/juniper-solutions/juniper-switching-solutions/juniper-ap32-high-performance-access-point/p/1014919994
+
+The Juniper AP32 access point integrates Mist AI for AX capabilities to automate network operation and boost Wi-Fi performance.
+
+Deployment
+Indoor
+Wi-Fi Standard
+802.11ax (Wi-Fi 6); 5GHz: 4x4:4; 2.4GHz: 2x2:2
+Wi-Fi Tri-Radio
+Yes
+Antenna Options
+Internal, External

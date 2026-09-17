@@ -1,0 +1,7 @@
+https://www.juniper.net/us/en/products/routers/mx-series.html
+
+The SDN-enabled MX2010 Universal Routing Platform is a high-capacity, carrier-grade, multiservice edge platform with extensive automation capabilities that enables operators to address long-term bandwidth, subscriber, and services growth. The MX2010 Universal Routing Platform delivers 40 Tbps of system capacity and supports up to 400 x 100GbE or 80 x 400GbE interfaces in a single chassis.
+40 Tbps capacity with 10 slots
+Dense 100/400 GbE
+Inline MACsec at 10/40/100 GbE with no penalties
+Rich multiservice edge, timing features

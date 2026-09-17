@@ -1,0 +1,13 @@
+https://www.juniper.net/us/en/products/routers/acx-series.html
+
+The ACX7100, part of the ACX7000 family, delivers high density and performance in a compact, 1 U footprint. Ideal for service provider, large enterprise, wholesale, and data center applications, it helps operators deliver premium customer and user experiences.
+
+Form factor
+Compact 1 U, with 59.49-cm depth
+
+Throughput
+Up to 4.8 Tbps
+
+Port density
+ACX7100-48L: 48 x 10/25/50GbE 6 x 400GbE
+ACX7100-32C: 32 x 40/100GbE 4 x 400GbE

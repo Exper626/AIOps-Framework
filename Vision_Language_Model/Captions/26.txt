@@ -1,3 +1,0 @@
-[SPEZ_TKS(SLTNTX)]
-Router:
-    - Router7 (Model: 2621XM)

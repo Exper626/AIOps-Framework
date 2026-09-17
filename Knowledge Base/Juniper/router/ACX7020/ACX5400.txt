@@ -1,0 +1,7 @@
+https://www.juniper.net/us/en/products/routers/acx-series.html
+
+The ACX5400 Series of 1U routers provide power-efficient metro aggregation and support full IP/MPLS functionality. They deliver the performance required for efficient 1/10GbE-to-100GbE metro aggregation, MACsec security, and packet-optical convergence.
+Up to 48 1GbE or 10GbE ports
+Up to 6 100GbE ports
+MEF 3.0-certified
+MACsec encryption

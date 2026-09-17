@@ -1,0 +1,7 @@
+{
+  "switches": [
+    {"name": "Switch12", "model": "2960-24TT", "connected_to": []},
+    {"name": "Switch5", "model": "2960-24TT", "connected_to": []},
+    {"name": "Switch6", "model": "Switch-PT", "connected_to": []}
+  ]
+}

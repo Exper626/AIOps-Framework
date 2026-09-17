@@ -1,0 +1,8 @@
+https://www.juniper.net/us/en/products/routers/acx-series.html
+
+The ACX710 1U router is a hardened multiservice solution that delivers the performance, capacity, and features needed to provide universal metro access and aggregation services. It offers a high-density, cost-optimized metro solution in a compact footprint.
+
+Hardened platform with 320-Gbps switching capacity 
+MEF 3.0-certified
+24 1/10GbE ports
+4 40/100GbE ports

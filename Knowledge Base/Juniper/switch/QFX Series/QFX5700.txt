@@ -1,0 +1,10 @@
+https://www.juniper.net/us/en/products/switches/qfx-series.html
+
+The QFX5700 line supports very large, dense, and fast 400GbE IP fabrics based on proven Internet-scale technology. With 10/25/40/50/100/200/GbE interface options, the QFX5700 is an optimal choice for spine-and-leaf deployments in enterprise, high-performance computing, service provider, and cloud provider data centers.
+Use Cases: Data Center Fabric Spine, EVPN-VXLAN Fabric, Data Center Interconnect (DCI) Border, Secure DCI, Multitier Campus, Campus Fabric
+Port Density:
+32 x 400GbE QSFP56-DD
+64 x 200GbE
+128 x 100GbE
+144 x 50/40/25/10GbE
+Throughput: Up to 25.6 Tbps (bidirectional)

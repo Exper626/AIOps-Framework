@@ -1,0 +1,39 @@
+https://www.cisco.com/site/us/en/products/collateral/networking/sdwan-routers/8000-secure-routers/8200-series-secure-routers-ds.html
+
+Cisco 8200 Series Secure Routers Data Sheet
+
+Overview
+The Cisco®  8200 Series Secure Routers deliver secure networking simplified. Powered by the all-new secure networking processor and the unified Cisco secure networking platform, the Cisco 8200 Series delivers robust platform-level security, advanced performance engineering via routing and SD-WAN, and on-premises, infrastructure-as-code, or cloud management flexibility that enables businesses to seamlessly scale and grow. Each class of secure routers is designed to deliver risk reduction, enhanced reliability, and future readiness.
+
+Platform highlights
+Designed for medium-sized branch deployments, the Cisco 8200 Series Secure Routers combine robust security, advanced performance engineering, and flexible management options. These routers offer seamless connectivity, dynamic path selection, and unified security enforcement, helping ensure resilient operations and simplified IT overhead as your network grows. With integrated security and support for high-speed 10Gigabit Ethernet (GE) interfaces, these platforms deliver scalable and reliable performance for modern WAN edge deployments. Whether used for traditional routing or SDWAN applications, the Cisco 8200 Series supports AI-driven growth to meet digital branch demands
+
+
+Key features
+Hardware-accelerated security and networking
+Dedicated secure networking processor for fast cryptography and deep packet inspection
+Hardware acceleration that helps ensure high throughput with robust threat protection
+
+Fanless model for medium sized branches
+Quiet, reliable fanless SKU ideal for noise-sensitive or space-constrained sites
+Fewer moving parts for lower maintenance and enhanced durability
+
+Integrated branch connectivity
+Combines Next-Generation Firewall (NGFW) security, routing, and SD-WAN in one unified platform
+Simplifies branch infrastructure and management with all-in-one secure access
+
+
+Secure networking with PQC readiness
+Future-ready branch security with advanced, quantum-resistant encryption
+
+
+Models and specifications
+The Cisco 8200 Series Secure Routers offer a range of configurations to meet diverse networking needs and include the following models:
+
+Cisco C8235-E-G2 and C8231-E-G2 with one NIM slot plus two 10 GE SFP/SFP+ and two 2.5 GE Multigigabit RJ-45 ports
+Cisco C8235-G2 with two 1/10 GE SFP+ and eight 2.5 GE Multigigabit RJ-45 ports
+Cisco C8231-G2 with two 1/10 GE SFP+, four 2.5 GE Multigigabit RJ-45, and four 1 GE RJ-45 ports
+Cisco C8225-G2 and C8221-G2 with two 1/10 GE SFP+ and eight 1 GE RJ-45 ports
+Cisco C8221L-G2 with two 10 GE RJ-45 and eight 1 GE RJ-45 ports
+Cisco C8211-G2 with two 1 GE RJ-45/SFP combo and four 1 GE RJ-45 ports
+Cisco C8255-G2-UCSXE (secure router node for Cisco UCS® XE9305 Chassis) with two 1/10 GE SFP+, four 2.5 GE Multigigabit RJ-45, and fourteen 1 GE RJ-45 ports 

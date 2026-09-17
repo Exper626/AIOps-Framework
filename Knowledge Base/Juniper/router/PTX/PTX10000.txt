@@ -1,0 +1,69 @@
+https://buy.hpe.com/us/en/networking/juniper-solutions/juniper-routing-solutions/juniper-ptx10000-line-of-modular-routers/p/1014920245
+
+
+The modular Juniper PTX10004, PTX10008, and PTX100016 Routers, designed with Juniper’s latest generations of custom Express silicon, deliver ultra-high port density, unyielding throughput performance, and unmatched sustainable efficiencies for the most demanding WAN and data center architectures. Juniper PTX10000 modular series routers deliver no-excuses 400GbE and 800GbE performance along with industry-leading port density of 28.8 Tbps per line card. The PTX10000 series router family delivers tremendous versatility, supporting a broad spectrum of WAN and data center use cases, including core, peering, data center interconnect, data center edge, metro aggregation, and AI data center networking. The PTX10000 lets operators reduce their TCO with highly flexible, high performance, and sustainable platforms built for longevity in the most demanding environments.
+
+
+PTX10001ACDEVIDJUNOS EVOBASETAA
+PTX10001 36 QSFP56-DD / QSFP28 multi-rate port base system with redundant AC Power supplies, FAN trays, TPM2.0 with DevID , JUNOS Evo,TAA
+
+
+PTX10008 PREM2 SONIC SYSTEM FOR 14.4T LC
+PTX10003-80C base system with 80 100GE ports or 16 400GE ports, 2 3000W AC power supplies, 2 power cables, and 3 fan trays, with standard tier right-to-use license
+
+
+PTX10001 DC JUNOS EVO BASE
+PTX10001 36 QSFP56-DD / QSFP28 multi-rate port base system with redundant DC Power supplies, FAN trays, JUNOS Evo
+
+
+PTX10001 DC JUNOS EVO BASE
+PTX10001 36 QSFP56-DD / QSFP28 multi-rate port base system with redundant DC Power supplies, FAN trays, JUNOS Evo
+
+
+
+PTX10008 PREMIUM4 BUNDLE
+The modular Juniper PTX10004, PTX10008, and PTX100016 Routers, designed with Juniper’s latest generations of custom Express silicon, deliver ultra-high port density, unyielding throughput performance, and unmatched sustainable efficiencies for the most demanding WAN and data center architectures. Juniper PTX10000 modular series routers deliver no-excuses 400GbE and 800GbE performance along with industry-leading port density of 28.8 Tbps per line card. The PTX10000 series router family delivers tremendous versatility, supporting a broad spectrum of WAN and data center use cases, including core, peering, data center interconnect, data center edge, metro aggregation, and AI data center networking. The PTX10000 lets operators reduce their TCO with highly flexible, high performance, and sustainable platforms built for longevity in the most demanding environments.
+Choose from three configurable PTX10000 models: PTX10004 (4 slots), PTX10008 (8 slots), and PTX10016 (16 slots).
+
+
+PTX10008 PREMIUM2 REDUNDANT CHASSIS
+The modular Juniper PTX10004, PTX10008, and PTX100016 Routers, designed with Juniper’s latest generations of custom Express silicon, deliver ultra-high port density, unyielding throughput performance, and unmatched sustainable efficiencies for the most demanding WAN and data center architectures. Juniper PTX10000 modular series routers deliver no-excuses 400GbE and 800GbE performance along with industry-leading port density of 28.8 Tbps per line card. The PTX10000 series router family delivers tremendous versatility, supporting a broad spectrum of WAN and data center use cases, including core, peering, data center interconnect, data center edge, metro aggregation, and AI data center networking. The PTX10000 lets operators reduce their TCO with highly flexible, high performance, and sustainable platforms built for longevity in the most demanding environments.
+Choose from three configurable PTX10000 models: PTX10004 (4 slots), PTX10008 (8 slots), and PTX10016 (16 slots).
+
+
+
+PTX10001 DC DEVID JUNOS EVO BASE
+PTX10001 36 QSFP56-DD / QSFP28 multi-rate port base system with redundant DC Power supplies, FAN trays, TPM2.0 with DevID, JUNOS Evo
+
+
+
+PTX10008 BASE SYSTEM FOR 14.4T LC
+The modular Juniper PTX10004, PTX10008, and PTX100016 Routers, designed with Juniper’s latest generations of custom Express silicon, deliver ultra-high port density, unyielding throughput performance, and unmatched sustainable efficiencies for the most demanding WAN and data center architectures. Juniper PTX10000 modular series routers deliver no-excuses 400GbE and 800GbE performance along with industry-leading port density of 28.8 Tbps per line card. The PTX10000 series router family delivers tremendous versatility, supporting a broad spectrum of WAN and data center use cases, including core, peering, data center interconnect, data center edge, metro aggregation, and AI data center networking. The PTX10000 lets operators reduce their TCO with highly flexible, high performance, and sustainable platforms built for longevity in the most demanding environments.
+Choose from three configurable PTX10000 models: PTX10004 (4 slots), PTX10008 (8 slots), and PTX10016 (16 slots).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

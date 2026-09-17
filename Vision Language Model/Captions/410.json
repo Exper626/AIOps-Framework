@@ -1,0 +1,16 @@
+{
+  "switches": [
+    {"name": "unknown", "model": "2950T-24", "connected_to": ["Server7", "Router0", "PC11", "PC1", "PC4"]}
+  ],
+  "servers": [
+    {"name": "Server7", "model": "Server-PT", "connected_to": ["unknown"]}
+  ],
+  "routers": [
+    {"name": "Router0", "model": "2621XM", "connected_to": ["unknown"]}
+  ],
+  "pcs": [
+    {"name": "PC11", "model": "PC-PT", "connected_to": ["unknown"]},
+    {"name": "PC1", "model": "PC-PT", "connected_to": ["unknown"]},
+    {"name": "PC4", "model": "PC-PT", "connected_to": ["unknown"]}
+  ]
+}

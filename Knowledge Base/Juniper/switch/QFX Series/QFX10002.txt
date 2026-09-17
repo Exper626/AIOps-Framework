@@ -1,0 +1,11 @@
+https://www.juniper.net/us/en/products/switches/qfx-series.html
+
+QFX10002 fixed-configuration switches are very dense, highly scalable platforms designed for today’s most demanding data center, campus, and routing environments. They’re loaded with power and functionality, all housed in a compact, 2 U form factor.
+Use Case: Data Center Fabric Leaf/Spine
+Port Density:
+QFX10002-36Q: 36 x 40GbE QSFP+ or 12 x 100GbE QSFP28
+QFX10002-72Q: 72 x 40GbE QSFP+ or 24 x 100GbE QSFP28
+QFX10002-60C: 60 x 40/100GbE QSFP+/QSFP28
+Throughput: Up to 2.88/5.76/12 Tbps (bidirectional)
+Deep Buffers: 100 ms per port
+Precision Time Protocol (PTP)

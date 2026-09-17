@@ -1,0 +1,6 @@
+{
+  "pcs": [
+    {"name": "PC7", "model": "PC-PT", "connected_to": []},
+    {"name": "PC10", "model": "PC-PT", "connected_to": []}
+  ]
+}

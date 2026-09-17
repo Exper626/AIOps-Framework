@@ -1,0 +1,7 @@
+https://www.cisco.com/c/en/us/products/collateral/wireless/catalyst-9100ax-access-points/wireless-9171-series-acc-point-ds.html
+
+Wi-Fi 7 for lower-density environments in compact form factor with internal omnidirectional antennas
+
+2x2:2 MIMO (2.4 GHz, 5 GHz/6 GHz)
+Integrated Bluetooth Low Energy®/IoT and dedicated scan radio
+2.5 Gbps multigigabit Ethernet, USB

@@ -1,0 +1,12 @@
+https://www.juniper.net/us/en/products/routers/acx-series.html
+
+Part of the ACX7000 family, this Cloud Metro router provides leading access performance in an industrial-rated 1U footprint. Ideal for service providers, enterprises, and wholesale environments, it delivers premium customer and user experiences.
+
+Form factor
+Compact 1 U 23.5-cm depth
+
+Throughput
+100 Gbps
+
+Port density
+4 x 1/10/25GbE + 16 x 1/10GbE

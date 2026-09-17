@@ -1,0 +1,14 @@
+https://www.juniper.net/us/en/products/routers/mx-series.html
+
+The SDN-enabled MX204 Universal Routing Platform provides a modular, automated, carrier-grade solution for service providers and enterprises. The compact platform brings 400 Gbps capacity and a full feature set to space and power constrained environments.
+400 Gbps capacity
+Space and power efficiency – 1 RU
+Full service suite – 1:1 NAT, firewall
+Rich multiservice edge features
+
+Juniper and Corero Joint DDoS Protection
+Juniper and Corero DDoS protection combines packet-level traffic inspection with the power of infrastructure-based enforcement. It automates real-time attack mitigation at the network edge at speeds up to 40 Tbps.
+Automated DDoS mitigation in seconds at line rate that scales from 50 Gbps to 40 Tbps
+Advanced Protection from “Carpet Bombing” attacks
+5G DDoS visibility with GPRS Tunneling Protocol (GTP) payload inspection, as well as ability to inspect network traffic within GRE, VXLAN and IP-IP tunnels
+Multi-Tenant Portal for as a Service offerings or views by department within an enterprise

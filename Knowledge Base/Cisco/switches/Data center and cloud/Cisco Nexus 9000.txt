@@ -1,0 +1,37 @@
+https://www.cisco.com/site/us/en/products/networking/cloud-networking-switches/nexus-9000-switches/index.html
+
+Cisco N9100 Series switches
+With unmatched bandwidth, low latency, and seamless integration, this is the future of high-performance networking for neoclouds and sovereign clouds.
+
+
+Nexus 9200 Series switches
+Dense, high-capacity spine and leaf supporting 800G for massively scaled-out fabrics.
+
+
+Nexus 9300 Series switches
+If spine and leaf or top-of-rack are your style, these fixed switches support ports from 1G to 800G.
+
+
+Nexus 9400 Series switches
+High bandwidth, small form factor. This compact modular system supports 400G speeds in a 4 RU platform.
+
+
+Nexus 9500 Series switches
+Enterprise or high growth? Modular configurations can support you, with ports from 1G to 400G.
+
+
+Nexus 9800 Series switches
+Modular switching redefined. Be 400G-ready and 800G-capable with a power efficient distributed architecture. 
+
+
+Nexus 400G and 800G family
+Bandwidth like you've never known. Adopt 400G with confidence in a family of 1, 2, 4, and 16 RU switches.
+
+
+Cisco Nexus Dashboard
+Simplify hybrid cloud network operations, with one simple view.
+
+
+Cisco NX-OS
+Make your network agile, easily scalable, and secure with simplified network operations and integrated automation
+

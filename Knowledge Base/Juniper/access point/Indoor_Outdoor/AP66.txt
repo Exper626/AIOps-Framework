@@ -1,0 +1,14 @@
+https://buy.hpe.com/us/en/networking/juniper-solutions/juniper-switching-solutions/juniper-ap66-high-performance-access-point/p/1014921239
+
+Juniper’s AP66 brings tri-band Wi-Fi 7 to rugged deployments, pairing IP67 durability with cloud automation from the Mist AI-native networking platform. A tri-radio architecture with a dedicated scanning radio ensures clean-air operation and consistent performance across 2.4, 5, and 6 GHz for campus quads, covered walkways, and semi-industrial spaces.
+
+Deployment
+Indoor/outdoor
+Wi-Fi Standard
+802.11be (Wi-Fi 7): 2x2:2
+Wi-Fi Tri-Band
+Yes; dedicated fourth radio
+Antenna Options
+Internal / directional
+Omni BLE
+Yes

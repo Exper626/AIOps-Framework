@@ -1,0 +1,8 @@
+https://www.juniper.net/us/en/products/switches/qfx-series.html
+
+The QFX5220 line offers up to 400GbE interfaces for very large, dense, and fast standards-based fabrics based on proven internet-scale technology. QFX5220 switches are an optimal choice for spine-and-leaf data center fabric deployments as well as metro use cases.
+Use Case: Data Center Fabric Spine
+Port Density:
+QFX5220-32CD: 32 x 40/100/400GbE QSFP56-DD and 2 x 10GbE SFP+
+QFX5220-128C: 128 x 100GbE QSFP28 and 2 x 10GbE SFP+
+Throughput: Up to 25.6 Tbps (bidirectional)

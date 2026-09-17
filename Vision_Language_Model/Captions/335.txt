@@ -1,4 +1,0 @@
-[SPEZ_TKS(SLTNTX)]
-Server:
- - Server14 (Model: Server-PT)
- - Not Connected

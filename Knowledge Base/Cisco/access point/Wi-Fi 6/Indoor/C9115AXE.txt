@@ -1,0 +1,6 @@
+https://www.cisco.com/c/en/us/products/collateral/wireless/catalyst-9100ax-access-points/datasheet-c78-741988.html
+
+Wi-Fi 6 for midsize deployments with external antennas
+4x4:4 MU-MIMO (2.4 GHz, 5 GHz)
+Integrated Bluetooth Low Energy®/IoT
+2.5 Gbps multigigabit Ethernet

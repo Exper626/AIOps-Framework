@@ -1,0 +1,6 @@
+https://www.cisco.com/c/en/us/products/collateral/wireless/catalyst-9100ax-access-points/datasheet-c78-744062.html
+
+Wall plate Wi-Fi 6 for entry-level deployments
+2x2:2 (2.4 GHz, 5 GHz)
+Integrated Bluetooth Low Energy®/IoT
+2.5 Gbps multigigabit Ethernet, three 1 Gbps LAN ports

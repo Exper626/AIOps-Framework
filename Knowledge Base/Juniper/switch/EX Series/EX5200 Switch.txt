@@ -1,0 +1,3 @@
+https://www.hpe.com/us/en/juniper-ex-series-switches.html
+
+Cloud-native campus access switch delivering higher density 10G , 1Tbps switching capacity, IEEE 802.3bt PoE++ power, end-to-end MACsec AES-256 encryption, standards-based EVPN-VXLAN campus fabrics, and AI-driven operations through Juniper Mist Wired Assurance.

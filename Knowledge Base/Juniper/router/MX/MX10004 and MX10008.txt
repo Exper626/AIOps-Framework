@@ -1,0 +1,8 @@
+https://www.juniper.net/us/en/products/routers/mx-series.html
+
+The MX10004 and MX10008 Universal Routing Platforms deliver unprecedented scale for service provider and cloud operators, enabling advanced business and residential multi-service edge services with a cloud-optimized form factor, and superior cost-per-bit economics. The MX10004 and MX10008 are SDN-enabled, delivering up to 76.8 Tbps of system capacity in 4, 8, or 16 slot chassis supporting dense 100 GbE, 400 GbE, and, in the future, 800 GbE interfaces. These carrier-grade platforms have extensive automation capabilities.
+Up to 76.8 Tbps capacity
+4 or 8 slots
+Dense 100 GbE and 400 GbE
+800 GbE ready
+Rich multiservice edge, timing features

@@ -1,0 +1,7 @@
+https://www.juniper.net/us/en/products/switches/qfx-series.html
+
+The QFX5210 line offers line-rate, low-latency 10/25/40/100GbE switches for building large, standards-based fabrics. QFX5210 Switches are an optimal choice for spine-and-leaf data center fabric deployments as well as metro use cases.
+Use Case: DC fabric leaf/spine
+Port Density:
+QFX5210-64C/-S: 64 x 40/100GbE QSFP+/QSFP28
+Throughput: Up to 12.8 Tbps (bidirectional)

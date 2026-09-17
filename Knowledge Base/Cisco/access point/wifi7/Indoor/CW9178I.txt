@@ -1,0 +1,7 @@
+https://www.cisco.com/c/en/us/products/collateral/wireless/catalyst-9100ax-access-points/wireless-9178-series-access-point-ds.html
+
+Ultra-high-performance Wi-Fi 7 for high-density environments
+
+4x4:4 MU-MIMO (2.4 GHz, 5 GHz, 5 GHz, and 6 GHz)
+Integrated Bluetooth Low Energy®/IoT, GNSS/GPS, ultra-wideband and dedicated scan radio
+Dual 10 Gbps multigigabit Ethernet

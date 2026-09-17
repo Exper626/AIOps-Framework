@@ -1,0 +1,109 @@
+https://www.cisco.com/site/us/en/products/networking/switches/catalyst-9200-series-switches/index.html#accordion-64c3b82e02-item-4d55a6d812
+
+Catalyst 9200L-M cloud-managed models
+
+Gigabit, data-only models
+C9200L-24T-4G-M, C9200L-24T-4X-M, C9200L-48T-4G-M, C9200L-48T-4X-M. Ideal for secure branch and entry-level enterprise environments. Managed natively from the cloud through the Meraki dashboard.  
+
+Gigabit, PoE models
+C9200L-24P-4G-M, C9200L-24P-4X-M, C9200L-48P-4G-M, C9200L-48P-4X-M, C9200L-48PL-4G-M, C9200L-48PL-4X-M. Optimized for secure deployments of IoT and smart building technology. Managed natively from the cloud through the Meraki dashboard. 
+
+Multigigabit, PoE models
+C9200L-24PXG-2Y-M, C9200L-24PXG-4X-M, C9200L-48PXG-2Y-M, C9200L-48PXG-4X-M. Optimized for converged Wi-Fi 6/7 and higher bandwidth deployments. Managed natively from the cloud through the Meraki dashboard. 
+
+
+
+Catalyst 9200 multigigabit, PoE+ models
+
+
+24-port 1G, multigigabit, 30W PoE+
+C9200-24PXG. Optimized for Wi-Fi 6/6E wired and wireless converged access and higher-bandwidth branch deployments. 16-port 1G, 8-port 10GBASE-T, 10G/5G/2.5G/1G multigigabit, 1000M/100M. Modular uplinks of 40G, 25G, 1G, or 10G/1G. Stackable to 160G, FRU power supplies and fans​.
+
+48-port 1G, multigigabit, 30W PoE+
+C9200-48PXG. Optimized for Wi-Fi 6/6E wired and wireless converged access and higher-bandwidth branch deployments. 40-port 1G, 8-port 10GBASE-T, 10G/5G/2.5G/1G multigigabit, 1000M/100M. Modular uplinks of 40G, 25G, 1G, or 10G/1G. Stackable to 160G, FRU power supplies and fans​.
+
+
+
+Catalyst 9200 PoE+ models
+
+
+24-port 1G, 30W PoE+, enhanced VN
+C9200-24PB. Ideal for improved Cisco SD-Access deployments. 24-port 1G, 30W PoE+. Modular uplinks of 40G, 25G, 1G, or 10G/1G. Stackable to 160G, FRU power supplies and fans​.
+
+48-port 1G, 30W PoE+, enhanced VN
+C9200-48PB. Ideal for improved Cisco SD-Access deployments. 48-port 1G, 30W PoE+. Modular uplinks of 40G, 25G, 1G, or 10G/1G. Stackable to 160G, FRU power supplies and fans​.
+
+24-port 1G, 30W full PoE+
+C9200-24P. Ideal for secure branch and entry-level enterprise environments. 24-port 1G, 30W PoE+. Modular uplinks of 25G, 10G, or 1G. Stackable to 80G, FRU power supplies and fans​.
+
+48-port 1G, 30W full PoE+
+C9200-48P. Ideal for secure branch and entry-level enterprise environments. 48-port 1G, 30W PoE+. Modular uplinks of 25G, 10G, or 1G. Stackable to 80G, FRU power supplies and fans​.
+
+48-port 1G, 30W partial PoE+
+C9200-48PL. Ideal for secure branch and entry-level enterprise environments. 48-port 1G, 30W partial PoE+. Modular uplinks of 25G, 10G, or 1G. Stackable to 80G, FRU power supplies and fans​.
+
+
+
+
+Catalyst 9200 data models	
+
+24-port 1G, data
+C9200-24T. Ideal for secure branch and entry-level enterprise environments. 24-port 1G, data. Modular uplinks of 25G, 10G, or 1G. Stackable to 80G, FRU power supplies and fans​.
+
+
+48-port 1G, data
+C9200-48T. Ideal for secure branch and entry-level enterprise environments. 48-port 1G, data. Modular uplinks of 25G, 10G, or 1G. Stackable to 80G, FRU power supplies and fans.
+
+
+
+Catalyst 9200L multigigabit, PoE+ models
+
+24-port 1G, multigigabit, 30W PoE+
+C9200L-24PXG-2Y. C9200L-24PXG-4X. Designed for branch wired and wireless converged access. 16-port 1G, 8-port 10GBASE-T, 10G/5G/2.5G/1G multigigabit, 1000M/100M. Two 25G/10G/1G fixed uplinks or four 10G/1G fixed uplinks. Stackable to 160G, FRU power supplies and fixed redundant fans​.
+
+48-port 1G, multigigabit, 30W PoE+
+C9200L-48PXG-2Y. Optimized for Wi-Fi 6/6E wired and wireless converged access and higher-bandwidth branch deployments. 40-port 1G, 8-port 10GBASE-T, 10G/5G/2.5G/1G multigigabit, 1000M/100M. Two 25G/10G/1G fixed uplinks or four 10G/1G fixed uplinks. Stackable to 160G, FRU power supplies and fixed redundant fans.
+
+
+
+Catalyst 9200L PoE+ models
+
+
+24-port 1G, 30W full PoE+
+C9200L-24P-4G. C9200L-24P-4X. Cost-effective foundation for small and branch networks. 24-port 1G, 30W PoE+. Four 1G or 10G/1G fixed uplinks. Stackable to 80G, FRU power supplies and fixed redundant fans​.
+
+
+48-port 1G, 30W full PoE+
+C9200L-48P-4G. C9200L-48P-4X. Cost-effective foundation for small and branch networks. 48-port 1G, 30W PoE+. Four 1G or 10G/1G fixed uplinks. Stackable to 80G, FRU power supplies and fixed redundant fans​.
+
+48-port 1G, 30W partial PoE+
+C9200L-48PL-4G. C9200L-48PL-4X. Cost-effective foundation for small and branch networks. 48-port 1G, partial 30W PoE+. Four 1G or 10G/1G fixed uplinks. Stackable to 80G, FRU power supplies and fixed redundant fans.
+
+
+
+
+Catalyst 9200L data models
+
+
+24-port 1G, data
+C9200L-24T-4G. C9200L-24T-4X. Cost-effective foundation for small and branch networks. 24-port 1G, data. Four 1G or 10G/1G fixed uplinks. Stackable to 80G, FRU power supplies and fixed redundant fans​.
+
+48-port 1G, data
+C9200L-48T-4G. C9200L-48T-4X. Cost-effective foundation for small and branch networks. 48-port 1G, data. Four 1G or 10G/1G fixed uplinks. Stackable to 80G, FRU power supplies and fixed redundant fans​.
+
+
+
+Catalyst 9200CX compact models
+
+
+8-port 1G, multigigabit, 60W UPOE
+C9200CX-8UXG-2X. C9200CX-8UXG-2XH. Ideal for use in limited spaces and smart buildings. 4-port 1G, 4-port multigigabit, 60W UPOE. Two 10G SFP+ fixed uplinks. AC or AC/DC options. Compact and fanless​.
+
+8-port 1G, 30W PoE+
+C9200CX-8P-2X2G. C9200CX-8P-2XGH. C9200CX-8PT-2G. C9200CX-8PT. Ideal for use in limited spaces and smart buildings. 8-port 1G, 30W PoE+. Two 1G copper, two 10G SFP+ fixed uplinks. AC or AC/DC options. Compact and fanless.
+
+12-port 1G, 30W PoE+
+C9200CX-12P-2X2G. C9200CX-12P-2XGH. Ideal for use in limited spaces and smart buildings. 12-port 1G, 30W PoE+. Two 1G copper, two 10G SFP+ fixed uplinks. AC or AC/DC options. Compact and fanless​.
+
+12-port 1G, data
+C9200CX-12T-2X2G. Ideal for use in limited spaces and smart buildings. 12-port 1G, data. Two 1G copper, one 1G CU PD, two 10G SFP+ fixed uplinks. PoE powered or optional auxiliary 80W AC or DC power adaptor. Compact and fanless​.

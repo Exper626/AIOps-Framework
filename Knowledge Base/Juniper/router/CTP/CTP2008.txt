@@ -1,0 +1,8 @@
+https://www.juniper.net/us/en/products/routers/ctp-series.html
+
+The CTP2008 Circuit to Packet Platform bridges legacy and IP worlds for circuit-switched applications. Designed for the U.S. and Australian markets, this 1 U rack-mountable chassis supports up to eight software-configurable circuit emulation interfaces.
+Up to 8 circuit emulation interfaces
+Serial, T1/E1, and 4WTO 
+Analog interface options
+250W power supply
+Web-based management system

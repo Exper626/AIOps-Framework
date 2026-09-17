@@ -1,0 +1,36 @@
+https://www.cisco.com/site/us/en/products/collateral/networking/sdwan-routers/8000-secure-routers/8100-series-secure-routers-ds.html
+
+Overview
+Cisco 8100 Series Secure Routers deliver secure networking simplified. Powered by the all-new secure networking processor and the unified Cisco secure networking platform, the Cisco 8100 Series Secure Routers deliver robust, platform-level security, advanced performance engineering via routing and SD-WAN, and on-premises, infrastructure-as-code, or cloud management flexibility that enables businesses to seamlessly scale and grow. Each class of secure routers is designed to deliver risk reduction, enhanced reliability, and future readiness.
+
+
+Platform highlights
+Purpose-built for small branch environments, Cisco 8100 Series Secure Routers deliver enterprise-grade security and high performance in a compact, energy-efficient form factor. With integrated next-generation firewall, Zero Trust capabilities, and SASE-ready architecture, the 8100 Series empowers small sites to operate securely and reliably—simplifying management while scaling with your business needs.
+
+
+Use cases
+Secure routing or SD-WAN for point-of-sale transactions
+Reliable and secure connectivity for small branch workers, remote workers, and IoT
+Prioritize application traffic based on centralized policies
+Data Protection with encryption designed to remain unbreakable—even in the era of quantum computing
+Remote asset management and monitoring
+Quick deployment of secure networking for temporary or mobile operations
+
+
+Key features
+Hardware accelerated security and networking
+Fanless model for small branches
+Secure connectivity for small branches
+Secure networking with PQC readiness
+
+
+Models and specifications
+Cisco 8100 Series Secure Routers have the following models: Cisco C8130-G2, C8130H-G2, C8130-VAI-G2, C8130-VAP-G2, C8131-G2, C8140-G2, C8151-G2, C8151-CVAI-G2, C8151-CVAP-G2,C8151H-C-G2 and C8161-G2.
+Cisco C8130-G2 and C8131-G2 with 6 x 1GE
+C8130H-G2 has 5 x 1GE, 1 x 10GE Copper port
+Cisco C8130-VAI-G2 and Cisco C8130-VAP-G2 with 5x 1 GE, 1 x XGSPON/10G BASE-T port and 1 x RJ-11 DSL port
+Cisco C8140-G2 with 10 x 1 GE port
+Cisco C8151-G2 with 10 x 1 GE including 1x PIM 
+Cisco C8161-G2 with 10 x 1 GE including 1 x PIM and 4x POE/2PoE+
+Cisco C8151-CVAI-G2 and C8151-CVAP-G2 with 9x 1 GE, 1 x XGSPON/10G BASE-T port, 1 x RJ-11 DSL port with embedded cellular module
+C8151H-C-G2 has 9 x 1GE, 1 x 10GE Copper port
