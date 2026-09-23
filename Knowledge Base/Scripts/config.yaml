@@ -1,0 +1,11 @@
+knowledge_base:
+  root: "Knowledge Base"
+
+weaviate:
+  collection_name: "NetworkDevice"
+
+embedding:
+  base_url: "https://ai-gateway.vercel.sh/v1"
+  model: "openai/text-embedding-3-small"
+  dim: 1536
+  batch_size: 50
