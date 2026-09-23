@@ -13,8 +13,8 @@ export const guestRegex = /^guest-\d+$/;
 export const DUMMY_PASSWORD = generateDummyPassword();
 
 export const suggestions = [
-  "Can I book a doctor appointment for the same day?",
-  "Where is Nawaloka Hospital located?",
-  "Is Nawaloka Hospital's emergency service available 24/7?",
-  "Can I reserve a hospital room online?",
+  "How do I configure a VLAN on a Cisco switch?",
+  "What is the difference between OSPF and BGP?",
+  "Troubleshoot a router interface that is down",
+  "Explain subnetting for a /26 network",
 ];

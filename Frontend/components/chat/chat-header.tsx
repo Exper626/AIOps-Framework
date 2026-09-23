@@ -24,7 +24,7 @@ function PureChatHeader({
   }
 
   return (
-    <header className="sticky top-0 flex h-14 items-center gap-2 bg-sidebar px-3">
+    <header className="sticky top-0 flex h-14 items-center gap-2 bg-sidebar px-3 md:hidden">
       <Button
         className="md:hidden"
         onClick={toggleSidebar}
@@ -43,12 +43,12 @@ function PureChatHeader({
         <VercelIcon size={14} />
       </Link>
 
-      {!isReadonly && (
+      {/* {!isReadonly && (
         <VisibilitySelector
           chatId={chatId}
           selectedVisibilityType={selectedVisibilityType}
         />
-      )}
+      )} */}
 
 
     </header>

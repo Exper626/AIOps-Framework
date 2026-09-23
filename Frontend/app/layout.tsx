@@ -1,10 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
-
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
+
+
+const geist = Plus_Jakarta_Sans({
+  display: "swap",
+  subsets: ["latin"],
+  variable: "--font-geist",
+});
+
+
 
 export const metadata: Metadata = {
   description: "Next.js chatbot template using the AI SDK.",
@@ -16,11 +24,6 @@ export const viewport = {
   maximumScale: 1,
 };
 
-const geist = Geist({
-  display: "swap",
-  subsets: ["latin"],
-  variable: "--font-geist",
-});
 
 const geistMono = Geist_Mono({
   display: "swap",

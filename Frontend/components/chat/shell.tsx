@@ -22,6 +22,7 @@ import { cn } from "@/lib/utils";
 import { Artifact } from "./artifact";
 import { ChatHeader } from "./chat-header";
 import { DataStreamHandler } from "./data-stream-handler";
+import { Greeting } from "./greeting";
 import { submitEditedMessage } from "./message-editor";
 import { Messages } from "./messages";
 import { MultimodalInput } from "./multimodal-input";
@@ -110,6 +111,9 @@ export function ChatShell() {
     window.location.href = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/`;
   }, []);
 
+  // Empty chat: greeting + input centered. After the first message: normal layout.
+  const isEmptyChat = messages.length === 0 && !isLoading && !editingMessage;
+
   return (
     <>
       <div className="flex h-dvh w-full flex-row overflow-hidden">
@@ -125,27 +129,51 @@ export function ChatShell() {
             selectedVisibilityType={visibilityType}
           />
 
-          <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-background md:rounded-tl-[12px] md:border-t md:border-l md:border-border/40">
-            <Messages
-              addToolApprovalResponse={addToolApprovalResponse}
-              chatId={chatId}
-              isArtifactVisible={isArtifactVisible}
-              isLoading={isLoading}
-              isReadonly={isReadonly}
-              messages={messages}
-              onEditMessage={handleEditMessage}
-              regenerate={regenerate}
-              selectedModelId={currentModelId}
-              setMessages={setMessages}
-              status={status}
-              votes={votes}
-            />
+          <div
+            className={cn(
+              "relative flex min-h-0 flex-1 flex-col overflow-hidden bg-background md:rounded-tl-[12px] md:border-t md:border-l md:border-border/40",
+              isEmptyChat && "justify-center"
+            )}
+          >
+            {isEmptyChat && (
+              <div className="mb-8">
+                <Greeting />
+              </div>
+            )}
 
-            <div className="sticky bottom-0 z-1 mx-auto flex w-full max-w-4xl gap-2 border-t-0 bg-background px-2 pb-3 md:px-4 md:pb-4">
+            <div
+              className={cn(
+                "flex min-h-0 flex-1 flex-col",
+                isEmptyChat && "hidden"
+              )}
+            >
+              <Messages
+                addToolApprovalResponse={addToolApprovalResponse}
+                chatId={chatId}
+                isArtifactVisible={isArtifactVisible}
+                isLoading={isLoading}
+                isReadonly={isReadonly}
+                messages={messages}
+                onEditMessage={handleEditMessage}
+                regenerate={regenerate}
+                selectedModelId={currentModelId}
+                setMessages={setMessages}
+                status={status}
+                votes={votes}
+              />
+            </div>
+
+            <div
+              className={cn(
+                "sticky bottom-0 z-1 mx-auto flex w-full gap-2 border-t-0 bg-background px-2 pb-3 md:px-4 md:pb-4",
+                isEmptyChat ? "max-w-3xl" : "max-w-4xl"
+              )}
+            >
               {!isReadonly && (
                 <MultimodalInput
                   attachments={attachments}
                   chatId={chatId}
+                  compact={isEmptyChat}
                   editingMessage={editingMessage}
                   input={input}
                   isLoading={isLoading}

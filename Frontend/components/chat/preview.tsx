@@ -2,30 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
-import { suggestions } from "@/lib/constants";
 import { SparklesIcon } from "./icons";
-
-function PreviewSuggestionButton({
-  suggestion,
-  onAction,
-}: {
-  suggestion: string;
-  onAction: (query?: string) => void;
-}) {
-  const handleClick = useCallback(() => {
-    onAction(suggestion);
-  }, [onAction, suggestion]);
-
-  return (
-    <button
-      className="rounded-xl border border-border/30 bg-card/20 px-3 py-2.5 text-left text-[11px] leading-relaxed text-muted-foreground/70 transition-all duration-200 hover:border-border/60 hover:bg-card/40 hover:text-muted-foreground"
-      onClick={handleClick}
-      type="button"
-    >
-      {suggestion}
-    </button>
-  );
-}
 
 export function Preview() {
   const router = useRouter();
@@ -48,27 +25,17 @@ export function Preview() {
         <div className="flex size-5 items-center justify-center rounded bg-muted/60 ring-1 ring-border/50">
           <SparklesIcon size={10} />
         </div>
-        <span className="text-[13px] text-muted-foreground">Chatbot</span>
+        <span className="text-[13px] text-muted-foreground">Network Assistant</span>
       </div>
 
       <div className="flex flex-1 flex-col items-center justify-center gap-8 px-8">
         <div className="text-center">
           <h2 className="text-xl font-semibold tracking-tight">
-            Nawaloka AI Assistant
+            Sri Lanka Telecom Network Assistant
           </h2>
           <p className="mt-1.5 text-sm text-muted-foreground">
-             Trusted healthcare through technical excellence and patient-centered care.
+            Ask network questions, analyze topology images, or generate network diagrams.
           </p>
-        </div>
-
-        <div className="grid w-full max-w-md grid-cols-2 gap-2">
-          {suggestions.map((suggestion) => (
-            <PreviewSuggestionButton
-              key={suggestion}
-              onAction={handleAction}
-              suggestion={suggestion}
-            />
-          ))}
         </div>
       </div>
 

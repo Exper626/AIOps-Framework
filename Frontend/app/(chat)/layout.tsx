@@ -1,53 +1,86 @@
-import { cookies } from "next/headers";
-import Script from "next/script";
-import { Suspense } from "react";
-import { Toaster } from "sonner";
-import { AppSidebar } from "@/components/chat/app-sidebar";
-import { DataStreamProvider } from "@/components/chat/data-stream-provider";
-import { ChatShell } from "@/components/chat/shell";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { ActiveChatProvider } from "@/hooks/use-active-chat";
-import { auth } from "../(auth)/auth";
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import { ThemeProvider } from "@/components/theme-provider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+import "./globals.css";
+import { SessionProvider } from "next-auth/react";
+
+export const metadata: Metadata = {
+  description: "AI assistant for network questions, topology analysis, and diagram generation.",
+  metadataBase: new URL("https://chat.vercel.ai"),
+  title: "SLT Network Assistant",
+};
+
+export const viewport = {
+  maximumScale: 1,
+};
+
+const geist = Geist({
+  display: "swap",
+  subsets: ["latin"],
+  variable: "--font-geist",
+});
+
+const geistMono = Geist_Mono({
+  display: "swap",
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+});
+
+const LIGHT_THEME_COLOR = "hsl(0 0% 100%)";
+const DARK_THEME_COLOR = "hsl(240deg 10% 3.92%)";
+const THEME_COLOR_SCRIPT = `\
+(function() {
+  var html = document.documentElement;
+  var meta = document.querySelector('meta[name="theme-color"]');
+  if (!meta) {
+    meta = document.createElement('meta');
+    meta.setAttribute('name', 'theme-color');
+    document.head.appendChild(meta);
+  }
+  function updateThemeColor() {
+    var isDark = html.classList.contains('dark');
+    meta.setAttribute('content', isDark ? '${DARK_THEME_COLOR}' : '${LIGHT_THEME_COLOR}');
+  }
+  var observer = new MutationObserver(updateThemeColor);
+  observer.observe(html, { attributes: true, attributeFilter: ['class'] });
+  updateThemeColor();
+})();`;
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <>
-      <Script
-        src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"
-        strategy="lazyOnload"
-      />
-      <DataStreamProvider>
-        <Suspense fallback={<div className="flex h-dvh bg-sidebar" />}>
-          <SidebarShell>{children}</SidebarShell>
-        </Suspense>
-      </DataStreamProvider>
-    </>
-  );
-}
-
-async function SidebarShell({ children }: { children: React.ReactNode }) {
-  const [session, cookieStore] = await Promise.all([auth(), cookies()]);
-  const isCollapsed = cookieStore.get("sidebar_state")?.value !== "true";
-
-  return (
-    <SidebarProvider defaultOpen={!isCollapsed}>
-      <AppSidebar user={session?.user} />
-      <SidebarInset>
-        <Toaster
-          position="top-center"
-          theme="system"
-          toastOptions={{
-            className:
-              "!bg-card !text-foreground !border-border/50 !shadow-[var(--shadow-float)]",
+    <html
+      className={`${geist.variable} ${geistMono.variable}`}
+      lang="en"
+      suppressHydrationWarning
+    >
+      <head>
+        <script
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: "Required"
+          dangerouslySetInnerHTML={{
+            __html: THEME_COLOR_SCRIPT,
           }}
         />
-        <Suspense fallback={<div className="flex h-dvh" />}>
-          <ActiveChatProvider>
-            <ChatShell />
-          </ActiveChatProvider>
-        </Suspense>
-        {children}
-      </SidebarInset>
-    </SidebarProvider>
+      </head>
+      <body className="antialiased">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          disableTransitionOnChange
+          enableSystem
+        >
+          <SessionProvider
+            basePath={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/api/auth`}
+          >
+            <TooltipProvider>{children}</TooltipProvider>
+          </SessionProvider>
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }
