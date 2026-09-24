@@ -1,11 +1,14 @@
 "use client";
 
-import { PenSquareIcon } from "lucide-react";
+import { PanelLeftIcon, PenSquareIcon } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import type { User } from "next-auth";
 import { useCallback } from "react";
+import telecomIcon from "@/app/icon.png";
 import { SidebarHistory } from "@/components/chat/sidebar-history";
 import { SidebarUserNav } from "@/components/chat/sidebar-user-nav";
+import { Button } from "@/components/ui/button";
 import {
   Sidebar,
   SidebarContent,
@@ -17,7 +20,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-  SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
@@ -25,7 +27,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 export function AppSidebar({ user }: { user: User | undefined }) {
   const router = useRouter();
-  const { setOpenMobile, state } = useSidebar();
+  const { setOpenMobile, state, toggleSidebar } = useSidebar();
+  const collapsed = state === "collapsed";
 
   const handleNewChat = useCallback(() => {
     setOpenMobile(false);
@@ -36,23 +39,52 @@ export function AppSidebar({ user }: { user: User | undefined }) {
     <Sidebar collapsible="icon">
       <SidebarHeader className="pb-0 pt-3">
         <SidebarMenu>
-          {/* Toggle sits on the right when open, centred when collapsed */}
+          {/* Open: "SLT" on the left, toggle on the right.
+              Collapsed: the SLT logo, which turns into the open icon on hover. */}
           <SidebarMenuItem
             className={cn(
               "flex flex-row items-center",
-              state === "collapsed" ? "justify-center" : "justify-end"
+              collapsed ? "justify-center" : "justify-between"
             )}
           >
+            {collapsed ? null : (
+              <button
+                className="rounded-lg px-2 py-1 font-semibold text-foreground text-lg tracking-tight"
+                onClick={handleNewChat}
+                type="button"
+              >
+                SLT
+              </button>
+            )}
             <Tooltip>
               <TooltipTrigger asChild>
-                <SidebarTrigger className="size-9 rounded-lg [&_svg]:size-5! text-foreground transition-colors duration-150 hover:bg-foreground/10 hover:text-foreground" />
+                <Button
+                  aria-label={collapsed ? "Open sidebar" : "Close sidebar"}
+                  className="group/toggle size-9 rounded-lg text-foreground transition-colors duration-150 hover:bg-foreground/10 hover:text-foreground [&_svg]:size-5!"
+                  onClick={toggleSidebar}
+                  size="icon-sm"
+                  variant="ghost"
+                >
+                  {collapsed ? (
+                    <>
+                      <Image
+                        alt="SLT"
+                        className="size-7 rounded-lg bg-white object-contain p-1 group-hover/toggle:hidden"
+                        src={telecomIcon}
+                      />
+                      <PanelLeftIcon className="hidden group-hover/toggle:block" />
+                    </>
+                  ) : (
+                    <PanelLeftIcon />
+                  )}
+                </Button>
               </TooltipTrigger>
               <TooltipContent
                 className="hidden md:block"
-                side={state === "collapsed" ? "right" : "bottom"}
+                side={collapsed ? "right" : "bottom"}
                 sideOffset={0}
               >
-                {state === "collapsed" ? "Open sidebar" : "Close sidebar"}
+                {collapsed ? "Open sidebar" : "Close sidebar"}
               </TooltipContent>
             </Tooltip>
           </SidebarMenuItem>
