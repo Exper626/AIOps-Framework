@@ -55,14 +55,14 @@ export function SidebarUserNav({ user }: { user: User }) {
     <SidebarMenu>
       <SidebarMenuItem>
         <SidebarMenuButton
-          className="rounded-lg bg-transparent transition-colors duration-150 hover:bg-sidebar-accent"
+          className="h-10 rounded-lg bg-transparent px-1.5 transition-colors duration-150 hover:bg-foreground/10 group-data-[collapsible=icon]:w-10! group-data-[collapsible=icon]:px-1.5!"
           data-testid="user-nav-button"
           onClick={() => setSettingsOpen(true)}
           size="lg"
           tooltip="Settings"
         >
           <div
-            className="flex size-8 shrink-0 items-center justify-center rounded-full font-medium text-[13px] text-white ring-1 ring-sidebar-border/50"
+            className="flex size-7 shrink-0 items-center justify-center rounded-full font-medium text-[12px] text-white ring-1 ring-sidebar-border/50"
             style={{
               background: `linear-gradient(135deg, oklch(0.45 0.1 ${hue}), oklch(0.3 0.06 ${hue + 40}))`,
             }}
@@ -83,12 +83,7 @@ export function SidebarUserNav({ user }: { user: User }) {
         </SidebarMenuButton>
       </SidebarMenuItem>
 
-      <SettingsDialog
-        isGuest={isGuest}
-        onOpenChange={setSettingsOpen}
-        open={settingsOpen}
-        user={user}
-      />
+      <SettingsDialog onOpenChange={setSettingsOpen} open={settingsOpen} />
     </SidebarMenu>
   );
 }

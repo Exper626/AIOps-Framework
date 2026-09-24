@@ -19,6 +19,9 @@
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
+  --color-composer: var(--composer);
+  --color-suggestion: var(--suggestion);
+  --color-suggestion-hover: var(--suggestion-hover);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
@@ -54,6 +57,10 @@
   --foreground: oklch(0.12 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.12 0 0);
+  /* Chat input box + suggestion cards (start screen) */
+  --composer: oklch(1 0 0);
+  --suggestion: oklch(0.96 0 0);
+  --suggestion-hover: oklch(0.93 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.12 0 0);
   --primary: oklch(0.12 0 0);
@@ -101,6 +108,10 @@
   --foreground: oklch(0.94 0 0);
   --card: oklch(0.225 0 0);
   --card-foreground: oklch(0.94 0 0);
+  /* Chat input box + suggestion cards (start screen) */
+  --composer: oklch(0.305 0 0);
+  --suggestion: oklch(0.235 0 0);
+  --suggestion-hover: oklch(0.27 0 0);
   --popover: oklch(0.225 0 0);
   --popover-foreground: oklch(0.94 0 0);
   --primary: oklch(0.94 0 0);

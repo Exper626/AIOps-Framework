@@ -25,6 +25,11 @@ import { useAutoResume } from "@/hooks/use-auto-resume";
 import { DEFAULT_CHAT_MODEL } from "@/lib/ai/models";
 import type { Vote } from "@/lib/db/schema";
 import { ChatbotError } from "@/lib/errors";
+import {
+  getAgentSettings,
+  getDiagramGenerationEnabled,
+  getModelChoice,
+} from "@/lib/model-settings";
 import type { ChatMessage } from "@/lib/types";
 import { fetcher, fetchWithErrorHandlers, generateUUID } from "@/lib/utils";
 
@@ -74,10 +79,6 @@ export function ActiveChatProvider({ children }: { children: ReactNode }) {
   const chatId = chatIdFromUrl ?? newChatIdRef.current;
 
   const [currentModelId, setCurrentModelId] = useState(DEFAULT_CHAT_MODEL);
-  const currentModelIdRef = useRef(currentModelId);
-  useEffect(() => {
-    currentModelIdRef.current = currentModelId;
-  }, [currentModelId]);
 
   const [input, setInput] = useState("");
   const [showCreditCardAlert, setShowCreditCardAlert] = useState(false);
@@ -166,8 +167,15 @@ export function ActiveChatProvider({ children }: { children: ReactNode }) {
             ...(isToolApprovalContinuation
               ? { messages: request.messages }
               : { message: lastMessage }),
-            selectedChatModel: currentModelIdRef.current,
+            agents: getAgentSettings(),
+            diagramGeneration: getDiagramGenerationEnabled(),
+            modelChoices: {
+              text: getModelChoice("text"),
+              vision: getModelChoice("vision"),
+            },
+            selectedChatModel: getModelChoice("text").modelId,
             selectedVisibilityType: visibility,
+            selectedVisionModel: getModelChoice("vision").modelId,
             ...request.body,
           },
         };

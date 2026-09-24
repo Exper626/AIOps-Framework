@@ -9,7 +9,13 @@ import { after } from "next/server";
 import { createResumableStreamContext } from "resumable-stream";
 import { auth, type UserType } from "@/app/(auth)/auth";
 import { entitlementsByUserType } from "@/lib/ai/entitlements";
-import { allowedModelIds, DEFAULT_CHAT_MODEL } from "@/lib/ai/models";
+import {
+  allowedModelIds,
+  allowedVisionModelIds,
+  DEFAULT_CHAT_MODEL,
+  DEFAULT_VISION_MODEL,
+  isAllowedModelId,
+} from "@/lib/ai/models";
 import { callBackend, type HistoryMessage } from "@/lib/backend";
 import {
   createStreamId,
@@ -104,7 +110,11 @@ export async function POST(request: Request) {
       id,
       message,
       messages,
+      agents,
+      diagramGeneration,
+      modelChoices,
       selectedChatModel,
+      selectedVisionModel,
       selectedVisibilityType,
     } = requestBody;
 
@@ -121,9 +131,37 @@ export async function POST(request: Request) {
       return new ChatbotError("unauthorized:chat").toResponse();
     }
 
-    const chatModel = allowedModelIds.has(selectedChatModel)
-      ? selectedChatModel
-      : DEFAULT_CHAT_MODEL;
+    // Self-hosted models are passed through as-is; API models must exist on
+    // the AI Gateway, otherwise the default is used
+    const textSelfHosted =
+      modelChoices?.text.source === "self-hosted" &&
+      Boolean(modelChoices.text.baseUrl);
+    const visionSelfHosted =
+      modelChoices?.vision.source === "self-hosted" &&
+      Boolean(modelChoices.vision.baseUrl);
+
+    const [chatModelOk, visionModelOk] = await Promise.all([
+      textSelfHosted || isAllowedModelId(selectedChatModel, allowedModelIds),
+      visionSelfHosted ||
+        (selectedVisionModel
+          ? isAllowedModelId(selectedVisionModel, allowedVisionModelIds)
+          : false),
+    ]);
+    const chatModel = chatModelOk ? selectedChatModel : DEFAULT_CHAT_MODEL;
+    const visionModel =
+      visionModelOk && selectedVisionModel
+        ? selectedVisionModel
+        : DEFAULT_VISION_MODEL;
+    const modelSources = {
+      textBaseUrl: textSelfHosted ? modelChoices?.text.baseUrl : undefined,
+      textSource: textSelfHosted ? ("self-hosted" as const) : ("api" as const),
+      visionBaseUrl: visionSelfHosted
+        ? modelChoices?.vision.baseUrl
+        : undefined,
+      visionSource: visionSelfHosted
+        ? ("self-hosted" as const)
+        : ("api" as const),
+    };
 
     await checkIpRateLimit(ipAddress(request));
 
@@ -228,15 +266,25 @@ export async function POST(request: Request) {
           model: chatModel,
         });
 
-        // Build last 4 turns of history (excluding the current message)
+        // Full history of this chat (excluding the current message)
         const history: HistoryMessage[] = uiMessages
-          .slice(0, -1)          // drop the current user message
-          .slice(-4)             // last 4 messages max
+          .slice(0, -1) // drop the current user message
           .flatMap((m) => {
             const text = getMessageText(m);
             if (!text) return [];
             return [{ role: m.role as "user" | "assistant", content: text }];
           });
+
+        // The answer is shown piece by piece as the backend streams it
+        const textId = generateUUID();
+        let textStarted = false;
+        const writeDelta = (delta: string) => {
+          if (!textStarted) {
+            dataStream.write({ id: textId, type: "text-start" });
+            textStarted = true;
+          }
+          dataStream.write({ delta, id: textId, type: "text-delta" });
+        };
 
         const backendResponse = await callBackend(
           userMessage,
@@ -256,6 +304,13 @@ export async function POST(request: Request) {
           },
           history,
           session?.user?.id,
+          {
+            agents: agents ?? {},
+            diagramGeneration: diagramGeneration ?? true,
+            ...modelSources,
+            onDelta: writeDelta,
+            visionModel,
+          },
         );
 
         console.log("RENDER RESPONSE:", backendResponse);
@@ -270,18 +325,10 @@ export async function POST(request: Request) {
           );
         }
 
-        const textId = generateUUID();
-
-        dataStream.write({
-          type: "text-start",
-          id: textId,
-        });
-
-        dataStream.write({
-          type: "text-delta",
-          id: textId,
-          delta: backendResponse.message,
-        });
+        // A backend that doesn't stream sends the whole answer at the end
+        if (!textStarted) {
+          writeDelta(backendResponse.message);
+        }
 
         dataStream.write({
           type: "text-end",

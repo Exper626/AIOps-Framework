@@ -63,6 +63,37 @@ export const chatModels: ChatModel[] = [
   },
 ];
 
+// Models that can read images (topology screenshots, photos of equipment).
+// IDs are Vercel AI Gateway model IDs, same format as chatModels above.
+export const DEFAULT_VISION_MODEL = "google/gemini-2.5-flash";
+
+export const visionModels: ChatModel[] = [
+  {
+    description: "Fast, low-cost image understanding",
+    id: "google/gemini-2.5-flash",
+    name: "Gemini 2.5 Flash",
+    provider: "google",
+  },
+  {
+    description: "Stronger reasoning over complex diagrams",
+    id: "google/gemini-2.5-pro",
+    name: "Gemini 2.5 Pro",
+    provider: "google",
+  },
+  {
+    description: "Balanced vision model",
+    id: "openai/gpt-4.1-mini",
+    name: "GPT-4.1 mini",
+    provider: "openai",
+  },
+  {
+    description: "Moonshot AI multimodal model",
+    id: "moonshotai/kimi-k2.5",
+    name: "Kimi K2.5",
+    provider: "moonshotai",
+  },
+];
+
 export async function getCapabilities(): Promise<
   Record<string, ModelCapabilities>
 > {
@@ -149,11 +180,24 @@ export async function getAllGatewayModels(): Promise<
   }
 }
 
+// True when the ID is in one of our lists or is any language model on the gateway.
+export async function isAllowedModelId(
+  id: string,
+  curated: Set<string>
+): Promise<boolean> {
+  if (curated.has(id)) {
+    return true;
+  }
+  const gatewayModels = await getAllGatewayModels();
+  return gatewayModels.some((m) => m.id === id);
+}
+
 export function getActiveModels(): ChatModel[] {
   return chatModels;
 }
 
 export const allowedModelIds = new Set(chatModels.map((m) => m.id));
+export const allowedVisionModelIds = new Set(visionModels.map((m) => m.id));
 
 export const modelsByProvider = chatModels.reduce(
   (acc, model) => {

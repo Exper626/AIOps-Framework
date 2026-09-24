@@ -1,6 +1,8 @@
 "use client";
 import type { UseChatHelpers } from "@ai-sdk/react";
-import { useCallback } from "react";
+import Image from "next/image";
+import { useCallback, useEffect, useState } from "react";
+import telecomIcon from "@/app/icon.png";
 import type { Vote } from "@/lib/db/schema";
 import type { ChatMessage } from "@/lib/types";
 import { cn, sanitizeText } from "@/lib/utils";
@@ -17,15 +19,33 @@ import { useDataStream } from "./data-stream-provider";
 import { DebugPanel } from "./debug-panel";
 import { DocumentToolResult } from "./document";
 import { DocumentPreview } from "./document-preview";
-import { SparklesIcon } from "./icons";
 import { MessageActions } from "./message-actions";
 import { MessageReasoning } from "./message-reasoning";
 import { PreviewAttachment } from "./preview-attachment";
 import { Weather } from "./weather";
 
+// Shown while the backend hasn't sent a status of its own.
+// Advances every few seconds and stays on the last one.
+const LOADING_MESSAGES = [
+  "Thinking...",
+  "Reading your question...",
+  "Checking network knowledge...",
+  "Preparing your answer...",
+];
+
 function WaitingText() {
   const { waitingStatus } = useDataStream();
-  const waitingText = waitingStatus?.message ?? "Waiting...";
+  const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    if (step >= LOADING_MESSAGES.length - 1) {
+      return;
+    }
+    const timer = setTimeout(() => setStep((s) => s + 1), 2500);
+    return () => clearTimeout(timer);
+  }, [step]);
+
+  const waitingText = waitingStatus?.message ?? LOADING_MESSAGES[step];
 
   return (
     <div className="flex min-h-[calc(13px*1.65)] min-w-0 items-center text-[13px] leading-[1.65]">
@@ -36,6 +56,18 @@ function WaitingText() {
       >
         {waitingText}
       </Shimmer>
+    </div>
+  );
+}
+
+function AssistantAvatar() {
+  return (
+    <div className="flex size-7 items-center justify-center overflow-hidden rounded-lg bg-white ring-1 ring-border/50">
+      <Image
+        alt="Sri Lanka Telecom"
+        className="size-5 object-contain"
+        src={telecomIcon}
+      />
     </div>
   );
 }
@@ -178,7 +210,7 @@ const PurePreviewMessage = ({
       return (
         <MessageContent
           className={cn("text-[13px] leading-[1.65]", {
-            "w-fit max-w-[min(80%,56ch)] overflow-hidden break-words rounded-2xl rounded-br-lg border border-border/30 bg-gradient-to-br from-secondary to-muted px-3.5 py-2 shadow-[var(--shadow-card)]":
+            "w-fit max-w-[min(80%,56ch)] overflow-hidden break-words rounded-3xl bg-composer px-4 py-2.5":
               message.role === "user",
           })}
           data-testid="message-content"
@@ -383,9 +415,7 @@ const PurePreviewMessage = ({
       >
         {isAssistant && (
           <div className="flex h-[calc(13px*1.65)] shrink-0 items-center">
-            <div className="flex size-7 items-center justify-center rounded-lg bg-muted/60 text-muted-foreground ring-1 ring-border/50">
-              <SparklesIcon size={13} />
-            </div>
+            <AssistantAvatar />
           </div>
         )}
         {isAssistant ? (
@@ -408,9 +438,7 @@ export const ThinkingMessage = () => (
   >
     <div className="flex items-start gap-3">
       <div className="flex h-[calc(13px*1.65)] shrink-0 items-center">
-        <div className="flex size-7 items-center justify-center rounded-lg bg-muted/60 text-muted-foreground ring-1 ring-border/50">
-          <SparklesIcon size={13} />
-        </div>
+        <AssistantAvatar />
       </div>
 
       <WaitingText />

@@ -478,7 +478,7 @@ function SidebarMenuItem({ className, ...props }: React.ComponentProps<"li">) {
 }
 
 const sidebarMenuButtonVariants = cva(
-  "peer/menu-button group/menu-button flex w-full items-center gap-2 overflow-hidden px-2.5 text-left text-[13px] text-sidebar-foreground/70 outline-hidden transition-colors duration-150 group-has-data-[sidebar=menu-action]/menu-item:pr-8 group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! hover:text-sidebar-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-open:hover:text-sidebar-accent-foreground data-active:font-medium data-active:text-sidebar-accent-foreground [&_svg]:size-4 [&_svg]:shrink-0 [&>span:last-child]:truncate",
+  "peer/menu-button group/menu-button flex w-full items-center gap-2 overflow-hidden px-2.5 text-left text-[13px] text-sidebar-foreground/70 outline-hidden transition-colors duration-150 group-has-data-[sidebar=menu-action]/menu-item:pr-8 group-data-[collapsible=icon]:w-8! group-data-[collapsible=icon]:px-1.5! hover:text-sidebar-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-open:hover:text-sidebar-accent-foreground data-active:font-medium data-active:text-sidebar-accent-foreground [&_svg]:size-4 [&_svg]:shrink-0 [&>span:last-child]:truncate",
   {
     variants: {
       variant: {
@@ -489,7 +489,7 @@ const sidebarMenuButtonVariants = cva(
       size: {
         default: "h-8 text-[13px]",
         sm: "h-8 text-xs",
-        lg: "h-14 px-3 text-sm group-data-[collapsible=icon]:p-0!",
+        lg: "h-14 px-3 text-sm group-data-[collapsible=icon]:px-0!",
       },
     },
     defaultVariants: {
@@ -542,6 +542,7 @@ function SidebarMenuButton({
       <TooltipContent
         side="right"
         align="center"
+        sideOffset={6}
         hidden={state !== "collapsed" || isMobile}
         {...tooltip}
       />

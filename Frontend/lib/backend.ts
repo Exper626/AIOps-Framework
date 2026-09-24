@@ -4,10 +4,16 @@ export type BackendChatResult = {
 };
 
 export type BackendProgressEvent = {
-  phase: "router" | "vector" | "sql" | "answer";
+  phase: "context" | "query" | "router" | "vector" | "sql" | "answer";
   message: string;
   modelId?: string;
   modelName?: string;
+};
+
+// One piece of the answer as the model writes it
+type BackendDeltaEvent = {
+  phase: "delta";
+  delta: string;
 };
 
 type BackendDoneEvent = {
@@ -24,6 +30,7 @@ type BackendErrorEvent = {
 
 type BackendStreamEvent =
   | BackendProgressEvent
+  | BackendDeltaEvent
   | BackendDoneEvent
   | BackendErrorEvent;
 
@@ -38,6 +45,16 @@ export async function callBackend(
   onProgress?: (event: BackendProgressEvent) => void,
   history: HistoryMessage[] = [],
   sessionId?: string,
+  options: {
+    visionModel?: string;
+    agents?: Record<string, boolean>;
+    diagramGeneration?: boolean;
+    textSource?: "api" | "self-hosted";
+    textBaseUrl?: string;
+    visionSource?: "api" | "self-hosted";
+    visionBaseUrl?: string;
+    onDelta?: (delta: string) => void;
+  } = {},
 ): Promise<BackendChatResult> {
   const backendUrl = process.env.BACKEND_URL;
 
@@ -53,6 +70,15 @@ export async function callBackend(
       model,
       history,
       session_id: sessionId ?? null,
+      vision_model: options.visionModel ?? null,
+      agents: options.agents ?? {},
+      diagram_generation: options.diagramGeneration ?? true,
+      // "api" = call through the Vercel AI Gateway, "self-hosted" = call the
+      // OpenAI-compatible server at *_base_url
+      text_source: options.textSource ?? "api",
+      text_base_url: options.textBaseUrl ?? null,
+      vision_source: options.visionSource ?? "api",
+      vision_base_url: options.visionBaseUrl ?? null,
     }),
     cache: "no-store",
   });
@@ -83,6 +109,11 @@ export async function callBackend(
 
     if (event.phase === "error") {
       throw new Error(event.error);
+    }
+
+    if (event.phase === "delta") {
+      options.onDelta?.(event.delta);
+      return;
     }
 
     if (event.phase === "done") {

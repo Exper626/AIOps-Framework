@@ -20,6 +20,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 export function AppSidebar({ user }: { user: User | undefined }) {
@@ -35,12 +36,22 @@ export function AppSidebar({ user }: { user: User | undefined }) {
     <Sidebar collapsible="icon">
       <SidebarHeader className="pb-0 pt-3">
         <SidebarMenu>
-          <SidebarMenuItem className="flex flex-row items-center">
+          {/* Toggle sits on the right when open, centred when collapsed */}
+          <SidebarMenuItem
+            className={cn(
+              "flex flex-row items-center",
+              state === "collapsed" ? "justify-center" : "justify-end"
+            )}
+          >
             <Tooltip>
               <TooltipTrigger asChild>
-                <SidebarTrigger className="size-8 text-sidebar-foreground/60 transition-colors duration-150 hover:text-sidebar-foreground" />
+                <SidebarTrigger className="size-9 rounded-lg [&_svg]:size-5! text-foreground transition-colors duration-150 hover:bg-foreground/10 hover:text-foreground" />
               </TooltipTrigger>
-              <TooltipContent className="hidden md:block" side="right">
+              <TooltipContent
+                className="hidden md:block"
+                side={state === "collapsed" ? "right" : "bottom"}
+                sideOffset={0}
+              >
                 {state === "collapsed" ? "Open sidebar" : "Close sidebar"}
               </TooltipContent>
             </Tooltip>
@@ -48,16 +59,16 @@ export function AppSidebar({ user }: { user: User | undefined }) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup className="pt-1">
+        <SidebarGroup className="pt-3">
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton
-                  className="h-8 rounded-lg border border-sidebar-border text-[13px] text-sidebar-foreground/70 transition-colors duration-150 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+                  className="h-8 rounded-lg px-1.5 text-[13px] [&>svg]:size-5 text-foreground transition-colors duration-150 hover:bg-foreground/10 hover:text-foreground"
                   onClick={handleNewChat}
                   tooltip="New Chat"
                 >
-                  <PenSquareIcon className="size-4" />
+                  <PenSquareIcon />
                   <span className="font-medium">New chat</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -66,7 +77,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
         </SidebarGroup>
         <SidebarHistory user={user} />
       </SidebarContent>
-      <SidebarFooter className="border-t border-sidebar-border pt-2 pb-3">
+      <SidebarFooter className="border-t border-sidebar-border px-1 pt-2 pb-3">
         {user ? <SidebarUserNav user={user} /> : null}
       </SidebarFooter>
       <SidebarRail />

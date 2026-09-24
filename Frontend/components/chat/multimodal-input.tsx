@@ -17,9 +17,7 @@ import {
   useState,
 } from "react";
 import { toast } from "sonner";
-import useSWR from "swr";
 import { useLocalStorage, useWindowSize } from "usehooks-ts";
-import type { ModelCapabilities } from "@/lib/ai/models";
 import type { Attachment, ChatMessage } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import {
@@ -57,7 +55,6 @@ function PureMultimodalInput({
   editingMessage,
   onCancelEdit,
   isLoading,
-  compact = false,
 }: {
   chatId: string;
   input: string;
@@ -78,7 +75,6 @@ function PureMultimodalInput({
   editingMessage?: ChatMessage | null;
   onCancelEdit?: () => void;
   isLoading?: boolean;
-  compact?: boolean;
 }) {
   const router = useRouter();
   const { setTheme, resolvedTheme } = useTheme();
@@ -114,9 +110,8 @@ function PureMultimodalInput({
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploadQueue, setUploadQueue] = useState<string[]>([]);
-  // Single-row pill layout for the empty start screen (falls back to normal when files are attached)
-  const isCompact =
-    compact && attachments.length === 0 && uploadQueue.length === 0;
+  // Single-row pill layout that grows with the text (falls back to stacked when files are attached)
+  const isCompact = attachments.length === 0 && uploadQueue.length === 0;
   const [slashOpen, setSlashOpen] = useState(false);
   const [slashQuery, setSlashQuery] = useState("");
   const [slashIndex, setSlashIndex] = useState(0);
@@ -444,6 +439,7 @@ function PureMultimodalInput({
       ) : null}
 
       <input
+        accept="image/png,image/jpeg"
         className="pointer-events-none fixed -top-4 -left-4 size-0.5 opacity-0"
         multiple
         onChange={handleFileChange}
@@ -465,7 +461,8 @@ function PureMultimodalInput({
 
       <PromptInput
         className={cn(
-          "[&>div]:rounded-2xl [&>div]:border [&>div]:border-border/30 [&>div]:bg-card/70 [&>div]:shadow-[var(--shadow-composer)] [&>div]:transition-shadow [&>div]:duration-300 [&>div]:focus-within:shadow-[var(--shadow-composer-focus)]",
+          // No focus ring/highlight when the box is clicked; it looks the same focused or not
+          "[&>div]:rounded-2xl [&>div]:border [&>div]:border-border/60! [&>div]:bg-composer [&>div]:shadow-[var(--shadow-composer)] [&>div]:ring-0!",
           isCompact && "[&>div]:flex-row! [&>div]:items-end! [&>div]:rounded-[28px]!"
         )}
         onSubmit={handlePromptSubmit}
@@ -499,10 +496,10 @@ function PureMultimodalInput({
         )}
         <PromptInputTextarea
           className={cn(
-            "text-[13px] leading-relaxed placeholder:text-muted-foreground/35",
+            "text-[13px] leading-relaxed placeholder:text-foreground/60",
             isCompact
               ? "min-h-0 flex-1 px-5 py-3.5"
-              : "min-h-24 px-4 pt-3.5 pb-1.5"
+              : "min-h-0 px-4 pt-3.5 pb-1.5"
           )}
           data-testid="multimodal-input"
           onChange={handleInput}
@@ -519,11 +516,7 @@ function PureMultimodalInput({
           )}
         >
           <PromptInputTools>
-            <AttachmentsButton
-              fileInputRef={fileInputRef}
-              selectedModelId={selectedModelId}
-              status={status}
-            />
+            <AttachmentsButton fileInputRef={fileInputRef} status={status} />
           </PromptInputTools>
 
           {status === "submitted" ? (
@@ -534,7 +527,7 @@ function PureMultimodalInput({
                 "h-7 w-7 rounded-xl transition-all duration-200",
                 input.trim()
                   ? "bg-foreground text-background hover:opacity-85 active:scale-95"
-                  : "bg-muted text-muted-foreground/25 cursor-not-allowed"
+                  : "bg-foreground/25 text-foreground/80 cursor-not-allowed disabled:opacity-100"
               )}
               data-testid="send-button"
               disabled={!input.trim() || uploadQueue.length > 0}
@@ -577,9 +570,6 @@ export const MultimodalInput = memo(
     if (prevProps.messages.length !== nextProps.messages.length) {
       return false;
     }
-    if (prevProps.compact !== nextProps.compact) {
-      return false;
-    }
 
     return true;
   }
@@ -611,21 +601,10 @@ const AttachmentPreviewItem = memo(PureAttachmentPreviewItem);
 function PureAttachmentsButton({
   fileInputRef,
   status,
-  selectedModelId,
 }: {
   fileInputRef: React.MutableRefObject<HTMLInputElement | null>;
   status: UseChatHelpers<ChatMessage>["status"];
-  selectedModelId: string;
 }) {
-  const { data: modelsResponse } = useSWR(
-    `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/api/models`,
-    (url: string) => fetch(url).then((r) => r.json()),
-    { dedupingInterval: 3_600_000, revalidateOnFocus: false }
-  );
-
-  const caps: Record<string, ModelCapabilities> | undefined =
-    modelsResponse?.capabilities ?? modelsResponse;
-  const hasVision = caps?.[selectedModelId]?.vision ?? false;
   const handleClick = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
@@ -637,14 +616,12 @@ function PureAttachmentsButton({
   return (
     <Button
       className={cn(
-        "h-7 w-7 rounded-lg border border-border/40 p-1 transition-colors",
-        hasVision
-          ? "text-foreground hover:border-border hover:text-foreground"
-          : "text-muted-foreground/30 cursor-not-allowed"
+        "h-7 w-7 rounded-lg p-1 text-foreground/80 transition-colors hover:bg-foreground/10 hover:text-foreground"
       )}
       data-testid="attachments-button"
-      disabled={status !== "ready" || !hasVision}
+      disabled={status !== "ready"}
       onClick={handleClick}
+      title="Attach images (PNG or JPEG)"
       variant="ghost"
     >
       <PaperclipIcon size={14} style={{ height: 14, width: 14 }} />

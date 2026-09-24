@@ -166,15 +166,13 @@ export function ChatShell() {
 
             <div
               className={cn(
-                "sticky bottom-0 z-1 mx-auto flex w-full gap-2 border-t-0 bg-background px-2 pb-3 md:px-4 md:pb-4",
-                isEmptyChat ? "max-w-3xl" : "max-w-4xl"
+                "sticky bottom-0 z-1 mx-auto flex w-full max-w-3xl gap-2 border-t-0 bg-background px-2 pb-5 md:px-4 md:pb-8"
               )}
             >
               {!isReadonly && (
                 <MultimodalInput
                   attachments={attachments}
                   chatId={chatId}
-                  compact={isEmptyChat}
                   editingMessage={editingMessage}
                   input={input}
                   isLoading={isLoading}
