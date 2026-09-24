@@ -26,6 +26,7 @@ import { Greeting } from "./greeting";
 import { submitEditedMessage } from "./message-editor";
 import { Messages } from "./messages";
 import { MultimodalInput } from "./multimodal-input";
+import { SuggestedActions } from "./suggested-actions";
 
 export function ChatShell() {
   const {
@@ -193,6 +194,16 @@ export function ChatShell() {
                 />
               )}
             </div>
+
+            {isEmptyChat && !isReadonly && (
+              <div className="mx-auto w-full max-w-3xl px-2 md:px-4">
+                <SuggestedActions
+                  chatId={chatId}
+                  selectedVisibilityType={visibilityType}
+                  sendMessage={sendMessage}
+                />
+              </div>
+            )}
           </div>
         </div>
 
