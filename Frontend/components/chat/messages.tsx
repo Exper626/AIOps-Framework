@@ -22,6 +22,7 @@ type MessagesProps = {
   isLoading?: boolean;
   selectedModelId: string;
   onEditMessage?: (message: ChatMessage) => void;
+  onRetryMessage?: (message: ChatMessage) => Promise<void>;
 };
 
 function PureMessages({
@@ -37,6 +38,7 @@ function PureMessages({
   isLoading,
   selectedModelId: _selectedModelId,
   onEditMessage,
+  onRetryMessage,
 }: MessagesProps) {
   const {
     containerRef: messagesContainerRef,
@@ -90,6 +92,10 @@ function PureMessages({
               key={message.id}
               message={message}
               onEdit={onEditMessage}
+              // Retrying an older answer would throw away everything after it
+              onRetry={
+                index === messages.length - 1 ? onRetryMessage : undefined
+              }
               regenerate={regenerate}
               requiresScrollPadding={
                 hasSentMessage && index === messages.length - 1

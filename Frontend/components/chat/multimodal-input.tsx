@@ -496,7 +496,8 @@ function PureMultimodalInput({
         )}
         <PromptInputTextarea
           className={cn(
-            "text-[13px] leading-relaxed placeholder:text-foreground/60",
+            // md: variant too, or the base textarea's md:text-sm wins on desktop
+            "text-[15px] leading-relaxed placeholder:text-foreground/60 md:text-[15px]",
             isCompact
               ? "min-h-0 flex-1 px-5 py-3.5"
               : "min-h-0 px-4 pt-3.5 pb-1.5"

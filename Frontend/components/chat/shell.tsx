@@ -23,7 +23,7 @@ import { Artifact } from "./artifact";
 import { ChatHeader } from "./chat-header";
 import { DataStreamHandler } from "./data-stream-handler";
 import { Greeting } from "./greeting";
-import { submitEditedMessage } from "./message-editor";
+import { retryAssistantMessage, submitEditedMessage } from "./message-editor";
 import { Messages } from "./messages";
 import { MultimodalInput } from "./multimodal-input";
 import { SuggestedActions } from "./suggested-actions";
@@ -59,6 +59,10 @@ export function ChatShell() {
 
   const stopRef = useRef(stop);
   stopRef.current = stop;
+
+  // Message actions are memoized, so the retry handler reads the latest list
+  const messagesRef = useRef(messages);
+  messagesRef.current = messages;
 
   const prevChatIdRef = useRef(chatId);
   useEffect(() => {
@@ -104,6 +108,17 @@ export function ChatShell() {
     setInput("");
   }, [editingMessage, input, regenerate, setInput, setMessages]);
 
+  const handleRetryMessage = useCallback(
+    (msg: ChatMessage) =>
+      retryAssistantMessage({
+        message: msg,
+        messages: messagesRef.current,
+        regenerate,
+        setMessages,
+      }),
+    [regenerate, setMessages]
+  );
+
   const handleActivateGateway = useCallback(() => {
     window.open(
       "https://vercel.com/d?to=%2F%5Bteam%5D%2F%7E%2Fai%3Fmodal%3Dadd-credit-card",
@@ -137,7 +152,7 @@ export function ChatShell() {
             )}
           >
             {isEmptyChat && (
-              <div className="mb-8">
+              <div className="mb-4">
                 <Greeting />
               </div>
             )}
@@ -156,6 +171,7 @@ export function ChatShell() {
                 isReadonly={isReadonly}
                 messages={messages}
                 onEditMessage={handleEditMessage}
+                onRetryMessage={handleRetryMessage}
                 regenerate={regenerate}
                 selectedModelId={currentModelId}
                 setMessages={setMessages}

@@ -39,7 +39,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
     <Sidebar collapsible="icon">
       <SidebarHeader className="pb-0 pt-3">
         <SidebarMenu>
-          {/* Open: "SLT" on the left, toggle on the right.
+          {/* Open: "Sri Lanka Telecom" on the left, toggle on the right.
               Collapsed: the SLT logo, which turns into the open icon on hover. */}
           <SidebarMenuItem
             className={cn(
@@ -49,11 +49,11 @@ export function AppSidebar({ user }: { user: User | undefined }) {
           >
             {collapsed ? null : (
               <button
-                className="rounded-lg px-2 py-1 font-semibold text-foreground text-lg tracking-tight"
+                className="rounded-lg px-2 py-1 font-semibold text-foreground text-lg tracking-normal"
                 onClick={handleNewChat}
                 type="button"
               >
-                SLT
+                Sri Lanka Telecom
               </button>
             )}
             <Tooltip>

@@ -1,8 +1,6 @@
 "use client";
 import type { UseChatHelpers } from "@ai-sdk/react";
-import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
-import telecomIcon from "@/app/icon.png";
 import type { Vote } from "@/lib/db/schema";
 import type { ChatMessage } from "@/lib/types";
 import { cn, sanitizeText } from "@/lib/utils";
@@ -48,7 +46,7 @@ function WaitingText() {
   const waitingText = waitingStatus?.message ?? LOADING_MESSAGES[step];
 
   return (
-    <div className="flex min-h-[calc(13px*1.65)] min-w-0 items-center text-[13px] leading-[1.65]">
+    <div className="flex min-h-[calc(15px*1.65)] min-w-0 items-center text-[15px] leading-[1.65]">
       <Shimmer
         as="span"
         className="font-medium whitespace-normal break-words"
@@ -56,18 +54,6 @@ function WaitingText() {
       >
         {waitingText}
       </Shimmer>
-    </div>
-  );
-}
-
-function AssistantAvatar() {
-  return (
-    <div className="flex size-7 items-center justify-center overflow-hidden rounded-lg bg-white ring-1 ring-border/50">
-      <Image
-        alt="Sri Lanka Telecom"
-        className="size-5 object-contain"
-        src={telecomIcon}
-      />
     </div>
   );
 }
@@ -116,15 +102,16 @@ function ToolApprovalActions({
 
 const PurePreviewMessage = ({
   addToolApprovalResponse,
-  chatId,
+  chatId: _chatId,
   message,
-  vote,
+  vote: _vote,
   isLoading,
   setMessages: _setMessages,
   regenerate: _regenerate,
   isReadonly,
   requiresScrollPadding: _requiresScrollPadding,
   onEdit,
+  onRetry,
 }: {
   addToolApprovalResponse: UseChatHelpers<ChatMessage>["addToolApprovalResponse"];
   chatId: string;
@@ -136,6 +123,7 @@ const PurePreviewMessage = ({
   isReadonly: boolean;
   requiresScrollPadding: boolean;
   onEdit?: (message: ChatMessage) => void;
+  onRetry?: (message: ChatMessage) => Promise<void>;
 }) => {
   const attachmentsFromMessage = message.parts.filter(
     (part) => part.type === "file"
@@ -209,7 +197,7 @@ const PurePreviewMessage = ({
     if (type === "text") {
       return (
         <MessageContent
-          className={cn("text-[13px] leading-[1.65]", {
+          className={cn("text-[15px] leading-[1.65]", {
             "w-fit max-w-[min(80%,56ch)] overflow-hidden break-words rounded-3xl bg-composer px-4 py-2.5":
               message.role === "user",
           })}
@@ -380,12 +368,11 @@ const PurePreviewMessage = ({
 
   const actions = !isReadonly && (
     <MessageActions
-      chatId={chatId}
       isLoading={isLoading}
       key={`action-${message.id}`}
       message={message}
       onEdit={onEdit ? () => onEdit(message) : undefined}
-      vote={vote}
+      onRetry={onRetry ? () => onRetry(message) : undefined}
     />
   );
 
@@ -413,11 +400,6 @@ const PurePreviewMessage = ({
           isUser ? "flex flex-col items-end gap-2" : "flex items-start gap-3"
         )}
       >
-        {isAssistant && (
-          <div className="flex h-[calc(13px*1.65)] shrink-0 items-center">
-            <AssistantAvatar />
-          </div>
-        )}
         {isAssistant ? (
           <div className="flex min-w-0 flex-1 flex-col gap-2">{content}</div>
         ) : (
@@ -437,10 +419,6 @@ export const ThinkingMessage = () => (
     data-testid="message-assistant-loading"
   >
     <div className="flex items-start gap-3">
-      <div className="flex h-[calc(13px*1.65)] shrink-0 items-center">
-        <AssistantAvatar />
-      </div>
-
       <WaitingText />
     </div>
   </div>

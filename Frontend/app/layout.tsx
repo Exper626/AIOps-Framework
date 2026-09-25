@@ -15,9 +15,10 @@ const geist = Plus_Jakarta_Sans({
 
 
 export const metadata: Metadata = {
-  description: "Next.js chatbot template using the AI SDK.",
+  description:
+    "AI assistant for network questions, topology analysis, and diagram generation.",
   metadataBase: new URL("https://chat.vercel.ai"),
-  title: "Next.js Chatbot Template",
+  title: "SLT Network Assistant",
 };
 
 export const viewport = {
