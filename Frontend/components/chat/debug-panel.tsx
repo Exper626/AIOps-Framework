@@ -13,6 +13,8 @@ type TraceStep = {
   output?: unknown;
   error?: string;
   fallback?: boolean;
+  // Whether the model was asked for JSON mode (false = it doesn't support it)
+  json_mode?: boolean;
   source?: string;
   skipped?: string;
 };
@@ -109,6 +111,8 @@ function StepSection({ step }: { step: TraceStep }) {
     step.model,
     step.source === "self-hosted" && "self-hosted",
     formatMs(step.ms),
+    step.json_mode === true && "JSON mode",
+    step.json_mode === false && "no JSON mode",
     step.fallback && "fell back",
     step.skipped && "skipped",
   ]

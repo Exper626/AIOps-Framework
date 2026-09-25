@@ -3,15 +3,16 @@
 1. Query agent: rewrites the message as a standalone question and splits it into sub-questions.
 2. Context management agent: decides which context each sub-question needs.
 
-Each one uses the model picked for it in Settings. If an agent fails, is slow or returns
-bad JSON, it falls back to what the chat did without it, so the answer still comes.
+Each one uses the model picked for it in Settings and asks for JSON mode, so the reply is
+valid JSON. If an agent fails, is slow or still returns bad JSON, it falls back to what the
+chat did without it, so the answer still comes.
 """
 
 import json
 import os
 from pathlib import Path
 
-from openai import APIError, OpenAI
+from openai import APIError, BadRequestError, OpenAI, UnprocessableEntityError
 from pydantic import BaseModel, Field
 
 from pipeline.llm import describe_llm_error
@@ -80,14 +81,24 @@ def parse_json_object(raw: str) -> dict:
 
 def ask_agent(model: ResolvedModel, prompt_file: str, agent_input: str, step: dict) -> dict:
     """One small-model call that must reply with a JSON object."""
-    response = model.client.with_options(timeout=AGENT_TIMEOUT_SECONDS, max_retries=0).chat.completions.create(
-        model=model.id,
-        messages=[
-            {"role": "system", "content": (PROMPTS_DIR / prompt_file).read_text(encoding="utf-8")},
-            {"role": "user", "content": agent_input},
-        ],
-        temperature=0,
-    )
+    client = model.client.with_options(timeout=AGENT_TIMEOUT_SECONDS, max_retries=0)
+    messages = [
+        {"role": "system", "content": (PROMPTS_DIR / prompt_file).read_text(encoding="utf-8")},
+        {"role": "user", "content": agent_input},
+    ]
+
+    try:
+        # JSON mode: the server only lets the model write valid JSON
+        response = client.chat.completions.create(
+            model=model.id, messages=messages, temperature=0, response_format={"type": "json_object"}
+        )
+        step["json_mode"] = True
+    except (BadRequestError, UnprocessableEntityError) as error:
+        # Not every model or server supports JSON mode, so it asks again without it
+        print(f"[agents] {model.id} rejected JSON mode, asking without it: {str(error)[:200]}")
+        response = client.chat.completions.create(model=model.id, messages=messages, temperature=0)
+        step["json_mode"] = False
+
     raw = (response.choices[0].message.content or "") if response.choices else ""
     step["raw_output"] = raw
 
