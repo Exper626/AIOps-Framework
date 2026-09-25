@@ -25,7 +25,14 @@ export async function submitEditedMessage({
 
     return [
       ...messages.slice(0, index),
-      { ...message, parts: [{ text, type: "text" as const }] },
+      // Attached images stay with the edited question
+      {
+        ...message,
+        parts: [
+          ...message.parts.filter((part) => part.type === "file"),
+          { text, type: "text" as const },
+        ],
+      },
     ];
   });
 

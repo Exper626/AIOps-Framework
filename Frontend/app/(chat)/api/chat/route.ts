@@ -16,7 +16,11 @@ import {
   DEFAULT_VISION_MODEL,
   isAllowedModelId,
 } from "@/lib/ai/models";
-import { callBackend, type HistoryMessage } from "@/lib/backend";
+import {
+  type BackendImage,
+  callBackend,
+  type HistoryMessage,
+} from "@/lib/backend";
 import {
   createStreamId,
   deleteChatById,
@@ -56,6 +60,26 @@ function getMessageText(message?: ChatMessage) {
       .map((part) => part.text)
       .join(" ")
       .trim() ?? ""
+  );
+}
+
+// Images attached to a message, which are kept in it as base64 data URLs
+function getMessageImages(message?: ChatMessage): BackendImage[] {
+  return (
+    message?.parts?.flatMap((part) =>
+      part.type === "file" &&
+      part.mediaType.startsWith("image/") &&
+      part.url.startsWith("data:")
+        ? [
+            {
+              mediaType: part.mediaType,
+              name:
+                (part as { name?: string }).name ?? part.filename ?? "image",
+              url: part.url,
+            },
+          ]
+        : []
+    ) ?? []
   );
 }
 
@@ -267,9 +291,13 @@ export async function POST(request: Request) {
 
     const stream = createUIMessageStream({
       execute: async ({ writer: dataStream }) => {
+        const images = getMessageImages(message as ChatMessage | undefined);
+        // A message can be just an image; the backend still needs a question
         const userMessage =
           getMessageText(message as ChatMessage | undefined) ||
-          getLatestUserMessageText(uiMessages);
+          (images.length > 0
+            ? "Describe the network topology in the attached image."
+            : getLatestUserMessageText(uiMessages));
 
         if (!userMessage) {
           throw new Error("No user message was found to send to the backend");
@@ -323,6 +351,7 @@ export async function POST(request: Request) {
             diagramGeneration: diagramGeneration ?? true,
             ...modelSources,
             contextModel,
+            images,
             onDelta: writeDelta,
             onErrorDebug: (debug) => {
               if (textStarted) {

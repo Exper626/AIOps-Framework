@@ -24,6 +24,7 @@ from pipeline.agents import (  # noqa: E402
 from pipeline.llm import create_client, describe_llm_error  # noqa: E402
 from pipeline.models import ModelRef, ModelUnavailable, list_self_hosted_models, resolve_model  # noqa: E402
 from pipeline.trace import Trace  # noqa: E402
+from pipeline.vision import VISION_MODEL, ImageDescription, ImageInput, describe_images  # noqa: E402
 
 TEXT_PROMPT_PATH = Path(__file__).parent / "prompts" / "text.md"
 
@@ -65,6 +66,10 @@ class ChatRequest(BaseModel):
     agents: dict[str, bool] = {}
     # Settings → Knowledge Base; for when knowledge base search is added (see rag/reranker.py)
     reranker: bool = True
+    # Images attached to this message, and the model that reads them
+    images: list[ImageInput] = []
+    vision_model: str | None = None
+    vision_source: Literal["api", "self-hosted"] = "api"
 
 
 def to_event(data: dict, trace: Trace | None = None) -> str:
@@ -75,7 +80,30 @@ def to_event(data: dict, trace: Trace | None = None) -> str:
     return json.dumps(data) + "\n"
 
 
-def build_answer_messages(message: str, history: list[dict], plan: Plan) -> list[dict]:
+def describe_attachments(descriptions: list[ImageDescription]) -> str:
+    """What the answer model is told about the attached images."""
+    read = [d for d in descriptions if d.description]
+    lines = []
+
+    if read:
+        lines.append(
+            "The user attached network topology images. A vision model extracted this from them "
+            "(JSON with each device's name, model and connections):"
+        )
+        lines.extend(f"Image \"{d.name}\":\n{d.description}" for d in read)
+
+    if len(read) < len(descriptions):
+        lines.append(
+            "Some attached images could not be read. Tell the user you couldn't see those images "
+            "and answer from the rest."
+        )
+
+    return "\n\n".join(lines)
+
+
+def build_answer_messages(
+    message: str, history: list[dict], plan: Plan, descriptions: list[ImageDescription]
+) -> list[dict]:
     messages = []
 
     # prompts/text.md becomes the system prompt once it has content
@@ -99,6 +127,9 @@ def build_answer_messages(message: str, history: list[dict], plan: Plan) -> list
             f"{question}\n\nThis message contains {len(plan.sub_questions)} separate questions. "
             f"Answer each one in order, under its own short heading:\n{numbered}"
         )
+
+    if descriptions:
+        question = f"{question}\n\n{describe_attachments(descriptions)}"
 
     messages.append({"role": "user", "content": question})
 
@@ -156,6 +187,7 @@ def chat(request: ChatRequest):
         raise HTTPException(status_code=error.status_code, detail=str(error)) from error
 
     query_ref = request.query_model or ModelRef(id=QUERY_MODEL)
+    vision_ref = ModelRef(id=request.vision_model or VISION_MODEL, source=request.vision_source)
     context_ref = request.context_model or ModelRef(id=CONTEXT_MODEL)
     query_enabled = request.agents.get("queryTransformation", True)
     context_enabled = request.agents.get("contextManagement", True)
@@ -165,6 +197,12 @@ def chat(request: ChatRequest):
     trace = Trace()
 
     def stream():
+        # 0. Vision description: read attached topology images with prompts/vision.md
+        descriptions = []
+        if request.images:
+            yield to_event({"phase": "vision", "message": "Reading the attached image..."})
+            descriptions = describe_images(vision_ref, gateway_client, request.images, trace)
+
         # 1. Query agent: rewrite the message and split it into sub-questions
         if query_enabled:
             yield to_event({"phase": "query", "message": "Understanding your question..."})
@@ -177,7 +215,7 @@ def chat(request: ChatRequest):
             context_ref, gateway_client, query.sub_questions, history, trace, enabled=context_enabled
         )
         plan = build_plan(query, needs)
-        messages = build_answer_messages(message, history, plan)
+        messages = build_answer_messages(message, history, plan, descriptions)
 
         # 3. Answer: the model picked for answers, streamed
         yield to_event({"phase": "answer", "message": "Writing the answer...", "modelId": answer_model.id})

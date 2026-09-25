@@ -33,6 +33,7 @@ export type WaitingStatusData = {
     | "still-waiting"
     | "health"
     | "thinking"
+    | "vision"
     | "context"
     | "query"
     | "router"

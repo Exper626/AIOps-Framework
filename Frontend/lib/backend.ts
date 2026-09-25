@@ -6,7 +6,14 @@ export type BackendChatResult = {
 };
 
 export type BackendProgressEvent = {
-  phase: "context" | "query" | "router" | "vector" | "sql" | "answer";
+  phase:
+    | "vision"
+    | "context"
+    | "query"
+    | "router"
+    | "vector"
+    | "sql"
+    | "answer";
   message: string;
   modelId?: string;
   modelName?: string;
@@ -36,6 +43,12 @@ type BackendStreamEvent =
   | BackendDeltaEvent
   | BackendDoneEvent
   | BackendErrorEvent;
+
+export type BackendImage = {
+  name: string;
+  mediaType: string;
+  url: string;
+};
 
 export type HistoryMessage = {
   role: "user" | "assistant";
@@ -112,6 +125,8 @@ export async function callBackend(
     agents?: Record<string, boolean>;
     diagramGeneration?: boolean;
     reranker?: boolean;
+    // Images attached to this message, as base64 data URLs
+    images?: BackendImage[];
     textSource?: "api" | "self-hosted";
     visionSource?: "api" | "self-hosted";
     // Models for the agents before the answer; the backend has defaults
@@ -145,6 +160,11 @@ export async function callBackend(
         agents: options.agents ?? {},
         diagram_generation: options.diagramGeneration ?? true,
         reranker: options.reranker ?? true,
+        images: (options.images ?? []).map((image) => ({
+          data_url: image.url,
+          media_type: image.mediaType,
+          name: image.name,
+        })),
         // "api" = call through the Vercel AI Gateway, "self-hosted" = one of
         // the backend's own models (its GET /models list)
         text_source: options.textSource ?? "api",

@@ -18,6 +18,7 @@ import {
 } from "react";
 import { toast } from "sonner";
 import { useLocalStorage, useWindowSize } from "usehooks-ts";
+import { imageToDataUrl } from "@/lib/images";
 import type { Attachment, ChatMessage } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import {
@@ -112,6 +113,10 @@ function PureMultimodalInput({
   const [uploadQueue, setUploadQueue] = useState<string[]>([]);
   // Single-row pill layout that grows with the text (falls back to stacked when files are attached)
   const isCompact = attachments.length === 0 && uploadQueue.length === 0;
+  // Text, an image, or both; not while an image is still being prepared
+  const canSend =
+    (input.trim().length > 0 || attachments.length > 0) &&
+    uploadQueue.length === 0;
   const [slashOpen, setSlashOpen] = useState(false);
   const [slashQuery, setSlashQuery] = useState("");
   const [slashIndex, setSlashIndex] = useState(0);
@@ -210,10 +215,8 @@ function PureMultimodalInput({
           type: "file" as const,
           url: attachment.url,
         })),
-        {
-          text: input,
-          type: "text",
-        },
+        // An image can be sent on its own; an empty text part would be rejected
+        ...(input.trim() ? [{ text: input, type: "text" as const }] : []),
       ],
       role: "user",
     });
@@ -236,44 +239,35 @@ function PureMultimodalInput({
     chatId,
   ]);
 
-  const uploadFile = useCallback(async (file: File) => {
-    const formData = new FormData();
-    formData.append("file", file);
-
+  // The image goes into the message itself as base64; nothing is uploaded
+  const attachFile = useCallback(async (file: File) => {
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/api/files/upload`,
-        {
-          body: formData,
-          method: "POST",
-        }
+      const { url, contentType } = await imageToDataUrl(file);
+
+      return {
+        contentType,
+        name: file.name.slice(0, 100) || "image",
+        url,
+      };
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Couldn't attach the image, please try again!"
       );
-
-      if (response.ok) {
-        const data = await response.json();
-        const { url, pathname, contentType } = data;
-
-        return {
-          contentType,
-          name: pathname,
-          url,
-        };
-      }
-      const { error } = await response.json();
-      toast.error(error);
-    } catch {
-      toast.error("Failed to upload file, please try again!");
     }
   }, []);
 
   const handleFileChange = useCallback(
     async (event: ChangeEvent<HTMLInputElement>) => {
       const files = Array.from(event.target.files || []);
+      // Cleared so picking the same image again still fires a change
+      event.target.value = "";
 
       setUploadQueue(files.map((file) => file.name));
 
       try {
-        const uploadPromises = files.map((file) => uploadFile(file));
+        const uploadPromises = files.map((file) => attachFile(file));
         const uploadedAttachments = await Promise.all(uploadPromises);
         const successfullyUploadedAttachments = uploadedAttachments.filter(
           (attachment) => attachment !== undefined
@@ -289,7 +283,7 @@ function PureMultimodalInput({
         setUploadQueue([]);
       }
     },
-    [setAttachments, uploadFile]
+    [setAttachments, attachFile]
   );
 
   const handlePaste = useCallback(
@@ -315,7 +309,7 @@ function PureMultimodalInput({
         const uploadPromises = imageItems
           .map((item) => item.getAsFile())
           .filter((file): file is File => file !== null)
-          .map((file) => uploadFile(file));
+          .map((file) => attachFile(file));
 
         const uploadedAttachments = await Promise.all(uploadPromises);
         const successfullyUploadedAttachments = uploadedAttachments.filter(
@@ -335,7 +329,7 @@ function PureMultimodalInput({
         setUploadQueue([]);
       }
     },
-    [setAttachments, uploadFile]
+    [setAttachments, attachFile]
   );
 
   useEffect(() => {
@@ -526,12 +520,12 @@ function PureMultimodalInput({
             <PromptInputSubmit
               className={cn(
                 "h-7 w-7 rounded-xl transition-all duration-200",
-                input.trim()
+                canSend
                   ? "bg-foreground text-background hover:opacity-85 active:scale-95"
                   : "bg-foreground/25 text-foreground/80 cursor-not-allowed disabled:opacity-100"
               )}
               data-testid="send-button"
-              disabled={!input.trim() || uploadQueue.length > 0}
+              disabled={!canSend}
               status={status}
               variant="secondary"
             >
