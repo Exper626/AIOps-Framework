@@ -30,6 +30,7 @@ import {
 } from "@/lib/db/queries";
 import type { DBMessage } from "@/lib/db/schema";
 import { ChatbotError } from "@/lib/errors";
+import type { ModelChoice } from "@/lib/model-settings";
 import { checkIpRateLimit } from "@/lib/ratelimit";
 import type { ChatMessage } from "@/lib/types";
 import { convertToUIMessages, generateUUID } from "@/lib/utils";
@@ -113,6 +114,7 @@ export async function POST(request: Request) {
       agents,
       diagramGeneration,
       modelChoices,
+      reranker,
       selectedChatModel,
       selectedVisionModel,
       selectedVisibilityType,
@@ -131,14 +133,11 @@ export async function POST(request: Request) {
       return new ChatbotError("unauthorized:chat").toResponse();
     }
 
-    // Self-hosted models are passed through as-is; API models must exist on
-    // the AI Gateway, otherwise the default is used
-    const textSelfHosted =
-      modelChoices?.text.source === "self-hosted" &&
-      Boolean(modelChoices.text.baseUrl);
+    // Self-hosted models are checked by the backend against its own list;
+    // API models must exist on the AI Gateway, otherwise the default is used
+    const textSelfHosted = modelChoices?.answer?.source === "self-hosted";
     const visionSelfHosted =
-      modelChoices?.vision.source === "self-hosted" &&
-      Boolean(modelChoices.vision.baseUrl);
+      modelChoices?.visionDescription?.source === "self-hosted";
 
     const [chatModelOk, visionModelOk] = await Promise.all([
       textSelfHosted || isAllowedModelId(selectedChatModel, allowedModelIds),
@@ -152,12 +151,27 @@ export async function POST(request: Request) {
       visionModelOk && selectedVisionModel
         ? selectedVisionModel
         : DEFAULT_VISION_MODEL;
+    // The query and context management agents: self-hosted ids are checked by
+    // the backend, API ids must be known models, otherwise the backend's own
+    // defaults are used
+    const agentModel = async (choice?: ModelChoice) => {
+      if (!choice) {
+        return;
+      }
+      if (choice.source === "self-hosted") {
+        return choice;
+      }
+      return (await isAllowedModelId(choice.modelId, allowedModelIds))
+        ? choice
+        : undefined;
+    };
+    const [queryModel, contextModel] = await Promise.all([
+      agentModel(modelChoices?.query),
+      agentModel(modelChoices?.contextManagement),
+    ]);
+
     const modelSources = {
-      textBaseUrl: textSelfHosted ? modelChoices?.text.baseUrl : undefined,
       textSource: textSelfHosted ? ("self-hosted" as const) : ("api" as const),
-      visionBaseUrl: visionSelfHosted
-        ? modelChoices?.vision.baseUrl
-        : undefined,
       visionSource: visionSelfHosted
         ? ("self-hosted" as const)
         : ("api" as const),
@@ -308,7 +322,20 @@ export async function POST(request: Request) {
             agents: agents ?? {},
             diagramGeneration: diagramGeneration ?? true,
             ...modelSources,
+            contextModel,
             onDelta: writeDelta,
+            onErrorDebug: (debug) => {
+              if (textStarted) {
+                dataStream.write({ id: textId, type: "text-end" });
+              }
+              dataStream.write({
+                data: debug,
+                id: `debug-${textId}`,
+                type: "data-debug",
+              });
+            },
+            queryModel,
+            reranker: reranker ?? true,
             visionModel,
           },
         );

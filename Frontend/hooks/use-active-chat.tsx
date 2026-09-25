@@ -29,6 +29,7 @@ import {
   getAgentSettings,
   getDiagramGenerationEnabled,
   getModelChoice,
+  getRerankerEnabled,
 } from "@/lib/model-settings";
 import type { ChatMessage } from "@/lib/types";
 import { fetcher, fetchWithErrorHandlers, generateUUID } from "@/lib/utils";
@@ -170,12 +171,15 @@ export function ActiveChatProvider({ children }: { children: ReactNode }) {
             agents: getAgentSettings(),
             diagramGeneration: getDiagramGenerationEnabled(),
             modelChoices: {
-              text: getModelChoice("text"),
-              vision: getModelChoice("vision"),
+              answer: getModelChoice("answer"),
+              contextManagement: getModelChoice("contextManagement"),
+              query: getModelChoice("query"),
+              visionDescription: getModelChoice("visionDescription"),
             },
-            selectedChatModel: getModelChoice("text").modelId,
+            reranker: getRerankerEnabled(),
+            selectedChatModel: getModelChoice("answer").modelId,
             selectedVisibilityType: visibility,
-            selectedVisionModel: getModelChoice("vision").modelId,
+            selectedVisionModel: getModelChoice("visionDescription").modelId,
             ...request.body,
           },
         };

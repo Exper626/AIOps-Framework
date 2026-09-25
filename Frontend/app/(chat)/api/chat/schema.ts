@@ -27,7 +27,6 @@ const toolApprovalMessageSchema = z.object({
 });
 
 const modelChoiceSchema = z.object({
-  baseUrl: z.url().optional(),
   modelId: z.string().min(1).max(200),
   source: z.enum(["api", "self-hosted"]),
 });
@@ -38,9 +37,19 @@ export const postRequestBodySchema = z.object({
   id: z.uuid(),
   message: userMessageSchema.optional(),
   messages: z.array(toolApprovalMessageSchema).optional(),
+  // One model per pipeline step; any may be missing, e.g. when a tab still
+  // runs an older version of the app
   modelChoices: z
-    .object({ text: modelChoiceSchema, vision: modelChoiceSchema })
+    .object({
+      answer: modelChoiceSchema,
+      contextManagement: modelChoiceSchema,
+      query: modelChoiceSchema,
+      visionDescription: modelChoiceSchema,
+    })
+    .partial()
     .optional(),
+  // Settings → Knowledge Base: re-order search results before answering
+  reranker: z.boolean().optional(),
   selectedChatModel: z.string(),
   selectedVisibilityType: z.enum(["public", "private"]),
   selectedVisionModel: z.string().optional(),

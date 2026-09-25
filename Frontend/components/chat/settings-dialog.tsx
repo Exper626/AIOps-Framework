@@ -5,8 +5,10 @@ import {
   BotIcon,
   CheckIcon,
   EyeIcon,
+  LayersIcon,
   MessageSquareTextIcon,
   SearchIcon,
+  TextSearchIcon,
   XIcon,
 } from "lucide-react";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
@@ -32,39 +34,60 @@ import {
   getAgentSettings,
   getDiagramGenerationEnabled,
   getModelChoice,
+  getRerankerEnabled,
+  MODEL_TASKS,
   type ModelChoice,
-  type ModelSettingKind,
+  type ModelKind,
   type ModelSource,
+  type ModelTask,
   setAgentSettings,
   setDiagramGenerationEnabled,
   setModelChoice,
+  setRerankerEnabled,
 } from "@/lib/model-settings";
 import { cn } from "@/lib/utils";
 
-type Tab = ModelSettingKind | "agents" | "knowledge";
+type Tab = ModelTask | "agents" | "knowledge";
 
-const TABS: { id: Tab; label: string; icon: ReactNode }[] = [
-  { icon: <MessageSquareTextIcon />, id: "text", label: "Text" },
-  { icon: <EyeIcon />, id: "vision", label: "Vision" },
+const MODEL_TAB_ICONS: Record<ModelTask, ReactNode> = {
+  answer: <MessageSquareTextIcon />,
+  contextManagement: <LayersIcon />,
+  query: <TextSearchIcon />,
+  visionDescription: <EyeIcon />,
+};
+
+const OTHER_TABS: { id: Tab; label: string; icon: ReactNode }[] = [
   { icon: <BotIcon />, id: "agents", label: "Agents" },
   { icon: <BookOpenIcon />, id: "knowledge", label: "Knowledge Base" },
 ];
 
-const SLOTS: Record<
-  ModelSettingKind,
-  { label: string; description: string; recommended: ChatModel[] }
-> = {
-  text: {
-    description: "Answers network questions and troubleshooting requests.",
-    label: "Text",
-    recommended: chatModels,
-  },
-  vision: {
-    description: "Reads topology images and screenshots you attach.",
-    label: "Vision",
-    recommended: visionModels,
-  },
+const SOURCE_OPTIONS: { id: ModelSource; label: string }[] = [
+  { id: "api", label: "API provider" },
+  { id: "self-hosted", label: "Self-hosted" },
+];
+
+// Self-hosted models come from the backend (GET /models), never from the browser
+type SelfHostedModel = { id: string; name: string };
+
+type SelfHostedResponse = Record<ModelKind, SelfHostedModel[]>;
+
+type ModelChoices = Record<ModelTask, ModelChoice>;
+
+// Shown in the API list before you search
+const RECOMMENDED: Record<ModelKind, ChatModel[]> = {
+  text: chatModels,
+  vision: visionModels,
 };
+
+function readModelChoices(): ModelChoices {
+  return Object.fromEntries(
+    MODEL_TASKS.map((task) => [task.id, getModelChoice(task.id)])
+  ) as ModelChoices;
+}
+
+function sameChoice(a: ModelChoice, b: ModelChoice) {
+  return a.source === b.source && a.modelId === b.modelId;
+}
 
 type CapabilityFilter = "vision" | "tools" | "reasoning";
 
@@ -122,7 +145,7 @@ function CurrentModelCard({
           <SourceTag source={choice.source} />
         </div>
         <span className="truncate text-muted-foreground text-xs">
-          {choice.source === "self-hosted" ? choice.baseUrl : choice.modelId}
+          {choice.modelId}
         </span>
       </div>
       <CheckIcon className="size-4 shrink-0 text-foreground" />
@@ -132,31 +155,64 @@ function CurrentModelCard({
 
 // ---------- Models: browser ----------
 
-function SourceSwitch({
+function Segmented<T extends string>({
+  options,
   value,
   onChange,
 }: {
-  value: ModelSource;
-  onChange: (source: ModelSource) => void;
+  options: { id: T; label: string }[];
+  value: T;
+  onChange: (value: T) => void;
 }) {
   return (
     <div className="inline-flex w-fit rounded-lg bg-foreground/10 p-0.5">
-      {(["api", "self-hosted"] as const).map((source) => (
+      {options.map((option) => (
         <button
           className={cn(
             "rounded-md px-3 py-1.5 text-sm transition-colors",
-            value === source
+            value === option.id
               ? "bg-background text-foreground shadow-sm"
               : "text-muted-foreground hover:text-foreground"
           )}
-          key={source}
-          onClick={() => onChange(source)}
+          key={option.id}
+          onClick={() => onChange(option.id)}
           type="button"
         >
-          {source === "api" ? "API provider" : "Self-hosted"}
+          {option.label}
         </button>
       ))}
     </div>
+  );
+}
+
+function ModelRow({
+  name,
+  id,
+  selected,
+  onPick,
+}: {
+  name: string;
+  id: string;
+  selected: boolean;
+  onPick: () => void;
+}) {
+  return (
+    <button
+      className={cn(
+        "flex items-center justify-between gap-3 rounded-lg px-3 py-2 text-left transition-colors hover:bg-foreground/10",
+        selected && "bg-foreground/5"
+      )}
+      onClick={onPick}
+      type="button"
+    >
+      <div className="flex min-w-0 flex-col">
+        <span className="truncate text-sm">{name}</span>
+        <span className="truncate text-muted-foreground text-xs">{id}</span>
+      </div>
+      {selected ? (
+        <CheckIcon className="size-4 shrink-0 text-foreground" />
+      ) : null}
+    </button>
   );
 }
 
@@ -166,7 +222,7 @@ function ApiModelBrowser({
   gatewayModels,
   onPick,
 }: {
-  kind: ModelSettingKind;
+  kind: ModelKind;
   current: ModelChoice;
   gatewayModels: GatewayModelWithCapabilities[];
   onPick: (modelId: string) => void;
@@ -220,7 +276,7 @@ function ApiModelBrowser({
   };
 
   // With no search or provider chosen, show our short recommended list
-  const list: ChatModel[] = isFiltering ? results : SLOTS[kind].recommended;
+  const list: ChatModel[] = isFiltering ? results : RECOMMENDED[kind];
 
   return (
     <div className="flex flex-col gap-3">
@@ -277,31 +333,15 @@ function ApiModelBrowser({
       </span>
 
       <div className="flex flex-col gap-1">
-        {list.map((model) => {
-          const selected =
-            current.source === "api" && current.modelId === model.id;
-          return (
-            <button
-              className={cn(
-                "flex items-center justify-between gap-3 rounded-lg px-3 py-2 text-left transition-colors hover:bg-foreground/10",
-                selected && "bg-foreground/5"
-              )}
-              key={model.id}
-              onClick={() => onPick(model.id)}
-              type="button"
-            >
-              <div className="flex min-w-0 flex-col">
-                <span className="truncate text-sm">{model.name}</span>
-                <span className="truncate text-muted-foreground text-xs">
-                  {model.id}
-                </span>
-              </div>
-              {selected ? (
-                <CheckIcon className="size-4 shrink-0 text-foreground" />
-              ) : null}
-            </button>
-          );
-        })}
+        {list.map((model) => (
+          <ModelRow
+            id={model.id}
+            key={model.id}
+            name={model.name}
+            onPick={() => onPick(model.id)}
+            selected={current.source === "api" && current.modelId === model.id}
+          />
+        ))}
         {isFiltering && results.length === 0 ? (
           <div className="px-3 py-6 text-center text-muted-foreground text-sm">
             {gatewayModels.length === 0
@@ -314,183 +354,168 @@ function ApiModelBrowser({
   );
 }
 
-function SelfHostedForm({
+function SelfHostedList({
+  models,
   current,
-  onSave,
+  loading,
+  onPick,
 }: {
+  models: SelfHostedModel[];
   current: ModelChoice;
-  onSave: (baseUrl: string, modelId: string) => void;
+  loading: boolean;
+  onPick: (modelId: string) => void;
 }) {
-  const [baseUrl, setBaseUrl] = useState(
-    current.source === "self-hosted" ? (current.baseUrl ?? "") : ""
-  );
-  const [modelId, setModelId] = useState(
-    current.source === "self-hosted" ? current.modelId : ""
-  );
-  const [status, setStatus] = useState<
-    | { state: "idle" }
-    | { state: "testing" }
-    | { state: "ok"; models: string[] }
-    | { state: "error"; message: string }
-  >({ state: "idle" });
-
-  const testConnection = async () => {
-    setStatus({ state: "testing" });
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/api/models/test`,
-        {
-          body: JSON.stringify({ baseUrl }),
-          headers: { "Content-Type": "application/json" },
-          method: "POST",
-        }
-      );
-      const data = (await res.json()) as { models?: string[]; error?: string };
-      if (!res.ok) {
-        setStatus({
-          message: data.error ?? "Connection failed",
-          state: "error",
-        });
-        return;
-      }
-      const models = data.models ?? [];
-      setStatus({ models, state: "ok" });
-      if (!modelId && models.length > 0) {
-        setModelId(models[0]);
-      }
-    } catch {
-      setStatus({ message: "Connection failed", state: "error" });
-    }
-  };
-
-  const inputClass =
-    "h-10 w-full rounded-xl border border-border/60 bg-transparent px-3 text-sm outline-none placeholder:text-muted-foreground/70 focus:border-foreground/30";
+  if (loading) {
+    return (
+      <p className="px-3 py-6 text-center text-muted-foreground text-sm">
+        Loading self-hosted models...
+      </p>
+    );
+  }
 
   return (
-    <div className="flex flex-col gap-4">
-      <label className="flex flex-col gap-1.5">
-        <span className="text-xs">Server URL</span>
-        <input
-          className={inputClass}
-          onChange={(e) => {
-            setBaseUrl(e.target.value);
-            setStatus({ state: "idle" });
-          }}
-          placeholder="http://10.0.0.5:11434/v1"
-          type="url"
-          value={baseUrl}
-        />
-        <span className="text-muted-foreground text-xs">
-          Any OpenAI-compatible server, such as Ollama, vLLM or LM Studio.
-        </span>
-      </label>
-
-      <div className="flex items-center gap-3">
-        <Button
-          disabled={!baseUrl || status.state === "testing"}
-          onClick={testConnection}
-          size="sm"
-          variant="outline"
-        >
-          {status.state === "testing" ? "Testing..." : "Test connection"}
-        </Button>
-        {status.state === "ok" ? (
-          <span className="text-muted-foreground text-xs">
-            Connected · {status.models.length} models found
+    <div className="flex flex-col gap-2">
+      {models.length === 0 ? (
+        <div className="flex flex-col items-center gap-1 rounded-xl border border-border/60 border-dashed px-4 py-8 text-center">
+          <span className="text-sm">No self-hosted models yet</span>
+          <span className="max-w-sm text-muted-foreground text-xs">
+            Self-hosted models are set up on the backend. Once they&apos;re
+            added there, they show up here.
           </span>
-        ) : null}
-        {status.state === "error" ? (
-          <span className="text-destructive text-xs">{status.message}</span>
-        ) : null}
-      </div>
-
-      <label className="flex flex-col gap-1.5">
-        <span className="text-xs">Model name</span>
-        <input
-          className={inputClass}
-          list="self-hosted-models"
-          onChange={(e) => setModelId(e.target.value)}
-          placeholder="e.g. llama3.1:8b"
-          type="text"
-          value={modelId}
-        />
-        {status.state === "ok" ? (
-          <datalist id="self-hosted-models">
-            {status.models.map((m) => (
-              <option key={m} value={m} />
-            ))}
-          </datalist>
-        ) : null}
-      </label>
-
-      <p className="text-muted-foreground text-xs">
-        If the server needs an API key, set SELF_HOSTED_API_KEY in the
-        server&apos;s environment. Keys are never stored in the browser.
-      </p>
-
-      <Button
-        className="w-fit"
-        disabled={!baseUrl || !modelId.trim()}
-        onClick={() => onSave(baseUrl.trim(), modelId.trim())}
-        size="sm"
-      >
-        Use this model
-      </Button>
+        </div>
+      ) : (
+        <div className="flex flex-col gap-1">
+          {models.map((model) => (
+            <ModelRow
+              id={model.id}
+              key={model.id}
+              name={model.name}
+              onPick={() => onPick(model.id)}
+              selected={
+                current.source === "self-hosted" && current.modelId === model.id
+              }
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
 
-function ModelTab({
+function ModelSlot({
   kind,
   current,
   gatewayModels,
-  onChoose,
+  selfHosted,
+  selfHostedLoading,
+  onPick,
 }: {
-  kind: ModelSettingKind;
+  kind: ModelKind;
   current: ModelChoice;
   gatewayModels: GatewayModelWithCapabilities[];
-  onChoose: (choice: ModelChoice) => void;
+  selfHosted: SelfHostedModel[];
+  selfHostedLoading: boolean;
+  onPick: (choice: ModelChoice) => void;
 }) {
-  // Which source you're browsing; starts on the one currently in use
+  // Which source you're browsing; starts on the one currently selected
   const [source, setSource] = useState<ModelSource>(current.source);
 
   const displayName =
     current.source === "self-hosted"
-      ? current.modelId
-      : (SLOTS[kind].recommended.find((m) => m.id === current.modelId)?.name ??
+      ? (selfHosted.find((m) => m.id === current.modelId)?.name ??
+        current.modelId)
+      : (RECOMMENDED[kind].find((m) => m.id === current.modelId)?.name ??
         gatewayModels.find((m) => m.id === current.modelId)?.name ??
         current.modelId);
 
   return (
-    <div className="flex flex-col gap-4 py-3">
-      <SectionHeader
-        description={SLOTS[kind].description}
-        title={`${SLOTS[kind].label} model`}
-      />
-
+    <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-1.5">
-        <span className="text-muted-foreground text-xs">Current model</span>
+        <span className="text-muted-foreground text-xs">Selected model</span>
         <CurrentModelCard choice={current} displayName={displayName} />
       </div>
 
       <div className="flex flex-col gap-3 border-border/60 border-t pt-4">
-        <SourceSwitch onChange={setSource} value={source} />
+        <Segmented
+          onChange={setSource}
+          options={SOURCE_OPTIONS}
+          value={source}
+        />
 
         {source === "api" ? (
           <ApiModelBrowser
             current={current}
             gatewayModels={gatewayModels}
             kind={kind}
-            onPick={(modelId) => onChoose({ modelId, source: "api" })}
+            onPick={(modelId) => onPick({ modelId, source: "api" })}
           />
         ) : (
-          <SelfHostedForm
+          <SelfHostedList
             current={current}
-            onSave={(baseUrl, modelId) =>
-              onChoose({ baseUrl, modelId, source: "self-hosted" })
-            }
+            loading={selfHostedLoading}
+            models={selfHosted}
+            onPick={(modelId) => onPick({ modelId, source: "self-hosted" })}
           />
         )}
+      </div>
+    </div>
+  );
+}
+
+function ModelTaskPanel({
+  task,
+  draft,
+  unsavedTasks,
+  justSaved,
+  gatewayModels,
+  selfHosted,
+  selfHostedLoading,
+  onPick,
+  onSave,
+}: {
+  task: (typeof MODEL_TASKS)[number];
+  draft: ModelChoice;
+  unsavedTasks: string[];
+  justSaved: boolean;
+  gatewayModels: GatewayModelWithCapabilities[];
+  selfHosted?: SelfHostedResponse;
+  selfHostedLoading: boolean;
+  onPick: (choice: ModelChoice) => void;
+  onSave: () => void;
+}) {
+  let saveStatus = "";
+  if (unsavedTasks.length > 0) {
+    saveStatus = `Unsaved: ${unsavedTasks.join(", ")}`;
+  } else if (justSaved) {
+    saveStatus = "Saved";
+  }
+
+  return (
+    <div className="flex min-h-full flex-col">
+      <div className="flex flex-1 flex-col gap-4 py-3">
+        <SectionHeader
+          description={task.description}
+          title={`${task.label} model`}
+        />
+        <ModelSlot
+          current={draft}
+          gatewayModels={gatewayModels}
+          key={task.id}
+          kind={task.kind}
+          onPick={onPick}
+          selfHosted={selfHosted?.[task.kind] ?? []}
+          selfHostedLoading={selfHostedLoading}
+        />
+      </div>
+
+      {/* One Save for every model tab */}
+      <div className="sticky -bottom-2 flex items-center justify-end gap-3 border-border/60 border-t bg-background py-3">
+        <span className="truncate text-muted-foreground text-xs">
+          {saveStatus}
+        </span>
+        <Button disabled={unsavedTasks.length === 0} onClick={onSave} size="sm">
+          Save
+        </Button>
       </div>
     </div>
   );
@@ -591,13 +616,26 @@ function AgentsPanel({
 
 // ---------- Knowledge Base ----------
 
-function KnowledgeBasePanel() {
+function KnowledgeBasePanel({
+  reranker,
+  onRerankerChange,
+}: {
+  reranker: boolean;
+  onRerankerChange: (enabled: boolean) => void;
+}) {
   return (
     <div className="flex flex-col gap-3 py-3">
       <SectionHeader
         description="Vendor documentation the assistant searches when answering."
         title="Knowledge Base"
       />
+      <ToggleRow
+        checked={reranker}
+        description="Re-orders the documents found for your question so the most relevant ones reach the answer. Usually more accurate, a little slower."
+        onChange={onRerankerChange}
+        title="Reranker"
+      />
+      <span className="pt-2 text-muted-foreground text-xs">Sources</span>
       <div className="flex flex-col gap-1.5">
         {KNOWLEDGE_SOURCES.map((source) => (
           <div
@@ -624,23 +662,26 @@ export function SettingsDialog({
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
-  const [tab, setTab] = useState<Tab>("text");
-  const [choices, setChoices] = useState<Record<ModelSettingKind, ModelChoice>>(
-    () => ({ text: getModelChoice("text"), vision: getModelChoice("vision") })
-  );
+  const [tab, setTab] = useState<Tab>("answer");
+  const [choices, setChoices] = useState<ModelChoices>(readModelChoices);
+  // Picks stay here, across tabs, until Save; closing the dialog discards them
+  const [drafts, setDrafts] = useState<ModelChoices>(readModelChoices);
+  const [justSaved, setJustSaved] = useState(false);
   const [agentSettings, setAgentSettingsState] =
     useState<AgentSettings>(getAgentSettings);
   const [diagramGeneration, setDiagramGeneration] = useState(true);
+  const [reranker, setReranker] = useState(true);
 
   // Read the saved choices each time the dialog opens
   useEffect(() => {
     if (open) {
-      setChoices({
-        text: getModelChoice("text"),
-        vision: getModelChoice("vision"),
-      });
+      const saved = readModelChoices();
+      setChoices(saved);
+      setDrafts(saved);
+      setJustSaved(false);
       setAgentSettingsState(getAgentSettings());
       setDiagramGeneration(getDiagramGenerationEnabled());
+      setReranker(getRerankerEnabled());
     }
   }, [open]);
 
@@ -655,10 +696,57 @@ export function SettingsDialog({
   );
   const gatewayModels = modelsResponse?.models ?? [];
 
-  const handleChoose = (kind: ModelSettingKind, choice: ModelChoice) => {
-    setModelChoice(kind, choice);
-    setChoices((prev) => ({ ...prev, [kind]: choice }));
+  // Self-hosted models the backend offers; empty until some are set up there
+  // (if they can't be loaded, the list just shows as empty)
+  const { data: selfHosted, isLoading: selfHostedLoading } =
+    useSWR<SelfHostedResponse>(
+      open
+        ? `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/api/models/self-hosted`
+        : null,
+      (url: string) => fetch(url, { cache: "no-store" }).then((r) => r.json()),
+      { revalidateOnFocus: false }
+    );
+  const unsavedTasks = MODEL_TASKS.filter(
+    (task) => !sameChoice(drafts[task.id], choices[task.id])
+  );
+
+  const handlePick = (task: ModelTask, choice: ModelChoice) => {
+    setDrafts((prev) => ({ ...prev, [task]: choice }));
+    setJustSaved(false);
   };
+
+  const handleSave = () => {
+    for (const task of MODEL_TASKS) {
+      setModelChoice(task.id, drafts[task.id]);
+    }
+    setChoices(drafts);
+    setJustSaved(true);
+  };
+
+  const activeTask = MODEL_TASKS.find((task) => task.id === tab);
+
+  const tabButton = (id: Tab, label: string, icon: ReactNode) => (
+    <button
+      className={cn(
+        "flex items-center gap-2.5 whitespace-nowrap rounded-lg px-3 py-2 text-left text-sm transition-colors [&_svg]:size-4 [&_svg]:shrink-0",
+        tab === id
+          ? "bg-muted text-foreground"
+          : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+      )}
+      key={id}
+      onClick={() => setTab(id)}
+      type="button"
+    >
+      {icon}
+      <span className="truncate">{label}</span>
+      {unsavedTasks.some((task) => task.id === id) ? (
+        <span
+          className="ml-auto size-1.5 shrink-0 rounded-full bg-foreground"
+          title="Unsaved"
+        />
+      ) : null}
+    </button>
+  );
 
   const handleAgentChange = (id: AgentId, enabled: boolean) => {
     const next = { ...agentSettings, [id]: enabled };
@@ -669,6 +757,11 @@ export function SettingsDialog({
   const handleDiagramChange = (enabled: boolean) => {
     setDiagramGenerationEnabled(enabled);
     setDiagramGeneration(enabled);
+  };
+
+  const handleRerankerChange = (enabled: boolean) => {
+    setRerankerEnabled(enabled);
+    setReranker(enabled);
   };
 
   return (
@@ -690,33 +783,30 @@ export function SettingsDialog({
         </DialogDescription>
 
         <div className="flex min-h-0 flex-1 flex-col md:flex-row">
-          <nav className="flex shrink-0 gap-1 overflow-x-auto border-b border-border/60 p-2 md:w-48 md:flex-col md:border-r md:border-b-0 md:p-3">
-            {TABS.map((t) => (
-              <button
-                className={cn(
-                  "flex items-center gap-2.5 whitespace-nowrap rounded-lg px-3 py-2 text-left text-sm transition-colors [&_svg]:size-4",
-                  tab === t.id
-                    ? "bg-muted text-foreground"
-                    : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
-                )}
-                key={t.id}
-                onClick={() => setTab(t.id)}
-                type="button"
-              >
-                {t.icon}
-                {t.label}
-              </button>
-            ))}
+          <nav className="flex shrink-0 gap-1 overflow-x-auto border-b border-border/60 p-2 md:w-60 md:flex-col md:border-r md:border-b-0 md:p-3">
+            <span className="hidden px-3 pt-1 pb-1 font-medium text-[11px] text-muted-foreground/70 uppercase tracking-wide md:block">
+              Models
+            </span>
+            {MODEL_TASKS.map((task) =>
+              tabButton(task.id, task.label, MODEL_TAB_ICONS[task.id])
+            )}
+            <div className="hidden border-border/60 border-t md:my-2 md:block" />
+            {OTHER_TABS.map((t) => tabButton(t.id, t.label, t.icon))}
           </nav>
 
           <div className="min-h-0 flex-1 overflow-y-auto px-5 py-2">
-            {tab === "text" || tab === "vision" ? (
-              <ModelTab
-                current={choices[tab]}
+            {activeTask ? (
+              <ModelTaskPanel
+                draft={drafts[activeTask.id]}
                 gatewayModels={gatewayModels}
-                key={tab}
-                kind={tab}
-                onChoose={(choice) => handleChoose(tab, choice)}
+                justSaved={justSaved}
+                key={activeTask.id}
+                onPick={(choice) => handlePick(activeTask.id, choice)}
+                onSave={handleSave}
+                selfHosted={selfHosted}
+                selfHostedLoading={selfHostedLoading}
+                task={activeTask}
+                unsavedTasks={unsavedTasks.map((task) => task.label)}
               />
             ) : null}
             {tab === "agents" ? (
@@ -727,7 +817,12 @@ export function SettingsDialog({
                 settings={agentSettings}
               />
             ) : null}
-            {tab === "knowledge" ? <KnowledgeBasePanel /> : null}
+            {tab === "knowledge" ? (
+              <KnowledgeBasePanel
+                onRerankerChange={handleRerankerChange}
+                reranker={reranker}
+              />
+            ) : null}
           </div>
         </div>
       </DialogContent>

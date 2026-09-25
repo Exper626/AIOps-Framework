@@ -1,3 +1,5 @@
+import type { ModelChoice } from "@/lib/model-settings";
+
 export type BackendChatResult = {
   message: string;
   debug?: unknown;
@@ -26,6 +28,7 @@ type BackendErrorEvent = {
   phase: "error";
   error: string;
   status?: number;
+  debug?: unknown;
 };
 
 type BackendStreamEvent =
@@ -40,6 +43,15 @@ export type HistoryMessage = {
 };
 
 const TRAILING_SLASHES = /\/+$/;
+
+function toBackendModel(choice?: ModelChoice) {
+  return choice ? { id: choice.modelId, source: choice.source } : null;
+}
+
+// BACKEND_URL without trailing slashes, which would turn /chat into //chat (a 404)
+export function getBackendUrl(): string | undefined {
+  return process.env.BACKEND_URL?.trim().replace(TRAILING_SLASHES, "") || undefined;
+}
 
 // FastAPI puts the reason in "detail": a string, or a list of validation errors
 function readErrorDetail(body: string) {
@@ -99,18 +111,17 @@ export async function callBackend(
     visionModel?: string;
     agents?: Record<string, boolean>;
     diagramGeneration?: boolean;
+    reranker?: boolean;
     textSource?: "api" | "self-hosted";
-    textBaseUrl?: string;
     visionSource?: "api" | "self-hosted";
-    visionBaseUrl?: string;
+    // Models for the agents before the answer; the backend has defaults
+    queryModel?: ModelChoice;
+    contextModel?: ModelChoice;
     onDelta?: (delta: string) => void;
+    onErrorDebug?: (debug: unknown) => void;
   } = {},
 ): Promise<BackendChatResult> {
-  // A trailing slash would turn the request into //chat, which is a 404
-  const backendUrl = process.env.BACKEND_URL?.trim().replace(
-    TRAILING_SLASHES,
-    ""
-  );
+  const backendUrl = getBackendUrl();
 
   if (!backendUrl) {
     throw new Error(
@@ -133,12 +144,13 @@ export async function callBackend(
         vision_model: options.visionModel ?? null,
         agents: options.agents ?? {},
         diagram_generation: options.diagramGeneration ?? true,
-        // "api" = call through the Vercel AI Gateway, "self-hosted" = call the
-        // OpenAI-compatible server at *_base_url
+        reranker: options.reranker ?? true,
+        // "api" = call through the Vercel AI Gateway, "self-hosted" = one of
+        // the backend's own models (its GET /models list)
         text_source: options.textSource ?? "api",
-        text_base_url: options.textBaseUrl ?? null,
         vision_source: options.visionSource ?? "api",
-        vision_base_url: options.visionBaseUrl ?? null,
+        query_model: toBackendModel(options.queryModel),
+        context_model: toBackendModel(options.contextModel),
       }),
       cache: "no-store",
     });
@@ -189,6 +201,10 @@ export async function callBackend(
     }
 
     if (event.phase === "error") {
+      // The trace says which step failed, so it is handed over before the error
+      if (event.debug !== undefined) {
+        options.onErrorDebug?.(event.debug);
+      }
       throw new Error(event.error);
     }
 

@@ -1,6 +1,6 @@
 "use client";
 import type { UseChatHelpers } from "@ai-sdk/react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import type { Vote } from "@/lib/db/schema";
 import type { ChatMessage } from "@/lib/types";
 import { cn, sanitizeText } from "@/lib/utils";
@@ -22,28 +22,12 @@ import { MessageReasoning } from "./message-reasoning";
 import { PreviewAttachment } from "./preview-attachment";
 import { Weather } from "./weather";
 
-// Shown while the backend hasn't sent a status of its own.
-// Advances every few seconds and stays on the last one.
-const LOADING_MESSAGES = [
-  "Thinking...",
-  "Reading your question...",
-  "Checking network knowledge...",
-  "Preparing your answer...",
-];
-
 function WaitingText() {
   const { waitingStatus } = useDataStream();
-  const [step, setStep] = useState(0);
 
-  useEffect(() => {
-    if (step >= LOADING_MESSAGES.length - 1) {
-      return;
-    }
-    const timer = setTimeout(() => setStep((s) => s + 1), 2500);
-    return () => clearTimeout(timer);
-  }, [step]);
-
-  const waitingText = waitingStatus?.message ?? LOADING_MESSAGES[step];
+  // The backend reports the step it is on (planner, answer, ...); until its
+  // first report arrives, nothing specific is known yet
+  const waitingText = waitingStatus?.message ?? "Thinking...";
 
   return (
     <div className="flex min-h-[calc(15px*1.65)] min-w-0 items-center text-[15px] leading-[1.65]">

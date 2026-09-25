@@ -1,5 +1,10 @@
 export const DEFAULT_CHAT_MODEL = "moonshotai/kimi-k2.5";
 
+// The query and context management agents only rewrite and route the
+// question, so a small, fast model is enough
+export const DEFAULT_QUERY_MODEL = "xai/grok-4.1-fast-non-reasoning";
+export const DEFAULT_CONTEXT_MODEL = "xai/grok-4.1-fast-non-reasoning";
+
 export const titleModel = {
   description: "Fast model for title generation",
   gatewayOrder: ["fireworks", "bedrock"],

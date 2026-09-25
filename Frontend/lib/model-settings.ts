@@ -1,8 +1,57 @@
-import { DEFAULT_CHAT_MODEL, DEFAULT_VISION_MODEL } from "@/lib/ai/models";
+import {
+  DEFAULT_CHAT_MODEL,
+  DEFAULT_CONTEXT_MODEL,
+  DEFAULT_QUERY_MODEL,
+  DEFAULT_VISION_MODEL,
+} from "@/lib/ai/models";
 
 // Choices from the Settings dialog, stored in cookies so both the sidebar
 // (settings) and the chat (sending messages) can read them.
-export type ModelSettingKind = "text" | "vision";
+
+// Each step of the answering pipeline can use its own model
+export type ModelTask =
+  | "query"
+  | "contextManagement"
+  | "answer"
+  | "visionDescription";
+
+// Whether a step reads text or images; self-hosted models are listed by the
+// backend under these kinds
+export type ModelKind = "text" | "vision";
+
+export const MODEL_TASKS: {
+  id: ModelTask;
+  label: string;
+  description: string;
+  kind: ModelKind;
+}[] = [
+  {
+    description:
+      "Rewrites your message as clear questions and splits multi-part messages. A small, fast model is enough.",
+    id: "query",
+    kind: "text",
+    label: "Query",
+  },
+  {
+    description:
+      "Decides which earlier messages each question needs. A small, fast model is enough.",
+    id: "contextManagement",
+    kind: "text",
+    label: "Context management",
+  },
+  {
+    description: "Writes the answer you see in the chat.",
+    id: "answer",
+    kind: "text",
+    label: "Answer",
+  },
+  {
+    description: "Reads topology images and screenshots you attach.",
+    id: "visionDescription",
+    kind: "vision",
+    label: "Vision description",
+  },
+];
 
 export type AgentId = "retrieval" | "contextManagement" | "queryTransformation";
 
@@ -35,18 +84,23 @@ const DEFAULT_AGENTS: AgentSettings = {
   retrieval: true,
 };
 
-const MODEL_COOKIES: Record<ModelSettingKind, string> = {
-  text: "chat-model",
-  vision: "vision-model",
+// Plain model ids from before models were picked per step; the chat still
+// reads "chat-model" on load
+const MODEL_COOKIES: Partial<Record<ModelTask, string>> = {
+  answer: "chat-model",
+  visionDescription: "vision-model",
 };
 
-const MODEL_DEFAULTS: Record<ModelSettingKind, string> = {
-  text: DEFAULT_CHAT_MODEL,
-  vision: DEFAULT_VISION_MODEL,
+const MODEL_DEFAULTS: Record<ModelTask, string> = {
+  answer: DEFAULT_CHAT_MODEL,
+  contextManagement: DEFAULT_CONTEXT_MODEL,
+  query: DEFAULT_QUERY_MODEL,
+  visionDescription: DEFAULT_VISION_MODEL,
 };
 
 const AGENTS_COOKIE = "agent-settings";
 const DIAGRAM_COOKIE = "diagram-generation";
+const RERANKER_COOKIE = "reranker";
 
 function readCookie(name: string): string | undefined {
   if (typeof document === "undefined") {
@@ -64,31 +118,26 @@ function writeCookie(name: string, value: string) {
   document.cookie = `${name}=${encodeURIComponent(value)}; path=/; max-age=31536000; samesite=lax`;
 }
 
-export function getModelSetting(kind: ModelSettingKind): string {
-  return readCookie(MODEL_COOKIES[kind]) ?? MODEL_DEFAULTS[kind];
-}
-
-export function setModelSetting(kind: ModelSettingKind, modelId: string) {
-  writeCookie(MODEL_COOKIES[kind], modelId);
-}
-
-// Where a model runs: through the AI Gateway, or on your own server
-// (any OpenAI-compatible endpoint such as Ollama, vLLM or LM Studio).
+// Where a model runs: through the AI Gateway, or on one of the self-hosted
+// servers the backend is set up with (it lists those models at GET /models).
 export type ModelSource = "api" | "self-hosted";
 
 export type ModelChoice = {
   source: ModelSource;
   modelId: string;
-  baseUrl?: string;
 };
 
-const CHOICE_COOKIES: Record<ModelSettingKind, string> = {
-  text: "text-model-choice",
-  vision: "vision-model-choice",
+// Answer and Vision description keep the cookies of the old Text and Vision
+// settings, so choices made there carry over
+const CHOICE_COOKIES: Record<ModelTask, string> = {
+  answer: "text-model-choice",
+  contextManagement: "context-model-choice",
+  query: "query-model-choice",
+  visionDescription: "vision-model-choice",
 };
 
-export function getModelChoice(kind: ModelSettingKind): ModelChoice {
-  const raw = readCookie(CHOICE_COOKIES[kind]);
+export function getModelChoice(task: ModelTask): ModelChoice {
+  const raw = readCookie(CHOICE_COOKIES[task]);
   if (raw) {
     try {
       const parsed = JSON.parse(raw) as ModelChoice;
@@ -99,13 +148,16 @@ export function getModelChoice(kind: ModelSettingKind): ModelChoice {
       // fall through to the plain model ID
     }
   }
-  return { modelId: getModelSetting(kind), source: "api" };
+  const plainCookie = MODEL_COOKIES[task];
+  const plainModelId = plainCookie ? readCookie(plainCookie) : undefined;
+  return { modelId: plainModelId ?? MODEL_DEFAULTS[task], source: "api" };
 }
 
-export function setModelChoice(kind: ModelSettingKind, choice: ModelChoice) {
-  writeCookie(CHOICE_COOKIES[kind], JSON.stringify(choice));
-  if (choice.source === "api") {
-    setModelSetting(kind, choice.modelId);
+export function setModelChoice(task: ModelTask, choice: ModelChoice) {
+  writeCookie(CHOICE_COOKIES[task], JSON.stringify(choice));
+  const plainCookie = MODEL_COOKIES[task];
+  if (plainCookie && choice.source === "api") {
+    writeCookie(plainCookie, choice.modelId);
   }
 }
 
@@ -131,4 +183,13 @@ export function getDiagramGenerationEnabled(): boolean {
 
 export function setDiagramGenerationEnabled(enabled: boolean) {
   writeCookie(DIAGRAM_COOKIE, String(enabled));
+}
+
+// Whether knowledge base results are re-ordered by a reranker before answering
+export function getRerankerEnabled(): boolean {
+  return readCookie(RERANKER_COOKIE) !== "false";
+}
+
+export function setRerankerEnabled(enabled: boolean) {
+  writeCookie(RERANKER_COOKIE, String(enabled));
 }
