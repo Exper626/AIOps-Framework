@@ -12,8 +12,6 @@ import { entitlementsByUserType } from "@/lib/ai/entitlements";
 import {
   allowedModelIds,
   allowedVisionModelIds,
-  DEFAULT_CHAT_MODEL,
-  DEFAULT_VISION_MODEL,
   isAllowedModelId,
 } from "@/lib/ai/models";
 import {
@@ -101,6 +99,11 @@ function getLatestUserMessageText(messages: ChatMessage[]) {
   return "";
 }
 
+// The pipeline trace is shown once under the answer and never saved
+function withoutTrace(parts: ChatMessage["parts"]) {
+  return parts.filter((part) => part.type !== "data-debug");
+}
+
 function getStreamContext() {
   try {
     return createResumableStreamContext({ waitUntil: after });
@@ -136,11 +139,11 @@ export async function POST(request: Request) {
       message,
       messages,
       agents,
+      chunkCount,
       diagramGeneration,
+      hybridSearch,
       modelChoices,
       reranker,
-      selectedChatModel,
-      selectedVisionModel,
       selectedVisibilityType,
     } = requestBody;
 
@@ -157,49 +160,27 @@ export async function POST(request: Request) {
       return new ChatbotError("unauthorized:chat").toResponse();
     }
 
-    // Self-hosted models are checked by the backend against its own list;
-    // API models must exist on the AI Gateway, otherwise the default is used
-    const textSelfHosted = modelChoices?.answer?.source === "self-hosted";
-    const visionSelfHosted =
-      modelChoices?.visionDescription?.source === "self-hosted";
-
-    const [chatModelOk, visionModelOk] = await Promise.all([
-      textSelfHosted || isAllowedModelId(selectedChatModel, allowedModelIds),
-      visionSelfHosted ||
-        (selectedVisionModel
-          ? isAllowedModelId(selectedVisionModel, allowedVisionModelIds)
-          : false),
-    ]);
-    const chatModel = chatModelOk ? selectedChatModel : DEFAULT_CHAT_MODEL;
-    const visionModel =
-      visionModelOk && selectedVisionModel
-        ? selectedVisionModel
-        : DEFAULT_VISION_MODEL;
-    // The query and context management agents: self-hosted ids are checked by
-    // the backend, API ids must be known models, otherwise the backend's own
-    // defaults are used
-    const agentModel = async (choice?: ModelChoice) => {
-      if (!choice) {
-        return;
-      }
-      if (choice.source === "self-hosted") {
+    // Models picked in Settings. Self-hosted ones are checked by the backend
+    // against its own list; API ones must exist on the AI Gateway. A step with
+    // no usable pick is left out, and the backend uses its default model.
+    const pickModel = async (
+      choice: ModelChoice | undefined,
+      allowed: Set<string>
+    ) => {
+      if (!choice || choice.source === "self-hosted") {
         return choice;
       }
-      return (await isAllowedModelId(choice.modelId, allowedModelIds))
+      return (await isAllowedModelId(choice.modelId, allowed))
         ? choice
         : undefined;
     };
-    const [queryModel, contextModel] = await Promise.all([
-      agentModel(modelChoices?.query),
-      agentModel(modelChoices?.contextManagement),
-    ]);
-
-    const modelSources = {
-      textSource: textSelfHosted ? ("self-hosted" as const) : ("api" as const),
-      visionSource: visionSelfHosted
-        ? ("self-hosted" as const)
-        : ("api" as const),
-    };
+    const [answerModel, queryModel, contextModel, visionModel] =
+      await Promise.all([
+        pickModel(modelChoices?.answer, allowedModelIds),
+        pickModel(modelChoices?.query, allowedModelIds),
+        pickModel(modelChoices?.contextManagement, allowedModelIds),
+        pickModel(modelChoices?.visionDescription, allowedVisionModelIds),
+      ]);
 
     await checkIpRateLimit(ipAddress(request));
 
@@ -305,7 +286,7 @@ export async function POST(request: Request) {
 
         console.log("RENDER REQUEST:", {
           message: userMessage,
-          model: chatModel,
+          model: answerModel?.modelId ?? "backend default",
         });
 
         // Full history of this chat (excluding the current message)
@@ -330,7 +311,7 @@ export async function POST(request: Request) {
 
         const backendResponse = await callBackend(
           userMessage,
-          chatModel,
+          answerModel,
           (event) => {
             dataStream.write({
               data: {
@@ -349,7 +330,6 @@ export async function POST(request: Request) {
           {
             agents: agents ?? {},
             diagramGeneration: diagramGeneration ?? true,
-            ...modelSources,
             contextModel,
             images,
             onDelta: writeDelta,
@@ -363,6 +343,8 @@ export async function POST(request: Request) {
                 type: "data-debug",
               });
             },
+            chunkCount,
+            hybridSearch,
             queryModel,
             reranker: reranker ?? true,
             visionModel,
@@ -426,7 +408,7 @@ export async function POST(request: Request) {
               if (existingMessage) {
                 await updateMessage({
                   id: finishedMessage.id,
-                  parts: finishedMessage.parts,
+                  parts: withoutTrace(finishedMessage.parts),
                 });
                 return;
               }
@@ -438,7 +420,7 @@ export async function POST(request: Request) {
                     chatId: id,
                     createdAt: new Date(),
                     id: finishedMessage.id,
-                    parts: finishedMessage.parts,
+                    parts: withoutTrace(finishedMessage.parts),
                     role: finishedMessage.role,
                   },
                 ],
@@ -452,7 +434,7 @@ export async function POST(request: Request) {
               chatId: id,
               createdAt: new Date(),
               id: currentMessage.id,
-              parts: currentMessage.parts,
+              parts: withoutTrace(currentMessage.parts),
               role: currentMessage.role,
             })),
           });

@@ -1,23 +1,21 @@
 import time
 from contextlib import contextmanager
 
+from pipeline.errors import StepFailed, describe_error
+
 
 class Trace:
-    """Records what each pipeline step received, returned and how long it took.
-
-    Sent to the frontend as the "Pipeline trace" panel when DEBUG_TRACE is on.
-    """
-
     def __init__(self):
         self.steps: list[dict] = []
         self._started = time.perf_counter()
 
     @contextmanager
-    def step(self, name: str, model: str | None = None, input=None):
+    def step(self, name: str, model=None, input=None, fallback: bool = False):
         entry: dict = {"name": name}
 
-        if model:
-            entry["model"] = model
+        if model is not None:
+            entry["model"] = model.id
+            entry["source"] = model.source
 
         if input is not None:
             entry["input"] = input
@@ -27,8 +25,13 @@ class Trace:
         try:
             yield entry
         except Exception as error:
-            entry.setdefault("error", str(error))
-            raise
+            entry["error"] = describe_error(error, name, model)
+
+            if not fallback:
+                raise StepFailed(entry["error"]) from error
+
+            entry["fallback"] = True
+            print(f"[{name}] {entry['error']} (falling back)")
         finally:
             entry["ms"] = round((time.perf_counter() - started) * 1000)
             self.steps.append(entry)
@@ -40,5 +43,4 @@ class Trace:
         }
 
     def summary(self) -> str:
-        """One line for the server logs, e.g. "planner=840ms answer=5230ms"."""
         return " ".join(f"{step['name']}={step['ms']}ms" for step in self.steps)

@@ -1,10 +1,3 @@
-export const DEFAULT_CHAT_MODEL = "moonshotai/kimi-k2.5";
-
-// The query and context management agents only rewrite and route the
-// question, so a small, fast model is enough
-export const DEFAULT_QUERY_MODEL = "xai/grok-4.1-fast-non-reasoning";
-export const DEFAULT_CONTEXT_MODEL = "xai/grok-4.1-fast-non-reasoning";
-
 export const titleModel = {
   description: "Fast model for title generation",
   gatewayOrder: ["fireworks", "bedrock"],
@@ -70,7 +63,6 @@ export const chatModels: ChatModel[] = [
 
 // Models that can read images (topology screenshots, photos of equipment).
 // IDs are Vercel AI Gateway model IDs, same format as chatModels above.
-export const DEFAULT_VISION_MODEL = "google/gemini-2.5-flash";
 
 export const visionModels: ChatModel[] = [
   {

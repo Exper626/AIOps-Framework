@@ -1,10 +1,3 @@
-import {
-  DEFAULT_CHAT_MODEL,
-  DEFAULT_CONTEXT_MODEL,
-  DEFAULT_QUERY_MODEL,
-  DEFAULT_VISION_MODEL,
-} from "@/lib/ai/models";
-
 // Choices from the Settings dialog, stored in cookies so both the sidebar
 // (settings) and the chat (sending messages) can read them.
 
@@ -27,17 +20,17 @@ export const MODEL_TASKS: {
 }[] = [
   {
     description:
-      "Rewrites your message as clear questions and splits multi-part messages. A small, fast model is enough.",
+      "Rewrites your message as one clear question when it needs it. A small, fast model is enough.",
     id: "query",
     kind: "text",
     label: "Query",
   },
   {
     description:
-      "Decides which earlier messages each question needs. A small, fast model is enough.",
+      "Decides which earlier messages the answer needs. A small, fast model is enough.",
     id: "contextManagement",
     kind: "text",
-    label: "Context management",
+    label: "Context",
   },
   {
     description: "Writes the answer you see in the chat.",
@@ -49,7 +42,7 @@ export const MODEL_TASKS: {
     description: "Reads topology images and screenshots you attach.",
     id: "visionDescription",
     kind: "vision",
-    label: "Vision description",
+    label: "Vision",
   },
 ];
 
@@ -91,16 +84,15 @@ const MODEL_COOKIES: Partial<Record<ModelTask, string>> = {
   visionDescription: "vision-model",
 };
 
-const MODEL_DEFAULTS: Record<ModelTask, string> = {
-  answer: DEFAULT_CHAT_MODEL,
-  contextManagement: DEFAULT_CONTEXT_MODEL,
-  query: DEFAULT_QUERY_MODEL,
-  visionDescription: DEFAULT_VISION_MODEL,
-};
-
 const AGENTS_COOKIE = "agent-settings";
 const DIAGRAM_COOKIE = "diagram-generation";
 const RERANKER_COOKIE = "reranker";
+const HYBRID_SEARCH_COOKIE = "hybrid-search";
+const CHUNK_COUNT_COOKIE = "chunk-count";
+
+// How many knowledge base chunks the answer is written from
+export const CHUNK_COUNT_RANGE = { max: 20, min: 1 };
+const DEFAULT_CHUNK_COUNT = 5;
 
 function readCookie(name: string): string | undefined {
   if (typeof document === "undefined") {
@@ -136,7 +128,8 @@ const CHOICE_COOKIES: Record<ModelTask, string> = {
   visionDescription: "vision-model-choice",
 };
 
-export function getModelChoice(task: ModelTask): ModelChoice {
+// Nothing picked yet: the backend uses its default model for that step
+export function getModelChoice(task: ModelTask): ModelChoice | undefined {
   const raw = readCookie(CHOICE_COOKIES[task]);
   if (raw) {
     try {
@@ -150,7 +143,7 @@ export function getModelChoice(task: ModelTask): ModelChoice {
   }
   const plainCookie = MODEL_COOKIES[task];
   const plainModelId = plainCookie ? readCookie(plainCookie) : undefined;
-  return { modelId: plainModelId ?? MODEL_DEFAULTS[task], source: "api" };
+  return plainModelId ? { modelId: plainModelId, source: "api" } : undefined;
 }
 
 export function setModelChoice(task: ModelTask, choice: ModelChoice) {
@@ -192,4 +185,25 @@ export function getRerankerEnabled(): boolean {
 
 export function setRerankerEnabled(enabled: boolean) {
   writeCookie(RERANKER_COOKIE, String(enabled));
+}
+
+export function getHybridSearchEnabled(): boolean {
+  return readCookie(HYBRID_SEARCH_COOKIE) !== "false";
+}
+
+export function setHybridSearchEnabled(enabled: boolean) {
+  writeCookie(HYBRID_SEARCH_COOKIE, String(enabled));
+}
+
+export function getChunkCount(): number {
+  const count = Number(readCookie(CHUNK_COUNT_COOKIE));
+  return Number.isInteger(count) &&
+    count >= CHUNK_COUNT_RANGE.min &&
+    count <= CHUNK_COUNT_RANGE.max
+    ? count
+    : DEFAULT_CHUNK_COUNT;
+}
+
+export function setChunkCount(count: number) {
+  writeCookie(CHUNK_COUNT_COOKIE, String(count));
 }

@@ -116,20 +116,20 @@ function describeBackendFailure(url: string, status: number, body: string) {
 
 export async function callBackend(
   message: string,
-  model: string,
+  // Models picked in Settings; a missing one means the backend's default
+  answerModel: ModelChoice | undefined,
   onProgress?: (event: BackendProgressEvent) => void,
   history: HistoryMessage[] = [],
   sessionId?: string,
   options: {
-    visionModel?: string;
+    visionModel?: ModelChoice;
     agents?: Record<string, boolean>;
     diagramGeneration?: boolean;
     reranker?: boolean;
+    hybridSearch?: boolean;
+    chunkCount?: number;
     // Images attached to this message, as base64 data URLs
     images?: BackendImage[];
-    textSource?: "api" | "self-hosted";
-    visionSource?: "api" | "self-hosted";
-    // Models for the agents before the answer; the backend has defaults
     queryModel?: ModelChoice;
     contextModel?: ModelChoice;
     onDelta?: (delta: string) => void;
@@ -153,24 +153,22 @@ export async function callBackend(
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         message,
-        model,
         history,
         session_id: sessionId ?? null,
-        vision_model: options.visionModel ?? null,
         agents: options.agents ?? {},
         diagram_generation: options.diagramGeneration ?? true,
         reranker: options.reranker ?? true,
+        hybrid_search: options.hybridSearch,
+        chunk_count: options.chunkCount,
         images: (options.images ?? []).map((image) => ({
           data_url: image.url,
           media_type: image.mediaType,
           name: image.name,
         })),
-        // "api" = call through the Vercel AI Gateway, "self-hosted" = one of
-        // the backend's own models (its GET /models list)
-        text_source: options.textSource ?? "api",
-        vision_source: options.visionSource ?? "api",
+        answer_model: toBackendModel(answerModel),
         query_model: toBackendModel(options.queryModel),
         context_model: toBackendModel(options.contextModel),
+        vision_model: toBackendModel(options.visionModel),
       }),
       cache: "no-store",
     });

@@ -33,7 +33,11 @@ const modelChoiceSchema = z.object({
 
 export const postRequestBodySchema = z.object({
   agents: z.record(z.string(), z.boolean()).optional(),
+  // Settings → Knowledge Base: chunks the answer is written from
+  chunkCount: z.number().int().min(1).max(20).optional(),
   diagramGeneration: z.boolean().optional(),
+  // Settings → Knowledge Base: keyword + vector search, or vector only
+  hybridSearch: z.boolean().optional(),
   id: z.uuid(),
   message: userMessageSchema.optional(),
   messages: z.array(toolApprovalMessageSchema).optional(),
@@ -50,9 +54,7 @@ export const postRequestBodySchema = z.object({
     .optional(),
   // Settings → Knowledge Base: re-order search results before answering
   reranker: z.boolean().optional(),
-  selectedChatModel: z.string(),
   selectedVisibilityType: z.enum(["public", "private"]),
-  selectedVisionModel: z.string().optional(),
 });
 
 export type PostRequestBody = z.infer<typeof postRequestBodySchema>;

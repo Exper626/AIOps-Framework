@@ -7,6 +7,8 @@ import {
   EyeIcon,
   LayersIcon,
   MessageSquareTextIcon,
+  MinusIcon,
+  PlusIcon,
   SearchIcon,
   TextSearchIcon,
   XIcon,
@@ -31,8 +33,11 @@ import {
   AGENTS,
   type AgentId,
   type AgentSettings,
+  CHUNK_COUNT_RANGE,
   getAgentSettings,
+  getChunkCount,
   getDiagramGenerationEnabled,
+  getHybridSearchEnabled,
   getModelChoice,
   getRerankerEnabled,
   MODEL_TASKS,
@@ -41,7 +46,9 @@ import {
   type ModelSource,
   type ModelTask,
   setAgentSettings,
+  setChunkCount,
   setDiagramGenerationEnabled,
+  setHybridSearchEnabled,
   setModelChoice,
   setRerankerEnabled,
 } from "@/lib/model-settings";
@@ -71,7 +78,8 @@ type SelfHostedModel = { id: string; name: string };
 
 type SelfHostedResponse = Record<ModelKind, SelfHostedModel[]>;
 
-type ModelChoices = Record<ModelTask, ModelChoice>;
+// A step with no choice uses the backend's default model
+type ModelChoices = Partial<Record<ModelTask, ModelChoice>>;
 
 // Shown in the API list before you search
 const RECOMMENDED: Record<ModelKind, ChatModel[]> = {
@@ -85,8 +93,8 @@ function readModelChoices(): ModelChoices {
   ) as ModelChoices;
 }
 
-function sameChoice(a: ModelChoice, b: ModelChoice) {
-  return a.source === b.source && a.modelId === b.modelId;
+function sameChoice(a?: ModelChoice, b?: ModelChoice) {
+  return a?.source === b?.source && a?.modelId === b?.modelId;
 }
 
 type CapabilityFilter = "vision" | "tools" | "reasoning";
@@ -134,7 +142,7 @@ function CurrentModelCard({
   choice,
   displayName,
 }: {
-  choice: ModelChoice;
+  choice?: ModelChoice;
   displayName: string;
 }) {
   return (
@@ -142,10 +150,10 @@ function CurrentModelCard({
       <div className="flex min-w-0 flex-col gap-0.5">
         <div className="flex min-w-0 items-center gap-2">
           <span className="truncate text-sm">{displayName}</span>
-          <SourceTag source={choice.source} />
+          {choice ? <SourceTag source={choice.source} /> : null}
         </div>
         <span className="truncate text-muted-foreground text-xs">
-          {choice.modelId}
+          {choice ? choice.modelId : "Set on the backend"}
         </span>
       </div>
       <CheckIcon className="size-4 shrink-0 text-foreground" />
@@ -223,7 +231,7 @@ function ApiModelBrowser({
   onPick,
 }: {
   kind: ModelKind;
-  current: ModelChoice;
+  current?: ModelChoice;
   gatewayModels: GatewayModelWithCapabilities[];
   onPick: (modelId: string) => void;
 }) {
@@ -339,7 +347,7 @@ function ApiModelBrowser({
             key={model.id}
             name={model.name}
             onPick={() => onPick(model.id)}
-            selected={current.source === "api" && current.modelId === model.id}
+            selected={current?.source === "api" && current.modelId === model.id}
           />
         ))}
         {isFiltering && results.length === 0 ? (
@@ -361,7 +369,7 @@ function SelfHostedList({
   onPick,
 }: {
   models: SelfHostedModel[];
-  current: ModelChoice;
+  current?: ModelChoice;
   loading: boolean;
   onPick: (modelId: string) => void;
 }) {
@@ -392,7 +400,8 @@ function SelfHostedList({
               name={model.name}
               onPick={() => onPick(model.id)}
               selected={
-                current.source === "self-hosted" && current.modelId === model.id
+                current?.source === "self-hosted" &&
+                current.modelId === model.id
               }
             />
           ))}
@@ -411,22 +420,25 @@ function ModelSlot({
   onPick,
 }: {
   kind: ModelKind;
-  current: ModelChoice;
+  current?: ModelChoice;
   gatewayModels: GatewayModelWithCapabilities[];
   selfHosted: SelfHostedModel[];
   selfHostedLoading: boolean;
   onPick: (choice: ModelChoice) => void;
 }) {
   // Which source you're browsing; starts on the one currently selected
-  const [source, setSource] = useState<ModelSource>(current.source);
+  const [source, setSource] = useState<ModelSource>(current?.source ?? "api");
 
-  const displayName =
-    current.source === "self-hosted"
-      ? (selfHosted.find((m) => m.id === current.modelId)?.name ??
-        current.modelId)
-      : (RECOMMENDED[kind].find((m) => m.id === current.modelId)?.name ??
-        gatewayModels.find((m) => m.id === current.modelId)?.name ??
-        current.modelId);
+  let displayName = "Default model";
+  if (current?.source === "self-hosted") {
+    displayName =
+      selfHosted.find((m) => m.id === current.modelId)?.name ?? current.modelId;
+  } else if (current) {
+    displayName =
+      RECOMMENDED[kind].find((m) => m.id === current.modelId)?.name ??
+      gatewayModels.find((m) => m.id === current.modelId)?.name ??
+      current.modelId;
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -474,7 +486,7 @@ function ModelTaskPanel({
   onSave,
 }: {
   task: (typeof MODEL_TASKS)[number];
-  draft: ModelChoice;
+  draft?: ModelChoice;
   unsavedTasks: string[];
   justSaved: boolean;
   gatewayModels: GatewayModelWithCapabilities[];
@@ -576,6 +588,52 @@ function ToggleRow({
   );
 }
 
+function StepperRow({
+  title,
+  description,
+  value,
+  min,
+  max,
+  onChange,
+}: {
+  title: string;
+  description: string;
+  value: number;
+  min: number;
+  max: number;
+  onChange: (value: number) => void;
+}) {
+  return (
+    <div className="flex items-center justify-between gap-4 rounded-xl border border-border/60 px-4 py-3">
+      <div className="flex min-w-0 flex-col gap-0.5">
+        <span className="text-sm">{title}</span>
+        <span className="text-muted-foreground text-xs">{description}</span>
+      </div>
+      <div className="flex shrink-0 items-center gap-1">
+        <Button
+          aria-label={`Fewer ${title.toLowerCase()}`}
+          disabled={value <= min}
+          onClick={() => onChange(value - 1)}
+          size="icon-sm"
+          variant="ghost"
+        >
+          <MinusIcon />
+        </Button>
+        <span className="w-6 text-center text-sm tabular-nums">{value}</span>
+        <Button
+          aria-label={`More ${title.toLowerCase()}`}
+          disabled={value >= max}
+          onClick={() => onChange(value + 1)}
+          size="icon-sm"
+          variant="ghost"
+        >
+          <PlusIcon />
+        </Button>
+      </div>
+    </div>
+  );
+}
+
 function AgentsPanel({
   settings,
   onChange,
@@ -617,11 +675,19 @@ function AgentsPanel({
 // ---------- Knowledge Base ----------
 
 function KnowledgeBasePanel({
+  hybridSearch,
+  onHybridSearchChange,
   reranker,
   onRerankerChange,
+  chunkCount,
+  onChunkCountChange,
 }: {
+  hybridSearch: boolean;
+  onHybridSearchChange: (enabled: boolean) => void;
   reranker: boolean;
   onRerankerChange: (enabled: boolean) => void;
+  chunkCount: number;
+  onChunkCountChange: (count: number) => void;
 }) {
   return (
     <div className="flex flex-col gap-3 py-3">
@@ -630,10 +696,24 @@ function KnowledgeBasePanel({
         title="Knowledge Base"
       />
       <ToggleRow
+        checked={hybridSearch}
+        description="Matches exact words like model numbers (EX2300, C9200) as well as meaning. Turn off to search by meaning only."
+        onChange={onHybridSearchChange}
+        title="Hybrid search"
+      />
+      <ToggleRow
         checked={reranker}
         description="Re-orders the documents found for your question so the most relevant ones reach the answer. Usually more accurate, a little slower."
         onChange={onRerankerChange}
         title="Reranker"
+      />
+      <StepperRow
+        description="How many passages from the knowledge base the answer is written from. More gives more context, but a longer and slower answer."
+        max={CHUNK_COUNT_RANGE.max}
+        min={CHUNK_COUNT_RANGE.min}
+        onChange={onChunkCountChange}
+        title="Chunks"
+        value={chunkCount}
       />
       <span className="pt-2 text-muted-foreground text-xs">Sources</span>
       <div className="flex flex-col gap-1.5">
@@ -671,6 +751,8 @@ export function SettingsDialog({
     useState<AgentSettings>(getAgentSettings);
   const [diagramGeneration, setDiagramGeneration] = useState(true);
   const [reranker, setReranker] = useState(true);
+  const [hybridSearch, setHybridSearch] = useState(true);
+  const [chunkCount, setChunkCountState] = useState(getChunkCount);
 
   // Read the saved choices each time the dialog opens
   useEffect(() => {
@@ -682,6 +764,8 @@ export function SettingsDialog({
       setAgentSettingsState(getAgentSettings());
       setDiagramGeneration(getDiagramGenerationEnabled());
       setReranker(getRerankerEnabled());
+      setHybridSearch(getHybridSearchEnabled());
+      setChunkCountState(getChunkCount());
     }
   }, [open]);
 
@@ -717,7 +801,10 @@ export function SettingsDialog({
 
   const handleSave = () => {
     for (const task of MODEL_TASKS) {
-      setModelChoice(task.id, drafts[task.id]);
+      const draft = drafts[task.id];
+      if (draft) {
+        setModelChoice(task.id, draft);
+      }
     }
     setChoices(drafts);
     setJustSaved(true);
@@ -762,6 +849,16 @@ export function SettingsDialog({
   const handleRerankerChange = (enabled: boolean) => {
     setRerankerEnabled(enabled);
     setReranker(enabled);
+  };
+
+  const handleHybridSearchChange = (enabled: boolean) => {
+    setHybridSearchEnabled(enabled);
+    setHybridSearch(enabled);
+  };
+
+  const handleChunkCountChange = (count: number) => {
+    setChunkCount(count);
+    setChunkCountState(count);
   };
 
   return (
@@ -819,6 +916,10 @@ export function SettingsDialog({
             ) : null}
             {tab === "knowledge" ? (
               <KnowledgeBasePanel
+                chunkCount={chunkCount}
+                hybridSearch={hybridSearch}
+                onChunkCountChange={handleChunkCountChange}
+                onHybridSearchChange={handleHybridSearchChange}
                 onRerankerChange={handleRerankerChange}
                 reranker={reranker}
               />

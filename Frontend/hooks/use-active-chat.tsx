@@ -22,12 +22,13 @@ import { getChatHistoryPaginationKey } from "@/components/chat/sidebar-history";
 import { toast } from "@/components/chat/toast";
 import type { VisibilityType } from "@/components/chat/visibility-selector";
 import { useAutoResume } from "@/hooks/use-auto-resume";
-import { DEFAULT_CHAT_MODEL } from "@/lib/ai/models";
 import type { Vote } from "@/lib/db/schema";
 import { ChatbotError } from "@/lib/errors";
 import {
   getAgentSettings,
+  getChunkCount,
   getDiagramGenerationEnabled,
+  getHybridSearchEnabled,
   getModelChoice,
   getRerankerEnabled,
 } from "@/lib/model-settings";
@@ -79,7 +80,7 @@ export function ActiveChatProvider({ children }: { children: ReactNode }) {
 
   const chatId = chatIdFromUrl ?? newChatIdRef.current;
 
-  const [currentModelId, setCurrentModelId] = useState(DEFAULT_CHAT_MODEL);
+  const [currentModelId, setCurrentModelId] = useState("");
 
   const [input, setInput] = useState("");
   const [showCreditCardAlert, setShowCreditCardAlert] = useState(false);
@@ -169,7 +170,9 @@ export function ActiveChatProvider({ children }: { children: ReactNode }) {
               ? { messages: request.messages }
               : { message: lastMessage }),
             agents: getAgentSettings(),
+            chunkCount: getChunkCount(),
             diagramGeneration: getDiagramGenerationEnabled(),
+            hybridSearch: getHybridSearchEnabled(),
             modelChoices: {
               answer: getModelChoice("answer"),
               contextManagement: getModelChoice("contextManagement"),
@@ -177,9 +180,7 @@ export function ActiveChatProvider({ children }: { children: ReactNode }) {
               visionDescription: getModelChoice("visionDescription"),
             },
             reranker: getRerankerEnabled(),
-            selectedChatModel: getModelChoice("answer").modelId,
             selectedVisibilityType: visibility,
-            selectedVisionModel: getModelChoice("visionDescription").modelId,
             ...request.body,
           },
         };
