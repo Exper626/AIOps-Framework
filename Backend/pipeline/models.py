@@ -1,3 +1,4 @@
+import re
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from functools import cache
@@ -7,10 +8,12 @@ from openai import OpenAI
 from pydantic import BaseModel, Field
 
 from config import ModelKind, SelfHostedServer, settings
-from pipeline.errors import ModelUnavailable
+from pipeline.errors import ModelUnavailable, describe_discovery_error
 from pipeline.llm import gateway_client
 
 DISCOVERY_TIMEOUT_SECONDS = 15
+
+MODAL_PROXY_TOKEN = re.compile(r"^(wk-[^.]+)\.(ws-.+)$")
 
 
 class ModelRef(BaseModel):
@@ -37,9 +40,17 @@ class SelfHostedModel:
 known_models: dict[str, SelfHostedModel] = {}
 
 
+# A Modal proxy token (wk-….ws-…) goes both as the Bearer key, which Modal
+# Servers take, and as the Modal-Key / Modal-Secret headers web endpoints need
+def auth_headers(api_key: str) -> dict[str, str]:
+    token = MODAL_PROXY_TOKEN.match(api_key)
+    return {"Modal-Key": token.group(1), "Modal-Secret": token.group(2)} if token else {}
+
+
 @cache
 def self_hosted_client(base_url: str) -> OpenAI:
-    return OpenAI(api_key=settings.self_hosted_api_key, base_url=base_url)
+    key = settings.self_hosted_api_key
+    return OpenAI(api_key=key, base_url=base_url, default_headers=auth_headers(key))
 
 
 def ask_server_for_models(server: SelfHostedServer) -> list[str]:
@@ -57,7 +68,8 @@ def discover_self_hosted_models() -> list[str]:
 
     for server, reply in replies:
         if reply.exception():
-            unreachable.append(f"{server.base_url} ({reply.exception()})")
+            reason = describe_discovery_error(reply.exception(), DISCOVERY_TIMEOUT_SECONDS)
+            unreachable.append(f"Couldn't get the models from {server.base_url}: {reason}.")
             continue
 
         for model_id in [m.id for m in known_models.values() if m.server == server]:
@@ -75,9 +87,10 @@ def list_self_hosted_models() -> dict:
         kind: [{"id": m.id, "name": m.id.rsplit("/", 1)[-1]} for m in known_models.values() if kind in m.server.kinds]
         for kind in ("text", "vision")
     }
+    listing["servers"] = len(settings.self_hosted_servers)
 
     if unreachable:
-        listing["error"] = "Couldn't get the models from " + "; ".join(unreachable)
+        listing["error"] = "\n".join(unreachable)
 
     return listing
 

@@ -132,8 +132,6 @@ export async function callBackend(
   sessionId?: string,
   options: {
     visionModel?: ModelChoice;
-    agents?: Record<string, boolean>;
-    diagramGeneration?: boolean;
     // A diagram the user drew and sent with this message
     diagram?: NetworkDiagram;
     reranker?: boolean;
@@ -141,6 +139,7 @@ export async function callBackend(
     chunkCount?: number;
     // Images attached to this message, as base64 data URLs
     images?: BackendImage[];
+    routerModel?: ModelChoice;
     queryModel?: ModelChoice;
     contextModel?: ModelChoice;
     onDelta?: (delta: string) => void;
@@ -167,8 +166,6 @@ export async function callBackend(
         message,
         history,
         session_id: sessionId ?? null,
-        agents: options.agents ?? {},
-        diagram_generation: options.diagramGeneration ?? true,
         diagram: options.diagram ?? null,
         reranker: options.reranker ?? true,
         hybrid_search: options.hybridSearch,
@@ -178,6 +175,7 @@ export async function callBackend(
           media_type: image.mediaType,
           name: image.name,
         })),
+        router_model: toBackendModel(options.routerModel),
         answer_model: toBackendModel(answerModel),
         query_model: toBackendModel(options.queryModel),
         context_model: toBackendModel(options.contextModel),

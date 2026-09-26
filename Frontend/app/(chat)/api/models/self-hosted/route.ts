@@ -3,7 +3,8 @@ import { getBackendUrl } from "@/lib/backend";
 
 type SelfHostedModel = { id: string; name: string };
 
-// The self-hosted models the backend is set up with, for Settings → Models.
+// The self-hosted models the backend is set up with, for Settings → Models,
+// and the model it uses for a step when none is picked.
 // The backend keeps the server addresses; the browser only sees ids and names.
 export async function GET() {
   const session = await auth();
@@ -38,11 +39,15 @@ export async function GET() {
     }
 
     const data = (await res.json()) as Partial<typeof empty> & {
+      default_model?: string;
       error?: string;
+      servers?: number;
     };
 
     return Response.json({
+      defaultModel: data.default_model,
       error: data.error,
+      servers: data.servers,
       text: data.text ?? [],
       vision: data.vision ?? [],
     });

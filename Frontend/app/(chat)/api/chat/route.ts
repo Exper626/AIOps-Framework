@@ -144,9 +144,7 @@ export async function POST(request: Request) {
       id,
       message,
       messages,
-      agents,
       chunkCount,
-      diagramGeneration,
       hybridSearch,
       modelChoices,
       reranker,
@@ -180,8 +178,9 @@ export async function POST(request: Request) {
         ? choice
         : undefined;
     };
-    const [answerModel, queryModel, contextModel, visionModel] =
+    const [routerModel, answerModel, queryModel, contextModel, visionModel] =
       await Promise.all([
+        pickModel(modelChoices?.router, allowedModelIds),
         pickModel(modelChoices?.answer, allowedModelIds),
         pickModel(modelChoices?.query, allowedModelIds),
         pickModel(modelChoices?.contextManagement, allowedModelIds),
@@ -353,8 +352,6 @@ export async function POST(request: Request) {
           history,
           session?.user?.id,
           {
-            agents: agents ?? {},
-            diagramGeneration: diagramGeneration ?? true,
             contextModel,
             diagram: drawnDiagram,
             images,
@@ -376,6 +373,7 @@ export async function POST(request: Request) {
             hybridSearch,
             queryModel,
             reranker: reranker ?? true,
+            routerModel,
             visionModel,
           },
         );

@@ -40,19 +40,13 @@ def describe_selection(selected: list[int], total: int) -> str:
     return f"Used exchange{'s' if len(selected) > 1 else ''} {', '.join(map(str, selected))} of {total}"
 
 
-def context_runs(enabled: bool, history: list[dict]) -> bool:
-    return enabled and bool(history)
-
-
-def run_context(ref: ModelRef, question: str, history: list[dict], trace: Trace, enabled: bool = True) -> list[dict]:
+def run_context(ref: ModelRef, question: str, history: list[dict], trace: Trace) -> list[dict]:
     exchanges = group_exchanges(history)
     everything = list(range(1, len(exchanges) + 1))
 
-    if not context_runs(enabled, history):
+    if not history:
         with trace.step("context management") as step:
-            step["skipped"] = "Turned off in Settings → Agents" if not enabled else "No earlier messages yet"
-            if history:
-                step["output"] = describe_selection(everything, len(exchanges))
+            step["skipped"] = "No earlier messages yet"
         return history
 
     agent_input = f"Conversation:\n{format_exchanges(exchanges)}\n\nQuestion: {question}"

@@ -25,9 +25,7 @@ import { useAutoResume } from "@/hooks/use-auto-resume";
 import type { Vote } from "@/lib/db/schema";
 import { ChatbotError } from "@/lib/errors";
 import {
-  getAgentSettings,
   getChunkCount,
-  getDiagramGenerationEnabled,
   getHybridSearchEnabled,
   getModelChoice,
   getRerankerEnabled,
@@ -180,14 +178,13 @@ export function ActiveChatProvider({ children }: { children: ReactNode }) {
             ...(isToolApprovalContinuation
               ? { messages: request.messages }
               : { message: lastMessage }),
-            agents: getAgentSettings(),
             chunkCount: getChunkCount(),
-            diagramGeneration: getDiagramGenerationEnabled(),
             hybridSearch: getHybridSearchEnabled(),
             modelChoices: {
               answer: getModelChoice("answer"),
               contextManagement: getModelChoice("contextManagement"),
               query: getModelChoice("query"),
+              router: getModelChoice("router"),
               visionDescription: getModelChoice("visionDescription"),
             },
             reranker: getRerankerEnabled(),

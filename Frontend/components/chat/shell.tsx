@@ -148,16 +148,17 @@ export function ChatShell() {
             selectedVisibilityType={visibilityType}
           />
 
-          <div
-            className={cn(
-              "relative flex min-h-0 flex-1 flex-col overflow-hidden bg-background md:rounded-tl-[12px] md:border-t md:border-l md:border-border/40",
-              isEmptyChat && "justify-center"
-            )}
-          >
+          <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-background md:rounded-tl-[12px] md:border-t md:border-l md:border-border/40">
+            {/* On a new chat the title and message box sit a little above the
+                middle, with the ideas below; the space above gives way first
+                on short screens */}
             {isEmptyChat && (
-              <div className="mb-4">
-                <Greeting />
-              </div>
+              <>
+                <div aria-hidden="true" className="min-h-4 flex-[4_1_0%]" />
+                <div className="mb-4">
+                  <Greeting />
+                </div>
+              </>
             )}
 
             <div
@@ -214,15 +215,18 @@ export function ChatShell() {
               )}
             </div>
 
-            {isEmptyChat && !isReadonly && (
-              <div className="mx-auto w-full max-w-3xl px-2 md:px-4">
-                <SuggestedActions
-                  chatId={chatId}
-                  selectedVisibilityType={visibilityType}
-                  sendMessage={sendMessage}
-                />
+            {isEmptyChat ? (
+              <div className="mx-auto w-full max-w-3xl flex-[5_1_0%] px-2 pb-8 md:px-4">
+                {isReadonly ? null : (
+                  <SuggestedActions
+                    chatId={chatId}
+                    selectedVisibilityType={visibilityType}
+                    sendMessage={sendMessage}
+                    setInput={setInput}
+                  />
+                )}
               </div>
-            )}
+            ) : null}
           </div>
         </div>
 

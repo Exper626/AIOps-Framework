@@ -11,10 +11,3 @@ export const isTestEnvironment = Boolean(
 export const guestRegex = /^guest-\d+$/;
 
 export const DUMMY_PASSWORD = generateDummyPassword();
-
-export const suggestions = [
-  "How do I configure a VLAN on a Cisco switch?",
-  "What is the difference between OSPF and BGP?",
-  "Troubleshoot a router interface that is down",
-  "Explain subnetting for a /26 network",
-];

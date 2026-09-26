@@ -40,7 +40,8 @@ def hello(name: str = "world"):
 
 @app.get("/models")
 def models():
-    return list_self_hosted_models()
+    # Also says which model a step uses when none is picked in Settings
+    return {**list_self_hosted_models(), "default_model": DEFAULT_MODEL.id}
 
 
 @app.post("/chat")

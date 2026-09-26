@@ -8,8 +8,10 @@ import {
   LayersIcon,
   MessageSquareTextIcon,
   MinusIcon,
+  NetworkIcon,
   PlusIcon,
   SearchIcon,
+  SignpostIcon,
   TextSearchIcon,
   XIcon,
 } from "lucide-react";
@@ -32,11 +34,8 @@ import {
 import {
   AGENTS,
   type AgentId,
-  type AgentSettings,
   CHUNK_COUNT_RANGE,
-  getAgentSettings,
   getChunkCount,
-  getDiagramGenerationEnabled,
   getHybridSearchEnabled,
   getModelChoice,
   getRerankerEnabled,
@@ -45,9 +44,7 @@ import {
   type ModelKind,
   type ModelSource,
   type ModelTask,
-  setAgentSettings,
   setChunkCount,
-  setDiagramGenerationEnabled,
   setHybridSearchEnabled,
   setModelChoice,
   setRerankerEnabled,
@@ -60,7 +57,18 @@ const MODEL_TAB_ICONS: Record<ModelTask, ReactNode> = {
   answer: <MessageSquareTextIcon />,
   contextManagement: <LayersIcon />,
   query: <TextSearchIcon />,
+  router: <SignpostIcon />,
   visionDescription: <EyeIcon />,
+};
+
+const AGENT_ICONS: Record<AgentId, ReactNode> = {
+  answer: <MessageSquareTextIcon />,
+  context: <LayersIcon />,
+  diagram: <NetworkIcon />,
+  knowledgeBase: <BookOpenIcon />,
+  query: <TextSearchIcon />,
+  router: <SignpostIcon />,
+  vision: <EyeIcon />,
 };
 
 const OTHER_TABS: { id: Tab; label: string; icon: ReactNode }[] = [
@@ -76,7 +84,24 @@ const SOURCE_OPTIONS: { id: ModelSource; label: string }[] = [
 // Self-hosted models come from the backend (GET /models), never from the browser
 type SelfHostedModel = { id: string; name: string };
 
-type SelfHostedResponse = Record<ModelKind, SelfHostedModel[]>;
+type SelfHostedResponse = Record<ModelKind, SelfHostedModel[]> & {
+  // The model a step uses when none is picked (missing on older backends)
+  defaultModel?: string;
+  // Why a server's models couldn't be loaded, one line per server
+  error?: string;
+  // How many servers the backend is set up with (missing on older backends)
+  servers?: number;
+};
+
+// Says why the self-hosted list is empty or incomplete, if the backend knows
+function selfHostedNote(response?: SelfHostedResponse): string | undefined {
+  if (response?.error) {
+    return response.error;
+  }
+  if (response?.servers === 0) {
+    return "No servers are set up on the backend yet. Add your server's address (for example your Modal URL ending in /v1) to SELF_HOSTED_SERVERS there, and its models show up here.";
+  }
+}
 
 // A step with no choice uses the backend's default model
 type ModelChoices = Partial<Record<ModelTask, ModelChoice>>;
@@ -128,32 +153,41 @@ function SectionHeader({
   );
 }
 
-function SourceTag({ source }: { source: ModelSource }) {
+function Tag({ label }: { label: string }) {
   return (
     <span className="shrink-0 rounded-md bg-foreground/10 px-1.5 py-0.5 text-[11px] text-muted-foreground">
-      {source === "api" ? "API" : "Self-hosted"}
+      {label}
     </span>
   );
 }
 
 // ---------- Models: current choice ----------
 
+// With nothing picked, the step uses the backend's default model, which is
+// shown by name with a "Default" tag
 function CurrentModelCard({
   choice,
   displayName,
+  defaultModelId,
 }: {
   choice?: ModelChoice;
   displayName: string;
+  defaultModelId?: string;
 }) {
+  let tag = "Default";
+  if (choice) {
+    tag = choice.source === "api" ? "API" : "Self-hosted";
+  }
+
   return (
     <div className="flex items-center justify-between gap-3 rounded-xl border border-foreground/20 bg-foreground/5 px-4 py-3">
       <div className="flex min-w-0 flex-col gap-0.5">
         <div className="flex min-w-0 items-center gap-2">
           <span className="truncate text-sm">{displayName}</span>
-          {choice ? <SourceTag source={choice.source} /> : null}
+          <Tag label={tag} />
         </div>
         <span className="truncate text-muted-foreground text-xs">
-          {choice ? choice.modelId : "Set on the backend"}
+          {choice?.modelId ?? defaultModelId ?? "No model picked yet"}
         </span>
       </div>
       <CheckIcon className="size-4 shrink-0 text-foreground" />
@@ -366,11 +400,13 @@ function SelfHostedList({
   models,
   current,
   loading,
+  note,
   onPick,
 }: {
   models: SelfHostedModel[];
   current?: ModelChoice;
   loading: boolean;
+  note?: string;
   onPick: (modelId: string) => void;
 }) {
   if (loading) {
@@ -386,9 +422,12 @@ function SelfHostedList({
       {models.length === 0 ? (
         <div className="flex flex-col items-center gap-1 rounded-xl border border-border/60 border-dashed px-4 py-8 text-center">
           <span className="text-sm">No self-hosted models yet</span>
-          <span className="max-w-sm text-muted-foreground text-xs">
-            Self-hosted models are set up on the backend. Once they&apos;re
-            added there, they show up here.
+          <span
+            className="max-w-md whitespace-pre-line break-words text-muted-foreground text-xs"
+            data-testid="self-hosted-note"
+          >
+            {note ??
+              "Self-hosted models are set up on the backend. Once they're added there, they show up here."}
           </span>
         </div>
       ) : (
@@ -405,6 +444,14 @@ function SelfHostedList({
               }
             />
           ))}
+          {note ? (
+            <p
+              className="whitespace-pre-line break-words px-1 pt-1 text-muted-foreground text-xs"
+              data-testid="self-hosted-note"
+            >
+              {note}
+            </p>
+          ) : null}
         </div>
       )}
     </div>
@@ -417,34 +464,47 @@ function ModelSlot({
   gatewayModels,
   selfHosted,
   selfHostedLoading,
+  selfHostedNote: note,
+  defaultModelId,
   onPick,
 }: {
   kind: ModelKind;
   current?: ModelChoice;
+  defaultModelId?: string;
   gatewayModels: GatewayModelWithCapabilities[];
   selfHosted: SelfHostedModel[];
   selfHostedLoading: boolean;
+  selfHostedNote?: string;
   onPick: (choice: ModelChoice) => void;
 }) {
   // Which source you're browsing; starts on the one currently selected
   const [source, setSource] = useState<ModelSource>(current?.source ?? "api");
 
-  let displayName = "Default model";
+  const apiModelName = (id: string) =>
+    [...RECOMMENDED.text, ...RECOMMENDED.vision].find((m) => m.id === id)
+      ?.name ??
+    gatewayModels.find((m) => m.id === id)?.name ??
+    id;
+
+  let displayName = defaultModelId
+    ? apiModelName(defaultModelId)
+    : "Default model";
   if (current?.source === "self-hosted") {
     displayName =
       selfHosted.find((m) => m.id === current.modelId)?.name ?? current.modelId;
   } else if (current) {
-    displayName =
-      RECOMMENDED[kind].find((m) => m.id === current.modelId)?.name ??
-      gatewayModels.find((m) => m.id === current.modelId)?.name ??
-      current.modelId;
+    displayName = apiModelName(current.modelId);
   }
 
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-1.5">
         <span className="text-muted-foreground text-xs">Selected model</span>
-        <CurrentModelCard choice={current} displayName={displayName} />
+        <CurrentModelCard
+          choice={current}
+          defaultModelId={defaultModelId}
+          displayName={displayName}
+        />
       </div>
 
       <div className="flex flex-col gap-3 border-border/60 border-t pt-4">
@@ -466,6 +526,7 @@ function ModelSlot({
             current={current}
             loading={selfHostedLoading}
             models={selfHosted}
+            note={note}
             onPick={(modelId) => onPick({ modelId, source: "self-hosted" })}
           />
         )}
@@ -511,12 +572,14 @@ function ModelTaskPanel({
         />
         <ModelSlot
           current={draft}
+          defaultModelId={selfHosted?.defaultModel}
           gatewayModels={gatewayModels}
           key={task.id}
           kind={task.kind}
           onPick={onPick}
           selfHosted={selfHosted?.[task.kind] ?? []}
           selfHostedLoading={selfHostedLoading}
+          selfHostedNote={selfHostedNote(selfHosted)}
         />
       </div>
 
@@ -533,7 +596,7 @@ function ModelTaskPanel({
   );
 }
 
-// ---------- Agents ----------
+// ---------- Rows ----------
 
 function Toggle({
   checked,
@@ -634,40 +697,36 @@ function StepperRow({
   );
 }
 
-function AgentsPanel({
-  settings,
-  onChange,
-  diagramGeneration,
-  onDiagramChange,
-}: {
-  settings: AgentSettings;
-  onChange: (id: AgentId, enabled: boolean) => void;
-  diagramGeneration: boolean;
-  onDiagramChange: (enabled: boolean) => void;
-}) {
+// ---------- Agents ----------
+
+function AgentsPanel() {
   return (
-    <div className="flex flex-col gap-3 py-3">
+    <div className="flex flex-col gap-4 py-3">
       <SectionHeader
-        description="Turn individual steps of the answering pipeline on or off."
+        description="Each message goes through these steps in order. The router decides which of them it needs."
         title="Agents"
       />
-      <div className="flex flex-col gap-1.5">
-        {AGENTS.map((agent) => (
-          <ToggleRow
-            checked={settings[agent.id]}
-            description={agent.description}
-            key={agent.id}
-            onChange={(enabled) => onChange(agent.id, enabled)}
-            title={agent.name}
-          />
+      <ol className="flex flex-col">
+        {AGENTS.map((agent, index) => (
+          <li className="relative flex gap-3 pb-4 last:pb-0" key={agent.id}>
+            {index < AGENTS.length - 1 ? (
+              <span
+                aria-hidden="true"
+                className="absolute top-9 bottom-1 left-4 w-px bg-border"
+              />
+            ) : null}
+            <span className="grid size-8 shrink-0 place-items-center rounded-lg border border-border/60 bg-foreground/5 text-foreground/80 [&_svg]:size-4">
+              {AGENT_ICONS[agent.id]}
+            </span>
+            <div className="flex min-w-0 flex-col gap-0.5 pt-1.5">
+              <span className="text-sm">{agent.name}</span>
+              <span className="text-muted-foreground text-xs leading-relaxed">
+                {agent.description}
+              </span>
+            </div>
+          </li>
         ))}
-        <ToggleRow
-          checked={diagramGeneration}
-          description="Draws a network topology diagram when you ask for one."
-          onChange={onDiagramChange}
-          title="Diagram generation"
-        />
-      </div>
+      </ol>
     </div>
   );
 }
@@ -747,9 +806,6 @@ export function SettingsDialog({
   // Picks stay here, across tabs, until Save; closing the dialog discards them
   const [drafts, setDrafts] = useState<ModelChoices>(readModelChoices);
   const [justSaved, setJustSaved] = useState(false);
-  const [agentSettings, setAgentSettingsState] =
-    useState<AgentSettings>(getAgentSettings);
-  const [diagramGeneration, setDiagramGeneration] = useState(true);
   const [reranker, setReranker] = useState(true);
   const [hybridSearch, setHybridSearch] = useState(true);
   const [chunkCount, setChunkCountState] = useState(getChunkCount);
@@ -761,8 +817,6 @@ export function SettingsDialog({
       setChoices(saved);
       setDrafts(saved);
       setJustSaved(false);
-      setAgentSettingsState(getAgentSettings());
-      setDiagramGeneration(getDiagramGenerationEnabled());
       setReranker(getRerankerEnabled());
       setHybridSearch(getHybridSearchEnabled());
       setChunkCountState(getChunkCount());
@@ -835,17 +889,6 @@ export function SettingsDialog({
     </button>
   );
 
-  const handleAgentChange = (id: AgentId, enabled: boolean) => {
-    const next = { ...agentSettings, [id]: enabled };
-    setAgentSettings(next);
-    setAgentSettingsState(next);
-  };
-
-  const handleDiagramChange = (enabled: boolean) => {
-    setDiagramGenerationEnabled(enabled);
-    setDiagramGeneration(enabled);
-  };
-
   const handleRerankerChange = (enabled: boolean) => {
     setRerankerEnabled(enabled);
     setReranker(enabled);
@@ -891,7 +934,8 @@ export function SettingsDialog({
             {OTHER_TABS.map((t) => tabButton(t.id, t.label, t.icon))}
           </nav>
 
-          <div className="min-h-0 flex-1 overflow-y-auto px-5 py-2">
+          {/* A new key per tab, so each one opens scrolled to the top */}
+          <div className="min-h-0 flex-1 overflow-y-auto px-5 py-2" key={tab}>
             {activeTask ? (
               <ModelTaskPanel
                 draft={drafts[activeTask.id]}
@@ -906,14 +950,7 @@ export function SettingsDialog({
                 unsavedTasks={unsavedTasks.map((task) => task.label)}
               />
             ) : null}
-            {tab === "agents" ? (
-              <AgentsPanel
-                diagramGeneration={diagramGeneration}
-                onChange={handleAgentChange}
-                onDiagramChange={handleDiagramChange}
-                settings={agentSettings}
-              />
-            ) : null}
+            {tab === "agents" ? <AgentsPanel /> : null}
             {tab === "knowledge" ? (
               <KnowledgeBasePanel
                 chunkCount={chunkCount}

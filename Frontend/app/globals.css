@@ -511,3 +511,141 @@ textarea:focus-visible {
 [data-testid="artifact"] {
   isolation: isolate;
 }
+/* Sidebar icons move a little when the mouse is over them (see
+   components/chat/app-sidebar.tsx) */
+@keyframes sidebar-pencil {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-12deg);
+  }
+  55% {
+    transform: rotate(9deg);
+  }
+  80% {
+    transform: rotate(-4deg);
+  }
+}
+
+@keyframes sidebar-bookmark {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-3px);
+  }
+  55% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(-1px);
+  }
+}
+
+@keyframes sidebar-divider-out {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  45% {
+    transform: translateX(3px);
+  }
+}
+
+@keyframes sidebar-divider-in {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  45% {
+    transform: translateX(-2.5px);
+  }
+}
+
+/* The pencil turns around its tip, like it's writing */
+.sidebar-icon-pencil > path:last-child {
+  transform-origin: 9px 15px;
+  transform-box: view-box;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  [data-sidebar="menu-button"]:hover .sidebar-icon-pencil > path:last-child {
+    animation: sidebar-pencil 0.5s ease-in-out;
+  }
+
+  [data-sidebar="menu-button"]:hover .sidebar-icon-bookmark {
+    animation: sidebar-bookmark 0.45s ease-in-out;
+  }
+
+  /* The divider nudges the way the sidebar will go: out to open (once the
+     icon has faded in), in to close */
+  .sidebar-toggle[data-collapsed="true"]:hover .sidebar-icon-panel > path {
+    animation: sidebar-divider-out 0.45s 0.1s ease-in-out;
+  }
+
+  .sidebar-toggle[data-collapsed="false"]:hover .sidebar-icon-panel > path {
+    animation: sidebar-divider-in 0.45s ease-in-out;
+  }
+}
+
+/* Start-screen suggestion cards: a soft purple light follows the mouse
+   (--x / --y are set as it moves) and lights the nearest part of the border */
+.idea-card {
+  isolation: isolate;
+}
+
+.idea-card::before,
+.idea-card::after {
+  content: "";
+  position: absolute;
+  border-radius: inherit;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.idea-card::before {
+  inset: -1px;
+  padding: 1px;
+  background: radial-gradient(
+    180px circle at var(--x, 50%) var(--y, 50%),
+    #a78bfa,
+    transparent 70%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+}
+
+.idea-card::after {
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    240px circle at var(--x, 50%) var(--y, 50%),
+    color-mix(in oklch, #8b5cf6 14%, transparent),
+    transparent 65%
+  );
+}
+
+.idea-card:hover::before,
+.idea-card:hover::after,
+.idea-card:focus-visible::before,
+.idea-card:focus-visible::after {
+  opacity: 1;
+}
+
+.idea-picture {
+  background-color: var(--muted);
+  background-image: radial-gradient(
+    color-mix(in oklch, var(--foreground) 12%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 14px 14px;
+}

@@ -3,6 +3,7 @@
 
 // Each step of the answering pipeline can use its own model
 export type ModelTask =
+  | "router"
   | "query"
   | "contextManagement"
   | "answer"
@@ -19,15 +20,20 @@ export const MODEL_TASKS: {
   kind: ModelKind;
 }[] = [
   {
+    description: "Reads each message first and decides which steps it needs.",
+    id: "router",
+    kind: "text",
+    label: "Router",
+  },
+  {
     description:
-      "Rewrites your message as one clear question when it needs it. A small, fast model is enough.",
+      "Rewrites your message as one clear question when it needs it.",
     id: "query",
     kind: "text",
     label: "Query",
   },
   {
-    description:
-      "Decides which earlier messages the answer needs. A small, fast model is enough.",
+    description: "Decides which earlier messages the answer needs.",
     id: "contextManagement",
     kind: "text",
     label: "Context",
@@ -46,36 +52,61 @@ export const MODEL_TASKS: {
   },
 ];
 
-export type AgentId = "retrieval" | "contextManagement" | "queryTransformation";
+// The steps each message goes through, in order, shown in Settings → Agents.
+// The router decides which of them run.
+export type AgentId =
+  | "router"
+  | "vision"
+  | "query"
+  | "context"
+  | "knowledgeBase"
+  | "answer"
+  | "diagram";
 
 export const AGENTS: { id: AgentId; name: string; description: string }[] = [
   {
     description:
-      "Searches the knowledge base for vendor docs relevant to your question.",
-    id: "retrieval",
-    name: "Retrieval agent",
+      "Reads each message first and decides what it needs: a greeting gets a quick reply, a question about a device searches the knowledge base, and a design request gets a diagram.",
+    id: "router",
+    name: "Router",
   },
   {
     description:
-      "Keeps track of the conversation so follow-up questions have context.",
-    id: "contextManagement",
-    name: "Context management agent",
+      "Describes topology images and screenshots you attach, so the other steps can use them. Only runs when a message has an image.",
+    id: "vision",
+    name: "Vision",
   },
   {
     description:
-      "Rewrites your question into better search queries before retrieval.",
-    id: "queryTransformation",
-    name: "Query transformation agent",
+      'Rewrites your message as one clear question, so short follow-ups like "and the second switch?" make sense on their own.',
+    id: "query",
+    name: "Query",
+  },
+  {
+    description:
+      "Picks the earlier messages the answer needs, so long conversations stay focused. Only runs once there are earlier messages.",
+    id: "context",
+    name: "Context",
+  },
+  {
+    description:
+      "Searches the vendor documentation for passages about the devices you asked about. Only runs when the router asks for it.",
+    id: "knowledgeBase",
+    name: "Knowledge base search",
+  },
+  {
+    description:
+      "Writes the reply you see, from your question, the earlier messages it needs and any passages found.",
+    id: "answer",
+    name: "Answer",
+  },
+  {
+    description:
+      "Draws an editable network diagram when the answer describes a topology, or changes the one you drew.",
+    id: "diagram",
+    name: "Diagram",
   },
 ];
-
-export type AgentSettings = Record<AgentId, boolean>;
-
-const DEFAULT_AGENTS: AgentSettings = {
-  contextManagement: true,
-  queryTransformation: true,
-  retrieval: true,
-};
 
 // Plain model ids from before models were picked per step; the chat still
 // reads "chat-model" on load
@@ -84,8 +115,6 @@ const MODEL_COOKIES: Partial<Record<ModelTask, string>> = {
   visionDescription: "vision-model",
 };
 
-const AGENTS_COOKIE = "agent-settings";
-const DIAGRAM_COOKIE = "diagram-generation";
 const RERANKER_COOKIE = "reranker";
 const HYBRID_SEARCH_COOKIE = "hybrid-search";
 const CHUNK_COUNT_COOKIE = "chunk-count";
@@ -125,6 +154,7 @@ const CHOICE_COOKIES: Record<ModelTask, string> = {
   answer: "text-model-choice",
   contextManagement: "context-model-choice",
   query: "query-model-choice",
+  router: "router-model-choice",
   visionDescription: "vision-model-choice",
 };
 
@@ -152,30 +182,6 @@ export function setModelChoice(task: ModelTask, choice: ModelChoice) {
   if (plainCookie && choice.source === "api") {
     writeCookie(plainCookie, choice.modelId);
   }
-}
-
-export function getAgentSettings(): AgentSettings {
-  const raw = readCookie(AGENTS_COOKIE);
-  if (!raw) {
-    return DEFAULT_AGENTS;
-  }
-  try {
-    return { ...DEFAULT_AGENTS, ...JSON.parse(raw) };
-  } catch {
-    return DEFAULT_AGENTS;
-  }
-}
-
-export function setAgentSettings(settings: AgentSettings) {
-  writeCookie(AGENTS_COOKIE, JSON.stringify(settings));
-}
-
-export function getDiagramGenerationEnabled(): boolean {
-  return readCookie(DIAGRAM_COOKIE) !== "false";
-}
-
-export function setDiagramGenerationEnabled(enabled: boolean) {
-  writeCookie(DIAGRAM_COOKIE, String(enabled));
 }
 
 // Whether knowledge base results are re-ordered by a reranker before answering

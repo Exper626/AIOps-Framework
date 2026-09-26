@@ -62,10 +62,8 @@ const modelChoiceSchema = z.object({
 });
 
 export const postRequestBodySchema = z.object({
-  agents: z.record(z.string(), z.boolean()).optional(),
   // Settings → Knowledge Base: chunks the answer is written from
   chunkCount: z.number().int().min(1).max(20).optional(),
-  diagramGeneration: z.boolean().optional(),
   // Settings → Knowledge Base: keyword + vector search, or vector only
   hybridSearch: z.boolean().optional(),
   id: z.uuid(),
@@ -78,6 +76,7 @@ export const postRequestBodySchema = z.object({
       answer: modelChoiceSchema,
       contextManagement: modelChoiceSchema,
       query: modelChoiceSchema,
+      router: modelChoiceSchema,
       visionDescription: modelChoiceSchema,
     })
     .partial()

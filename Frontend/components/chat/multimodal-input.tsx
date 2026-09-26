@@ -3,7 +3,7 @@
 import type { UseChatHelpers } from "@ai-sdk/react";
 import type { UIMessage } from "ai";
 import equal from "fast-deep-equal";
-import { ArrowUpIcon, NetworkIcon } from "lucide-react";
+import { ArrowUpIcon, NetworkIcon, PaperclipIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import {
@@ -31,7 +31,7 @@ import {
 } from "../ai-elements/prompt-input";
 import { Button } from "../ui/button";
 import { DrawDiagramDialog } from "./draw-diagram-dialog";
-import { CrossSmallIcon, PaperclipIcon, StopIcon } from "./icons";
+import { CrossSmallIcon, StopIcon } from "./icons";
 import { DiagramIcon } from "./network-diagram";
 import { PreviewAttachment } from "./preview-attachment";
 import {
@@ -41,6 +41,11 @@ import {
 } from "./slash-commands";
 import type { VisibilityType } from "./visibility-selector";
 import { WithTooltip } from "./with-tooltip";
+
+// The attach and draw buttons next to Send
+const TOOL_BUTTON =
+  "size-8 rounded-full p-0 text-foreground transition-colors hover:bg-foreground/10";
+const TOOL_ICON = "size-[18px]";
 
 function PureMultimodalInput({
   chatId,
@@ -562,13 +567,13 @@ function PureMultimodalInput({
             <WithTooltip label="Draw a network diagram">
               <Button
                 aria-label="Draw a network diagram"
-                className="h-7 w-7 rounded-lg p-1 text-foreground/80 transition-colors hover:bg-foreground/10 hover:text-foreground"
+                className={TOOL_BUTTON}
                 data-testid="draw-diagram-button"
                 disabled={status !== "ready" || Boolean(editingMessage)}
                 onClick={openDrawing}
                 variant="ghost"
               >
-                <NetworkIcon className="size-3.5" />
+                <NetworkIcon className={TOOL_ICON} strokeWidth={2.1} />
               </Button>
             </WithTooltip>
           </PromptInputTools>
@@ -578,17 +583,18 @@ function PureMultimodalInput({
           ) : (
             <PromptInputSubmit
               className={cn(
-                "h-7 w-7 rounded-xl transition-all duration-200",
+                "size-8 rounded-full transition-all duration-200",
+                // A dimmed copy of the ready button, so it still reads as Send
                 canSend
                   ? "bg-foreground text-background hover:opacity-85 active:scale-95"
-                  : "bg-foreground/25 text-foreground/80 cursor-not-allowed disabled:opacity-100"
+                  : "cursor-not-allowed bg-foreground/40 text-background disabled:opacity-100"
               )}
               data-testid="send-button"
               disabled={!canSend}
               status={status}
               variant="secondary"
             >
-              <ArrowUpIcon className="size-4" />
+              <ArrowUpIcon className="size-[18px]" strokeWidth={2.6} />
             </PromptInputSubmit>
           )}
         </PromptInputFooter>
@@ -721,15 +727,13 @@ function PureAttachmentsButton({
     <WithTooltip label="Attach images">
       <Button
         aria-label="Attach images (PNG or JPEG)"
-        className={cn(
-          "h-7 w-7 rounded-lg p-1 text-foreground/80 transition-colors hover:bg-foreground/10 hover:text-foreground"
-        )}
+        className={TOOL_BUTTON}
         data-testid="attachments-button"
         disabled={status !== "ready"}
         onClick={handleClick}
         variant="ghost"
       >
-        <PaperclipIcon size={14} style={{ height: 14, width: 14 }} />
+        <PaperclipIcon className={TOOL_ICON} strokeWidth={2.1} />
       </Button>
     </WithTooltip>
   );
@@ -755,11 +759,11 @@ function PureStopButton({
 
   return (
     <Button
-      className="h-7 w-7 rounded-xl bg-foreground p-1 text-background transition-all duration-200 hover:opacity-85 active:scale-95 disabled:bg-muted disabled:text-muted-foreground/25 disabled:cursor-not-allowed"
+      className="size-8 rounded-full bg-foreground p-1 text-background transition-all duration-200 hover:opacity-85 active:scale-95 disabled:bg-muted disabled:text-muted-foreground/25 disabled:cursor-not-allowed"
       data-testid="stop-button"
       onClick={handleClick}
     >
-      <StopIcon size={14} />
+      <StopIcon size={13} />
     </Button>
   );
 }

@@ -6,8 +6,13 @@ from pipeline.errors import PipelineError
 from pipeline.models import ResolvedModel
 from pipeline.trace import Trace
 from pipeline.vision import ImageDescription
+from rag.prompt import build_context
 
-SYSTEM_PROMPT_PATH = Path(__file__).parent.parent / "prompts" / "text.md"
+PROMPTS_DIR = Path(__file__).parent.parent / "prompts"
+# The answer's instructions: text.md normally, answer.md (with the passages
+# in place of {context}) when the knowledge base found something
+SYSTEM_PROMPT_PATH = PROMPTS_DIR / "text.md"
+KNOWLEDGE_PROMPT_PATH = PROMPTS_DIR / "answer.md"
 
 
 def describe_attachments(descriptions: list[ImageDescription]) -> str:
@@ -30,12 +35,21 @@ def describe_attachments(descriptions: list[ImageDescription]) -> str:
     return "\n\n".join(lines)
 
 
-def build_answer_messages(message: str, question: str, history: list[dict], descriptions: list[ImageDescription], diagram: Diagram | None) -> list[dict]:
+def system_prompt(passages: list[dict]) -> str:
+    if passages:
+        return KNOWLEDGE_PROMPT_PATH.read_text(encoding="utf-8").replace("{context}", build_context(passages)).strip()
+
+    return SYSTEM_PROMPT_PATH.read_text(encoding="utf-8").strip() if SYSTEM_PROMPT_PATH.exists() else ""
+
+
+def build_answer_messages(
+    message: str, question: str, history: list[dict], descriptions: list[ImageDescription], diagram: Diagram | None, passages: list[dict]
+) -> list[dict]:
     messages = []
 
-    system_prompt = SYSTEM_PROMPT_PATH.read_text(encoding="utf-8").strip() if SYSTEM_PROMPT_PATH.exists() else ""
-    if system_prompt:
-        messages.append({"role": "system", "content": system_prompt})
+    prompt = system_prompt(passages)
+    if prompt:
+        messages.append({"role": "system", "content": prompt})
 
     messages.extend(history)
 
@@ -55,7 +69,7 @@ def build_answer_messages(message: str, question: str, history: list[dict], desc
 
 def describe_messages(messages: list[dict]) -> str:
     return "\n\n".join(
-        f"System prompt: prompts/{SYSTEM_PROMPT_PATH.name}" if m["role"] == "system" else f"{m['role'].capitalize()}: {m['content']}"
+        f"System prompt ({len(m['content']):,} characters)" if m["role"] == "system" else f"{m['role'].capitalize()}: {m['content']}"
         for m in messages
     )
 

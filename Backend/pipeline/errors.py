@@ -1,4 +1,4 @@
-from openai import APIError, APIStatusError
+from openai import APIError, APIStatusError, APITimeoutError
 
 from pipeline.llm import AI_GATEWAY_BASE_URL
 
@@ -25,6 +25,29 @@ SELF_HOSTED_HINTS = {
     401: " Check SELF_HOSTED_API_KEY on the backend.",
     404: " That server doesn't serve this model any more; pick it again under Settings → Self-hosted.",
 }
+
+
+DISCOVERY_HINTS = {
+    401: "; check SELF_HOSTED_API_KEY on the backend",
+    403: "; check SELF_HOSTED_API_KEY on the backend",
+    404: "; check that the address in SELF_HOSTED_SERVERS ends with /v1",
+}
+
+
+def describe_discovery_error(error: BaseException, timeout: float) -> str:
+    if isinstance(error, APIStatusError):
+        return f"it answered {error.status_code}{DISCOVERY_HINTS.get(error.status_code, '')}"
+
+    if isinstance(error, APITimeoutError):
+        return (
+            f"no reply within {timeout:g} s. A Modal server that was asleep can take a minute to start, "
+            "so open Settings again shortly"
+        )
+
+    if isinstance(error, APIError):
+        return f"couldn't connect ({error.__cause__ or error}); check the address in SELF_HOSTED_SERVERS"
+
+    return str(error)
 
 
 def describe_error(error: Exception, step: str, model=None) -> str:
