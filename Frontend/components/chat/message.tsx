@@ -15,6 +15,7 @@ import {
 } from "../ai-elements/tool";
 import { useDataStream } from "./data-stream-provider";
 import { DebugPanel } from "./debug-panel";
+import { DiagramPart } from "./diagram-part";
 import { DocumentToolResult } from "./document";
 import { DocumentPreview } from "./document-preview";
 import { MessageActions } from "./message-actions";
@@ -86,11 +87,11 @@ function ToolApprovalActions({
 
 const PurePreviewMessage = ({
   addToolApprovalResponse,
-  chatId: _chatId,
+  chatId,
   message,
   vote: _vote,
   isLoading,
-  setMessages: _setMessages,
+  setMessages,
   regenerate: _regenerate,
   isReadonly,
   requiresScrollPadding: _requiresScrollPadding,
@@ -347,11 +348,30 @@ const PurePreviewMessage = ({
       return <DebugPanel data={part.data} key={key} />;
     }
 
+    if (type === "data-diagram") {
+      return (
+        <div
+          className={cn("w-full", isUser && "max-w-[min(100%,640px)]")}
+          key={key}
+        >
+          <DiagramPart
+            chatId={chatId}
+            diagram={part.data}
+            messageId={message.id}
+            partId={part.id}
+            readOnly={isReadonly || isLoading}
+            setMessages={setMessages}
+          />
+        </div>
+      );
+    }
+
     return null;
   });
 
   const actions = !isReadonly && (
     <MessageActions
+      chatId={chatId}
       isLoading={isLoading}
       key={`action-${message.id}`}
       message={message}

@@ -3,7 +3,9 @@
 import { useCallback, useState } from "react";
 import { cn } from "@/lib/utils";
 
-// One pipeline step as the backend records it (Backend/pipeline/trace.py)
+// One pipeline step as the backend records it (Backend/pipeline/trace.py).
+// Input and output are plain text; the model's own reply is only shown when
+// the step failed, to see what was wrong with it.
 type TraceStep = {
   name: string;
   model?: string;
@@ -13,7 +15,7 @@ type TraceStep = {
   output?: unknown;
   error?: string;
   fallback?: boolean;
-  // Whether the model was asked for JSON mode (false = it doesn't support it)
+  // false when the model doesn't support JSON mode
   json_mode?: boolean;
   source?: string;
   skipped?: string;
@@ -86,22 +88,35 @@ function CollapsibleSection({
   );
 }
 
+// Anything that isn't text already is written out as "key: value" lines
+function toText(value: unknown): string {
+  if (typeof value === "string") {
+    return value;
+  }
+  if (Array.isArray(value)) {
+    return value.map(toText).join("\n");
+  }
+  if (value && typeof value === "object") {
+    return Object.entries(value)
+      .map(([key, item]) => `${key}: ${toText(item)}`)
+      .join("\n");
+  }
+  return String(value);
+}
+
 function Value({ label, value }: { label: string; value: unknown }) {
-  if (value === undefined || value === null) {
+  if (value === undefined || value === null || value === "") {
     return null;
   }
-
-  const text =
-    typeof value === "string" ? value : JSON.stringify(value, null, 2);
 
   return (
     <div>
       <div className="mb-0.5 font-medium text-[10px] text-muted-foreground/70 uppercase tracking-wide">
         {label}
       </div>
-      <pre className="max-h-64 overflow-auto whitespace-pre-wrap break-words rounded border border-border/40 bg-background/60 p-1.5 text-[11px] text-foreground/80">
-        {text}
-      </pre>
+      <div className="max-h-64 overflow-auto whitespace-pre-wrap break-words rounded border border-border/40 bg-background/60 p-1.5 text-[11px] text-foreground/80 leading-relaxed">
+        {toText(value)}
+      </div>
     </div>
   );
 }
@@ -111,7 +126,6 @@ function StepSection({ step }: { step: TraceStep }) {
     step.model,
     step.source === "self-hosted" && "self-hosted",
     formatMs(step.ms),
-    step.json_mode === true && "JSON mode",
     step.json_mode === false && "no JSON mode",
     step.fallback && "fell back",
     step.skipped && "skipped",
@@ -129,9 +143,11 @@ function StepSection({ step }: { step: TraceStep }) {
       {step.skipped ? (
         <div className="text-muted-foreground">Skipped: {step.skipped}</div>
       ) : null}
+      <Value label="Result" value={step.output} />
       <Value label="Input" value={step.input} />
-      <Value label="Raw model output" value={step.raw_output} />
-      <Value label="Output" value={step.output} />
+      {step.error ? (
+        <Value label="Model reply" value={step.raw_output} />
+      ) : null}
     </CollapsibleSection>
   );
 }
@@ -176,12 +192,9 @@ export function DebugPanel({ data }: { data: unknown }) {
 
       {open ? (
         <div className="space-y-2 border-border/50 border-t px-3 py-2.5">
-          {steps ? (
-            steps.map((step) => <StepSection key={step.name} step={step} />)
-          ) : (
-            // A trace from an older backend that has no step list
-            <Value label="Raw trace" value={data} />
-          )}
+          {steps?.map((step) => (
+            <StepSection key={step.name} step={step} />
+          ))}
         </div>
       ) : null}
     </div>

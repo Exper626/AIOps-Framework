@@ -1,11 +1,11 @@
 "use client";
 
-import { PanelLeftIcon, PenSquareIcon } from "lucide-react";
+import { BookmarkIcon, PanelLeftIcon, PenSquareIcon } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import type { User } from "next-auth";
 import { useCallback } from "react";
-import telecomIcon from "@/app/icon.png";
+import telecomIcon from "@/public/images/slt-logo.png";
 import { SidebarHistory } from "@/components/chat/sidebar-history";
 import { SidebarUserNav } from "@/components/chat/sidebar-user-nav";
 import { Button } from "@/components/ui/button";
@@ -22,17 +22,24 @@ import {
   SidebarRail,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { isPageRoute } from "@/lib/routes";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 export function AppSidebar({ user }: { user: User | undefined }) {
   const router = useRouter();
+  const pathname = usePathname();
   const { setOpenMobile, state, toggleSidebar } = useSidebar();
   const collapsed = state === "collapsed";
 
   const handleNewChat = useCallback(() => {
     setOpenMobile(false);
     router.push("/");
+  }, [router, setOpenMobile]);
+
+  const handleSaved = useCallback(() => {
+    setOpenMobile(false);
+    router.push("/saved");
   }, [router, setOpenMobile]);
 
   return (
@@ -102,6 +109,18 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                 >
                   <PenSquareIcon />
                   <span className="font-medium">New chat</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  className="h-8 rounded-lg px-1.5 text-[13px] [&>svg]:size-5 text-foreground transition-colors duration-150 hover:bg-foreground/10 hover:text-foreground data-[active=true]:bg-foreground/10"
+                  data-testid="sidebar-saved-responses"
+                  isActive={isPageRoute(pathname)}
+                  onClick={handleSaved}
+                  tooltip="Saved responses"
+                >
+                  <BookmarkIcon />
+                  <span className="font-medium">Saved responses</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>

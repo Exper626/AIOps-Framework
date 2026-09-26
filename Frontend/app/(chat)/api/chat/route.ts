@@ -31,6 +31,7 @@ import {
   updateMessage,
 } from "@/lib/db/queries";
 import type { DBMessage } from "@/lib/db/schema";
+import type { NetworkDiagram } from "@/lib/diagram";
 import { ChatbotError } from "@/lib/errors";
 import type { ModelChoice } from "@/lib/model-settings";
 import { checkIpRateLimit } from "@/lib/ratelimit";
@@ -79,6 +80,11 @@ function getMessageImages(message?: ChatMessage): BackendImage[] {
         : []
     ) ?? []
   );
+}
+
+// The latest version of the diagram in a message, as edits are saved into it
+function getMessageDiagram(message?: ChatMessage): NetworkDiagram | undefined {
+  return message?.parts?.findLast((part) => part.type === "data-diagram")?.data;
 }
 
 function getLatestUserMessageText(messages: ChatMessage[]) {
@@ -272,13 +278,21 @@ export async function POST(request: Request) {
 
     const stream = createUIMessageStream({
       execute: async ({ writer: dataStream }) => {
+        // Gives the answer the id it is saved under, so the browser and the
+        // database agree on it (saving a response looks it up by this id)
+        dataStream.write({ type: "start" });
+
         const images = getMessageImages(message as ChatMessage | undefined);
-        // A message can be just an image; the backend still needs a question
+        const drawnDiagram = getMessageDiagram(message as ChatMessage | undefined);
+        // A message can be just an image or a diagram; the backend still
+        // needs a question
         const userMessage =
           getMessageText(message as ChatMessage | undefined) ||
           (images.length > 0
             ? "Describe the network topology in the attached image."
-            : getLatestUserMessageText(uiMessages));
+            : drawnDiagram
+              ? "Explain the network in the diagram I drew."
+              : getLatestUserMessageText(uiMessages));
 
         if (!userMessage) {
           throw new Error("No user message was found to send to the backend");
@@ -289,18 +303,29 @@ export async function POST(request: Request) {
           model: answerModel?.modelId ?? "backend default",
         });
 
-        // Full history of this chat (excluding the current message)
+        // Full history of this chat (excluding the current message), with
+        // the diagrams as the user left them
         const history: HistoryMessage[] = uiMessages
           .slice(0, -1) // drop the current user message
           .flatMap((m) => {
             const text = getMessageText(m);
-            if (!text) return [];
-            return [{ role: m.role as "user" | "assistant", content: text }];
+            const diagram = getMessageDiagram(m);
+            if (!(text || diagram)) {
+              return [];
+            }
+            return [
+              {
+                content: text,
+                role: m.role as "user" | "assistant",
+                ...(diagram ? { diagram } : {}),
+              },
+            ];
           });
 
         // The answer is shown piece by piece as the backend streams it
         const textId = generateUUID();
         let textStarted = false;
+        let answerDiagram: NetworkDiagram | undefined;
         const writeDelta = (delta: string) => {
           if (!textStarted) {
             dataStream.write({ id: textId, type: "text-start" });
@@ -331,8 +356,12 @@ export async function POST(request: Request) {
             agents: agents ?? {},
             diagramGeneration: diagramGeneration ?? true,
             contextModel,
+            diagram: drawnDiagram,
             images,
             onDelta: writeDelta,
+            onDiagram: (diagram) => {
+              answerDiagram = diagram;
+            },
             onErrorDebug: (debug) => {
               if (textStarted) {
                 dataStream.write({ id: textId, type: "text-end" });
@@ -372,6 +401,15 @@ export async function POST(request: Request) {
           type: "text-end",
           id: textId,
         });
+
+        // Saved with the answer; its id is how edits find it later
+        if (answerDiagram) {
+          dataStream.write({
+            data: answerDiagram,
+            id: `diagram-${textId}`,
+            type: "data-diagram",
+          });
+        }
 
         if (backendResponse.debug) {
           dataStream.write({

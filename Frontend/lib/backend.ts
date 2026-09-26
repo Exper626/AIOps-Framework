@@ -1,3 +1,4 @@
+import type { NetworkDiagram } from "@/lib/diagram";
 import type { ModelChoice } from "@/lib/model-settings";
 
 export type BackendChatResult = {
@@ -25,6 +26,12 @@ type BackendDeltaEvent = {
   delta: string;
 };
 
+// A network diagram the backend drew for the answer
+type BackendDiagramEvent = {
+  phase: "diagram";
+  diagram: NetworkDiagram;
+};
+
 type BackendDoneEvent = {
   phase: "done";
   message: string;
@@ -41,6 +48,7 @@ type BackendErrorEvent = {
 type BackendStreamEvent =
   | BackendProgressEvent
   | BackendDeltaEvent
+  | BackendDiagramEvent
   | BackendDoneEvent
   | BackendErrorEvent;
 
@@ -53,6 +61,7 @@ export type BackendImage = {
 export type HistoryMessage = {
   role: "user" | "assistant";
   content: string;
+  diagram?: NetworkDiagram;
 };
 
 const TRAILING_SLASHES = /\/+$/;
@@ -125,6 +134,8 @@ export async function callBackend(
     visionModel?: ModelChoice;
     agents?: Record<string, boolean>;
     diagramGeneration?: boolean;
+    // A diagram the user drew and sent with this message
+    diagram?: NetworkDiagram;
     reranker?: boolean;
     hybridSearch?: boolean;
     chunkCount?: number;
@@ -133,6 +144,7 @@ export async function callBackend(
     queryModel?: ModelChoice;
     contextModel?: ModelChoice;
     onDelta?: (delta: string) => void;
+    onDiagram?: (diagram: NetworkDiagram) => void;
     onErrorDebug?: (debug: unknown) => void;
   } = {},
 ): Promise<BackendChatResult> {
@@ -157,6 +169,7 @@ export async function callBackend(
         session_id: sessionId ?? null,
         agents: options.agents ?? {},
         diagram_generation: options.diagramGeneration ?? true,
+        diagram: options.diagram ?? null,
         reranker: options.reranker ?? true,
         hybrid_search: options.hybridSearch,
         chunk_count: options.chunkCount,
@@ -228,6 +241,11 @@ export async function callBackend(
 
     if (event.phase === "delta") {
       options.onDelta?.(event.delta);
+      return;
+    }
+
+    if (event.phase === "diagram") {
+      options.onDiagram?.(event.diagram);
       return;
     }
 

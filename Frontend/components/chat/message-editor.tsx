@@ -25,11 +25,13 @@ export async function submitEditedMessage({
 
     return [
       ...messages.slice(0, index),
-      // Attached images stay with the edited question
+      // Attached images and diagrams stay with the edited question
       {
         ...message,
         parts: [
-          ...message.parts.filter((part) => part.type === "file"),
+          ...message.parts.filter(
+            (part) => part.type === "file" || part.type === "data-diagram"
+          ),
           { text, type: "text" as const },
         ],
       },

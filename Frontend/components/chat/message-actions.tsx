@@ -1,19 +1,75 @@
-import { memo, useCallback } from "react";
+import { BookmarkIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { memo, useCallback, useState } from "react";
 import { toast } from "sonner";
 import { useCopyToClipboard } from "usehooks-ts";
+import { useSavedResponses } from "@/hooks/use-saved-responses";
 import type { ChatMessage } from "@/lib/types";
+import { cn } from "@/lib/utils";
 import {
   MessageAction as Action,
   MessageActions as Actions,
 } from "../ai-elements/message";
 import { CopyIcon, PencilEditIcon, UndoIcon } from "./icons";
 
+// Saves the answer to "Saved responses", or takes it out again
+function SaveResponseAction({
+  chatId,
+  messageId,
+}: {
+  chatId: string;
+  messageId: string;
+}) {
+  const router = useRouter();
+  const { remove, save, savedIds } = useSavedResponses();
+  const [busy, setBusy] = useState(false);
+  const isSaved = savedIds.has(messageId);
+
+  const handleClick = useCallback(async () => {
+    setBusy(true);
+
+    try {
+      if (isSaved) {
+        await remove(messageId);
+        toast.success("Removed from saved responses");
+      } else {
+        await save(chatId, messageId);
+        toast.success("Response saved", {
+          action: { label: "View", onClick: () => router.push("/saved") },
+        });
+      }
+    } catch {
+      toast.error("Couldn't update your saved responses. Please try again.");
+    } finally {
+      setBusy(false);
+    }
+  }, [chatId, isSaved, messageId, remove, router, save]);
+
+  return (
+    <Action
+      aria-pressed={isSaved}
+      className={cn(
+        "text-muted-foreground/50 hover:text-foreground",
+        isSaved && "text-foreground"
+      )}
+      data-testid="message-save"
+      disabled={busy}
+      onClick={handleClick}
+      tooltip={isSaved ? "Remove from saved" : "Save response"}
+    >
+      <BookmarkIcon className={cn(isSaved && "fill-current")} />
+    </Action>
+  );
+}
+
 export function PureMessageActions({
+  chatId,
   message,
   isLoading,
   onEdit,
   onRetry,
 }: {
+  chatId: string;
   message: ChatMessage;
   isLoading: boolean;
   onEdit?: () => void;
@@ -85,6 +141,8 @@ export function PureMessageActions({
         <CopyIcon />
       </Action>
 
+      <SaveResponseAction chatId={chatId} messageId={message.id} />
+
       {onRetry ? (
         <Action
           className="text-muted-foreground/50 hover:text-foreground"
@@ -103,6 +161,9 @@ export const MessageActions = memo(
   PureMessageActions,
   (prevProps, nextProps) => {
     if (prevProps.isLoading !== nextProps.isLoading) {
+      return false;
+    }
+    if (prevProps.message.id !== nextProps.message.id) {
       return false;
     }
     // Only the latest answer has "Try again", so it moves when a new one arrives

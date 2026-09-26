@@ -3,7 +3,7 @@
 import type { UseChatHelpers } from "@ai-sdk/react";
 import type { UIMessage } from "ai";
 import equal from "fast-deep-equal";
-import { ArrowUpIcon } from "lucide-react";
+import { ArrowUpIcon, NetworkIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import {
@@ -18,9 +18,10 @@ import {
 } from "react";
 import { toast } from "sonner";
 import { useLocalStorage, useWindowSize } from "usehooks-ts";
+import { describeDiagram, type NetworkDiagram } from "@/lib/diagram";
 import { imageToDataUrl } from "@/lib/images";
 import type { Attachment, ChatMessage } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import { cn, generateUUID } from "@/lib/utils";
 import {
   PromptInput,
   PromptInputFooter,
@@ -29,7 +30,9 @@ import {
   PromptInputTools,
 } from "../ai-elements/prompt-input";
 import { Button } from "../ui/button";
-import { PaperclipIcon, StopIcon } from "./icons";
+import { DrawDiagramDialog } from "./draw-diagram-dialog";
+import { CrossSmallIcon, PaperclipIcon, StopIcon } from "./icons";
+import { DiagramIcon } from "./network-diagram";
 import { PreviewAttachment } from "./preview-attachment";
 import {
   type SlashCommand,
@@ -37,6 +40,7 @@ import {
   slashCommands,
 } from "./slash-commands";
 import type { VisibilityType } from "./visibility-selector";
+import { WithTooltip } from "./with-tooltip";
 
 function PureMultimodalInput({
   chatId,
@@ -46,6 +50,8 @@ function PureMultimodalInput({
   stop,
   attachments,
   setAttachments,
+  diagram,
+  setDiagram,
   messages,
   setMessages,
   sendMessage,
@@ -64,6 +70,9 @@ function PureMultimodalInput({
   stop: () => void;
   attachments: Attachment[];
   setAttachments: Dispatch<SetStateAction<Attachment[]>>;
+  // A diagram the user drew, sent with the next message
+  diagram: NetworkDiagram | null;
+  setDiagram: Dispatch<SetStateAction<NetworkDiagram | null>>;
   messages: UIMessage[];
   setMessages: UseChatHelpers<ChatMessage>["setMessages"];
   sendMessage:
@@ -111,11 +120,14 @@ function PureMultimodalInput({
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploadQueue, setUploadQueue] = useState<string[]>([]);
+  const [isDrawing, setIsDrawing] = useState(false);
   // Single-row pill layout that grows with the text (falls back to stacked when files are attached)
-  const isCompact = attachments.length === 0 && uploadQueue.length === 0;
-  // Text, an image, or both; not while an image is still being prepared
+  const isCompact =
+    attachments.length === 0 && uploadQueue.length === 0 && !diagram;
+  // Text, an image, a diagram, or any mix; not while an image is still being
+  // prepared
   const canSend =
-    (input.trim().length > 0 || attachments.length > 0) &&
+    (input.trim().length > 0 || attachments.length > 0 || diagram !== null) &&
     uploadQueue.length === 0;
   const [slashOpen, setSlashOpen] = useState(false);
   const [slashQuery, setSlashQuery] = useState("");
@@ -215,6 +227,15 @@ function PureMultimodalInput({
           type: "file" as const,
           url: attachment.url,
         })),
+        ...(diagram
+          ? [
+              {
+                data: diagram,
+                id: `diagram-${generateUUID()}`,
+                type: "data-diagram" as const,
+              },
+            ]
+          : []),
         // An image can be sent on its own; an empty text part would be rejected
         ...(input.trim() ? [{ text: input, type: "text" as const }] : []),
       ],
@@ -222,6 +243,7 @@ function PureMultimodalInput({
     });
 
     setAttachments([]);
+    setDiagram(null);
     setLocalStorageInput("");
     setInput("");
 
@@ -232,8 +254,10 @@ function PureMultimodalInput({
     input,
     setInput,
     attachments,
+    diagram,
     sendMessage,
     setAttachments,
+    setDiagram,
     setLocalStorageInput,
     width,
     chatId,
@@ -350,6 +374,13 @@ function PureMultimodalInput({
     [onCancelEdit]
   );
 
+  const openDrawing = useCallback((event: React.MouseEvent) => {
+    event.preventDefault();
+    setIsDrawing(true);
+  }, []);
+
+  const removeDiagram = useCallback(() => setDiagram(null), [setDiagram]);
+
   const handleSlashClose = useCallback(() => {
     setSlashOpen(false);
   }, []);
@@ -363,7 +394,7 @@ function PureMultimodalInput({
       }
       return;
     }
-    if (!input.trim() && attachments.length === 0) {
+    if (!input.trim() && attachments.length === 0 && !diagram) {
       return;
     }
     if (status === "ready" || status === "error") {
@@ -371,7 +402,14 @@ function PureMultimodalInput({
     } else {
       toast.error("Please wait for the model to finish its response!");
     }
-  }, [attachments.length, handleSlashSelect, input, status, submitForm]);
+  }, [
+    attachments.length,
+    diagram,
+    handleSlashSelect,
+    input,
+    status,
+    submitForm,
+  ]);
 
   const handleTextareaKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -457,15 +495,24 @@ function PureMultimodalInput({
         className={cn(
           // No focus ring/highlight when the box is clicked; it looks the same focused or not
           "[&>div]:rounded-2xl [&>div]:border [&>div]:border-border/60! [&>div]:bg-composer [&>div]:shadow-[var(--shadow-composer)] [&>div]:ring-0!",
-          isCompact && "[&>div]:flex-row! [&>div]:items-end! [&>div]:rounded-[28px]!"
+          isCompact &&
+            "[&>div]:flex-row! [&>div]:items-end! [&>div]:rounded-[28px]!"
         )}
         onSubmit={handlePromptSubmit}
       >
-        {(attachments.length > 0 || uploadQueue.length > 0) && (
+        {(attachments.length > 0 || uploadQueue.length > 0 || diagram) && (
           <div
             className="flex w-full self-start flex-row gap-2 overflow-x-auto px-3 pt-3 no-scrollbar"
             data-testid="attachments-preview"
           >
+            {diagram ? (
+              <DiagramPreview
+                diagram={diagram}
+                onEdit={openDrawing}
+                onRemove={removeDiagram}
+              />
+            ) : null}
+
             {attachments.map((attachment) => (
               <AttachmentPreviewItem
                 attachment={attachment}
@@ -512,6 +559,18 @@ function PureMultimodalInput({
         >
           <PromptInputTools>
             <AttachmentsButton fileInputRef={fileInputRef} status={status} />
+            <WithTooltip label="Draw a network diagram">
+              <Button
+                aria-label="Draw a network diagram"
+                className="h-7 w-7 rounded-lg p-1 text-foreground/80 transition-colors hover:bg-foreground/10 hover:text-foreground"
+                data-testid="draw-diagram-button"
+                disabled={status !== "ready" || Boolean(editingMessage)}
+                onClick={openDrawing}
+                variant="ghost"
+              >
+                <NetworkIcon className="size-3.5" />
+              </Button>
+            </WithTooltip>
           </PromptInputTools>
 
           {status === "submitted" ? (
@@ -534,6 +593,13 @@ function PureMultimodalInput({
           )}
         </PromptInputFooter>
       </PromptInput>
+
+      <DrawDiagramDialog
+        diagram={diagram}
+        onAttach={setDiagram}
+        onOpenChange={setIsDrawing}
+        open={isDrawing}
+      />
     </div>
   );
 }
@@ -548,6 +614,9 @@ export const MultimodalInput = memo(
       return false;
     }
     if (!equal(prevProps.attachments, nextProps.attachments)) {
+      return false;
+    }
+    if (prevProps.diagram !== nextProps.diagram) {
       return false;
     }
     if (prevProps.selectedVisibilityType !== nextProps.selectedVisibilityType) {
@@ -593,6 +662,46 @@ function PureAttachmentPreviewItem({
 
 const AttachmentPreviewItem = memo(PureAttachmentPreviewItem);
 
+function DiagramPreview({
+  diagram,
+  onEdit,
+  onRemove,
+}: {
+  diagram: NetworkDiagram;
+  onEdit: (event: React.MouseEvent) => void;
+  onRemove: () => void;
+}) {
+  return (
+    <div
+      className="group relative h-24 w-36 shrink-0 overflow-hidden rounded-xl border border-border/40 bg-muted"
+      data-testid="input-diagram-preview"
+    >
+      <WithTooltip label="Edit the diagram">
+        <button
+          className="flex size-full flex-col items-center justify-center gap-1 px-2 text-center"
+          onClick={onEdit}
+          type="button"
+        >
+          <DiagramIcon size={26} />
+          <span className="font-medium text-xs">Network diagram</span>
+          <span className="text-[11px] text-muted-foreground">
+            {describeDiagram(diagram)}
+          </span>
+        </button>
+      </WithTooltip>
+
+      <button
+        aria-label="Remove the diagram"
+        className="absolute top-1.5 right-1.5 flex size-5 items-center justify-center rounded-full bg-black/60 text-white opacity-0 backdrop-blur-sm transition-opacity hover:bg-black/80 group-hover:opacity-100"
+        onClick={onRemove}
+        type="button"
+      >
+        <CrossSmallIcon size={10} />
+      </button>
+    </div>
+  );
+}
+
 function PureAttachmentsButton({
   fileInputRef,
   status,
@@ -609,18 +718,20 @@ function PureAttachmentsButton({
   );
 
   return (
-    <Button
-      className={cn(
-        "h-7 w-7 rounded-lg p-1 text-foreground/80 transition-colors hover:bg-foreground/10 hover:text-foreground"
-      )}
-      data-testid="attachments-button"
-      disabled={status !== "ready"}
-      onClick={handleClick}
-      title="Attach images (PNG or JPEG)"
-      variant="ghost"
-    >
-      <PaperclipIcon size={14} style={{ height: 14, width: 14 }} />
-    </Button>
+    <WithTooltip label="Attach images">
+      <Button
+        aria-label="Attach images (PNG or JPEG)"
+        className={cn(
+          "h-7 w-7 rounded-lg p-1 text-foreground/80 transition-colors hover:bg-foreground/10 hover:text-foreground"
+        )}
+        data-testid="attachments-button"
+        disabled={status !== "ready"}
+        onClick={handleClick}
+        variant="ghost"
+      >
+        <PaperclipIcon size={14} style={{ height: 14, width: 14 }} />
+      </Button>
+    </WithTooltip>
   );
 }
 

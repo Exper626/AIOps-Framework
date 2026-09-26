@@ -17,6 +17,7 @@ import {
   useArtifact,
   useArtifactSelector,
 } from "@/hooks/use-artifact";
+import type { NetworkDiagram } from "@/lib/diagram";
 import type { Attachment, ChatMessage } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Artifact } from "./artifact";
@@ -54,6 +55,7 @@ export function ChatShell() {
     null
   );
   const [attachments, setAttachments] = useState<Attachment[]>([]);
+  const [diagram, setDiagram] = useState<NetworkDiagram | null>(null);
   const isArtifactVisible = useArtifactSelector((state) => state.isVisible);
   const { setArtifact } = useArtifact();
 
@@ -72,6 +74,7 @@ export function ChatShell() {
       setArtifact(initialArtifactData);
       setEditingMessage(null);
       setAttachments([]);
+      setDiagram(null);
     }
   }, [chatId, setArtifact]);
 
@@ -189,6 +192,7 @@ export function ChatShell() {
                 <MultimodalInput
                   attachments={attachments}
                   chatId={chatId}
+                  diagram={diagram}
                   editingMessage={editingMessage}
                   input={input}
                   isLoading={isLoading}
@@ -201,6 +205,7 @@ export function ChatShell() {
                     editingMessage ? handleSendEditedMessage : sendMessage
                   }
                   setAttachments={setAttachments}
+                  setDiagram={setDiagram}
                   setInput={setInput}
                   setMessages={setMessages}
                   status={status}

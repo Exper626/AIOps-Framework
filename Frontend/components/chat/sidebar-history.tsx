@@ -194,7 +194,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
                   );
 
                   return (
-                    <div className="flex flex-col">
+                    <div className="flex flex-col gap-0.5">
                       {chatsFromHistory.map((chat) => (
                         <ChatItem
                           chat={chat}

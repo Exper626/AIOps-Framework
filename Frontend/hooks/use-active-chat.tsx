@@ -32,6 +32,7 @@ import {
   getModelChoice,
   getRerankerEnabled,
 } from "@/lib/model-settings";
+import { isPageRoute } from "@/lib/routes";
 import type { ChatMessage } from "@/lib/types";
 import { fetcher, fetchWithErrorHandlers, generateUUID } from "@/lib/utils";
 
@@ -64,7 +65,13 @@ function extractChatId(pathname: string): string | null {
 }
 
 export function ActiveChatProvider({ children }: { children: ReactNode }) {
-  const pathname = usePathname();
+  const currentPath = usePathname();
+  // On a page like Saved responses the chat keeps its last address
+  const chatPathRef = useRef(currentPath);
+  if (!isPageRoute(currentPath)) {
+    chatPathRef.current = currentPath;
+  }
+  const pathname = chatPathRef.current;
   const { setDataStream, setWaitingStatus } = useDataStream();
   const { mutate } = useSWRConfig();
 
@@ -85,7 +92,11 @@ export function ActiveChatProvider({ children }: { children: ReactNode }) {
   const [input, setInput] = useState("");
   const [showCreditCardAlert, setShowCreditCardAlert] = useState(false);
 
-  const { data: chatData, isLoading } = useSWR(
+  const {
+    data: chatData,
+    isLoading,
+    mutate: reloadChatData,
+  } = useSWR(
     isNewChat
       ? null
       : `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/api/messages?chatId=${chatId}`,
@@ -216,9 +227,18 @@ export function ActiveChatProvider({ children }: { children: ReactNode }) {
       prevChatIdRef.current = chatId;
       if (isNewChat) {
         setMessages([]);
+        return;
       }
+      // Back to a chat opened or started earlier in this tab: what was cached
+      // for it can be out of date, so its messages are fetched again
+      loadedChatIds.current.add(chatId);
+      reloadChatData().then((fresh) => {
+        if (fresh?.messages && prevChatIdRef.current === chatId) {
+          setMessages(fresh.messages);
+        }
+      });
     }
-  }, [chatId, isNewChat, setMessages]);
+  }, [chatId, isNewChat, reloadChatData, setMessages]);
 
   useEffect(() => {
     if (chatData && !isNewChat) {

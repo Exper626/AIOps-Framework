@@ -17,7 +17,6 @@ def run_query(ref: ModelRef, message: str, history: list[dict], trace: Trace, en
     if not enabled:
         with trace.step("query") as step:
             step["skipped"] = "Turned off in Settings → Agents"
-            step["output"] = {"standalone_question": message, "rewritten": False}
         return message
 
     agent_input = f"Conversation:\n{format_conversation(history)}\nNew message: {message}"
@@ -27,6 +26,6 @@ def run_query(ref: ModelRef, message: str, history: list[dict], trace: Trace, en
         reply = call_agent(ref, "query.md", agent_input, step, reply_type=QueryReply)
         question = (reply.standalone_question or "").strip() or message
 
-    step["output"] = {"standalone_question": question, "rewritten": question != message}
+    step["output"] = f"Rewrote the question: {question}" if question != message else "Kept the question as it was"
 
     return question

@@ -1,6 +1,7 @@
-from collections.abc import Iterator
+from collections.abc import Generator
 from pathlib import Path
 
+from pipeline.diagram import Diagram, describe_diagram
 from pipeline.errors import PipelineError
 from pipeline.models import ResolvedModel
 from pipeline.trace import Trace
@@ -29,7 +30,7 @@ def describe_attachments(descriptions: list[ImageDescription]) -> str:
     return "\n\n".join(lines)
 
 
-def build_answer_messages(message: str, question: str, history: list[dict], descriptions: list[ImageDescription]) -> list[dict]:
+def build_answer_messages(message: str, question: str, history: list[dict], descriptions: list[ImageDescription], diagram: Diagram | None) -> list[dict]:
     messages = []
 
     system_prompt = SYSTEM_PROMPT_PATH.read_text(encoding="utf-8").strip() if SYSTEM_PROMPT_PATH.exists() else ""
@@ -44,26 +45,36 @@ def build_answer_messages(message: str, question: str, history: list[dict], desc
     if descriptions:
         question = f"{question}\n\n{describe_attachments(descriptions)}"
 
+    if diagram:
+        question = f"{question}\n\nThe user drew this network diagram:\n{describe_diagram(diagram)}"
+
     messages.append({"role": "user", "content": question})
 
     return messages
 
 
-def write_answer(model: ResolvedModel, messages: list[dict], trace: Trace) -> Iterator[dict]:
+def describe_messages(messages: list[dict]) -> str:
+    return "\n\n".join(
+        f"System prompt: prompts/{SYSTEM_PROMPT_PATH.name}" if m["role"] == "system" else f"{m['role'].capitalize()}: {m['content']}"
+        for m in messages
+    )
+
+
+def write_answer(model: ResolvedModel, messages: list[dict], trace: Trace) -> Generator[dict, None, str]:
     parts = []
+    written = 0
 
-    with trace.step("answer", model=model, input=messages) as step:
-        step["output"] = {"chars": 0}
-
+    with trace.step("answer", model=model, input=describe_messages(messages)) as step:
         for chunk in model.client.chat.completions.create(model=model.id, messages=messages, stream=True):
             delta = chunk.choices[0].delta.content if chunk.choices else None
 
             if delta:
                 parts.append(delta)
-                step["output"]["chars"] += len(delta)
+                written += len(delta)
+                step["output"] = f"Wrote {written:,} characters"
                 yield {"phase": "delta", "delta": delta}
 
         if not "".join(parts).strip():
             raise PipelineError("The model returned an empty answer")
 
-    yield {"phase": "done", "message": "".join(parts)}
+    return "".join(parts)

@@ -24,7 +24,9 @@ import {
   type DBMessage,
   document,
   message,
+  type SavedResponse,
   type Suggestion,
+  savedResponse,
   stream,
   suggestion,
   type User,
@@ -585,6 +587,68 @@ export async function getStreamIdsByChatId({ chatId }: { chatId: string }) {
       .execute();
 
     return streamIds.map(({ id }) => id);
+  } catch (error) {
+    throw new ChatbotError("bad_request:database", { cause: error });
+  }
+}
+
+export async function saveResponse(
+  response: Omit<SavedResponse, "id" | "createdAt">
+) {
+  try {
+    const [saved] = await db
+      .insert(savedResponse)
+      .values({ ...response, createdAt: new Date() })
+      .onConflictDoNothing()
+      .returning();
+    return saved;
+  } catch (error) {
+    throw new ChatbotError("bad_request:database", { cause: error });
+  }
+}
+
+export async function deleteSavedResponse({
+  messageId,
+  userId,
+}: {
+  messageId: string;
+  userId: string;
+}) {
+  try {
+    return await db
+      .delete(savedResponse)
+      .where(
+        and(
+          eq(savedResponse.userId, userId),
+          eq(savedResponse.messageId, messageId)
+        )
+      );
+  } catch (error) {
+    throw new ChatbotError("bad_request:database", { cause: error });
+  }
+}
+
+// Newest first, with the title of the chat when it still exists
+export async function getSavedResponsesByUserId({
+  userId,
+}: {
+  userId: string;
+}) {
+  try {
+    return await db
+      .select({
+        chatId: savedResponse.chatId,
+        chatTitle: chat.title,
+        createdAt: savedResponse.createdAt,
+        id: savedResponse.id,
+        messageId: savedResponse.messageId,
+        parts: savedResponse.parts,
+        question: savedResponse.question,
+      })
+      .from(savedResponse)
+      .leftJoin(chat, eq(chat.id, savedResponse.chatId))
+      .where(eq(savedResponse.userId, userId))
+      .orderBy(desc(savedResponse.createdAt));
   } catch (error) {
     throw new ChatbotError("bad_request:database", { cause: error });
   }

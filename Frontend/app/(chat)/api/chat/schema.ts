@@ -12,7 +12,37 @@ const filePartSchema = z.object({
   url: z.url(),
 });
 
-const partSchema = z.union([textPartSchema, filePartSchema]);
+export const diagramSchema = z.object({
+  devices: z
+    .array(
+      z.object({
+        id: z.string().min(1).max(100),
+        model: z.string().max(100).optional(),
+        name: z.string().max(100),
+        type: z.string().min(1).max(40),
+        x: z.number().nullable().optional(),
+        y: z.number().nullable().optional(),
+      })
+    )
+    .max(200),
+  links: z
+    .array(
+      z.object({
+        source: z.string().min(1).max(100),
+        target: z.string().min(1).max(100),
+      })
+    )
+    .max(500),
+});
+
+// A network diagram the user drew and sent with the message
+const diagramPartSchema = z.object({
+  data: diagramSchema,
+  id: z.string().min(1).max(100),
+  type: z.enum(["data-diagram"]),
+});
+
+const partSchema = z.union([textPartSchema, filePartSchema, diagramPartSchema]);
 
 const userMessageSchema = z.object({
   id: z.uuid(),

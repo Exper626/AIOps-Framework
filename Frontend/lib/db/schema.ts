@@ -7,6 +7,7 @@ import {
   primaryKey,
   text,
   timestamp,
+  unique,
   uuid,
   varchar,
 } from "drizzle-orm/pg-core";
@@ -134,3 +135,25 @@ export const stream = pgTable(
 );
 
 export type Stream = InferSelectModel<typeof stream>;
+
+// A copy of an answer the user saved. It is kept when its chat is deleted, so
+// the chat and message ids are not foreign keys.
+export const savedResponse = pgTable(
+  "SavedResponse",
+  {
+    chatId: uuid("chatId").notNull(),
+    createdAt: timestamp("createdAt").notNull(),
+    id: uuid("id").primaryKey().notNull().defaultRandom(),
+    messageId: uuid("messageId").notNull(),
+    parts: json("parts").notNull(),
+    question: text("question").notNull(),
+    userId: uuid("userId")
+      .notNull()
+      .references(() => user.id),
+  },
+  (table) => ({
+    oncePerMessage: unique().on(table.userId, table.messageId),
+  })
+);
+
+export type SavedResponse = InferSelectModel<typeof savedResponse>;
