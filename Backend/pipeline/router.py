@@ -29,9 +29,11 @@ class Plan(BaseModel):
 
 
 def complete_plan(tasks: list[Task], images: int) -> Plan:
-    """Every message gets an answer, and attached images are always read
-    (and never looked for when there are none), whatever the router said"""
-    wanted = {*tasks, "text_generation"}
+    """Every message gets an answer or a picture, and attached images are always
+    read (and never looked for when there are none), whatever the router said"""
+    wanted = set(tasks)
+    if not wanted & {"text_generation", "image_generation"}:
+        wanted.add("text_generation")
     if images:
         wanted.add("image_description")
     else:

@@ -10,7 +10,8 @@ Tasks:
   access points: models, specifications, ports, PoE, throughput, supported features). Include it when the
   answer depends on facts about specific devices, vendors or products. Not for general concepts, general
   troubleshooting, general configuration or small talk.
-- "text_generation": write the answer. Always include it.
+- "text_generation": write the answer. Include it for every message, except one that only asks to draw or show
+  a network: then "image_generation" alone is enough, and the picture gets a short caption.
 - "image_generation": draw a network diagram. Include it when the user asks to draw, design, show or change
   a network or topology, attached a topology image, drew a diagram, or the answer will describe a specific
   network with named devices and the cables between them.
@@ -39,6 +40,13 @@ The user attached 1 image(s).
 
 New message: Design a small office network with one router, one switch and three PCs.
 {"tasks": ["text_generation", "image_generation"]}
+
+New message: Draw this network: {"devices": [{"name": "SW1", "type": "switch"}, {"name": "PC1", "type": "pc"}], "links": [{"from": "SW1", "to": "PC1"}]}
+{"tasks": ["image_generation"]}
+
+New message: Redraw this topology as a clean diagram.
+The user attached 1 image(s).
+{"tasks": ["image_description", "image_generation"]}
 
 New message: Design a branch office with a Cisco Catalyst 9300 switch and two Juniper AP45 access points.
 {"tasks": ["retrieval", "text_generation", "image_generation"]}

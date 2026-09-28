@@ -6,6 +6,7 @@ from pydantic import BaseModel, Field
 
 from config import settings
 from pipeline.answer import build_answer_messages, describe_sources, write_answer
+from pipeline.caption import write_caption
 from pipeline.context import run_context
 from pipeline.diagram import Diagram, describe_diagram, run_diagram
 from pipeline.errors import describe_error
@@ -81,17 +82,31 @@ def run_steps(request: ChatRequest, answer_model: ResolvedModel, trace: Trace) -
             request.query_model or DEFAULT_MODEL, search, request.hybrid_search, request.reranker, request.chunk_count, trace
         )
 
-    messages = build_answer_messages(message, question, selected, descriptions, request.diagram, passages)
-    yield {"phase": "answer", "message": "Writing the answer...", "modelId": answer_model.id}
-    sources = describe_sources(message, question, selected, descriptions, request.diagram, passages)
-    answer = yield from write_answer(answer_model, messages, sources, trace)
+    answer = ""
+    if plan.has("text_generation"):
+        messages = build_answer_messages(message, question, selected, descriptions, request.diagram, passages)
+        yield {"phase": "answer", "message": "Writing the answer...", "modelId": answer_model.id}
+        sources = describe_sources(message, question, selected, descriptions, request.diagram, passages)
+        answer = yield from write_answer(answer_model, messages, sources, trace)
 
     if plan.has("image_generation"):
+        if not answer:
+            yield {"phase": "answer", "message": "Drawing the diagram..."}
         images = [d.description for d in descriptions if d.description]
         earlier = [m.diagram for m in request.history if m.diagram and m.to_dict() in selected]
         diagram = run_diagram(
             request.answer_model or DEFAULT_MODEL, question, answer, images, request.diagram, earlier[-1] if earlier else None, passages, trace
         )
+
+        # Only a picture was asked for: a short caption of it, instead of an answer
+        if not answer:
+            answer = (
+                write_caption(request.answer_model or DEFAULT_MODEL, question, diagram, trace)
+                if diagram
+                else "I couldn't find a network to draw in your message. List its devices and how they are connected, and I'll draw it."
+            )
+            yield {"phase": "delta", "delta": answer}
+
         if diagram:
             yield {"phase": "diagram", "diagram": diagram.model_dump(), "image": draw_topology_image(diagram, trace)}
 

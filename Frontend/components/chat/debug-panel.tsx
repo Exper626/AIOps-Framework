@@ -2,6 +2,7 @@
 
 import {
   BookOpenIcon,
+  CaptionsIcon,
   EyeIcon,
   ImageIcon,
   LayersIcon,
@@ -84,6 +85,7 @@ const STEPS: {
     task: true,
   },
   { icon: <ImageIcon />, label: "Graphviz", prefix: "graphviz", task: false },
+  { icon: <CaptionsIcon />, label: "Caption", prefix: "caption", task: false },
 ];
 
 const MODEL_NAMES = new Map(

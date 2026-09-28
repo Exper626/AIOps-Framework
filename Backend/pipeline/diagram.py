@@ -87,7 +87,7 @@ def run_diagram(
     passages: list[dict],
     trace: Trace,
 ) -> Diagram | None:
-    agent_input = f"Question: {question}\n\nAnswer: {answer}"
+    agent_input = f"Question: {question}" + (f"\n\nAnswer: {answer}" if answer else "")
     attached = images + ([describe_diagram(drawn)] if drawn else [])
     found = describe_found_devices(passages)
 
