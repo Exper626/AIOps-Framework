@@ -264,31 +264,6 @@ function SidebarTrigger({
   )
 }
 
-function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
-  const { toggleSidebar } = useSidebar()
-
-  // A thin strip along the sidebar's edge; clicking it opens or closes the
-  // sidebar. Nothing is drawn on hover.
-  return (
-    <div
-      data-slot="sidebar-rail"
-      className={cn(
-        "absolute inset-y-0 z-20 hidden w-4 group-data-[side=left]:-right-4 sm:block",
-        className
-      )}
-    >
-      <button
-        data-sidebar="rail"
-        aria-label="Toggle Sidebar"
-        tabIndex={-1}
-        onClick={toggleSidebar}
-        className="absolute inset-y-0 left-0 w-4 cursor-w-resize [[data-side=left][data-state=collapsed]_&]:cursor-e-resize"
-        {...props}
-      />
-    </div>
-  )
-}
-
 function SidebarInset({ className, ...props }: React.ComponentProps<"main">) {
   return (
     <main
@@ -686,7 +661,6 @@ export {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   SidebarProvider,
-  SidebarRail,
   SidebarSeparator,
   SidebarTrigger,
   useSidebar,

@@ -19,7 +19,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarRail,
   useSidebar,
 } from "@/components/ui/sidebar";
 import { isPageRoute } from "@/lib/routes";
@@ -140,7 +139,6 @@ export function AppSidebar({ user }: { user: User | undefined }) {
           </SidebarFooter>
         </div>
       </div>
-      <SidebarRail />
     </Sidebar>
   );
 }
