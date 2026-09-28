@@ -1,11 +1,16 @@
 knowledge_base:
-  root: "Knowledge Base"
+  # The Knowledge Base folder, relative to this Scripts folder
+  root: ".."
 
 weaviate:
   collection_name: "NetworkDevice"
 
 embedding:
-  base_url: "https://ai-gateway.vercel.sh/v1"
-  model: "openai/text-embedding-3-small"
-  dim: 1536
-  batch_size: 50
+  # DashScope, Singapore region: the same as the reranker in Backend/rag/reranker.py
+  url: "https://dashscope-intl.aliyuncs.com/api/v1/services/embeddings/text-embedding/text-embedding"
+  # Must match EMBEDDING_MODEL and EMBEDDING_DIM in Backend/rag/embedding.py
+  model: "text-embedding-v4"
+  # 2048, 1536, 1024, 768, 512, 256, 128 or 64
+  dim: 1024
+  # Pages per request; DashScope takes up to 10
+  batch_size: 10
