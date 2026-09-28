@@ -21,8 +21,9 @@ def describe_attachments(descriptions: list[ImageDescription]) -> str:
 
     if read:
         lines.append(
-            "The user attached network topology images. A vision model extracted this from them "
-            "(JSON with each device's name, model and connections):"
+            "The user attached images. A vision model read them as JSON: the devices (name, type, model, "
+            "IP addresses), the cables between them (ports, and status: up, down or amber) and, for images "
+            "that aren't a topology, a description:"
         )
         lines.extend(f"Image \"{d.name}\":\n{d.description}" for d in read)
 

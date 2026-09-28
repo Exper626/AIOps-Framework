@@ -20,37 +20,34 @@ class ImageDescription(BaseModel):
     error: str | None = None
 
 
-def describe_topology(description: str) -> str:
-    """One line for the trace, like "3 devices: Router0 (2621XM), Switch0 (2950-24), PC0 (PC-PT)"."""
+def read_topology(description: str) -> dict:
+    """The vision model's JSON: {"devices": [...], "links": [...]}, and a "description" for other images"""
     try:
         topology = parse_json_object(description)
     except ValueError:
-        return description.strip().splitlines()[0][:200] if description.strip() else description
+        return {}
+    return topology if isinstance(topology, dict) else {}
 
-    devices = [
-        f"{device.get('name', 'unknown')} ({device.get('model', 'unknown')})"
-        for devices in topology.values()
-        if isinstance(devices, list)
-        for device in devices
-        if isinstance(device, dict)
-    ]
 
-    return f"{len(devices)} devices: {', '.join(devices)}" if devices else description
+def describe_topology(description: str) -> str:
+    """One line for the trace, like "3 devices, 2 cables: Router0 (2621XM), Switch0 (2950-24), PC0 (PC-PT)"."""
+    topology = read_topology(description)
+    devices = [d for d in topology.get("devices") or [] if isinstance(d, dict)]
+
+    if devices:
+        names = ", ".join(f"{d.get('name', 'unknown')} ({d.get('model', 'unknown')})" for d in devices)
+        return f"{len(devices)} devices, {len(topology.get('links') or [])} cables: {names}"
+
+    text = str(topology.get("description") or description).strip()
+    return text.splitlines()[0][:200] if text else text
 
 
 def topology_models(description: str) -> list[str]:
     """The device models read from a topology image, to search the knowledge base with"""
-    try:
-        topology = parse_json_object(description)
-    except ValueError:
-        return []
-
     return [
-        str(device["model"])
-        for devices in topology.values()
-        if isinstance(devices, list)
-        for device in devices
-        if isinstance(device, dict) and device.get("model") not in (None, "", "unknown")
+        str(d["model"])
+        for d in read_topology(description).get("devices") or []
+        if isinstance(d, dict) and d.get("model") not in (None, "", "unknown")
     ]
 
 
@@ -62,7 +59,7 @@ def describe_images(ref: ModelRef, images: list[ImageInput], trace: Trace) -> li
         size_kb = round(len(image.data_url) * 3 / 4 / 1024)
         step_input = f"{image.name} ({image.media_type}, {size_kb} KB)"
         content = [
-            {"type": "text", "text": "Extract the network topology from this image."},
+            {"type": "text", "text": "Output the JSON for this image."},
             {"type": "image_url", "image_url": {"url": image.data_url}},
         ]
 
