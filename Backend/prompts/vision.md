@@ -9,7 +9,7 @@ Output format:
     {"name": "...", "type": "...", "model": "...", "ips": ["..."]}
   ],
   "links": [
-    {"from": "...", "to": "...", "from_port": "...", "to_port": "...", "status": "..."}
+    {"from": "...", "to": "...", "from_port": "...", "to_port": "..."}
   ]
 }
 
@@ -25,9 +25,6 @@ Output format:
 - "from", "to": the names of the two devices the cable joins, exactly as in "devices".
 - "from_port", "to_port": the port name written next to that end of the cable ("F0/4", "Gig0/1", "S0/0/0").
   Leave a field out when no port name is written at that end.
-- "status": from the small lights on the cable. "down" when a light is red, "amber" when a light is an orange
-  dot (the port isn't forwarding yet, or spanning tree blocks it), "up" when the lights are green.
-  Leave it out when the cable has no lights.
 
 Reading labels:
 - A cable, light or note can cover part of a label. When the visible characters still clearly give the name or
@@ -59,14 +56,13 @@ Rules:
 Examples:
 
 Image: Router0 (2621XM) is joined to a 2950T-24 switch whose name is "Switch1", with the "1" partly behind a light.
-The router's cable has red lights. The switch also connects to Server7 (Server-PT), PC1, PC4 and PC11 (PC-PT);
-the cable to PC4 has an orange dot at the switch end, the others are green.
-{"devices": [{"name": "Router0", "type": "router", "model": "2621XM"}, {"name": "Switch1", "type": "switch", "model": "2950T-24"}, {"name": "Server7", "type": "server", "model": "Server-PT"}, {"name": "PC1", "type": "pc", "model": "PC-PT"}, {"name": "PC4", "type": "pc", "model": "PC-PT"}, {"name": "PC11", "type": "pc", "model": "PC-PT"}], "links": [{"from": "Router0", "to": "Switch1", "status": "down"}, {"from": "Switch1", "to": "Server7", "status": "up"}, {"from": "Switch1", "to": "PC1", "status": "up"}, {"from": "Switch1", "to": "PC4", "status": "amber"}, {"from": "Switch1", "to": "PC11", "status": "up"}]}
+The switch also connects to Server7 (Server-PT), PC1, PC4 and PC11 (PC-PT).
+{"devices": [{"name": "Router0", "type": "router", "model": "2621XM"}, {"name": "Switch1", "type": "switch", "model": "2950T-24"}, {"name": "Server7", "type": "server", "model": "Server-PT"}, {"name": "PC1", "type": "pc", "model": "PC-PT"}, {"name": "PC4", "type": "pc", "model": "PC-PT"}, {"name": "PC11", "type": "pc", "model": "PC-PT"}], "links": [{"from": "Router0", "to": "Switch1"}, {"from": "Switch1", "to": "Server7"}, {"from": "Switch1", "to": "PC1"}, {"from": "Switch1", "to": "PC4"}, {"from": "Switch1", "to": "PC11"}]}
 
 Image: Switch2 and Switch6 (2950-24) are joined by a dashed cable. On Switch2, PC29 (note "192.168.3.122") uses
 port F0/4 and PC11 (note "192.169.3.119") uses F0/10. On Switch6, PC12 (note "192.168.3.124") uses F0/8 and
-PC21 (note "192.168.3.120") uses F0/9. All lights are green.
-{"devices": [{"name": "Switch2", "type": "switch", "model": "2950-24"}, {"name": "Switch6", "type": "switch", "model": "2950-24"}, {"name": "PC11", "type": "pc", "model": "PC-PT", "ips": ["192.169.3.119"]}, {"name": "PC12", "type": "pc", "model": "PC-PT", "ips": ["192.168.3.124"]}, {"name": "PC21", "type": "pc", "model": "PC-PT", "ips": ["192.168.3.120"]}, {"name": "PC29", "type": "pc", "model": "PC-PT", "ips": ["192.168.3.122"]}], "links": [{"from": "Switch2", "to": "Switch6", "status": "up"}, {"from": "Switch2", "to": "PC11", "from_port": "F0/10", "status": "up"}, {"from": "Switch2", "to": "PC29", "from_port": "F0/4", "status": "up"}, {"from": "Switch6", "to": "PC12", "from_port": "F0/8", "status": "up"}, {"from": "Switch6", "to": "PC21", "from_port": "F0/9", "status": "up"}]}
+PC21 (note "192.168.3.120") uses F0/9.
+{"devices": [{"name": "Switch2", "type": "switch", "model": "2950-24"}, {"name": "Switch6", "type": "switch", "model": "2950-24"}, {"name": "PC11", "type": "pc", "model": "PC-PT", "ips": ["192.169.3.119"]}, {"name": "PC12", "type": "pc", "model": "PC-PT", "ips": ["192.168.3.124"]}, {"name": "PC21", "type": "pc", "model": "PC-PT", "ips": ["192.168.3.120"]}, {"name": "PC29", "type": "pc", "model": "PC-PT", "ips": ["192.168.3.122"]}], "links": [{"from": "Switch2", "to": "Switch6"}, {"from": "Switch2", "to": "PC11", "from_port": "F0/10"}, {"from": "Switch2", "to": "PC29", "from_port": "F0/4"}, {"from": "Switch6", "to": "PC12", "from_port": "F0/8"}, {"from": "Switch6", "to": "PC21", "from_port": "F0/9"}]}
 
 Image: Router2 and Router4 (2911) and Router11 (1941) with no cables. At the top edge, only the start of a
 label, "Rou", shows.
