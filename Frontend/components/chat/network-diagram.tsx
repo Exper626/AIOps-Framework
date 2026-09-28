@@ -357,6 +357,10 @@ type EditorProps = {
   diagram: NetworkDiagram;
   // Called with the whole diagram after each change (not during a drag)
   onChange?: (diagram: NetworkDiagram) => void;
+  // Shows a Done button, for editing an answer's picture
+  onDone?: () => void;
+  // The picture is being redrawn after Done
+  drawing?: boolean;
   readOnly?: boolean;
   className?: string;
 };
@@ -364,6 +368,8 @@ type EditorProps = {
 function Editor({
   diagram,
   onChange,
+  onDone,
+  drawing = false,
   readOnly = false,
   className,
 }: EditorProps) {
@@ -618,7 +624,21 @@ function Editor({
             </Panel>
           )}
 
-          {nodes.length > 0 ? (
+          {onDone ? (
+            <Panel position="top-right">
+              <Button
+                className="h-7 px-3 text-xs"
+                data-testid="diagram-done"
+                disabled={drawing || nodes.length === 0}
+                onClick={onDone}
+                size="sm"
+              >
+                {drawing ? "Drawing…" : "Done"}
+              </Button>
+            </Panel>
+          ) : null}
+
+          {!onDone && nodes.length > 0 ? (
             <Panel position="top-right">
               <WithTooltip label="Download the diagram as a PNG image">
                 <Button

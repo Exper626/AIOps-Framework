@@ -4,8 +4,10 @@ from fastapi.responses import JSONResponse, StreamingResponse
 
 from config import settings
 from pipeline.chat import ChatRequest, run_chat
+from pipeline.diagram import Diagram
 from pipeline.errors import PipelineError
 from pipeline.models import DEFAULT_MODEL, list_self_hosted_models, resolve_model
+from pipeline.topology_image import build_graph, render_png, to_data_url
 
 app = FastAPI(title="AIOps Backend", version="0.1.0")
 
@@ -51,3 +53,14 @@ def chat(request: ChatRequest):
 
     answer_model = resolve_model(request.answer_model or DEFAULT_MODEL, "text")
     return StreamingResponse(run_chat(request, answer_model), media_type="application/x-ndjson")
+
+
+@app.post("/diagram/image")
+def diagram_image(diagram: Diagram):
+    # Redraws an answer's picture after someone edits the diagram in the chat
+    if not diagram.devices:
+        raise PipelineError("The diagram has no devices to draw")
+    if len(diagram.devices) > 200 or len(diagram.links) > 500:
+        raise PipelineError("The diagram is too big to draw (at most 200 devices and 500 cables)")
+
+    return {"image": to_data_url(render_png(build_graph(diagram)))}

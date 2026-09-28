@@ -28,9 +28,11 @@ LEVELS = {"cloud": 0, "router": 1, "firewall": 1, "multilayer_switch": 2, "switc
 END_DEVICE_LEVEL = 5
 
 
+ICON_TYPES = {path.stem for path in ICONS_DIR.glob("*.png")}
+
+
 def icon_path(device_type: str) -> Path:
-    path = ICONS_DIR / f"{device_type}.png"
-    return path if path.exists() else ICONS_DIR / "other.png"
+    return ICONS_DIR / f"{device_type if device_type in ICON_TYPES else 'other'}.png"
 
 
 def png_size(path: Path) -> tuple[int, int]:
@@ -70,6 +72,17 @@ def build_graph(diagram: Diagram) -> Graph:
     return graph
 
 
+def render_png(graph: Graph) -> bytes:
+    try:
+        return graph.pipe()
+    except ExecutableNotFound as error:
+        raise PipelineError("Graphviz isn't installed where the backend runs: install it (graphviz.org/download) and restart") from error
+
+
+def to_data_url(png: bytes) -> str:
+    return "data:image/png;base64," + base64.b64encode(png).decode()
+
+
 def draw_topology_image(diagram: Diagram, trace: Trace) -> str | None:
     """The diagram drawn with Graphviz, as a PNG data URL, or None if it couldn't be drawn"""
     image = None
@@ -78,12 +91,8 @@ def draw_topology_image(diagram: Diagram, trace: Trace) -> str | None:
         graph = build_graph(diagram)
         step["raw_output"] = graph.source
 
-        try:
-            png = graph.pipe()
-        except ExecutableNotFound as error:
-            raise PipelineError("Graphviz isn't installed where the backend runs: install it (graphviz.org/download) and restart") from error
-
-        image = "data:image/png;base64," + base64.b64encode(png).decode()
+        png = render_png(graph)
+        image = to_data_url(png)
         step["output"] = f"Drew the diagram: {len(png) // 1024} KB image"
 
     if "error" in step:

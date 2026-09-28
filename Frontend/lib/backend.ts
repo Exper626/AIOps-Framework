@@ -1,4 +1,4 @@
-import type { NetworkDiagram } from "@/lib/diagram";
+import { diagramData, type NetworkDiagram } from "@/lib/diagram";
 import type { ModelChoice } from "@/lib/model-settings";
 
 export type BackendChatResult = {
@@ -291,4 +291,38 @@ export async function callBackend(
   }
 
   return finalResult;
+}
+
+// The backend's Graphviz picture of a diagram someone edited, as a PNG data
+// URL; throws with the reason when it can't be drawn
+export async function drawDiagramImage(diagram: NetworkDiagram) {
+  const url = getBackendUrl();
+
+  if (!url) {
+    throw new Error("BACKEND_URL is not configured");
+  }
+
+  const response = await fetch(`${url}/diagram/image`, {
+    body: JSON.stringify(diagramData(diagram)),
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+  });
+
+  if (response.status === 404) {
+    throw new Error(
+      "the backend has no /diagram/image endpoint yet, so redeploy it"
+    );
+  }
+
+  if (!response.ok) {
+    throw new Error(readErrorDetail(await response.text()));
+  }
+
+  const { image } = (await response.json()) as { image?: unknown };
+
+  if (typeof image !== "string" || !image.startsWith("data:image/png;")) {
+    throw new Error("the backend sent no picture back");
+  }
+
+  return image;
 }
