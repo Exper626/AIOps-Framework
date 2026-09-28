@@ -78,4 +78,7 @@ def draw_topology_image(diagram: Diagram, trace: Trace) -> str | None:
         image = "data:image/png;base64," + base64.b64encode(png).decode()
         step["output"] = f"Drew the diagram: {len(png) // 1024} KB image"
 
+    if "error" in step:
+        step["output"] = f"Couldn't draw the picture, so the chat shows an editable diagram instead: {step['error']}"
+
     return image

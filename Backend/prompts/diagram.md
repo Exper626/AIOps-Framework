@@ -6,7 +6,7 @@ the knowledge base found for the question.
 Decide whether a network diagram helps, and if so, output it.
 
 A diagram helps when:
-- the user asks to draw, design, show, change or fix a network or topology, or
+- the user asks to draw, generate, create, design, show, change or fix a network or topology, or
 - the user attached or drew a topology, or
 - the question or answer changes the diagram from earlier in the conversation (adds, removes or reconnects devices),
   or the user asks to see it again, or
@@ -28,7 +28,9 @@ Rules:
 - When the user attached or drew a topology, or there is a diagram from earlier in the conversation, keep its
   device names and include every device, then apply the changes the question or the answer describes.
 - Do not repeat the diagram from earlier in the conversation when nothing in it changes.
-- Do not invent devices or connections the question, answer or attached topology do not mention.
+- Do not invent devices or connections the question, answer or attached topology do not mention, unless the user
+  asks you to choose them ("connections are random", "you decide"). Then connect them simply: each end device to
+  one switch, and switches to each other or to a router.
 - When a device in the diagram is one the knowledge base found, use its model from the answer (or the knowledge
   base's device name) as "model", and its type: access point is access_point.
 
