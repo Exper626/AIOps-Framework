@@ -115,7 +115,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                       tooltip="New Chat"
                     >
                       <PenSquareIcon className="sidebar-icon-pencil" />
-                      <span className="font-medium">New chat</span>
+                      <span>New chat</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
@@ -127,7 +127,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                       tooltip="Saved responses"
                     >
                       <BookmarkIcon className="sidebar-icon-bookmark" />
-                      <span className="font-medium">Saved responses</span>
+                      <span>Saved responses</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 </SidebarMenu>

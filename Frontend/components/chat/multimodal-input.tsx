@@ -552,7 +552,9 @@ function PureMultimodalInput({
           onChange={handleInput}
           onKeyDown={handleTextareaKeyDown}
           placeholder={
-            editingMessage ? "Edit your message..." : "Ask anything..."
+            editingMessage
+              ? "Edit your message..."
+              : "Ask a networking question..."
           }
           ref={textareaRef}
           value={input}

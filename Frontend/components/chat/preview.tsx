@@ -45,7 +45,7 @@ export function Preview() {
           onClick={handleDefaultAction}
           type="button"
         >
-          Ask anything...
+          Ask a networking question...
         </button>
       </div>
     </div>
