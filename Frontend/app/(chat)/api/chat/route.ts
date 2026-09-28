@@ -31,7 +31,7 @@ import {
   updateMessage,
 } from "@/lib/db/queries";
 import type { DBMessage } from "@/lib/db/schema";
-import type { NetworkDiagram } from "@/lib/diagram";
+import { diagramData, type NetworkDiagram } from "@/lib/diagram";
 import { ChatbotError } from "@/lib/errors";
 import type { ModelChoice } from "@/lib/model-settings";
 import { checkIpRateLimit } from "@/lib/ratelimit";
@@ -316,7 +316,7 @@ export async function POST(request: Request) {
               {
                 content: text,
                 role: m.role as "user" | "assistant",
-                ...(diagram ? { diagram } : {}),
+                ...(diagram ? { diagram: diagramData(diagram) } : {}),
               },
             ];
           });

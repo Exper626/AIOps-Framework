@@ -30,6 +30,8 @@ type BackendDeltaEvent = {
 type BackendDiagramEvent = {
   phase: "diagram";
   diagram: NetworkDiagram;
+  // The diagram drawn with Graphviz, when the backend could draw it
+  image?: string | null;
 };
 
 type BackendDoneEvent = {
@@ -243,7 +245,9 @@ export async function callBackend(
     }
 
     if (event.phase === "diagram") {
-      options.onDiagram?.(event.diagram);
+      options.onDiagram?.(
+        event.image ? { ...event.diagram, image: event.image } : event.diagram
+      );
       return;
     }
 

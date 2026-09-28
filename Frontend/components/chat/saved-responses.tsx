@@ -22,6 +22,7 @@ import { MessageContent, MessageResponse } from "../ai-elements/message";
 import { Button } from "../ui/button";
 import { useSidebar } from "../ui/sidebar";
 import { Skeleton } from "../ui/skeleton";
+import { DiagramImage } from "./diagram-part";
 import { NetworkDiagramEditor } from "./network-diagram";
 
 const MARKDOWN_MARKS = /[#*_`>|[\]-]+/g;
@@ -161,7 +162,9 @@ function SavedResponseView({
           }
 
           if (part.type === "data-diagram") {
-            return (
+            return part.data.image ? (
+              <DiagramImage diagram={part.data} key={key} />
+            ) : (
               <NetworkDiagramEditor diagram={part.data} key={key} readOnly />
             );
           }

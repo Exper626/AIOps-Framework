@@ -31,7 +31,14 @@ export type NetworkLink = {
 export type NetworkDiagram = {
   devices: NetworkDevice[];
   links: NetworkLink[];
+  // An answer's diagram as the backend drew it with Graphviz (a PNG data URL)
+  image?: string;
 };
+
+// Only the devices and links, without the picture, to send to the backend
+export function diagramData(diagram: NetworkDiagram): NetworkDiagram {
+  return { devices: diagram.devices, links: diagram.links };
+}
 
 export const EMPTY_DIAGRAM: NetworkDiagram = { devices: [], links: [] };
 

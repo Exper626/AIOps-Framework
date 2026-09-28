@@ -3,6 +3,7 @@
 import {
   BookOpenIcon,
   EyeIcon,
+  ImageIcon,
   LayersIcon,
   ListFilterIcon,
   MessageSquareTextIcon,
@@ -82,6 +83,7 @@ const STEPS: {
     prefix: "diagram",
     task: true,
   },
+  { icon: <ImageIcon />, label: "Graphviz", prefix: "graphviz", task: false },
 ];
 
 const MODEL_NAMES = new Map(

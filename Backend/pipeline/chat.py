@@ -13,6 +13,7 @@ from pipeline.knowledge import search_knowledge_base
 from pipeline.models import DEFAULT_MODEL, ModelRef, ResolvedModel
 from pipeline.query import run_query
 from pipeline.router import run_router
+from pipeline.topology_image import draw_topology_image
 from pipeline.trace import Trace
 from pipeline.vision import ImageInput, describe_images, topology_models
 
@@ -92,7 +93,7 @@ def run_steps(request: ChatRequest, answer_model: ResolvedModel, trace: Trace) -
             request.answer_model or DEFAULT_MODEL, question, answer, images, request.diagram, earlier[-1] if earlier else None, passages, trace
         )
         if diagram:
-            yield {"phase": "diagram", "diagram": diagram.model_dump()}
+            yield {"phase": "diagram", "diagram": diagram.model_dump(), "image": draw_topology_image(diagram, trace)}
 
     yield {"phase": "done", "message": answer}
 

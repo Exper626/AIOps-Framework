@@ -110,7 +110,7 @@ export const AGENTS: { id: AgentId; name: string; description: string }[] = [
   },
   {
     description:
-      "Image generation: draws an editable network diagram from the answer, your image or drawing, and the devices found. Runs when the router plans it.",
+      "Image generation: works out the network (devices and cables) from the answer, your image or drawing, and the devices found, and Graphviz draws it as a picture. Runs when the router plans it.",
     id: "diagram",
     name: "Diagram",
   },

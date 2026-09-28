@@ -9,6 +9,19 @@ import { NetworkDiagramEditor } from "./network-diagram";
 
 const SAVE_DELAY_MS = 800;
 
+// An answer's diagram as the backend drew it with Graphviz
+export function DiagramImage({ diagram }: { diagram: NetworkDiagram }) {
+  return (
+    <picture className="block w-fit max-w-full overflow-hidden rounded-xl border border-border/50 bg-white">
+      <img
+        alt={`Network diagram: ${diagram.devices.map((device) => device.name).join(", ")}`}
+        className="block h-auto max-h-[600px] max-w-full object-contain"
+        src={diagram.image}
+      />
+    </picture>
+  );
+}
+
 // A diagram in a message; changes are saved with the chat a moment after the
 // user stops editing
 export function DiagramPart({
@@ -82,6 +95,10 @@ export function DiagramPart({
 
   // An edit made just before leaving the chat is still saved
   useEffect(() => flush, [flush]);
+
+  if (diagram.image) {
+    return <DiagramImage diagram={diagram} />;
+  }
 
   return (
     <NetworkDiagramEditor
