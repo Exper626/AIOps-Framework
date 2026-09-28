@@ -21,21 +21,37 @@ class ImageDescription(BaseModel):
 
 
 def describe_topology(description: str) -> str:
+    """One line for the trace, like "3 devices: Router0 (2621XM), Switch0 (2950-24), PC0 (PC-PT)"."""
     try:
         topology = parse_json_object(description)
     except ValueError:
-        return description
+        return description.strip().splitlines()[0][:200] if description.strip() else description
 
-    lines = [
-        f"{device.get('name', 'unknown')} ({device.get('model', 'unknown')}): "
-        f"connected to {', '.join(map(str, device.get('connected_to') or [])) or 'nothing'}"
+    devices = [
+        f"{device.get('name', 'unknown')} ({device.get('model', 'unknown')})"
         for devices in topology.values()
         if isinstance(devices, list)
         for device in devices
         if isinstance(device, dict)
     ]
 
-    return f"Found {len(lines)} devices:\n" + "\n".join(lines) if lines else description
+    return f"{len(devices)} devices: {', '.join(devices)}" if devices else description
+
+
+def topology_models(description: str) -> list[str]:
+    """The device models read from a topology image, to search the knowledge base with"""
+    try:
+        topology = parse_json_object(description)
+    except ValueError:
+        return []
+
+    return [
+        str(device["model"])
+        for devices in topology.values()
+        if isinstance(devices, list)
+        for device in devices
+        if isinstance(device, dict) and device.get("model") not in (None, "", "unknown")
+    ]
 
 
 def describe_images(ref: ModelRef, images: list[ImageInput], trace: Trace) -> list[ImageDescription]:

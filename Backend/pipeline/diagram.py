@@ -72,17 +72,33 @@ def keep_positions(diagram: Diagram, before: Diagram) -> None:
         device.x, device.y = positions.get(device.name, (None, None))
 
 
+def describe_found_devices(passages: list[dict]) -> str:
+    found = {p["device"]: " ".join(label for label in (p.get("vendor"), p.get("device_type")) if label) for p in passages if p.get("device")}
+    return "\n".join(f"{device} ({labels})" if labels else device for device, labels in found.items())
+
+
 def run_diagram(
-    ref: ModelRef, question: str, answer: str, images: list[str], drawn: Diagram | None, earlier: Diagram | None, trace: Trace
+    ref: ModelRef,
+    question: str,
+    answer: str,
+    images: list[str],
+    drawn: Diagram | None,
+    earlier: Diagram | None,
+    passages: list[dict],
+    trace: Trace,
 ) -> Diagram | None:
     agent_input = f"Question: {question}\n\nAnswer: {answer}"
     attached = images + ([describe_diagram(drawn)] if drawn else [])
+    found = describe_found_devices(passages)
 
     if attached:
         agent_input += "\n\nTopology the user attached:\n" + "\n\n".join(attached)
 
     if earlier:
         agent_input += f"\n\nDiagram from earlier in the conversation:\n{describe_diagram(earlier)}"
+
+    if found:
+        agent_input += f"\n\nDevices the knowledge base found:\n{found}"
 
     diagram = None
 

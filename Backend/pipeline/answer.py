@@ -74,7 +74,34 @@ def describe_messages(messages: list[dict]) -> str:
     )
 
 
-def write_answer(model: ResolvedModel, messages: list[dict], trace: Trace) -> Generator[dict, None, str]:
+def plural(count: int, word: str) -> str:
+    return f"{count} {word}{'s' if count != 1 else ''}"
+
+
+def describe_sources(
+    message: str, question: str, history: list[dict], descriptions: list[ImageDescription], diagram: Diagram | None, passages: list[dict]
+) -> str:
+    """What the answer was written from, for the trace, like "the question, the image and 1 passage"."""
+    exchanges = sum(1 for m in history if m["role"] == "user")
+    images = sum(1 for d in descriptions if d.description)
+    sources = ["the rewritten question" if question != message else "the question"]
+
+    if exchanges:
+        sources.append(plural(exchanges, "earlier exchange"))
+    if images:
+        sources.append("the image" if images == 1 else plural(images, "image"))
+    if diagram:
+        sources.append("your diagram")
+    if passages:
+        sources.append(plural(len(passages), "passage"))
+
+    if len(sources) == 1:
+        return f"{sources[0]} only"
+
+    return ", ".join(sources[:-1]) + " and " + sources[-1]
+
+
+def write_answer(model: ResolvedModel, messages: list[dict], sources: str, trace: Trace) -> Generator[dict, None, str]:
     parts = []
     written = 0
 
@@ -90,5 +117,7 @@ def write_answer(model: ResolvedModel, messages: list[dict], trace: Trace) -> Ge
 
         if not "".join(parts).strip():
             raise PipelineError("The model returned an empty answer")
+
+        step["output"] = f"Wrote the answer above from: {sources}"
 
     return "".join(parts)

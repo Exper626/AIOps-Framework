@@ -20,7 +20,7 @@ export const MODEL_TASKS: {
   kind: ModelKind;
 }[] = [
   {
-    description: "Reads each message first and decides which steps it needs.",
+    description: "Reads each message first and plans which steps it needs.",
     id: "router",
     kind: "text",
     label: "Router",
@@ -53,7 +53,8 @@ export const MODEL_TASKS: {
 ];
 
 // The steps each message goes through, in order, shown in Settings → Agents.
-// The router decides which of them run.
+// The router plans which of the four tasks run: image description, retrieval,
+// text generation and image generation.
 export type AgentId =
   | "router"
   | "vision"
@@ -66,13 +67,13 @@ export type AgentId =
 export const AGENTS: { id: AgentId; name: string; description: string }[] = [
   {
     description:
-      "Reads each message first and decides what it needs: a greeting gets a quick reply, a question about a device searches the knowledge base, and a design request gets a diagram.",
+      "Reads each message first and plans its tasks: image description when you attach an image, retrieval for questions about specific devices, text generation for every reply, and image generation for network diagrams.",
     id: "router",
     name: "Router",
   },
   {
     description:
-      "Describes topology images and screenshots you attach, so the other steps can use them. Only runs when a message has an image.",
+      "Image description: reads the topology images and screenshots you attach, so the later steps can use them. Runs whenever a message has an image.",
     id: "vision",
     name: "Vision",
   },
@@ -90,19 +91,19 @@ export const AGENTS: { id: AgentId; name: string; description: string }[] = [
   },
   {
     description:
-      "Searches the vendor documentation for passages about the devices you asked about. Only runs when the router asks for it.",
+      "Retrieval: searches the device knowledge base for the devices you asked about or that appear in your image. Runs when the router plans it.",
     id: "knowledgeBase",
     name: "Knowledge base search",
   },
   {
     description:
-      "Writes the reply you see, from your question, the earlier messages it needs and any passages found.",
+      "Text generation: writes the reply you see, from your question, the earlier messages it needs, your image and any passages found.",
     id: "answer",
     name: "Answer",
   },
   {
     description:
-      "Draws an editable network diagram when the answer describes a topology, or changes the one you drew.",
+      "Image generation: draws an editable network diagram from the answer, your image or drawing, and the devices found. Runs when the router plans it.",
     id: "diagram",
     name: "Diagram",
   },

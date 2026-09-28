@@ -1,11 +1,21 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import {
+  BookOpenIcon,
+  EyeIcon,
+  LayersIcon,
+  MessageSquareTextIcon,
+  NetworkIcon,
+  SignpostIcon,
+  TextSearchIcon,
+} from "lucide-react";
+import { type ReactNode, useCallback, useState } from "react";
+import { chatModels, visionModels } from "@/lib/ai/models";
 import { cn } from "@/lib/utils";
 
 // One pipeline step as the backend records it (Backend/pipeline/trace.py).
-// Input and output are plain text; the model's own reply is only shown when
-// the step failed, to see what was wrong with it.
+// "output" is the step's result in a line; "input" and "raw_output" are the
+// exact text the model was sent and replied with.
 type TraceStep = {
   name: string;
   model?: string;
@@ -23,69 +33,71 @@ type TraceStep = {
 
 type PipelineTrace = {
   steps?: TraceStep[];
-  total_ms?: number;
 };
+
+// Plain names and icons for the backend's step names. The four tasks the
+// router plans get blue icons, the steps that help them grey ones.
+const STEPS: {
+  icon: ReactNode;
+  label: string;
+  prefix: string;
+  task: boolean;
+}[] = [
+  { icon: <SignpostIcon />, label: "Plan", prefix: "router", task: false },
+  {
+    icon: <EyeIcon />,
+    label: "Image description",
+    prefix: "vision description",
+    task: true,
+  },
+  { icon: <TextSearchIcon />, label: "Question", prefix: "query", task: false },
+  {
+    icon: <LayersIcon />,
+    label: "Earlier messages",
+    prefix: "context management",
+    task: false,
+  },
+  {
+    icon: <BookOpenIcon />,
+    label: "Retrieval",
+    prefix: "knowledge base",
+    task: true,
+  },
+  {
+    icon: <MessageSquareTextIcon />,
+    label: "Text generation",
+    prefix: "answer",
+    task: true,
+  },
+  {
+    icon: <NetworkIcon />,
+    label: "Image generation",
+    prefix: "diagram",
+    task: true,
+  },
+];
+
+const MODEL_NAMES = new Map(
+  [...chatModels, ...visionModels].map((model) => [model.id, model.name])
+);
+
+function describeStep(name: string) {
+  const known = STEPS.find((step) => name.startsWith(step.prefix));
+
+  if (!known) {
+    return { icon: <SignpostIcon />, label: name, task: false };
+  }
+
+  // "vision description 2" is the second attached image
+  const number = name.slice(known.prefix.length).trim();
+  return { ...known, label: number ? `${known.label} ${number}` : known.label };
+}
 
 function formatMs(ms?: number) {
   if (typeof ms !== "number") {
     return "";
   }
   return ms >= 1000 ? `${(ms / 1000).toFixed(1)} s` : `${ms} ms`;
-}
-
-function Chevron({ open }: { open: boolean }) {
-  return (
-    <span
-      className={cn("inline-block transition-transform", open && "rotate-180")}
-    >
-      ▾
-    </span>
-  );
-}
-
-function CollapsibleSection({
-  title,
-  meta,
-  failed = false,
-  children,
-}: {
-  title: string;
-  meta?: string;
-  failed?: boolean;
-  children: React.ReactNode;
-}) {
-  const [open, setOpen] = useState(false);
-  const toggle = useCallback(() => setOpen((v) => !v), []);
-
-  return (
-    <div className="overflow-hidden rounded-md border border-border/40 bg-background/60">
-      <button
-        className="flex w-full items-center justify-between px-2.5 py-1.5 text-left text-muted-foreground text-xs hover:text-foreground"
-        onClick={toggle}
-        type="button"
-      >
-        <span className="flex min-w-0 items-baseline gap-2">
-          <span
-            className={cn("truncate font-medium", failed && "text-red-400")}
-          >
-            {title}
-          </span>
-          {meta ? (
-            <span className="shrink-0 text-[10px] text-muted-foreground/80">
-              {meta}
-            </span>
-          ) : null}
-        </span>
-        <Chevron open={open} />
-      </button>
-
-      {open ? (
-        <div className="space-y-2 border-border/40 border-t px-2.5 py-2">
-          {children}
-        </div>
-      ) : null}
-    </div>
-  );
 }
 
 // Anything that isn't text already is written out as "key: value" lines
@@ -111,92 +123,93 @@ function Value({ label, value }: { label: string; value: unknown }) {
 
   return (
     <div>
-      <div className="mb-0.5 font-medium text-[10px] text-muted-foreground/70 uppercase tracking-wide">
-        {label}
-      </div>
-      <div className="max-h-64 overflow-auto whitespace-pre-wrap break-words rounded border border-border/40 bg-background/60 p-1.5 text-[11px] text-foreground/80 leading-relaxed">
+      <div className="mb-0.5 text-[11px] text-muted-foreground">{label}</div>
+      <div className="max-h-64 overflow-auto whitespace-pre-wrap break-words rounded-md border border-border/40 bg-background/60 p-2 text-[11.5px] text-foreground/80 leading-relaxed">
         {toText(value)}
       </div>
     </div>
   );
 }
 
-function StepSection({ step }: { step: TraceStep }) {
-  const meta = [
-    step.model,
+function StepRow({ step }: { step: TraceStep }) {
+  const [open, setOpen] = useState(false);
+  const toggle = useCallback(() => setOpen((value) => !value), []);
+  const { icon, label, task } = describeStep(step.name);
+  const model = step.model ? (MODEL_NAMES.get(step.model) ?? step.model) : "";
+  const failed = Boolean(step.error) && !step.fallback;
+  const result = failed ? step.error : toText(step.output ?? "");
+  const modelDetails = [
+    model,
     step.source === "self-hosted" && "self-hosted",
-    formatMs(step.ms),
     step.json_mode === false && "no JSON mode",
-    step.fallback && "fell back",
-    step.skipped && "skipped",
   ]
     .filter(Boolean)
     .join(" · ");
 
   return (
-    <CollapsibleSection
-      failed={Boolean(step.error)}
-      meta={meta}
-      title={step.name}
-    >
-      {step.error ? <div className="text-red-400">{step.error}</div> : null}
-      {step.skipped ? (
-        <div className="text-muted-foreground">Skipped: {step.skipped}</div>
-      ) : null}
-      <Value label="Result" value={step.output} />
-      <Value label="Input" value={step.input} />
-      {step.error ? (
-        <Value label="Model reply" value={step.raw_output} />
-      ) : null}
-    </CollapsibleSection>
-  );
-}
-
-export function DebugPanel({ data }: { data: unknown }) {
-  const [open, setOpen] = useState(false);
-  const toggle = useCallback(() => setOpen((v) => !v), []);
-  const trace = data as PipelineTrace | undefined;
-  const steps = Array.isArray(trace?.steps) ? trace.steps : null;
-  const failedStep = steps?.find((step) => step.error);
-
-  const summary = steps
-    ? [`${steps.length} steps`, formatMs(trace?.total_ms)]
-        .filter(Boolean)
-        .join(" · ")
-    : "";
-
-  return (
-    <div className="w-[min(100%,560px)] overflow-hidden rounded-lg border border-border/50 bg-muted/30 text-[12px]">
+    <li>
       <button
-        className="flex w-full items-center justify-between px-3 py-2 text-left text-muted-foreground text-xs hover:text-foreground"
+        aria-expanded={open}
+        className="grid w-full grid-cols-[1fr_auto] items-start gap-x-3 gap-y-0.5 rounded-md px-2 py-1.5 text-left transition-colors hover:bg-foreground/5 sm:grid-cols-[9.5rem_1fr_auto]"
         onClick={toggle}
         type="button"
       >
-        <span className="flex items-baseline gap-2">
-          <span>Pipeline trace</span>
-          {summary ? (
-            <span className="text-[10px] text-muted-foreground/80">
-              {summary}
-            </span>
-          ) : null}
-          {failedStep ? (
-            <span className="text-[10px] text-red-400">
-              {failedStep.fallback
-                ? `${failedStep.name} fell back`
-                : `failed at ${failedStep.name}`}
-            </span>
+        <span className="flex items-center gap-2 text-muted-foreground">
+          <span
+            className={cn(
+              "shrink-0 [&_svg]:size-4",
+              task ? "text-brand dark:text-brand-light" : ""
+            )}
+          >
+            {icon}
+          </span>
+          {label}
+        </span>
+        <span
+          className={cn(
+            "col-span-2 row-start-2 break-words text-foreground/85 sm:col-span-1 sm:col-start-2 sm:row-start-1",
+            failed && "text-red-400",
+            step.fallback && "text-amber-500 dark:text-amber-400"
+          )}
+        >
+          {result}
+          {step.name === "answer" && model ? (
+            <span className="text-muted-foreground"> · {model}</span>
           ) : null}
         </span>
-        <Chevron open={open} />
+        <span className="col-start-2 row-start-1 text-[11px] text-muted-foreground/70 tabular-nums sm:col-start-3">
+          {formatMs(step.ms)}
+        </span>
       </button>
 
       {open ? (
-        <div className="space-y-2 border-border/50 border-t px-3 py-2.5">
-          {steps?.map((step) => (
-            <StepSection key={step.name} step={step} />
-          ))}
+        <div className="mx-2 mt-1 mb-2 space-y-2 border-brand-light/40 border-l-2 pl-3">
+          {step.error ? <div className="text-red-400">{step.error}</div> : null}
+          <Value label="Model" value={modelDetails} />
+          <Value label="Input" value={step.input} />
+          <Value label="Reply" value={step.raw_output} />
         </div>
       ) : null}
-    </div>
+    </li>
+  );
+}
+
+// Each step that ran, with its result; click one for the exact input and reply
+export function DebugPanel({ data }: { data: unknown }) {
+  const trace = data as PipelineTrace | undefined;
+  const steps = Array.isArray(trace?.steps)
+    ? trace.steps.filter((step) => !step.skipped)
+    : [];
+
+  if (steps.length === 0) {
+    return null;
+  }
+
+  return (
+    <ul className="w-[min(100%,620px)] rounded-lg border border-border/50 bg-muted/30 p-1.5 text-[12.5px]">
+      {steps.map((step) => (
+        <StepRow key={step.name} step={step} />
+      ))}
+    </ul>
   );
 }

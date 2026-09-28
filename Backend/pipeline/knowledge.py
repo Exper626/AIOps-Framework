@@ -1,6 +1,7 @@
 from pipeline.trace import Trace
 from rag.embedding import EMBEDDING_MODEL, create_embedding
 from rag.lookup import find_attributes, find_devices
+from rag.prompt import build_context
 from rag.reranker import rerank_chunks
 from rag.retrieval import attribute_filter, fetch_devices, retrieve_chunks
 
@@ -18,7 +19,13 @@ def describe_passages(chunks: list[dict], how: str) -> str:
         return f"{how}: nothing relevant found, so the answer doesn't use the knowledge base"
 
     devices = list(dict.fromkeys(chunk.get("device") or chunk.get("filename") or "unnamed" for chunk in chunks))
-    return f"{how}. Using {len(chunks)} passage{'s' if len(chunks) > 1 else ''}, from: {', '.join(devices)}"
+    passages = f"{len(chunks)} passage{'s' if len(chunks) > 1 else ''}"
+
+    # A match already names its devices
+    if how.startswith("Matched"):
+        return f"{how} · {passages}"
+
+    return f"{how} · {passages} from {', '.join(devices)}"
 
 
 def best(question: str, chunks: list[dict], rerank: bool, chunk_count: int) -> list[dict]:
@@ -53,5 +60,8 @@ def search_knowledge_base(question: str, hybrid: bool, rerank: bool, chunk_count
             chunks = best(question, found, rerank, chunk_count)
 
     step["output"] = describe_passages(chunks, how) if "error" not in step else "Answering without the knowledge base"
+    if chunks:
+        # The passages exactly as the answer's prompt gets them
+        step["raw_output"] = build_context(chunks)
 
     return chunks

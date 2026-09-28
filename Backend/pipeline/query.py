@@ -13,12 +13,7 @@ def format_conversation(history: list[dict]) -> str:
     return "\n".join(f"{m['role']}: {m['content']}" for m in history) or "(no earlier messages)"
 
 
-def run_query(ref: ModelRef, message: str, history: list[dict], trace: Trace, skip_reason: str | None = None) -> str:
-    if skip_reason:
-        with trace.step("query") as step:
-            step["skipped"] = skip_reason
-        return message
-
+def run_query(ref: ModelRef, message: str, history: list[dict], trace: Trace) -> str:
     agent_input = f"Conversation:\n{format_conversation(history)}\nNew message: {message}"
     question = message
 
