@@ -61,7 +61,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
               >
                 {collapsed ? null : (
                   <button
-                    className="rounded-lg px-2 py-1 font-semibold text-foreground text-lg tracking-normal"
+                    className="rounded-lg px-2 py-1 font-display font-semibold text-foreground text-lg tracking-normal"
                     onClick={handleNewChat}
                     type="button"
                   >
@@ -110,7 +110,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                 <SidebarMenu>
                   <SidebarMenuItem>
                     <SidebarMenuButton
-                      className="h-8 rounded-lg px-1.5 text-[13px] [&>svg]:size-5 text-foreground transition-colors duration-150 hover:bg-foreground/10 hover:text-foreground"
+                      className="h-9 rounded-lg px-1.5 text-sm [&>svg]:size-5 text-foreground transition-colors duration-150 hover:bg-foreground/10 hover:text-foreground"
                       onClick={handleNewChat}
                       tooltip="New Chat"
                     >
@@ -120,7 +120,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                   </SidebarMenuItem>
                   <SidebarMenuItem>
                     <SidebarMenuButton
-                      className="h-8 rounded-lg px-1.5 text-[13px] [&>svg]:size-5 text-foreground transition-colors duration-150 hover:bg-foreground/10 hover:text-foreground data-[active=true]:bg-foreground/10"
+                      className="h-9 rounded-lg px-1.5 text-sm [&>svg]:size-5 text-foreground transition-colors duration-150 hover:bg-foreground/10 hover:text-foreground data-[active=true]:bg-foreground/10"
                       data-testid="sidebar-saved-responses"
                       isActive={isPageRoute(pathname)}
                       onClick={handleSaved}

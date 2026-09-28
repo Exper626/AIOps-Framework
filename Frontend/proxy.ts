@@ -48,6 +48,7 @@ export const config = {
     "/login",
     "/register",
 
-    "/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+    // Everything else, except static files and the tab / home-screen icons
+    "/((?!_next/static|_next/image|favicon.ico|icon.svg|apple-icon.png|sitemap.xml|robots.txt).*)",
   ],
 };

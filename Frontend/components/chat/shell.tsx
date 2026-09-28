@@ -148,7 +148,7 @@ export function ChatShell() {
             selectedVisibilityType={visibilityType}
           />
 
-          <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-background md:rounded-tl-[12px] md:border-t md:border-l md:border-border/40">
+          <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-background md:border-border/40 md:border-l">
             {/* On a new chat the title and message box sit a little above the
                 middle, with the ideas below; the space above gives way first
                 on short screens */}

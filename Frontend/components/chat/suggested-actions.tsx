@@ -47,7 +47,7 @@ function focusComposer() {
   });
 }
 
-// The purple light on a card follows the mouse (see .idea-card in globals.css)
+// The blue light on a card follows the mouse (see .idea-card in globals.css)
 function followPointer(event: PointerEvent<HTMLButtonElement>) {
   const card = event.currentTarget;
   const box = card.getBoundingClientRect();
@@ -127,7 +127,7 @@ function PageDot({
       className={cn(
         "h-1.5 rounded-full transition-[width,background-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
         active
-          ? "w-5 bg-[#a78bfa]"
+          ? "w-5 bg-brand-light"
           : "w-1.5 bg-foreground/25 hover:bg-foreground/40"
       )}
       onClick={handleClick}
@@ -224,7 +224,7 @@ function PureSuggestedActions({
         <div className="flex gap-1.5 max-sm:hidden">
           <button
             aria-label="Previous ideas"
-            className="grid size-[30px] place-items-center rounded-full border border-border bg-suggestion text-foreground/80 transition-colors hover:border-[#a78bfa]/40 hover:bg-suggestion-hover disabled:pointer-events-none disabled:opacity-30"
+            className="grid size-[30px] place-items-center rounded-full border border-border bg-suggestion text-foreground/80 transition-colors hover:border-brand-light/60 hover:bg-suggestion-hover disabled:pointer-events-none disabled:opacity-30"
             disabled={page === 0}
             onClick={showPrevious}
             onKeyDown={handleKeyDown}
@@ -234,7 +234,7 @@ function PureSuggestedActions({
           </button>
           <button
             aria-label="More ideas"
-            className="grid size-[30px] place-items-center rounded-full border border-border bg-suggestion text-foreground/80 transition-colors hover:border-[#a78bfa]/40 hover:bg-suggestion-hover disabled:pointer-events-none disabled:opacity-30"
+            className="grid size-[30px] place-items-center rounded-full border border-border bg-suggestion text-foreground/80 transition-colors hover:border-brand-light/60 hover:bg-suggestion-hover disabled:pointer-events-none disabled:opacity-30"
             disabled={isLastPage}
             onClick={showNext}
             onKeyDown={handleKeyDown}

@@ -584,10 +584,12 @@ function PureMultimodalInput({
             <PromptInputSubmit
               className={cn(
                 "size-8 rounded-full transition-all duration-200",
-                // A dimmed copy of the ready button, so it still reads as Send
+                // Grey until there's something to send, then Mobitel blue.
+                // The hover colours are set here so the button's own (dark)
+                // hover never shows
                 canSend
-                  ? "bg-foreground text-background hover:opacity-85 active:scale-95"
-                  : "cursor-not-allowed bg-foreground/40 text-background disabled:opacity-100"
+                  ? "bg-brand text-white hover:bg-brand-hover active:scale-95"
+                  : "cursor-not-allowed bg-foreground/15 text-foreground/50 hover:bg-foreground/15 disabled:opacity-100"
               )}
               data-testid="send-button"
               disabled={!canSend}
@@ -759,7 +761,7 @@ function PureStopButton({
 
   return (
     <Button
-      className="size-8 rounded-full bg-foreground p-1 text-background transition-all duration-200 hover:opacity-85 active:scale-95 disabled:bg-muted disabled:text-muted-foreground/25 disabled:cursor-not-allowed"
+      className="size-8 rounded-full bg-brand p-1 text-white transition-all duration-200 hover:bg-brand-hover active:scale-95 disabled:bg-muted disabled:text-muted-foreground/25 disabled:cursor-not-allowed"
       data-testid="stop-button"
       onClick={handleClick}
     >

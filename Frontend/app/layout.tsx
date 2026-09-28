@@ -6,10 +6,12 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 
 
-const geist = Plus_Jakarta_Sans({
+// Only for the brand titles; everything else uses the device's own font
+// (see --font-sans in globals.css)
+const brandFont = Plus_Jakarta_Sans({
   display: "swap",
   subsets: ["latin"],
-  variable: "--font-geist",
+  variable: "--font-brand",
 });
 
 
@@ -59,7 +61,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      className={`${geist.variable} ${geistMono.variable}`}
+      className={`${brandFont.variable} ${geistMono.variable}`}
       lang="en"
       suppressHydrationWarning
     >

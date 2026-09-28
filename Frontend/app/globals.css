@@ -9,7 +9,14 @@
 @plugin "@tailwindcss/typography";
 
 @theme inline {
-  --font-sans: var(--font-geist);
+  /* Text uses each device's own font, as ChatGPT does: Segoe UI on
+     Windows, San Francisco on Apple devices, Roboto on Android. The brand
+     titles keep Plus Jakarta Sans (font-display). */
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, ui-sans-serif,
+    system-ui, Helvetica, Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji";
+  --font-display: var(--font-brand);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -22,6 +29,12 @@
   --color-composer: var(--composer);
   --color-suggestion: var(--suggestion);
   --color-suggestion-hover: var(--suggestion-hover);
+  /* Mobitel blue (the dark blue in the SLT logo), a lighter hover shade, and
+     a lighter tint for thin lines and dots, which the dark blue is too dim
+     for on the dark background */
+  --color-brand: #0056a2;
+  --color-brand-hover: #1f6ab7;
+  --color-brand-light: #4d95e6;
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
@@ -591,7 +604,7 @@ textarea:focus-visible {
   }
 }
 
-/* Start-screen suggestion cards: a soft purple light follows the mouse
+/* Start-screen suggestion cards: a soft blue light follows the mouse
    (--x / --y are set as it moves) and lights the nearest part of the border */
 .idea-card {
   isolation: isolate;
@@ -612,7 +625,7 @@ textarea:focus-visible {
   padding: 1px;
   background: radial-gradient(
     180px circle at var(--x, 50%) var(--y, 50%),
-    #a78bfa,
+    var(--color-brand-light),
     transparent 70%
   );
   -webkit-mask:
@@ -629,7 +642,7 @@ textarea:focus-visible {
   z-index: -1;
   background: radial-gradient(
     240px circle at var(--x, 50%) var(--y, 50%),
-    color-mix(in oklch, #8b5cf6 14%, transparent),
+    color-mix(in oklch, var(--color-brand) 30%, transparent),
     transparent 65%
   );
 }

@@ -1,0 +1,61 @@
+{"prompt": "What is data serialization?", "chosen": "The process of converting data into a standardized format for storage or transmission, so it can later be reconstructed.", "rejected": "The process of sending data one byte at a time over a serial connection."}
+{"prompt": "Why is the term serialization used?", "chosen": "Because the process converts an application's in-memory data structures into a series of bytes.", "rejected": "Because the data is assigned a serial number that identifies it to the receiving application."}
+{"prompt": "What is a data serialization format?", "chosen": "A standardized data format that lets applications exchange data in a form both parties understand.", "rejected": "A protocol that carries application data across a network between two devices."}
+{"prompt": "Why can't two applications just exchange their raw data?", "chosen": "They may be written in different programming languages and store and interpret data in different ways, so neither can read the other's internal structures.", "rejected": "Because raw data is too large to send over a network without compression."}
+{"prompt": "Name three common data serialization formats.", "chosen": "JSON, XML, and YAML.", "rejected": "JSON, HTML, and CSV."}
+{"prompt": "What does JSON stand for?", "chosen": "JavaScript Object Notation.", "rejected": "Java Structured Object Notation."}
+{"prompt": "Is JSON tied to JavaScript?", "chosen": "No. It was originally derived from JavaScript but is language independent. Applications in many languages can generate and interpret it.", "rejected": "Yes. Only JavaScript applications can generate and parse JSON natively."}
+{"prompt": "What is one of JSON's main characteristics?", "chosen": "Human readability. Properly formatted JSON is easy for people to read even though it is designed for applications.", "rejected": "Compactness. JSON produces the smallest possible representation of any data set."}
+{"prompt": "Why is JSON a CCNA topic?", "chosen": "Because REST APIs often support JSON, and REST APIs are central to network automation.", "rejected": "Because Cisco IOS stores its running configuration in JSON format."}
+{"prompt": "What is a variable?", "chosen": "A logical container for a value.", "rejected": "A value that changes each time an application runs."}
+{"prompt": "What is a key-value pair?", "chosen": "A variable together with the value it holds.", "rejected": "Two related values stored next to each other in an array."}
+{"prompt": "What are JSON's four primitive data types?", "chosen": "String, number, Boolean, and null.", "rejected": "String, number, object, and array."}
+{"prompt": "What is a JSON string?", "chosen": "An alphanumeric text value, always enclosed in double quotes.", "rejected": "Any sequence of characters, with or without quotes."}
+{"prompt": "What is a JSON number?", "chosen": "A numeric value, such as 5 or 101.25, written without quotes.", "rejected": "Any value that consists only of digits, whether or not it is in quotes."}
+{"prompt": "What is the JSON Boolean type?", "chosen": "A type with only two possible values: true and false.", "rejected": "A type with three possible values: true, false, and null."}
+{"prompt": "What is the JSON null type?", "chosen": "A type representing the intentional absence of a value, always written as null.", "rejected": "A type representing an empty string or the number zero."}
+{"prompt": "Is \"5\" a number or a string in JSON?", "chosen": "A string, because it is enclosed in double quotes.", "rejected": "A number, because the characters inside the quotes are numeric."}
+{"prompt": "Is \"true\" a Boolean in JSON?", "chosen": "No. It is a string, because it is enclosed in double quotes.", "rejected": "Yes. JSON accepts Booleans with or without quotes."}
+{"prompt": "Is \"null\" the null data type?", "chosen": "No. It is a string, because it is enclosed in double quotes.", "rejected": "Yes. Quoting null does not change its meaning."}
+{"prompt": "What is the rule about double quotes in JSON?", "chosen": "Any value enclosed in double quotes is a string, even if it would be a different data type without them.", "rejected": "Double quotes are optional and only used to improve readability."}
+{"prompt": "Must Boolean and null values be lowercase?", "chosen": "Yes. They must be written as true, false, and null.", "rejected": "No. TRUE, False, and NULL are all accepted."}
+{"prompt": "What are JSON's two structured data types?", "chosen": "Object and array.", "rejected": "Object and string."}
+{"prompt": "What is a JSON object?", "chosen": "An unordered set of key-value pairs.", "rejected": "An ordered set of values."}
+{"prompt": "What is a JSON array?", "chosen": "An ordered set of values.", "rejected": "An unordered set of key-value pairs."}
+{"prompt": "What does unordered mean for a JSON object?", "chosen": "The order of the key-value pairs is insignificant. They can be reordered without changing the object's meaning.", "rejected": "The keys are automatically sorted alphabetically when the object is parsed."}
+{"prompt": "Does the order of an array's values matter?", "chosen": "Yes. Arrays are ordered, so changing the order would change the array's meaning.", "rejected": "No. Like objects, arrays are unordered collections."}
+{"prompt": "What encloses a JSON object?", "chosen": "Curly braces.", "rejected": "Square brackets."}
+{"prompt": "What encloses a JSON array?", "chosen": "Square brackets.", "rejected": "Curly braces."}
+{"prompt": "What data type must an object's key be?", "chosen": "A string.", "rejected": "A string or a number, depending on the application."}
+{"prompt": "What data types can an object's value be?", "chosen": "Any valid JSON data type: string, number, Boolean, null, or even another object or array.", "rejected": "Only the four primitive types: string, number, Boolean, and null."}
+{"prompt": "What separates a key from its value?", "chosen": "A colon.", "rejected": "An equals sign."}
+{"prompt": "What separates multiple key-value pairs in an object?", "chosen": "A comma.", "rejected": "A semicolon."}
+{"prompt": "Is a trailing comma allowed after the last key-value pair?", "chosen": "No. A trailing comma makes the JSON invalid.", "rejected": "Yes. A trailing comma is permitted and often used for readability."}
+{"prompt": "What is a nested object?", "chosen": "An object that is the value of a key-value pair inside another object.", "rejected": "An object that references another object by its key name."}
+{"prompt": "Do array values have to be the same data type?", "chosen": "No. An array can hold values of different data types.", "rejected": "Yes. All values in an array must share a single data type."}
+{"prompt": "What separates values in a JSON array?", "chosen": "Commas.", "rejected": "Colons."}
+{"prompt": "Is a trailing comma allowed after an array's last value?", "chosen": "No. It makes the JSON invalid.", "rejected": "Yes, as long as the array has more than one value."}
+{"prompt": "Is whitespace significant in JSON?", "chosen": "No. Spaces, line breaks, and tabs do not affect the data's meaning. They are used only for readability.", "rejected": "Yes. Indentation defines the structure and hierarchy of the data."}
+{"prompt": "What happens if you remove all whitespace from valid JSON?", "chosen": "It remains valid and means exactly the same thing, but becomes much harder for a human to read.", "rejected": "It becomes invalid, because objects need line breaks between their key-value pairs."}
+{"prompt": "Why is TRUE invalid in JSON?", "chosen": "Because Booleans must be lowercase: true or false.", "rejected": "Because Booleans must be enclosed in double quotes."}
+{"prompt": "Why is NULL invalid in JSON?", "chosen": "Because null must be lowercase.", "rejected": "Because null must be written as an empty string instead."}
+{"prompt": "What is wrong with \"accessMode\"-\"ssh\"?", "chosen": "The key and value must be separated by a colon, not a hyphen.", "rejected": "The value must not be in double quotes when the key already is."}
+{"prompt": "Name three common JSON syntax errors.", "chosen": "Uppercase Booleans or null, a missing or trailing comma, and a missing closing brace or bracket.", "rejected": "Using double quotes on keys, nesting objects too deeply, and mixing data types in an array."}
+{"prompt": "What tool can check whether JSON is valid?", "chosen": "A validator website such as jsonlint.com.", "rejected": "The Cisco IOS command show json validate."}
+{"prompt": "Given a key whose value is in square brackets, what type is it?", "chosen": "An array.", "rejected": "An object."}
+{"prompt": "If a JSON value is \"22\", what data type is it?", "chosen": "A string, not a number, because of the double quotes.", "rejected": "A number, since 22 is numeric."}
+{"prompt": "Which RFC defines JSON?", "chosen": "RFC 8259.", "rejected": "RFC 7159, which is still the current version."}
+{"prompt": "What does XML stand for?", "chosen": "Extensible Markup Language.", "rejected": "Exchangeable Markup Language."}
+{"prompt": "What is XML's syntax similar to?", "chosen": "HTML, the standard markup language for web pages.", "rejected": "YAML, which also uses indentation to define structure."}
+{"prompt": "What is a markup language?", "chosen": "A language used for annotating documents, specifying structure and formatting.", "rejected": "A language used to write the logic of an application, like Python or Ruby."}
+{"prompt": "How does XML represent key-value pairs?", "chosen": "With HTML-like opening and closing tags, such as <key>value</key>.", "rejected": "With a key followed by a colon and the value, like key: value."}
+{"prompt": "Is XML supported by REST APIs?", "chosen": "Yes, like JSON it is commonly supported, although XML is less common than JSON or YAML overall.", "rejected": "No. REST APIs only support JSON."}
+{"prompt": "How do you display Cisco IOS show output in XML?", "chosen": "Add | format to the end of the command, such as show ip interface brief | format.", "rejected": "Add | xml to the end of the command."}
+{"prompt": "Is whitespace significant in XML?", "chosen": "No. Like JSON, whitespace is insignificant, though it is usually added for readability.", "rejected": "Yes. XML relies on indentation to nest its tags correctly."}
+{"prompt": "How does XML compare to JSON for readability?", "chosen": "XML is generally considered less human readable than JSON.", "rejected": "XML is generally considered more human readable than JSON."}
+{"prompt": "What does YAML stand for?", "chosen": "YAML Ain't Markup Language, a recursive acronym. It originally stood for Yet Another Markup Language.", "rejected": "Yet Another Markup Language, which is still its official name."}
+{"prompt": "Why was YAML renamed?", "chosen": "To emphasize its purpose as a data serialization format rather than a document markup language.", "rejected": "To avoid a trademark conflict with an earlier markup language of the same name."}
+{"prompt": "Is whitespace significant in YAML?", "chosen": "Yes. Proper indentation defines the structure and hierarchy of the data, not just readability.", "rejected": "No. Like JSON and XML, whitespace in YAML is purely cosmetic."}
+{"prompt": "Which of the three formats is considered most human friendly?", "chosen": "YAML.", "rejected": "XML."}
+{"prompt": "Why does YAML look minimalistic compared to JSON?", "chosen": "It defines structure through indentation levels, without needing markers like commas and curly braces.", "rejected": "It omits the keys entirely and relies on position to identify values."}
+{"prompt": "How does YAML indicate items in a list?", "chosen": "With a hyphen at the start of each item, indented under the parent key.", "rejected": "With square brackets around the whole list, as in JSON."}

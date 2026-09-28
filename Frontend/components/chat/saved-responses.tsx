@@ -204,7 +204,7 @@ export function SavedResponses() {
         </Button>
       </header>
 
-      <div className="relative min-h-0 flex-1 overflow-y-auto bg-background md:rounded-tl-[12px] md:border-border/40 md:border-t md:border-l">
+      <div className="relative min-h-0 flex-1 overflow-y-auto bg-background md:border-border/40 md:border-l">
         <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 py-8 md:px-6">
           {open ? (
             <SavedResponseView item={open} onBack={closeResponse} />
