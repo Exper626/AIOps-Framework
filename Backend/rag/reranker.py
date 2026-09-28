@@ -5,7 +5,8 @@ from config import settings
 
 RERANK_MODEL = "qwen3-rerank"
 RERANK_TOP_N = 5
-RERANK_URL = "https://dashscope-intl.aliyuncs.com/compatible-mode/v1/reranks"
+# DashScope, Singapore region: the same as the embeddings in rag/embedding.py
+RERANK_URL = "https://dashscope-intl.aliyuncs.com/api/v1/services/rerank/text-rerank/text-rerank"
 
 
 def rerank_chunks(query: str, chunks: list[dict], top_n: int = RERANK_TOP_N) -> list[dict]:
@@ -25,10 +26,11 @@ def rerank_chunks(query: str, chunks: list[dict], top_n: int = RERANK_TOP_N) -> 
         },
         json={
             "model": RERANK_MODEL,
-            "query": query.strip(),
-            "documents": documents,
-            "top_n": top_n,
-            "instruct": "Given a web search query, retrieve relevant passages that answer the query.",
+            "input": {"query": query.strip(), "documents": documents},
+            "parameters": {
+                "top_n": top_n,
+                "instruct": "Given a web search query, retrieve relevant passages that answer the query.",
+            },
         },
         timeout=30,
     )
@@ -39,7 +41,7 @@ def rerank_chunks(query: str, chunks: list[dict], top_n: int = RERANK_TOP_N) -> 
     data = response.json()
     reranked = []
 
-    for item in data.get("results", []):
+    for item in data.get("output", {}).get("results", []):
         index = item.get("index")
 
         if not isinstance(index, int) or not 0 <= index < len(candidates):

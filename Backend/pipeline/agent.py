@@ -19,10 +19,16 @@ def parse_json_object(raw: str) -> dict:
     return json.loads(raw[start : end + 1])
 
 
-def ask_model(model: ResolvedModel, prompt_file: str, content: str | list, step: dict, timeout: float | None) -> str:
+def ask_model(
+    model: ResolvedModel, prompt_file: str, content: str | list, step: dict, timeout: float | None, variables: dict[str, str] | None = None
+) -> str:
     client = model.client.with_options(timeout=timeout, max_retries=0) if timeout else model.client
+    prompt = (PROMPTS_DIR / prompt_file).read_text(encoding="utf-8")
+    # {name} in the prompt file is filled in with variables[name]
+    for name, value in (variables or {}).items():
+        prompt = prompt.replace(f"{{{name}}}", value)
     messages = [
-        {"role": "system", "content": (PROMPTS_DIR / prompt_file).read_text(encoding="utf-8")},
+        {"role": "system", "content": prompt},
         {"role": "user", "content": content},
     ]
 
@@ -42,9 +48,18 @@ def ask_model(model: ResolvedModel, prompt_file: str, content: str | list, step:
     return raw
 
 
-def call_agent(ref: ModelRef, prompt_file: str, content: str | list, step: dict, reply_type: type[BaseModel] | None = None, kind: ModelKind = "text", timeout: float | None = None):
+def call_agent(
+    ref: ModelRef,
+    prompt_file: str,
+    content: str | list,
+    step: dict,
+    reply_type: type[BaseModel] | None = None,
+    kind: ModelKind = "text",
+    timeout: float | None = None,
+    variables: dict[str, str] | None = None,
+):
     model = resolve_model(ref, kind)
-    raw = ask_model(model, prompt_file, content, step, timeout)
+    raw = ask_model(model, prompt_file, content, step, timeout, variables)
 
     if reply_type is not None:
         return reply_type.model_validate(parse_json_object(raw))

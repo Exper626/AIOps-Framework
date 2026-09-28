@@ -60,6 +60,7 @@ export type AgentId =
   | "vision"
   | "query"
   | "context"
+  | "retrievalAgent"
   | "knowledgeBase"
   | "answer"
   | "diagram";
@@ -88,6 +89,12 @@ export const AGENTS: { id: AgentId; name: string; description: string }[] = [
       "Picks the earlier messages the answer needs, so long conversations stay focused. Only runs once there are earlier messages.",
     id: "context",
     name: "Context",
+  },
+  {
+    description:
+      "Knows how the knowledge base is organised (vendors, device types, folders and every device name) and turns your question into a search: which devices to fetch, which filters to use and what to search for. Runs before retrieval, with the Query model.",
+    id: "retrievalAgent",
+    name: "Retrieval agent",
   },
   {
     description:

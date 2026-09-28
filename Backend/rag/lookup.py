@@ -62,6 +62,8 @@ class Catalog:
     tokens: dict[str, set[str]] = field(default_factory=dict)  # model number key -> devices
     vendors: set[str] = field(default_factory=set)
     tags: set[str] = field(default_factory=set)
+    # Every device with its vendor, device_type and tags (folders)
+    devices: list[dict] = field(default_factory=list)
 
 
 _catalog = Catalog()
@@ -77,8 +79,9 @@ def catalog() -> Catalog:
     fresh = Catalog()
     try:
         collection = weaviate_client().collections.get(COLLECTION_NAME)
-        for item in collection.iterator(return_properties=["device", "models", "vendor", "tags"]):
+        for item in collection.iterator(return_properties=["device", "models", "vendor", "device_type", "tags"]):
             p = item.properties
+            fresh.devices.append({name: p.get(name) for name in ("device", "vendor", "device_type", "tags")})
             models = p.get("models") or []
             for name in [*device_names(p["device"], p["vendor"]), *models]:
                 fresh.names.setdefault(key(name), set()).add(p["device"])
@@ -147,3 +150,13 @@ def find_attributes(question: str) -> dict:
         attributes["tags"] = sorted(tags)
 
     return attributes
+
+
+def catalog_text() -> str:
+    """The devices grouped by vendor, type and folders, one group a line, like
+    "Cisco · router · branch / meraki / small branch: Meraki MX67, Meraki MX68"."""
+    groups: dict[str, list[str]] = {}
+    for d in catalog().devices:
+        path = " · ".join(part for part in (d["vendor"], d["device_type"], " / ".join(d.get("tags") or [])) if part)
+        groups.setdefault(path, []).append(d["device"])
+    return "\n".join(f"{path}: {', '.join(sorted(devices))}" for path, devices in sorted(groups.items()))

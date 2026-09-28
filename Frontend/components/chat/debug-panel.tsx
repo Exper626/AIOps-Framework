@@ -4,6 +4,7 @@ import {
   BookOpenIcon,
   EyeIcon,
   LayersIcon,
+  ListFilterIcon,
   MessageSquareTextIcon,
   NetworkIcon,
   SignpostIcon,
@@ -55,6 +56,12 @@ const STEPS: {
     icon: <LayersIcon />,
     label: "Earlier messages",
     prefix: "context management",
+    task: false,
+  },
+  {
+    icon: <ListFilterIcon />,
+    label: "Retrieval agent",
+    prefix: "retrieval agent",
     task: false,
   },
   {

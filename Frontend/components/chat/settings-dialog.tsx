@@ -6,6 +6,7 @@ import {
   CheckIcon,
   EyeIcon,
   LayersIcon,
+  ListFilterIcon,
   MessageSquareTextIcon,
   MinusIcon,
   NetworkIcon,
@@ -67,6 +68,7 @@ const AGENT_ICONS: Record<AgentId, ReactNode> = {
   diagram: <NetworkIcon />,
   knowledgeBase: <BookOpenIcon />,
   query: <TextSearchIcon />,
+  retrievalAgent: <ListFilterIcon />,
   router: <SignpostIcon />,
   vision: <EyeIcon />,
 };

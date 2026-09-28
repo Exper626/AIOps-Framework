@@ -76,7 +76,9 @@ def run_steps(request: ChatRequest, answer_model: ResolvedModel, trace: Trace) -
         # Models read from an attached topology are searched for too
         models = list(dict.fromkeys(m for d in descriptions if d.description for m in topology_models(d.description)))
         search = f"{question}\nDevices in the attached image: {', '.join(models)}" if models else question
-        passages = search_knowledge_base(search, request.hybrid_search, request.reranker, request.chunk_count, trace)
+        passages = search_knowledge_base(
+            request.query_model or DEFAULT_MODEL, search, request.hybrid_search, request.reranker, request.chunk_count, trace
+        )
 
     messages = build_answer_messages(message, question, selected, descriptions, request.diagram, passages)
     yield {"phase": "answer", "message": "Writing the answer...", "modelId": answer_model.id}
