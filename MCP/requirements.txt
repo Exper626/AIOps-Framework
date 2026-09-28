@@ -1,0 +1,4 @@
+# The Backend's packages, whose code the tools run
+-r ../Backend/requirements.txt
+mcp>=2.2,<3
+python-dotenv

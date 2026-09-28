@@ -44,3 +44,8 @@ class Trace:
 
     def summary(self) -> str:
         return " ".join(f"{step['name']}={step['ms']}ms" for step in self.steps)
+
+
+def plural(number: int, word: str) -> str:
+    """For step outputs, like 1 cable or 7 cables"""
+    return f"{number} {word}{'' if number == 1 else 's'}"

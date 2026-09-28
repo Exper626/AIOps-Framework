@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field
 from config import settings
 from pipeline.agent import call_agent, parse_json_object
 from pipeline.models import ModelRef
-from pipeline.trace import Trace
+from pipeline.trace import Trace, plural
 
 
 class ImageInput(BaseModel):
@@ -36,7 +36,7 @@ def describe_topology(description: str) -> str:
 
     if devices:
         names = ", ".join(f"{d.get('name', 'unknown')} ({d.get('model', 'unknown')})" for d in devices)
-        return f"{len(devices)} devices, {len(topology.get('links') or [])} cables: {names}"
+        return f"{plural(len(devices), 'device')}, {plural(len(topology.get('links') or []), 'cable')}: {names}"
 
     text = str(topology.get("description") or description).strip()
     return text.splitlines()[0][:200] if text else text

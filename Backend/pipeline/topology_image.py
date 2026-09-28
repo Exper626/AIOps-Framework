@@ -1,4 +1,6 @@
 import base64
+import os
+import shutil
 import struct
 from html import escape
 from pathlib import Path
@@ -7,13 +9,19 @@ from graphviz import ExecutableNotFound, Graph
 
 from pipeline.diagram import Device, Diagram
 from pipeline.errors import PipelineError
-from pipeline.trace import Trace
+from pipeline.trace import Trace, plural
 
 # One PNG per device type, made from the Cisco icons in Image Generation/icons
 ICONS_DIR = Path(__file__).parent.parent / "icons"
 # Icons are drawn this tall (in points); their width follows their shape
 ICON_HEIGHT = 42
 DPI = "150"
+
+# Graphviz's Windows installer leaves it off PATH unless you tick that option
+WINDOWS_GRAPHVIZ = Path(os.environ.get("ProgramFiles", r"C:\Program Files")) / "Graphviz" / "bin"
+if os.name == "nt" and not shutil.which("dot") and WINDOWS_GRAPHVIZ.is_dir():
+    os.environ["PATH"] += os.pathsep + str(WINDOWS_GRAPHVIZ)
+
 # Graphviz draws each cable's first device above its second, so cables run from
 # the core of the network out to the end devices, and PCs end up at the bottom
 LEVELS = {"cloud": 0, "router": 1, "firewall": 1, "multilayer_switch": 2, "switch": 3, "access_point": 4, "server": 4}
@@ -66,7 +74,7 @@ def draw_topology_image(diagram: Diagram, trace: Trace) -> str | None:
     """The diagram drawn with Graphviz, as a PNG data URL, or None if it couldn't be drawn"""
     image = None
 
-    with trace.step("graphviz", input=f"{len(diagram.devices)} devices, {len(diagram.links)} cables", fallback=True) as step:
+    with trace.step("graphviz", input=f"{plural(len(diagram.devices), 'device')}, {plural(len(diagram.links), 'cable')}", fallback=True) as step:
         graph = build_graph(diagram)
         step["raw_output"] = graph.source
 

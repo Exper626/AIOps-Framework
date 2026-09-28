@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 
 from pipeline.agent import call_agent
 from pipeline.models import ModelRef
-from pipeline.trace import Trace
+from pipeline.trace import Trace, plural
 
 
 class Device(BaseModel):
@@ -107,7 +107,7 @@ def run_diagram(
         diagram = to_diagram(reply.diagram) if reply.diagram else None
 
     if diagram:
-        step["output"] = f"Drew a diagram: {len(diagram.devices)} devices, {len(diagram.links)} cables"
+        step["output"] = f"Drew a diagram: {plural(len(diagram.devices), 'device')}, {plural(len(diagram.links), 'cable')}"
     elif "error" not in step:
         step["output"] = "No diagram needed"
 
