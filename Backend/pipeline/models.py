@@ -10,6 +10,7 @@ from pydantic import BaseModel, Field
 from config import ModelKind, SelfHostedServer, settings
 from pipeline.errors import ModelUnavailable, describe_discovery_error
 from pipeline.llm import gateway_client
+from pipeline.modal_servers import modal_servers
 
 DISCOVERY_TIMEOUT_SECONDS = 15
 
@@ -58,13 +59,29 @@ def ask_server_for_models(server: SelfHostedServer) -> list[str]:
     return [model.id for model in client.models.list()]
 
 
+def self_hosted_servers() -> tuple[list[SelfHostedServer], list[str]]:
+    """The servers in SELF_HOSTED_SERVERS and the endpoints found in Modal, and why Modal couldn't be asked"""
+    servers = list(settings.self_hosted_servers)
+
+    try:
+        found = modal_servers()
+    except Exception as error:
+        return servers, [f"Couldn't list the endpoints in Modal: {error}"]
+
+    known = {server.base_url.rstrip("/") for server in servers}
+    return servers + [server for server in found if server.base_url.rstrip("/") not in known], []
+
+
 def discover_self_hosted_models() -> list[str]:
-    servers = settings.self_hosted_servers
+    servers, unreachable = self_hosted_servers()
+
+    # Models of servers that are gone, like a stopped Modal endpoint, stop being offered
+    if not unreachable:
+        for model_id in [m.id for m in known_models.values() if m.server not in servers]:
+            del known_models[model_id]
 
     with ThreadPoolExecutor(max_workers=max(len(servers), 1)) as pool:
         replies = [(server, pool.submit(ask_server_for_models, server)) for server in servers]
-
-    unreachable = []
 
     for server, reply in replies:
         if reply.exception():
@@ -87,7 +104,6 @@ def list_self_hosted_models() -> dict:
         kind: [{"id": m.id, "name": m.id.rsplit("/", 1)[-1]} for m in known_models.values() if kind in m.server.kinds]
         for kind in ("text", "vision")
     }
-    listing["servers"] = len(settings.self_hosted_servers)
 
     if unreachable:
         listing["error"] = "\n".join(unreachable)
@@ -106,7 +122,7 @@ def resolve_model(ref: ModelRef, kind: ModelKind) -> ResolvedModel:
 
     if model is None:
         raise ModelUnavailable(
-            f"The self-hosted model '{ref.id}' isn't served by any server in SELF_HOSTED_SERVERS right now. "
+            f"The self-hosted model '{ref.id}' isn't served by any self-hosted server right now. "
             "Pick another model, or check that its server is running."
         )
 

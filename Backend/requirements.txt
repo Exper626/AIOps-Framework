@@ -6,3 +6,5 @@ openai
 requests
 graphviz
 mem0ai
+# Pinned: pipeline/modal_servers.py lists endpoints the way this version's `modal endpoint list` does
+modal==1.6.0

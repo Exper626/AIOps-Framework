@@ -21,6 +21,11 @@ class Settings(BaseSettings):
 
     self_hosted_servers: list[SelfHostedServer] = []
     self_hosted_api_key: str = "not-needed"
+    # A Modal API token (ak-… / as-…): the endpoints running in that Modal workspace are added to the
+    # self-hosted servers automatically. MODAL_ENVIRONMENT picks one of its environments (empty: the default).
+    modal_token_id: str = ""
+    modal_token_secret: str = ""
+    modal_environment: str = ""
     debug_trace: bool = False
     allowed_origins: str = "*"
     vision_timeout_seconds: float = 40
