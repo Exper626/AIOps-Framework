@@ -2,6 +2,7 @@ import os
 from functools import lru_cache
 
 from pydantic import BaseModel
+from weaviate.classes.config import Configure, DataType, Property
 
 from config import settings
 from pipeline.agent import call_agent
@@ -10,6 +11,7 @@ from pipeline.llm import AI_GATEWAY_BASE_URL
 from pipeline.models import DEFAULT_MODEL, ModelRef
 from pipeline.trace import Trace
 from rag.embedding import EMBEDDING_DIM, EMBEDDING_MODEL
+from rag.retrieval import weaviate_client
 
 # Mem0 would otherwise send usage data to Mem0 and print notices
 os.environ.setdefault("MEM0_TELEMETRY", "False")
@@ -23,12 +25,34 @@ COMPARE_LIMIT = 20
 # The most memories one message can add, and the longest a memory can be
 MAX_NEW_MEMORIES = 5
 MAX_MEMORY_LENGTH = 300
+# As in mem0/vector_stores/weaviate.py, plus the two a saved memory also has
+MEM0_PROPERTIES = [
+    *("ids", "hash", "metadata", "data", "created_at", "category", "updated_at", "user_id", "agent_id", "run_id"),
+    *("text_lemmatized", "role"),
+]
+
+
+def create_collections() -> None:
+    """Mem0 creates its collections with an HNSW index, which Weaviate Cloud clusters that only allow hfresh
+    refuse. Created here first, the same way as the knowledge base, they get the cluster's default index,
+    and Mem0 uses them as they are."""
+    client = weaviate_client()
+
+    for name in (settings.memory_collection, f"{settings.memory_collection}_entities"):
+        if not client.collections.exists(name):
+            client.collections.create(
+                name,
+                properties=[Property(name=p, data_type=DataType.TEXT) for p in MEM0_PROPERTIES],
+                vector_config=Configure.Vectors.self_provided(),
+            )
 
 
 @lru_cache(maxsize=1)
 def memory_store() -> Memory:
     """Mem0, keeping each user's memories in Weaviate with the knowledge base's Qwen embeddings.
     Mem0's own LLM is never called: the memory agent decides what to add, update or delete."""
+    create_collections()
+
     return Memory.from_config(
         {
             "embedder": {
