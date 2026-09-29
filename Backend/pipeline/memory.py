@@ -1,8 +1,10 @@
 import os
 from functools import lru_cache
 
+import weaviate
 from pydantic import BaseModel
 from weaviate.classes.config import Configure, DataType, Property
+from weaviate.classes.init import Auth
 
 from config import settings
 from pipeline.agent import call_agent
@@ -11,7 +13,6 @@ from pipeline.llm import AI_GATEWAY_BASE_URL
 from pipeline.models import DEFAULT_MODEL, ModelRef
 from pipeline.trace import Trace
 from rag.embedding import EMBEDDING_DIM, EMBEDDING_MODEL
-from rag.retrieval import weaviate_client
 
 # Mem0 would otherwise send usage data to Mem0 and print notices
 os.environ.setdefault("MEM0_TELEMETRY", "False")
@@ -32,26 +33,47 @@ MEM0_PROPERTIES = [
 ]
 
 
-def create_collections() -> None:
-    """Mem0 creates its collections with an HNSW index, which Weaviate Cloud clusters that only allow hfresh
-    refuse. Created here first, the same way as the knowledge base, they get the cluster's default index,
-    and Mem0 uses them as they are."""
-    client = weaviate_client()
+def memory_cluster() -> tuple[str, str]:
+    """The Weaviate cluster's URL and API key: the memory cluster when one is set, else the knowledge base's"""
+    if settings.memory_weaviate_url:
+        return settings.memory_weaviate_url, settings.memory_weaviate_api_key
+    return settings.weaviate_url, settings.weaviate_api_key
 
-    for name in (settings.memory_collection, f"{settings.memory_collection}_entities"):
-        if not client.collections.exists(name):
+
+def connect_memory_cluster() -> weaviate.WeaviateClient:
+    url, api_key = memory_cluster()
+    return weaviate.connect_to_weaviate_cloud(cluster_url=url, auth_credentials=Auth.api_key(api_key))
+
+
+def create_collection() -> None:
+    """Mem0 creates its collection with an HNSW index, which Weaviate Cloud clusters that only allow hfresh
+    refuse. Created here first, the same way as the knowledge base, it gets the cluster's default index,
+    and Mem0 uses it as it is. (Mem0's second collection, for entities, is only used with spaCy installed.)"""
+    with connect_memory_cluster() as client:
+        if client.collections.exists(settings.memory_collection):
+            return
+
+        try:
             client.collections.create(
-                name,
+                settings.memory_collection,
                 properties=[Property(name=p, data_type=DataType.TEXT) for p in MEM0_PROPERTIES],
                 vector_config=Configure.Vectors.self_provided(),
             )
+        except Exception as error:
+            if "USAGE_LIMIT_EXCEEDED" in str(error):
+                raise PipelineError(
+                    "The Weaviate cluster has no room for the memories: a free cluster holds one collection, and the "
+                    "knowledge base uses it. Set MEMORY_WEAVIATE_URL and MEMORY_WEAVIATE_API_KEY to a second cluster."
+                ) from error
+            raise
 
 
 @lru_cache(maxsize=1)
 def memory_store() -> Memory:
     """Mem0, keeping each user's memories in Weaviate with the knowledge base's Qwen embeddings.
     Mem0's own LLM is never called: the memory agent decides what to add, update or delete."""
-    create_collections()
+    create_collection()
+    url, api_key = memory_cluster()
 
     return Memory.from_config(
         {
@@ -69,8 +91,8 @@ def memory_store() -> Memory:
                 "config": {
                     "collection_name": settings.memory_collection,
                     "embedding_model_dims": EMBEDDING_DIM,
-                    "cluster_url": settings.weaviate_url,
-                    "auth_client_secret": settings.weaviate_api_key,
+                    "cluster_url": url,
+                    "auth_client_secret": api_key,
                 },
             },
             "llm": {

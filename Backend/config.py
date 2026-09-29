@@ -24,7 +24,11 @@ class Settings(BaseSettings):
     debug_trace: bool = False
     allowed_origins: str = "*"
     vision_timeout_seconds: float = 40
-    # The Weaviate collection Mem0 keeps each user's memories in
+    # The Weaviate cluster and collection Mem0 keeps each user's memories in. A free Weaviate Cloud cluster
+    # holds one collection, which the knowledge base uses, so the memories need a cluster of their own.
+    # Without one set, the knowledge base's cluster is used.
+    memory_weaviate_url: str = ""
+    memory_weaviate_api_key: str = ""
     memory_collection: str = "Memories"
 
 
