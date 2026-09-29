@@ -3,6 +3,7 @@
 import {
   BookOpenIcon,
   BotIcon,
+  BrainIcon,
   CheckIcon,
   EyeIcon,
   LayersIcon,
@@ -14,9 +15,17 @@ import {
   SearchIcon,
   SignpostIcon,
   TextSearchIcon,
+  Trash2Icon,
   XIcon,
 } from "lucide-react";
-import { type ReactNode, useEffect, useMemo, useState } from "react";
+import {
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import { toast } from "sonner";
 import useSWR from "swr";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,12 +41,14 @@ import {
   type GatewayModelWithCapabilities,
   visionModels,
 } from "@/lib/ai/models";
+import type { SavedMemory } from "@/lib/backend";
 import {
   AGENTS,
   type AgentId,
   CHUNK_COUNT_RANGE,
   getChunkCount,
   getHybridSearchEnabled,
+  getMemoryEnabled,
   getModelChoice,
   getRerankerEnabled,
   MODEL_TASKS,
@@ -47,12 +58,13 @@ import {
   type ModelTask,
   setChunkCount,
   setHybridSearchEnabled,
+  setMemoryEnabled,
   setModelChoice,
   setRerankerEnabled,
 } from "@/lib/model-settings";
 import { cn } from "@/lib/utils";
 
-type Tab = ModelTask | "agents" | "knowledge";
+type Tab = ModelTask | "agents" | "knowledge" | "memory";
 
 const MODEL_TAB_ICONS: Record<ModelTask, ReactNode> = {
   answer: <MessageSquareTextIcon />,
@@ -67,6 +79,7 @@ const AGENT_ICONS: Record<AgentId, ReactNode> = {
   context: <LayersIcon />,
   diagram: <NetworkIcon />,
   knowledgeBase: <BookOpenIcon />,
+  memory: <BrainIcon />,
   query: <TextSearchIcon />,
   retrievalAgent: <ListFilterIcon />,
   router: <SignpostIcon />,
@@ -76,6 +89,7 @@ const AGENT_ICONS: Record<AgentId, ReactNode> = {
 const OTHER_TABS: { id: Tab; label: string; icon: ReactNode }[] = [
   { icon: <BotIcon />, id: "agents", label: "Agents" },
   { icon: <BookOpenIcon />, id: "knowledge", label: "Knowledge Base" },
+  { icon: <BrainIcon />, id: "memory", label: "Memory" },
 ];
 
 const SOURCE_OPTIONS: { id: ModelSource; label: string }[] = [
@@ -794,6 +808,172 @@ function KnowledgeBasePanel({
   );
 }
 
+// ---------- Memory ----------
+
+const MEMORY_API = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/api/memory`;
+
+async function fetchMemories(url: string) {
+  const response = await fetch(url, { cache: "no-store" });
+  const body = await response.json().catch(() => null);
+
+  if (!response.ok) {
+    throw new Error(body?.error ?? "Couldn't load the memories.");
+  }
+
+  return body as { memories: SavedMemory[] };
+}
+
+function savedWhen(memory: SavedMemory) {
+  const time = Date.parse(memory.updated_at ?? memory.created_at ?? "");
+
+  if (Number.isNaN(time)) {
+    return "";
+  }
+
+  const days = Math.floor((Date.now() - time) / 86_400_000);
+
+  if (days < 1) {
+    return "Saved today";
+  }
+  if (days === 1) {
+    return "Saved yesterday";
+  }
+  if (days < 7) {
+    return `Saved ${days} days ago`;
+  }
+  return `Saved ${new Date(time).toLocaleDateString()}`;
+}
+
+function MemoryRow({
+  memory,
+  onForget,
+}: {
+  memory: SavedMemory;
+  onForget: (id: string) => void;
+}) {
+  const handleForget = useCallback(
+    () => onForget(memory.id),
+    [memory.id, onForget]
+  );
+
+  return (
+    <li className="flex items-start gap-3 px-4 py-2.5">
+      <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+        <span className="text-sm">{memory.memory}</span>
+        <span className="text-muted-foreground text-xs">
+          {savedWhen(memory)}
+        </span>
+      </div>
+      <Button
+        aria-label={`Delete "${memory.memory}"`}
+        className="text-muted-foreground hover:text-foreground"
+        data-testid="memory-delete"
+        onClick={handleForget}
+        size="icon-sm"
+        variant="ghost"
+      >
+        <Trash2Icon />
+      </Button>
+    </li>
+  );
+}
+
+function MemoryPanel({
+  enabled,
+  onEnabledChange,
+}: {
+  enabled: boolean;
+  onEnabledChange: (enabled: boolean) => void;
+}) {
+  const { data, error, isLoading, mutate } = useSWR(MEMORY_API, fetchMemories, {
+    revalidateOnFocus: false,
+  });
+  const [confirmingClear, setConfirmingClear] = useState(false);
+  const memories = data?.memories ?? [];
+
+  // One memory, or all of them without an id
+  const forget = useCallback(
+    async (id?: string) => {
+      const response = await fetch(
+        id ? `${MEMORY_API}?id=${encodeURIComponent(id)}` : MEMORY_API,
+        { method: "DELETE" }
+      ).catch(() => null);
+
+      setConfirmingClear(false);
+
+      if (!response?.ok) {
+        toast.error("Couldn't delete the memory. Please try again.");
+        return;
+      }
+
+      await mutate();
+    },
+    [mutate]
+  );
+
+  // The first click asks to click again, so all is never deleted by accident
+  const handleClearAll = useCallback(() => {
+    if (confirmingClear) {
+      forget();
+    } else {
+      setConfirmingClear(true);
+    }
+  }, [confirmingClear, forget]);
+
+  let list: ReactNode;
+
+  if (isLoading) {
+    list = <p className="text-muted-foreground text-xs">Loading…</p>;
+  } else if (error) {
+    list = <p className="text-red-400 text-xs">{error.message}</p>;
+  } else if (memories.length === 0) {
+    list = (
+      <p className="text-muted-foreground text-xs leading-relaxed">
+        Nothing saved yet. Tell it your name, how you like answers or about the
+        networks you look after, and it remembers them in new chats.
+      </p>
+    );
+  } else {
+    list = (
+      <ul className="flex flex-col divide-y divide-border/60 rounded-xl border border-border/60">
+        {memories.map((memory) => (
+          <MemoryRow key={memory.id} memory={memory} onForget={forget} />
+        ))}
+      </ul>
+    );
+  }
+
+  return (
+    <div className="flex flex-col gap-3 py-3">
+      <SectionHeader
+        description="Facts about you and your networks that new chats start with, saved from your messages. Passwords, keys and SNMP communities are never saved."
+        title="Memory"
+      />
+      <ToggleRow
+        checked={enabled}
+        description="Use what it remembers in your chats and save new facts. Turning it off keeps the saved memories."
+        onChange={onEnabledChange}
+        title="Use memory"
+      />
+      <span className="pt-2 text-muted-foreground text-xs">Saved memories</span>
+      {list}
+      {memories.length > 0 ? (
+        <Button
+          className="self-start text-red-500 hover:text-red-500"
+          data-testid="memory-delete-all"
+          onClick={handleClearAll}
+          size="sm"
+          variant="ghost"
+        >
+          {confirmingClear
+            ? "Click again to delete all memories"
+            : "Delete all memories"}
+        </Button>
+      ) : null}
+    </div>
+  );
+}
+
 // ---------- Dialog ----------
 
 export function SettingsDialog({
@@ -811,6 +991,7 @@ export function SettingsDialog({
   const [reranker, setReranker] = useState(true);
   const [hybridSearch, setHybridSearch] = useState(true);
   const [chunkCount, setChunkCountState] = useState(getChunkCount);
+  const [memory, setMemory] = useState(true);
 
   // Read the saved choices each time the dialog opens
   useEffect(() => {
@@ -822,6 +1003,7 @@ export function SettingsDialog({
       setReranker(getRerankerEnabled());
       setHybridSearch(getHybridSearchEnabled());
       setChunkCountState(getChunkCount());
+      setMemory(getMemoryEnabled());
     }
   }, [open]);
 
@@ -906,6 +1088,11 @@ export function SettingsDialog({
     setChunkCountState(count);
   };
 
+  const handleMemoryChange = (enabled: boolean) => {
+    setMemoryEnabled(enabled);
+    setMemory(enabled);
+  };
+
   return (
     <Dialog onOpenChange={onOpenChange} open={open}>
       <DialogContent
@@ -961,6 +1148,12 @@ export function SettingsDialog({
                 onHybridSearchChange={handleHybridSearchChange}
                 onRerankerChange={handleRerankerChange}
                 reranker={reranker}
+              />
+            ) : null}
+            {tab === "memory" ? (
+              <MemoryPanel
+                enabled={memory}
+                onEnabledChange={handleMemoryChange}
               />
             ) : null}
           </div>

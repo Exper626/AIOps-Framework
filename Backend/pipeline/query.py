@@ -13,8 +13,10 @@ def format_conversation(history: list[dict]) -> str:
     return "\n".join(f"{m['role']}: {m['content']}" for m in history) or "(no earlier messages)"
 
 
-def run_query(ref: ModelRef, message: str, history: list[dict], trace: Trace) -> str:
+def run_query(ref: ModelRef, message: str, history: list[dict], trace: Trace, memories: str = "") -> str:
     agent_input = f"Conversation:\n{format_conversation(history)}\nNew message: {message}"
+    if memories:
+        agent_input = f"What you remember about the user:\n{memories}\n\n{agent_input}"
     question = message
 
     with trace.step("query", model=ref, input=agent_input, fallback=True) as step:

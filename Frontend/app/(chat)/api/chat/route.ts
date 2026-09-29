@@ -35,7 +35,7 @@ import { diagramData, type NetworkDiagram } from "@/lib/diagram";
 import { ChatbotError } from "@/lib/errors";
 import type { ModelChoice } from "@/lib/model-settings";
 import { checkIpRateLimit } from "@/lib/ratelimit";
-import type { ChatMessage } from "@/lib/types";
+import type { ChatMessage, MemoryChange } from "@/lib/types";
 import { convertToUIMessages, generateUUID } from "@/lib/utils";
 import { generateTitleFromUserMessage } from "../../actions";
 import { type PostRequestBody, postRequestBodySchema } from "./schema";
@@ -146,6 +146,7 @@ export async function POST(request: Request) {
       messages,
       chunkCount,
       hybridSearch,
+      memory,
       modelChoices,
       reranker,
       selectedVisibilityType,
@@ -325,6 +326,7 @@ export async function POST(request: Request) {
         const textId = generateUUID();
         let textStarted = false;
         let answerDiagram: NetworkDiagram | undefined;
+        let memoryChanges: MemoryChange[] = [];
         const writeDelta = (delta: string) => {
           if (!textStarted) {
             dataStream.write({ id: textId, type: "text-start" });
@@ -359,6 +361,9 @@ export async function POST(request: Request) {
             onDiagram: (diagram) => {
               answerDiagram = diagram;
             },
+            onMemory: (changes) => {
+              memoryChanges = changes;
+            },
             onErrorDebug: (debug) => {
               if (textStarted) {
                 dataStream.write({ id: textId, type: "text-end" });
@@ -374,6 +379,9 @@ export async function POST(request: Request) {
             queryModel,
             reranker: reranker ?? true,
             routerModel,
+            // Memories belong to the signed-in user, never to an id the
+            // browser sends
+            userId: memory === false ? undefined : session.user.id,
             visionModel,
           },
         );
@@ -406,6 +414,15 @@ export async function POST(request: Request) {
             data: answerDiagram,
             id: `diagram-${textId}`,
             type: "data-diagram",
+          });
+        }
+
+        // "Memory saved · …" under the answer, kept with it
+        if (memoryChanges.length > 0) {
+          dataStream.write({
+            data: memoryChanges,
+            id: `memory-${textId}`,
+            type: "data-memory",
           });
         }
 

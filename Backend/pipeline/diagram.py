@@ -86,8 +86,11 @@ def run_diagram(
     earlier: Diagram | None,
     passages: list[dict],
     trace: Trace,
+    memories: str = "",
 ) -> Diagram | None:
     agent_input = f"Question: {question}" + (f"\n\nAnswer: {answer}" if answer else "")
+    if memories:
+        agent_input += f"\n\nWhat you remember about the user's networks:\n{memories}"
     attached = images + ([describe_diagram(drawn)] if drawn else [])
     found = describe_found_devices(passages)
 

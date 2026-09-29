@@ -13,6 +13,8 @@ Rules:
 - Output only the JSON object. No explanations, no markdown code fences.
 - Keep the user's meaning. Do not add questions they did not ask, and do not drop any they did.
 - If the message is a greeting or small talk, return null.
+- You may also get what you remember about the user. When the message means their own network or devices ("our
+  switches", "the Kandy branch"), rewrite it with the devices named, so the knowledge base can be searched for them.
 
 Examples:
 

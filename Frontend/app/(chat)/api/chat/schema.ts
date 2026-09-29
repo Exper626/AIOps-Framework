@@ -67,6 +67,8 @@ export const postRequestBodySchema = z.object({
   // Settings → Knowledge Base: keyword + vector search, or vector only
   hybridSearch: z.boolean().optional(),
   id: z.uuid(),
+  // Settings → Memory: use and update what the assistant remembers
+  memory: z.boolean().optional(),
   message: userMessageSchema.optional(),
   messages: z.array(toolApprovalMessageSchema).optional(),
   // One model per pipeline step; any may be missing, e.g. when a tab still

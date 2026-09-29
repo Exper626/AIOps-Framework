@@ -11,6 +11,7 @@ from pipeline.context import run_context
 from pipeline.diagram import Diagram, describe_diagram, run_diagram
 from pipeline.errors import describe_error
 from pipeline.knowledge import search_knowledge_base
+from pipeline.memory import format_memories, recall_memories, update_memories
 from pipeline.models import DEFAULT_MODEL, ModelRef, ResolvedModel
 from pipeline.query import run_query
 from pipeline.router import run_router
@@ -44,6 +45,8 @@ class ChatRequest(BaseModel):
     chunk_count: int = Field(default=5, ge=1, le=20)
     images: list[ImageInput] = []
     diagram: Diagram | None = None
+    # The signed-in user, whose memories are used and updated; none when memory is off
+    user_id: str | None = Field(default=None, min_length=1, max_length=100)
 
 
 def to_event(data: dict, trace: Trace | None = None) -> str:
@@ -65,8 +68,14 @@ def run_steps(request: ChatRequest, answer_model: ResolvedModel, trace: Trace) -
         yield {"phase": "vision", "message": "Reading the attached image..."}
         descriptions = describe_images(request.vision_model or DEFAULT_MODEL, request.images, trace)
 
+    memories = []
+    if request.user_id:
+        yield {"phase": "memory", "message": "Checking what I remember..."}
+        memories = recall_memories(request.user_id, message, trace)
+    remembered = format_memories(memories)
+
     yield {"phase": "query", "message": "Understanding your question..."}
-    question = run_query(request.query_model or DEFAULT_MODEL, message, history, trace)
+    question = run_query(request.query_model or DEFAULT_MODEL, message, history, trace, remembered)
 
     if history:
         yield {"phase": "context", "message": "Checking what context is needed..."}
@@ -84,9 +93,9 @@ def run_steps(request: ChatRequest, answer_model: ResolvedModel, trace: Trace) -
 
     answer = ""
     if plan.has("text_generation"):
-        messages = build_answer_messages(message, question, selected, descriptions, request.diagram, passages)
+        messages = build_answer_messages(message, question, selected, descriptions, request.diagram, passages, remembered)
         yield {"phase": "answer", "message": "Writing the answer...", "modelId": answer_model.id}
-        sources = describe_sources(message, question, selected, descriptions, request.diagram, passages)
+        sources = describe_sources(message, question, selected, descriptions, request.diagram, passages, memories)
         answer = yield from write_answer(answer_model, messages, sources, trace)
 
     if plan.has("image_generation"):
@@ -95,7 +104,15 @@ def run_steps(request: ChatRequest, answer_model: ResolvedModel, trace: Trace) -
         images = [d.description for d in descriptions if d.description]
         earlier = [m.diagram for m in request.history if m.diagram and m.to_dict() in selected]
         diagram = run_diagram(
-            request.answer_model or DEFAULT_MODEL, question, answer, images, request.diagram, earlier[-1] if earlier else None, passages, trace
+            request.answer_model or DEFAULT_MODEL,
+            question,
+            answer,
+            images,
+            request.diagram,
+            earlier[-1] if earlier else None,
+            passages,
+            trace,
+            remembered,
         )
 
         # Only a picture was asked for: a short caption of it, instead of an answer
@@ -109,6 +126,12 @@ def run_steps(request: ChatRequest, answer_model: ResolvedModel, trace: Trace) -
 
         if diagram:
             yield {"phase": "diagram", "diagram": diagram.model_dump(), "image": draw_topology_image(diagram, trace)}
+
+    # After the answer is on screen: what the message says about the user is saved for later chats
+    if request.user_id and message:
+        changes = update_memories(request.context_model or DEFAULT_MODEL, request.user_id, message, trace)
+        if changes:
+            yield {"phase": "memory_changes", "changes": changes}
 
     yield {"phase": "done", "message": answer}
 

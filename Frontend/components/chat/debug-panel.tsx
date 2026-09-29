@@ -2,6 +2,7 @@
 
 import {
   BookOpenIcon,
+  BrainIcon,
   CaptionsIcon,
   EyeIcon,
   ImageIcon,
@@ -53,6 +54,12 @@ const STEPS: {
     prefix: "vision description",
     task: true,
   },
+  {
+    icon: <BrainIcon />,
+    label: "Memory",
+    prefix: "memory search",
+    task: false,
+  },
   { icon: <TextSearchIcon />, label: "Question", prefix: "query", task: false },
   {
     icon: <LayersIcon />,
@@ -86,6 +93,12 @@ const STEPS: {
   },
   { icon: <ImageIcon />, label: "Graphviz", prefix: "graphviz", task: false },
   { icon: <CaptionsIcon />, label: "Caption", prefix: "caption", task: false },
+  {
+    icon: <BrainIcon />,
+    label: "Memory update",
+    prefix: "memory update",
+    task: false,
+  },
 ];
 
 const MODEL_NAMES = new Map(

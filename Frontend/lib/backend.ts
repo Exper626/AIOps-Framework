@@ -1,5 +1,6 @@
 import { diagramData, type NetworkDiagram } from "@/lib/diagram";
 import type { ModelChoice } from "@/lib/model-settings";
+import type { MemoryChange } from "@/lib/types";
 
 export type BackendChatResult = {
   message: string;
@@ -9,6 +10,7 @@ export type BackendChatResult = {
 export type BackendProgressEvent = {
   phase:
     | "vision"
+    | "memory"
     | "context"
     | "query"
     | "router"
@@ -34,6 +36,12 @@ type BackendDiagramEvent = {
   image?: string | null;
 };
 
+// What the message changed in the user's memories, after the answer
+type BackendMemoryEvent = {
+  phase: "memory_changes";
+  changes: MemoryChange[];
+};
+
 type BackendDoneEvent = {
   phase: "done";
   message: string;
@@ -51,6 +59,7 @@ type BackendStreamEvent =
   | BackendProgressEvent
   | BackendDeltaEvent
   | BackendDiagramEvent
+  | BackendMemoryEvent
   | BackendDoneEvent
   | BackendErrorEvent;
 
@@ -144,8 +153,12 @@ export async function callBackend(
     routerModel?: ModelChoice;
     queryModel?: ModelChoice;
     contextModel?: ModelChoice;
+    // The signed-in user whose memories are used and updated; none when
+    // memory is off in Settings
+    userId?: string;
     onDelta?: (delta: string) => void;
     onDiagram?: (diagram: NetworkDiagram) => void;
+    onMemory?: (changes: MemoryChange[]) => void;
     onErrorDebug?: (debug: unknown) => void;
   } = {},
 ): Promise<BackendChatResult> {
@@ -182,6 +195,7 @@ export async function callBackend(
         query_model: toBackendModel(options.queryModel),
         context_model: toBackendModel(options.contextModel),
         vision_model: toBackendModel(options.visionModel),
+        user_id: options.userId ?? null,
       }),
       cache: "no-store",
     });
@@ -248,6 +262,11 @@ export async function callBackend(
       options.onDiagram?.(
         event.image ? { ...event.diagram, image: event.image } : event.diagram
       );
+      return;
+    }
+
+    if (event.phase === "memory_changes") {
+      options.onMemory?.(event.changes);
       return;
     }
 
@@ -325,4 +344,56 @@ export async function drawDiagramImage(diagram: NetworkDiagram) {
   }
 
   return image;
+}
+
+// A saved memory as Settings → Memory lists it
+export type SavedMemory = {
+  id: string;
+  memory: string;
+  created_at?: string | null;
+  updated_at?: string | null;
+};
+
+// One of the backend's /memories endpoints for this user; throws with the
+// reason when it fails
+async function memoriesRequest(
+  path: string,
+  userId: string,
+  method: "GET" | "DELETE"
+) {
+  const url = getBackendUrl();
+
+  if (!url) {
+    throw new Error("BACKEND_URL is not configured");
+  }
+
+  const response = await fetch(
+    `${url}/memories${path}?user_id=${encodeURIComponent(userId)}`,
+    { cache: "no-store", method }
+  );
+  const body = await response.text();
+
+  if (response.status === 404 && body.includes("Not Found")) {
+    throw new Error(
+      "the backend has no /memories endpoint yet, so redeploy it"
+    );
+  }
+
+  if (!response.ok) {
+    throw new Error(readErrorDetail(body));
+  }
+
+  return JSON.parse(body) as { memories?: SavedMemory[] };
+}
+
+export async function listMemories(userId: string) {
+  return (await memoriesRequest("", userId, "GET")).memories ?? [];
+}
+
+export async function deleteMemory(userId: string, memoryId: string) {
+  await memoriesRequest(`/${encodeURIComponent(memoryId)}`, userId, "DELETE");
+}
+
+export async function deleteAllMemories(userId: string) {
+  await memoriesRequest("", userId, "DELETE");
 }

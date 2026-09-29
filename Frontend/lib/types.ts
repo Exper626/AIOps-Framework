@@ -35,6 +35,7 @@ export type WaitingStatusData = {
     | "health"
     | "thinking"
     | "vision"
+    | "memory"
     | "context"
     | "query"
     | "router"
@@ -44,6 +45,12 @@ export type WaitingStatusData = {
   message: string;
   modelId: string;
   modelName: string;
+};
+
+// What a message changed in the user's memories, shown under the answer
+export type MemoryChange = {
+  action: "saved" | "updated" | "deleted";
+  memory: string;
 };
 
 export type CustomUIDataTypes = {
@@ -62,6 +69,7 @@ export type CustomUIDataTypes = {
   "waiting-status": WaitingStatusData;
   debug: unknown;
   diagram: NetworkDiagram;
+  memory: MemoryChange[];
 };
 
 export type ChatMessage = UIMessage<

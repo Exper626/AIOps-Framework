@@ -18,6 +18,7 @@ import { DebugPanel } from "./debug-panel";
 import { DiagramPart } from "./diagram-part";
 import { DocumentToolResult } from "./document";
 import { DocumentPreview } from "./document-preview";
+import { MemoryNote } from "./memory-note";
 import { MessageActions } from "./message-actions";
 import { MessageReasoning } from "./message-reasoning";
 import { PreviewAttachment } from "./preview-attachment";
@@ -346,6 +347,10 @@ const PurePreviewMessage = ({
 
     if (type === "data-debug") {
       return <DebugPanel data={part.data} key={key} />;
+    }
+
+    if (type === "data-memory") {
+      return <MemoryNote changes={part.data} key={key} />;
     }
 
     if (type === "data-diagram") {

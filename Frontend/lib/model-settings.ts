@@ -63,7 +63,8 @@ export type AgentId =
   | "retrievalAgent"
   | "knowledgeBase"
   | "answer"
-  | "diagram";
+  | "diagram"
+  | "memory";
 
 export const AGENTS: { id: AgentId; name: string; description: string }[] = [
   {
@@ -114,6 +115,12 @@ export const AGENTS: { id: AgentId; name: string; description: string }[] = [
     id: "diagram",
     name: "Diagram",
   },
+  {
+    description:
+      "Remembers you across chats with Mem0: before each message it looks up what it knows about you (your name, preferences and networks), and after the answer it saves new facts, replaces ones you changed and forgets what you ask it to. Runs with the Context model; see and delete the memories in Settings → Memory.",
+    id: "memory",
+    name: "Memory",
+  },
 ];
 
 // Plain model ids from before models were picked per step; the chat still
@@ -126,6 +133,7 @@ const MODEL_COOKIES: Partial<Record<ModelTask, string>> = {
 const RERANKER_COOKIE = "reranker";
 const HYBRID_SEARCH_COOKIE = "hybrid-search";
 const CHUNK_COUNT_COOKIE = "chunk-count";
+const MEMORY_COOKIE = "memory";
 
 // How many knowledge base chunks the answer is written from
 export const CHUNK_COUNT_RANGE = { max: 20, min: 1 };
@@ -220,4 +228,13 @@ export function getChunkCount(): number {
 
 export function setChunkCount(count: number) {
   writeCookie(CHUNK_COUNT_COOKIE, String(count));
+}
+
+// Whether chats use and update what the assistant remembers about the user
+export function getMemoryEnabled(): boolean {
+  return readCookie(MEMORY_COOKIE) !== "false";
+}
+
+export function setMemoryEnabled(enabled: boolean) {
+  writeCookie(MEMORY_COOKIE, String(enabled));
 }

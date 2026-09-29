@@ -27,6 +27,7 @@ import { ChatbotError } from "@/lib/errors";
 import {
   getChunkCount,
   getHybridSearchEnabled,
+  getMemoryEnabled,
   getModelChoice,
   getRerankerEnabled,
 } from "@/lib/model-settings";
@@ -180,6 +181,7 @@ export function ActiveChatProvider({ children }: { children: ReactNode }) {
               : { message: lastMessage }),
             chunkCount: getChunkCount(),
             hybridSearch: getHybridSearchEnabled(),
+            memory: getMemoryEnabled(),
             modelChoices: {
               answer: getModelChoice("answer"),
               contextManagement: getModelChoice("contextManagement"),

@@ -24,6 +24,8 @@ class Settings(BaseSettings):
     debug_trace: bool = False
     allowed_origins: str = "*"
     vision_timeout_seconds: float = 40
+    # The Weaviate collection Mem0 keeps each user's memories in
+    memory_collection: str = "Memories"
 
 
 settings = Settings()

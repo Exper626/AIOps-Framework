@@ -31,6 +31,8 @@ Rules:
 - Do not invent devices or connections the question, answer or attached topology do not mention, unless the user
   asks you to choose them ("connections are random", "you decide"). Then connect them simply: each end device to
   one switch, and switches to each other or to a router.
+- When the user asks to draw one of their own networks ("our Kandy branch"), use the devices, models and
+  connections you remember about it.
 - When a device in the diagram is one the knowledge base found, use its model from the answer (or the knowledge
   base's device name) as "model", and its type: access point is access_point.
 

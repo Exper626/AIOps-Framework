@@ -43,12 +43,26 @@ def system_prompt(passages: list[dict]) -> str:
     return SYSTEM_PROMPT_PATH.read_text(encoding="utf-8").strip() if SYSTEM_PROMPT_PATH.exists() else ""
 
 
+def describe_memories(memories: str) -> str:
+    return (
+        "What you remember about the user from earlier chats. Use it when it helps: address them by name now and "
+        "then, follow their preferences, and when they say \"our network\" or \"my switches\", these are the ones "
+        f"meant. Do not list these facts back to them:\n{memories}"
+    )
+
+
 def build_answer_messages(
-    message: str, question: str, history: list[dict], descriptions: list[ImageDescription], diagram: Diagram | None, passages: list[dict]
+    message: str,
+    question: str,
+    history: list[dict],
+    descriptions: list[ImageDescription],
+    diagram: Diagram | None,
+    passages: list[dict],
+    memories: str = "",
 ) -> list[dict]:
     messages = []
 
-    prompt = system_prompt(passages)
+    prompt = "\n\n".join(part for part in (system_prompt(passages), describe_memories(memories) if memories else "") if part)
     if prompt:
         messages.append({"role": "system", "content": prompt})
 
@@ -80,7 +94,13 @@ def plural(count: int, word: str) -> str:
 
 
 def describe_sources(
-    message: str, question: str, history: list[dict], descriptions: list[ImageDescription], diagram: Diagram | None, passages: list[dict]
+    message: str,
+    question: str,
+    history: list[dict],
+    descriptions: list[ImageDescription],
+    diagram: Diagram | None,
+    passages: list[dict],
+    memories: list[dict] = (),
 ) -> str:
     """What the answer was written from, for the trace, like "the question, the image and 1 passage"."""
     exchanges = sum(1 for m in history if m["role"] == "user")
@@ -95,6 +115,8 @@ def describe_sources(
         sources.append("your diagram")
     if passages:
         sources.append(plural(len(passages), "passage"))
+    if memories:
+        sources.append("1 memory" if len(memories) == 1 else f"{len(memories)} memories")
 
     if len(sources) == 1:
         return f"{sources[0]} only"
