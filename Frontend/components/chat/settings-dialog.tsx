@@ -109,16 +109,6 @@ type SelfHostedResponse = Record<ModelKind, SelfHostedModel[]> & {
   servers?: number;
 };
 
-// Says why the self-hosted list is empty or incomplete, if the backend knows
-function selfHostedNote(response?: SelfHostedResponse): string | undefined {
-  if (response?.error) {
-    return response.error;
-  }
-  if (response?.servers === 0) {
-    return "No servers are set up on the backend yet. Add your server's address (for example your Modal URL ending in /v1) to SELF_HOSTED_SERVERS there, and its models show up here.";
-  }
-}
-
 // A step with no choice uses the backend's default model
 type ModelChoices = Partial<Record<ModelTask, ModelChoice>>;
 
@@ -416,13 +406,11 @@ function SelfHostedList({
   models,
   current,
   loading,
-  note,
   onPick,
 }: {
   models: SelfHostedModel[];
   current?: ModelChoice;
   loading: boolean;
-  note?: string;
   onPick: (modelId: string) => void;
 }) {
   if (loading) {
@@ -436,16 +424,12 @@ function SelfHostedList({
   return (
     <div className="flex flex-col gap-2">
       {models.length === 0 ? (
-        <div className="flex flex-col items-center gap-1 rounded-xl border border-border/60 border-dashed px-4 py-8 text-center">
-          <span className="text-sm">No self-hosted models yet</span>
-          <span
-            className="max-w-md whitespace-pre-line break-words text-muted-foreground text-xs"
-            data-testid="self-hosted-note"
-          >
-            {note ??
-              "Self-hosted models are set up on the backend. Once they're added there, they show up here."}
-          </span>
-        </div>
+        <p
+          className="rounded-xl border border-border/60 border-dashed px-4 py-8 text-center text-muted-foreground text-sm"
+          data-testid="self-hosted-empty"
+        >
+          No models found
+        </p>
       ) : (
         <div className="flex flex-col gap-1">
           {models.map((model) => (
@@ -460,14 +444,6 @@ function SelfHostedList({
               }
             />
           ))}
-          {note ? (
-            <p
-              className="whitespace-pre-line break-words px-1 pt-1 text-muted-foreground text-xs"
-              data-testid="self-hosted-note"
-            >
-              {note}
-            </p>
-          ) : null}
         </div>
       )}
     </div>
@@ -480,7 +456,6 @@ function ModelSlot({
   gatewayModels,
   selfHosted,
   selfHostedLoading,
-  selfHostedNote: note,
   defaultModelId,
   onPick,
 }: {
@@ -490,7 +465,6 @@ function ModelSlot({
   gatewayModels: GatewayModelWithCapabilities[];
   selfHosted: SelfHostedModel[];
   selfHostedLoading: boolean;
-  selfHostedNote?: string;
   onPick: (choice: ModelChoice) => void;
 }) {
   // Which source you're browsing; starts on the one currently selected
@@ -542,7 +516,6 @@ function ModelSlot({
             current={current}
             loading={selfHostedLoading}
             models={selfHosted}
-            note={note}
             onPick={(modelId) => onPick({ modelId, source: "self-hosted" })}
           />
         )}
@@ -595,7 +568,6 @@ function ModelTaskPanel({
           onPick={onPick}
           selfHosted={selfHosted?.[task.kind] ?? []}
           selfHostedLoading={selfHostedLoading}
-          selfHostedNote={selfHostedNote(selfHosted)}
         />
       </div>
 

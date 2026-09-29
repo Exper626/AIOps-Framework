@@ -4,7 +4,7 @@ from pathlib import Path
 from pipeline.diagram import Diagram, describe_diagram
 from pipeline.errors import PipelineError
 from pipeline.models import ResolvedModel
-from pipeline.trace import Trace
+from pipeline.trace import Trace, plural
 from pipeline.vision import ImageDescription
 from rag.prompt import build_context
 
@@ -40,7 +40,7 @@ def system_prompt(passages: list[dict]) -> str:
     if passages:
         return KNOWLEDGE_PROMPT_PATH.read_text(encoding="utf-8").replace("{context}", build_context(passages)).strip()
 
-    return SYSTEM_PROMPT_PATH.read_text(encoding="utf-8").strip() if SYSTEM_PROMPT_PATH.exists() else ""
+    return SYSTEM_PROMPT_PATH.read_text(encoding="utf-8").strip()
 
 
 def describe_memories(memories: str) -> str:
@@ -87,10 +87,6 @@ def describe_messages(messages: list[dict]) -> str:
         f"System prompt ({len(m['content']):,} characters)" if m["role"] == "system" else f"{m['role'].capitalize()}: {m['content']}"
         for m in messages
     )
-
-
-def plural(count: int, word: str) -> str:
-    return f"{count} {word}{'s' if count != 1 else ''}"
 
 
 def describe_sources(

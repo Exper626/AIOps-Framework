@@ -1,9 +1,3 @@
-from pathlib import Path
-
-
-PROMPTS_DIR = Path(__file__).parent.parent / "prompts"
-
-
 def build_context(chunks: list[dict]) -> str:
     sources = []
 
@@ -25,12 +19,3 @@ def build_context(chunks: list[dict]) -> str:
         )
 
     return "\n\n".join(sources)
-
-
-def build_messages(question: str, context: str) -> list[dict]:
-    system_prompt = (PROMPTS_DIR / "answer.md").read_text(encoding="utf-8").replace("{context}", context)
-
-    return [
-        {"role": "system", "content": system_prompt},
-        {"role": "user", "content": question},
-    ]

@@ -117,40 +117,42 @@
 }
 
 .dark {
-  --background: oklch(0.195 0 0);
+  /* Cool dark greys, as in the DeepSeek harness: the sidebar is a step lighter
+     than the page, with a clear line between them (see shell.tsx) */
+  --background: #151517;
   --foreground: oklch(0.94 0 0);
-  --card: oklch(0.225 0 0);
+  --card: #1f1f21;
   --card-foreground: oklch(0.94 0 0);
   /* Chat input box + suggestion cards (start screen) */
-  --composer: oklch(0.305 0 0);
-  --suggestion: oklch(0.235 0 0);
-  --suggestion-hover: oklch(0.27 0 0);
-  --popover: oklch(0.225 0 0);
+  --composer: #2c2c2e;
+  --suggestion: #1e1e20;
+  --suggestion-hover: #262628;
+  --popover: #1f1f21;
   --popover-foreground: oklch(0.94 0 0);
   --primary: oklch(0.94 0 0);
-  --primary-foreground: oklch(0.195 0 0);
-  --secondary: oklch(0.26 0 0);
+  --primary-foreground: #151517;
+  --secondary: #252527;
   --secondary-foreground: oklch(0.75 0 0);
-  --muted: oklch(0.165 0 0);
+  --muted: #111113;
   --muted-foreground: oklch(0.6 0 0);
-  --accent: oklch(0.26 0 0);
+  --accent: #252527;
   --accent-foreground: oklch(0.94 0 0);
   --destructive: oklch(0.7 0.15 25);
-  --border: oklch(0.27 0 0);
-  --input: oklch(0.27 0 0);
+  --border: #2a2a2c;
+  --input: #2a2a2c;
   --ring: oklch(0.45 0 0);
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.175 0 0);
+  --sidebar: #1b1b1c;
   --sidebar-foreground: oklch(0.93 0 0);
   --sidebar-primary: oklch(0.94 0 0);
-  --sidebar-primary-foreground: oklch(0.195 0 0);
+  --sidebar-primary-foreground: #151517;
   --sidebar-accent: oklch(0.94 0 0 / 0.06);
   --sidebar-accent-foreground: oklch(0.94 0 0);
-  --sidebar-border: oklch(0.25 0 0);
+  --sidebar-border: #404040;
   --sidebar-ring: oklch(0.45 0 0);
 
   --shadow-card:

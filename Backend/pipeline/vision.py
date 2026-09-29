@@ -17,7 +17,6 @@ class ImageInput(BaseModel):
 class ImageDescription(BaseModel):
     name: str
     description: str | None = None
-    error: str | None = None
 
 
 def read_topology(description: str) -> dict:
@@ -69,6 +68,6 @@ def describe_images(ref: ModelRef, images: list[ImageInput], trace: Trace) -> li
             description = call_agent(ref, "vision.md", content, step, kind="vision", timeout=settings.vision_timeout_seconds)
             step["output"] = describe_topology(description)
 
-        results.append(ImageDescription(name=image.name, description=description, error=step.get("error")))
+        results.append(ImageDescription(name=image.name, description=description))
 
     return results

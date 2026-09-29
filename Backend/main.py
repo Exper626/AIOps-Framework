@@ -36,11 +36,6 @@ def health():
     return {"status": "healthy"}
 
 
-@app.get("/api/hello")
-def hello(name: str = "world"):
-    return {"message": f"Hello, {name}!"}
-
-
 @app.get("/models")
 def models():
     # Also says which model a step uses when none is picked in Settings
