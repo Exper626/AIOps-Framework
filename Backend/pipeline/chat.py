@@ -13,7 +13,6 @@ from pipeline.errors import describe_error
 from pipeline.knowledge import search_knowledge_base
 from pipeline.memory import format_memories, recall_memories, update_memories
 from pipeline.models import DEFAULT_MODEL, ModelRef, ResolvedModel
-from pipeline.query import run_query
 from pipeline.router import run_router
 from pipeline.topology_image import draw_topology_image
 from pipeline.trace import Trace
@@ -37,7 +36,8 @@ class ChatRequest(BaseModel):
     history: list[HistoryMessage] = []
     router_model: ModelRef | None = None
     answer_model: ModelRef | None = None
-    query_model: ModelRef | None = None
+    # Plans the knowledge base searches (and rewrites the question for them)
+    retrieval_model: ModelRef | None = None
     context_model: ModelRef | None = None
     vision_model: ModelRef | None = None
     reranker: bool = True
@@ -74,28 +74,32 @@ def run_steps(request: ChatRequest, answer_model: ResolvedModel, trace: Trace) -
         memories = recall_memories(request.user_id, message, trace)
     remembered = format_memories(memories)
 
-    yield {"phase": "query", "message": "Understanding your question..."}
-    question = run_query(request.query_model or DEFAULT_MODEL, message, history, trace, remembered)
-
     if history:
         yield {"phase": "context", "message": "Checking what context is needed..."}
-    selected = run_context(request.context_model or DEFAULT_MODEL, question, history, trace)
+    selected = run_context(request.context_model or DEFAULT_MODEL, message, history, trace)
 
     passages = []
     if plan.has("retrieval"):
         yield {"phase": "vector", "message": "Searching the knowledge base..."}
         # Models read from an attached topology are searched for too
         models = list(dict.fromkeys(m for d in descriptions if d.description for m in topology_models(d.description)))
-        search = f"{question}\nDevices in the attached image: {', '.join(models)}" if models else question
         passages = search_knowledge_base(
-            request.query_model or DEFAULT_MODEL, search, request.hybrid_search, request.reranker, request.chunk_count, trace
+            request.retrieval_model or DEFAULT_MODEL,
+            message,
+            history,
+            remembered,
+            models,
+            request.hybrid_search,
+            request.reranker,
+            request.chunk_count,
+            trace,
         )
 
     answer = ""
     if plan.has("text_generation"):
-        messages = build_answer_messages(message, question, selected, descriptions, request.diagram, passages, remembered)
+        messages = build_answer_messages(message, selected, descriptions, request.diagram, passages, remembered)
         yield {"phase": "answer", "message": "Writing the answer...", "modelId": answer_model.id}
-        sources = describe_sources(message, question, selected, descriptions, request.diagram, passages, memories)
+        sources = describe_sources(selected, descriptions, request.diagram, passages, memories)
         answer = yield from write_answer(answer_model, messages, sources, trace)
 
     if plan.has("image_generation"):
@@ -105,7 +109,7 @@ def run_steps(request: ChatRequest, answer_model: ResolvedModel, trace: Trace) -
         earlier = [m.diagram for m in request.history if m.diagram and m.to_dict() in selected]
         diagram = run_diagram(
             request.answer_model or DEFAULT_MODEL,
-            question,
+            message,
             answer,
             images,
             request.diagram,
@@ -118,7 +122,7 @@ def run_steps(request: ChatRequest, answer_model: ResolvedModel, trace: Trace) -
         # Only a picture was asked for: a short caption of it, instead of an answer
         if not answer:
             answer = (
-                write_caption(request.answer_model or DEFAULT_MODEL, question, diagram, trace)
+                write_caption(request.answer_model or DEFAULT_MODEL, message, diagram, trace)
                 if diagram
                 else "I couldn't find a network to draw in your message. List its devices and how they are connected, and I'll draw it."
             )

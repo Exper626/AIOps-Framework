@@ -4,7 +4,7 @@
 // Each step of the answering pipeline can use its own model
 export type ModelTask =
   | "router"
-  | "query"
+  | "retrieval"
   | "contextManagement"
   | "answer"
   | "visionDescription";
@@ -27,10 +27,10 @@ export const MODEL_TASKS: {
   },
   {
     description:
-      "Rewrites your message as one clear question when it needs it.",
-    id: "query",
+      "Plans the knowledge base search: rewrites your question and splits it into separate searches when it asks about several things.",
+    id: "retrieval",
     kind: "text",
-    label: "Query",
+    label: "Retrieval",
   },
   {
     description: "Decides which earlier messages the answer needs.",
@@ -58,7 +58,6 @@ export const MODEL_TASKS: {
 export type AgentId =
   | "router"
   | "vision"
-  | "query"
   | "context"
   | "retrievalAgent"
   | "knowledgeBase"
@@ -81,19 +80,13 @@ export const AGENTS: { id: AgentId; name: string; description: string }[] = [
   },
   {
     description:
-      'Rewrites your message as one clear question, so short follow-ups like "and the second switch?" make sense on their own.',
-    id: "query",
-    name: "Query",
-  },
-  {
-    description:
       "Picks the earlier messages the answer needs, so long conversations stay focused. Only runs once there are earlier messages.",
     id: "context",
     name: "Context",
   },
   {
     description:
-      "Knows how the knowledge base is organised (vendors, device types, folders and every device name) and turns your question into a search: which devices to fetch, which filters to use and what to search for. Runs before retrieval, with the Query model.",
+      'Knows how the knowledge base is organised (vendors, device types, folders and every device name) and turns your question into searches: which devices to fetch, which filters to use and what to search for. It rewrites follow-ups ("and its PoE?") from the conversation, and makes a search for each part of the question, e.g. "MX67 vs Juniper MX routers" gives 2 searches: "Meraki MX67" and "Juniper MX routers". Runs only for retrieval, with the Retrieval model.',
     id: "retrievalAgent",
     name: "Retrieval agent",
   },
@@ -169,7 +162,8 @@ export type ModelChoice = {
 const CHOICE_COOKIES: Record<ModelTask, string> = {
   answer: "text-model-choice",
   contextManagement: "context-model-choice",
-  query: "query-model-choice",
+  // The cookie of the old Query setting, so the model picked there carries over
+  retrieval: "query-model-choice",
   router: "router-model-choice",
   visionDescription: "vision-model-choice",
 };

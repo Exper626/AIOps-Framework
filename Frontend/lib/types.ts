@@ -37,7 +37,6 @@ export type WaitingStatusData = {
     | "vision"
     | "memory"
     | "context"
-    | "query"
     | "router"
     | "vector"
     | "sql"

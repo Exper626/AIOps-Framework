@@ -179,11 +179,11 @@ export async function POST(request: Request) {
         ? choice
         : undefined;
     };
-    const [routerModel, answerModel, queryModel, contextModel, visionModel] =
+    const [routerModel, answerModel, retrievalModel, contextModel, visionModel] =
       await Promise.all([
         pickModel(modelChoices?.router, allowedModelIds),
         pickModel(modelChoices?.answer, allowedModelIds),
-        pickModel(modelChoices?.query, allowedModelIds),
+        pickModel(modelChoices?.retrieval, allowedModelIds),
         pickModel(modelChoices?.contextManagement, allowedModelIds),
         pickModel(modelChoices?.visionDescription, allowedVisionModelIds),
       ]);
@@ -376,8 +376,8 @@ export async function POST(request: Request) {
             },
             chunkCount,
             hybridSearch,
-            queryModel,
             reranker: reranker ?? true,
+            retrievalModel,
             routerModel,
             // Memories belong to the signed-in user, never to an id the
             // browser sends

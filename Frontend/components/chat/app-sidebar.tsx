@@ -48,7 +48,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
           re-wrapping (and jumping) as it widens */}
       <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
         <div className="flex min-h-0 w-full flex-1 flex-col md:w-(--sidebar-width) md:group-data-[collapsible=icon]:w-(--sidebar-width-icon)">
-          <SidebarHeader className="pb-0 pt-3">
+          <SidebarHeader className="pb-0 pt-3 group-data-[collapsible=icon]:pt-4">
             <SidebarMenu>
               {/* Open: "Sri Lanka Telecom" on the left, toggle on the right.
               Collapsed: the SLT logo, which turns into the open icon on hover. */}
@@ -71,7 +71,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                   <TooltipTrigger asChild>
                     <Button
                       aria-label={collapsed ? "Open sidebar" : "Close sidebar"}
-                      className="sidebar-toggle group/toggle relative size-9 rounded-lg text-foreground transition-colors duration-150 hover:bg-foreground/10 hover:text-foreground [&_svg]:size-5!"
+                      className="sidebar-toggle group/toggle relative size-9 rounded-lg data-[collapsed=true]:size-10 data-[collapsed=true]:rounded-xl text-foreground transition-colors duration-150 hover:bg-foreground/10 hover:text-foreground [&_svg]:size-5!"
                       data-collapsed={collapsed}
                       onClick={toggleSidebar}
                       size="icon-sm"
@@ -82,7 +82,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                           {/* The logo fades into the open icon on hover */}
                           <Image
                             alt="SLT"
-                            className="size-7 rounded-lg bg-white object-contain p-1 transition-[opacity,scale] duration-200 group-hover/toggle:scale-75 group-hover/toggle:opacity-0"
+                            className="size-7 rounded-full bg-white object-contain p-1 transition-[opacity,scale] duration-200 group-hover/toggle:scale-75 group-hover/toggle:opacity-0"
                             src={telecomIcon}
                           />
                           <PanelLeftIcon className="sidebar-icon-panel absolute inset-0 m-auto scale-75 opacity-0 transition-[opacity,scale] duration-200 group-hover/toggle:scale-100 group-hover/toggle:opacity-100" />
@@ -104,12 +104,12 @@ export function AppSidebar({ user }: { user: User | undefined }) {
             </SidebarMenu>
           </SidebarHeader>
           <SidebarContent>
-            <SidebarGroup className="pt-3">
+            <SidebarGroup className="pt-3 group-data-[collapsible=icon]:pt-4">
               <SidebarGroupContent>
-                <SidebarMenu>
+                <SidebarMenu className="group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:gap-[13px]">
                   <SidebarMenuItem>
                     <SidebarMenuButton
-                      className="h-9 rounded-lg px-1.5 text-sm [&>svg]:size-5 text-foreground transition-colors duration-150 hover:bg-foreground/10 hover:text-foreground"
+                      className="h-9 rounded-lg px-1.5 text-sm [&>svg]:size-5 text-foreground transition-colors duration-150 hover:bg-foreground/10 hover:text-foreground group-data-[collapsible=icon]:size-10! group-data-[collapsible=icon]:rounded-xl group-data-[collapsible=icon]:px-[9px]!"
                       onClick={handleNewChat}
                       tooltip="New Chat"
                     >
@@ -119,7 +119,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                   </SidebarMenuItem>
                   <SidebarMenuItem>
                     <SidebarMenuButton
-                      className="h-9 rounded-lg px-1.5 text-sm [&>svg]:size-5 text-foreground transition-colors duration-150 hover:bg-foreground/10 hover:text-foreground data-[active=true]:bg-foreground/10"
+                      className="h-9 rounded-lg px-1.5 text-sm [&>svg]:size-5 text-foreground transition-colors duration-150 hover:bg-foreground/10 hover:text-foreground data-[active=true]:bg-foreground/10 group-data-[collapsible=icon]:size-10! group-data-[collapsible=icon]:rounded-xl group-data-[collapsible=icon]:px-[9px]!"
                       data-testid="sidebar-saved-responses"
                       isActive={isPageRoute(pathname)}
                       onClick={handleSaved}
@@ -134,7 +134,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
             </SidebarGroup>
             <SidebarHistory user={user} />
           </SidebarContent>
-          <SidebarFooter className="border-t border-sidebar-border px-1 pt-2 pb-3">
+          <SidebarFooter className="px-1 pt-2 pb-3 group-data-[collapsible=icon]:pb-2">
             {user ? <SidebarUserNav user={user} /> : null}
           </SidebarFooter>
         </div>

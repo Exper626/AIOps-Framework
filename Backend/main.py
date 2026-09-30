@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
+from pydantic import BaseModel, Field
 
 from config import settings
 from pipeline.chat import ChatRequest, run_chat
@@ -8,6 +9,7 @@ from pipeline.diagram import Diagram
 from pipeline.memory import delete_all_memories, delete_memory, list_memories
 from pipeline.errors import PipelineError
 from pipeline.models import DEFAULT_MODEL, list_self_hosted_models, resolve_model
+from pipeline.title import write_title
 from pipeline.topology_image import build_graph, render_png, to_data_url
 
 app = FastAPI(title="AIOps Backend", version="0.1.0")
@@ -49,6 +51,16 @@ def chat(request: ChatRequest):
 
     answer_model = resolve_model(request.answer_model or DEFAULT_MODEL, "text")
     return StreamingResponse(run_chat(request, answer_model), media_type="application/x-ndjson")
+
+
+class TitleRequest(BaseModel):
+    message: str = Field(min_length=1)
+
+
+@app.post("/title")
+def title(request: TitleRequest):
+    # The name of a new chat in the sidebar, from its first message
+    return {"title": write_title(request.message)}
 
 
 @app.post("/diagram/image")

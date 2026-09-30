@@ -14,7 +14,6 @@ import {
   PlusIcon,
   SearchIcon,
   SignpostIcon,
-  TextSearchIcon,
   Trash2Icon,
   XIcon,
 } from "lucide-react";
@@ -69,7 +68,7 @@ type Tab = ModelTask | "agents" | "knowledge" | "memory";
 const MODEL_TAB_ICONS: Record<ModelTask, ReactNode> = {
   answer: <MessageSquareTextIcon />,
   contextManagement: <LayersIcon />,
-  query: <TextSearchIcon />,
+  retrieval: <ListFilterIcon />,
   router: <SignpostIcon />,
   visionDescription: <EyeIcon />,
 };
@@ -80,7 +79,6 @@ const AGENT_ICONS: Record<AgentId, ReactNode> = {
   diagram: <NetworkIcon />,
   knowledgeBase: <BookOpenIcon />,
   memory: <BrainIcon />,
-  query: <TextSearchIcon />,
   retrievalAgent: <ListFilterIcon />,
   router: <SignpostIcon />,
   vision: <EyeIcon />,

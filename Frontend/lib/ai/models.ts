@@ -1,11 +1,3 @@
-export const titleModel = {
-  description: "Fast model for title generation",
-  gatewayOrder: ["fireworks", "bedrock"],
-  id: "moonshotai/kimi-k2.5",
-  name: "Kimi K2.5",
-  provider: "moonshotai",
-};
-
 export type ModelCapabilities = {
   tools: boolean;
   vision: boolean;

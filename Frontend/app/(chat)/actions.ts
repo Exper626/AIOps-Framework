@@ -1,12 +1,10 @@
 "use server";
 
-import { generateText, type UIMessage } from "ai";
+import type { UIMessage } from "ai";
 import { cookies } from "next/headers";
 import { auth } from "@/app/(auth)/auth";
 import type { VisibilityType } from "@/components/chat/visibility-selector";
-import { titleModel } from "@/lib/ai/models";
-import { titlePrompt } from "@/lib/ai/prompts";
-import { getTitleModel } from "@/lib/ai/providers";
+import { writeChatTitle } from "@/lib/backend";
 import {
   deleteMessagesByChatIdAfterTimestamp,
   getChatById,
@@ -20,21 +18,27 @@ export async function saveChatModelAsCookie(model: string) {
   cookieStore.set("chat-model", model);
 }
 
-
-
-
+// Written by the backend's default model; the start of the message when the
+// backend can't name it
 export async function generateTitleFromUserMessage({
   message,
 }: {
   message: UIMessage;
 }) {
   const text = getTextFromMessage(message);
-  // Just use the first ~50 chars of the user message as the title
-  return text.slice(0, 50).trim() || "New chat";
+  const fallback = text.slice(0, 50).trim() || "New chat";
+
+  if (!text.trim()) {
+    return fallback;
+  }
+
+  try {
+    return await writeChatTitle(text);
+  } catch (error) {
+    console.error("CHAT TITLE ERROR:", error);
+    return fallback;
+  }
 }
-
-
-
 
 export async function deleteTrailingMessages({ id }: { id: string }) {
   const session = await auth();

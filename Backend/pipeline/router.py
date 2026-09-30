@@ -52,8 +52,13 @@ def describe_plan(plan: Plan) -> str:
     return " → ".join(TASK_NAMES[task] for task in plan.tasks)
 
 
+def recent_conversation(history: list[dict]) -> str:
+    """The last few messages, each cut short, for agents that only need to follow the conversation"""
+    return "\n".join(f"{m['role']}: {m['content'][:MESSAGE_PREVIEW]}" for m in history[-RECENT_MESSAGES:]) or "(no earlier messages)"
+
+
 def run_router(ref: ModelRef, message: str, history: list[dict], images: int, drew_diagram: bool, trace: Trace) -> Plan:
-    recent = "\n".join(f"{m['role']}: {m['content'][:MESSAGE_PREVIEW]}" for m in history[-RECENT_MESSAGES:]) or "(no earlier messages)"
+    recent = recent_conversation(history)
     attached = [f"The user attached {images} image(s)." if images else "", "The user drew a network diagram." if drew_diagram else ""]
     agent_input = f"Conversation:\n{recent}\n\nNew message: {message}\n" + "\n".join(note for note in attached if note)
 

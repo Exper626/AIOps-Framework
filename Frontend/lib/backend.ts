@@ -12,7 +12,6 @@ export type BackendProgressEvent = {
     | "vision"
     | "memory"
     | "context"
-    | "query"
     | "router"
     | "vector"
     | "sql"
@@ -151,7 +150,7 @@ export async function callBackend(
     // Images attached to this message, as base64 data URLs
     images?: BackendImage[];
     routerModel?: ModelChoice;
-    queryModel?: ModelChoice;
+    retrievalModel?: ModelChoice;
     contextModel?: ModelChoice;
     // The signed-in user whose memories are used and updated; none when
     // memory is off in Settings
@@ -192,7 +191,7 @@ export async function callBackend(
         })),
         router_model: toBackendModel(options.routerModel),
         answer_model: toBackendModel(answerModel),
-        query_model: toBackendModel(options.queryModel),
+        retrieval_model: toBackendModel(options.retrievalModel),
         context_model: toBackendModel(options.contextModel),
         vision_model: toBackendModel(options.visionModel),
         user_id: options.userId ?? null,
@@ -344,6 +343,35 @@ export async function drawDiagramImage(diagram: NetworkDiagram) {
   }
 
   return image;
+}
+
+// A short name for a new chat, written by the backend's default model from
+// the chat's first message; throws with the reason when it can't
+export async function writeChatTitle(message: string) {
+  const url = getBackendUrl();
+
+  if (!url) {
+    throw new Error("BACKEND_URL is not configured");
+  }
+
+  const response = await fetch(`${url}/title`, {
+    body: JSON.stringify({ message }),
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+    signal: AbortSignal.timeout(20_000),
+  });
+
+  if (!response.ok) {
+    throw new Error(readErrorDetail(await response.text()));
+  }
+
+  const { title } = (await response.json()) as { title?: unknown };
+
+  if (typeof title !== "string" || !title.trim()) {
+    throw new Error("the backend sent no title back");
+  }
+
+  return title.trim();
 }
 
 // A saved memory as Settings → Memory lists it

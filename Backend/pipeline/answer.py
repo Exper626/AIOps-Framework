@@ -53,7 +53,6 @@ def describe_memories(memories: str) -> str:
 
 def build_answer_messages(
     message: str,
-    question: str,
     history: list[dict],
     descriptions: list[ImageDescription],
     diagram: Diagram | None,
@@ -68,16 +67,13 @@ def build_answer_messages(
 
     messages.extend(history)
 
-    if question != message:
-        question = f'{question}\n\n(The user\'s exact words: "{message}")'
-
     if descriptions:
-        question = f"{question}\n\n{describe_attachments(descriptions)}"
+        message = f"{message}\n\n{describe_attachments(descriptions)}"
 
     if diagram:
-        question = f"{question}\n\nThe user drew this network diagram:\n{describe_diagram(diagram)}"
+        message = f"{message}\n\nThe user drew this network diagram:\n{describe_diagram(diagram)}"
 
-    messages.append({"role": "user", "content": question})
+    messages.append({"role": "user", "content": message})
 
     return messages
 
@@ -90,8 +86,6 @@ def describe_messages(messages: list[dict]) -> str:
 
 
 def describe_sources(
-    message: str,
-    question: str,
     history: list[dict],
     descriptions: list[ImageDescription],
     diagram: Diagram | None,
@@ -101,7 +95,7 @@ def describe_sources(
     """What the answer was written from, for the trace, like "the question, the image and 1 passage"."""
     exchanges = sum(1 for m in history if m["role"] == "user")
     images = sum(1 for d in descriptions if d.description)
-    sources = ["the rewritten question" if question != message else "the question"]
+    sources = ["the question"]
 
     if exchanges:
         sources.append(plural(exchanges, "earlier exchange"))

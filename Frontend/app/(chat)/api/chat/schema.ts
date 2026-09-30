@@ -77,7 +77,7 @@ export const postRequestBodySchema = z.object({
     .object({
       answer: modelChoiceSchema,
       contextManagement: modelChoiceSchema,
-      query: modelChoiceSchema,
+      retrieval: modelChoiceSchema,
       router: modelChoiceSchema,
       visionDescription: modelChoiceSchema,
     })

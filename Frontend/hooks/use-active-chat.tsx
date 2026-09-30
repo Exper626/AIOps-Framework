@@ -185,7 +185,7 @@ export function ActiveChatProvider({ children }: { children: ReactNode }) {
             modelChoices: {
               answer: getModelChoice("answer"),
               contextManagement: getModelChoice("contextManagement"),
-              query: getModelChoice("query"),
+              retrieval: getModelChoice("retrieval"),
               router: getModelChoice("router"),
               visionDescription: getModelChoice("visionDescription"),
             },

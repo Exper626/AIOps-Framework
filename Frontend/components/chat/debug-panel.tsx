@@ -11,7 +11,6 @@ import {
   MessageSquareTextIcon,
   NetworkIcon,
   SignpostIcon,
-  TextSearchIcon,
 } from "lucide-react";
 import { type ReactNode, useCallback, useState } from "react";
 import { chatModels, visionModels } from "@/lib/ai/models";
@@ -60,7 +59,6 @@ const STEPS: {
     prefix: "memory search",
     task: false,
   },
-  { icon: <TextSearchIcon />, label: "Question", prefix: "query", task: false },
   {
     icon: <LayersIcon />,
     label: "Earlier messages",
@@ -191,7 +189,7 @@ function StepRow({ step }: { step: TraceStep }) {
         </span>
         <span
           className={cn(
-            "col-span-2 row-start-2 break-words text-foreground/85 sm:col-span-1 sm:col-start-2 sm:row-start-1",
+            "col-span-2 row-start-2 whitespace-pre-line break-words text-foreground/85 sm:col-span-1 sm:col-start-2 sm:row-start-1",
             failed && "text-red-400",
             step.fallback && "text-amber-500 dark:text-amber-400"
           )}

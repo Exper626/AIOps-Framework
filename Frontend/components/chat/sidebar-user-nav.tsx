@@ -52,10 +52,10 @@ export function SidebarUserNav({ user }: { user: User }) {
   }
 
   return (
-    <SidebarMenu>
+    <SidebarMenu className="group-data-[collapsible=icon]:items-center">
       <SidebarMenuItem>
         <SidebarMenuButton
-          className="h-10 rounded-lg bg-transparent px-1.5 transition-colors duration-150 hover:bg-foreground/10 group-data-[collapsible=icon]:w-10! group-data-[collapsible=icon]:px-1.5!"
+          className="h-10 rounded-lg bg-transparent px-1.5 transition-colors duration-150 hover:bg-foreground/10 group-data-[collapsible=icon]:size-10! group-data-[collapsible=icon]:rounded-xl group-data-[collapsible=icon]:px-1!"
           data-testid="user-nav-button"
           onClick={() => setSettingsOpen(true)}
           size="lg"
