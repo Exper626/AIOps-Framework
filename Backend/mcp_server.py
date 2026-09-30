@@ -7,20 +7,29 @@ that send "Authorization: Bearer <MCP_API_KEY>". For a client on this computer i
 
 import base64
 import hmac
+import json
+import zlib
 from typing import Literal
 
 from graphviz import ExecutableNotFound
-from mcp.server.mcpserver import Image, MCPServer
+from mcp.server.mcpserver import Context, Image, MCPServer
 from mcp.server.mcpserver.exceptions import ToolError
 from mcp.server.transport_security import TransportSecuritySettings
 from pydantic import BaseModel, ConfigDict, Field
+from starlette.requests import Request
 from starlette.responses import JSONResponse
 from starlette.types import ASGIApp, Receive, Scope, Send
 
 from config import settings
 from pipeline.agent import call_agent
 from pipeline.devices import DEVICE_KINDS
-from pipeline.diagram import DiagramContent, DiagramDevice, DiagramLink, to_diagram
+from pipeline.diagram import (
+    Diagram,
+    DiagramContent,
+    DiagramDevice,
+    DiagramLink,
+    to_diagram,
+)
 from pipeline.errors import describe_error
 from pipeline.knowledge import search_knowledge_base
 from pipeline.models import DEFAULT_MODEL
@@ -72,10 +81,51 @@ def search_devices(question: str, passages: int = 5) -> str:
     return build_context(chunks) if chunks else "Nothing in the knowledge base matches this question."
 
 
-@mcp.tool()
-def draw_network(devices: list[NetworkDevice], links: list[NetworkCable]) -> Image:
+# DeepSeek Harness and other MCP clients may not show the pictures tools return, only pictures linked in
+# the reply, so draw_network also gives a link to the same picture. The diagram travels inside the link
+# (compressed), so nothing is stored: main.py draws it again when the link is opened.
+PICTURE_PATH = "/diagram.png"
+MAX_PICTURE_DATA = 200_000
+
+
+def picture_link(diagram: Diagram, address: str) -> str:
+    index = {device.id: i for i, device in enumerate(diagram.devices)}
+    data = [
+        [[device.name, device.type, device.model] for device in diagram.devices],
+        [[index[link.source], index[link.target]] for link in diagram.links],
+    ]
+    packed = zlib.compress(json.dumps(data, separators=(",", ":")).encode(), 9)
+    return f"{address}{PICTURE_PATH}?d={base64.urlsafe_b64encode(packed).decode().rstrip('=')}"
+
+
+def read_picture_link(packed: str) -> Diagram | None:
+    """The diagram inside a picture link, or None when the link is broken"""
+    try:
+        data = zlib.decompressobj().decompress(base64.urlsafe_b64decode(packed + "=" * (-len(packed) % 4)), MAX_PICTURE_DATA)
+        devices, links = json.loads(data)
+        return to_diagram(
+            DiagramContent(
+                devices=[DiagramDevice(name=name, type=kind, model=model) for name, kind, model in devices],
+                links=[DiagramLink.model_validate({"from": devices[a][0], "to": devices[b][0]}) for a, b in links],
+            )
+        )
+    except (ValueError, TypeError, IndexError, zlib.error):
+        return None
+
+
+def public_address(request: Request) -> str:
+    """The backend's address as the client reached it (behind Railway's proxy, X-Forwarded-Proto says https)"""
+    scheme = request.headers.get("x-forwarded-proto", request.url.scheme).split(",")[0].strip()
+    host = request.headers.get("x-forwarded-host") or request.headers.get("host") or request.url.netloc
+    return f"{scheme}://{host}"
+
+
+@mcp.tool(structured_output=False)
+def draw_network(devices: list[NetworkDevice], links: list[NetworkCable], ctx: Context) -> list[Image | str]:
     """Draw a network diagram as a PNG with Cisco icons, core devices above end devices.
-    List each device once and each cable once (read_topology returns exactly this shape)."""
+    List each device once and each cable once (read_topology returns exactly this shape).
+    Returns the picture and a link to it: put the link in your reply as a Markdown image, since many apps
+    don't show pictures that tools return."""
     diagram = to_diagram(
         DiagramContent(
             devices=[DiagramDevice(name=d.name, type=d.type, model=d.model) for d in devices],
@@ -86,9 +136,17 @@ def draw_network(devices: list[NetworkDevice], links: list[NetworkCable]) -> Ima
         raise ToolError("Give at least one device to draw.")
 
     try:
-        return Image(data=build_graph(diagram).pipe(), format="png")
+        picture = Image(data=build_graph(diagram).pipe(), format="png")
     except ExecutableNotFound as error:
         raise ToolError("Graphviz isn't installed on this computer, so it can't draw (graphviz.org/download).") from error
+
+    # Over stdin/stdout there's no web address to link to
+    request = ctx.request_context.request
+    if not isinstance(request, Request):
+        return [picture]
+
+    link = picture_link(diagram, public_address(request))
+    return [picture, f"Show the user the picture by putting this Markdown image in your reply:\n\n![Network diagram]({link})"]
 
 
 NOT_AN_IMAGE = (

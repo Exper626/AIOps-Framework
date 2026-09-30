@@ -1,12 +1,12 @@
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, StreamingResponse
+from fastapi.responses import JSONResponse, Response, StreamingResponse
 from pydantic import BaseModel, Field
 
 from config import settings
-from mcp_server import McpEndpoint, mcp
+from mcp_server import PICTURE_PATH, McpEndpoint, mcp, read_picture_link
 from pipeline.chat import ChatRequest, run_chat
 from pipeline.diagram import Diagram
 from pipeline.memory import delete_all_memories, delete_memory, list_memories
@@ -76,15 +76,30 @@ def title(request: TitleRequest):
     return {"title": write_title(request.message)}
 
 
-@app.post("/diagram/image")
-def diagram_image(diagram: Diagram):
-    # Redraws an answer's picture after someone edits the diagram in the chat
+def check_size(diagram: Diagram) -> None:
     if not diagram.devices:
         raise PipelineError("The diagram has no devices to draw")
     if len(diagram.devices) > 200 or len(diagram.links) > 500:
         raise PipelineError("The diagram is too big to draw (at most 200 devices and 500 cables)")
 
+
+@app.post("/diagram/image")
+def diagram_image(diagram: Diagram):
+    # Redraws an answer's picture after someone edits the diagram in the chat
+    check_size(diagram)
     return {"image": to_data_url(render_png(build_graph(diagram)))}
+
+
+@app.get(PICTURE_PATH)
+def diagram_picture(d: str = Query(max_length=20_000)):
+    # The pictures draw_network links to (mcp_server.py), drawn again from the diagram inside the link
+    diagram = read_picture_link(d)
+    if diagram is None:
+        raise PipelineError("This picture link is broken")
+
+    check_size(diagram)
+    png = render_png(build_graph(diagram))
+    return Response(png, media_type="image/png", headers={"Cache-Control": "public, max-age=31536000, immutable"})
 
 
 @app.get("/memories")
