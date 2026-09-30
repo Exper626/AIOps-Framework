@@ -1,9 +1,12 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel, Field
 
 from config import settings
+from mcp_server import McpEndpoint, mcp
 from pipeline.chat import ChatRequest, run_chat
 from pipeline.diagram import Diagram
 from pipeline.memory import delete_all_memories, delete_memory, list_memories
@@ -12,7 +15,15 @@ from pipeline.models import DEFAULT_MODEL, list_self_hosted_models, resolve_mode
 from pipeline.title import write_title
 from pipeline.topology_image import build_graph, render_png, to_data_url
 
-app = FastAPI(title="AIOps Backend", version="0.1.0")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # The MCP tools' sessions (mcp_server.py)
+    async with mcp.session_manager.run():
+        yield
+
+
+app = FastAPI(title="AIOps Backend", version="0.1.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -21,6 +32,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+# MCP clients (DeepSeek Harness, Claude Desktop...) use the assistant's tools at /mcp (with MCP_API_KEY once set)
+app.add_middleware(McpEndpoint, key=settings.mcp_api_key)
 
 
 @app.exception_handler(PipelineError)

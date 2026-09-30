@@ -26,6 +26,9 @@ class Settings(BaseSettings):
     modal_token_id: str = ""
     modal_token_secret: str = ""
     modal_environment: str = ""
+    # The key MCP clients send as "Authorization: Bearer <key>" to use the tools at /mcp; while it's empty,
+    # anyone with the backend's address can use them
+    mcp_api_key: str = ""
     debug_trace: bool = False
     allowed_origins: str = "*"
     vision_timeout_seconds: float = 40

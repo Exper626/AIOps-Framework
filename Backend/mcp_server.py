@@ -1,40 +1,37 @@
-import argparse
+"""The assistant's tools for MCP clients (DeepSeek Harness, Claude Desktop, Cursor, VS Code...): search the
+device knowledge base, draw a network with Graphviz, and read a topology image.
+
+main.py serves them at /mcp: to anyone with the address while MCP_API_KEY is empty, else only to clients
+that send "Authorization: Bearer <MCP_API_KEY>". For a client on this computer instead, run
+`python mcp_server.py` in this folder (over stdin/stdout)."""
+
 import base64
 import hmac
-import os
-import sys
-from pathlib import Path
 from typing import Literal
 
-from dotenv import load_dotenv
+from graphviz import ExecutableNotFound
+from mcp.server.mcpserver import Image, MCPServer
+from mcp.server.mcpserver.exceptions import ToolError
+from mcp.server.transport_security import TransportSecuritySettings
+from pydantic import BaseModel, ConfigDict, Field
+from starlette.responses import JSONResponse
+from starlette.types import ASGIApp, Receive, Scope, Send
 
-HERE = Path(__file__).resolve().parent
-BACKEND = HERE.parent / "Backend"
+from config import settings
+from pipeline.agent import call_agent
+from pipeline.devices import DEVICE_KINDS
+from pipeline.diagram import DiagramContent, DiagramDevice, DiagramLink, to_diagram
+from pipeline.errors import describe_error
+from pipeline.knowledge import search_knowledge_base
+from pipeline.models import DEFAULT_MODEL
+from pipeline.topology_image import build_graph
+from pipeline.trace import Trace
+from rag.prompt import build_context
 
-# MCP/.env first (MCP_API_KEY), then the Backend's keys; neither replaces a variable already set
-load_dotenv(HERE / ".env")
-load_dotenv(BACKEND / ".env")
-sys.path.insert(0, str(BACKEND))
+MCP_PATH = "/mcp"
 
-from graphviz import ExecutableNotFound  # noqa: E402
-from mcp.server.mcpserver import Image, MCPServer  # noqa: E402
-from mcp.server.mcpserver.exceptions import ToolError  # noqa: E402
-from mcp.server.transport_security import TransportSecuritySettings  # noqa: E402
-from pydantic import BaseModel, ConfigDict, Field  # noqa: E402
-from starlette.responses import JSONResponse  # noqa: E402
-from starlette.types import ASGIApp, Receive, Scope, Send  # noqa: E402
-
-from config import settings  # noqa: E402
-from pipeline.agent import call_agent  # noqa: E402
-from pipeline.diagram import DiagramContent, DiagramDevice, DiagramLink, to_diagram  # noqa: E402
-from pipeline.errors import describe_error  # noqa: E402
-from pipeline.knowledge import search_knowledge_base  # noqa: E402
-from pipeline.models import DEFAULT_MODEL  # noqa: E402
-from pipeline.topology_image import build_graph  # noqa: E402
-from pipeline.trace import Trace  # noqa: E402
-from rag.prompt import build_context  # noqa: E402
-
-DeviceType = Literal["router", "multilayer_switch", "switch", "firewall", "access_point", "server", "pc", "laptop", "cloud", "other"]
+# The kinds of device (pipeline/devices.py), each with its icon and place in the picture
+DeviceType = Literal[tuple(DEVICE_KINDS)]  # type: ignore[valid-type]
 
 mcp = MCPServer(
     name="SLT Network Assistant",
@@ -65,7 +62,8 @@ def search_devices(question: str, passages: int = 5) -> str:
     (their product pages: models, specifications, ports, PoE, throughput, supported features). Use it for
     questions about specific devices, vendors or product lines. Returns the matching pages with their URLs."""
     trace = Trace()
-    chunks = search_knowledge_base(DEFAULT_MODEL, question, True, True, max(1, min(passages, 20)), trace)
+    # No conversation, memories or image here: just the question
+    chunks = search_knowledge_base(DEFAULT_MODEL, question, [], "", [], True, True, max(1, min(passages, 20)), trace)
 
     failed = next((step["error"] for step in trace.steps if step["name"] == "knowledge base" and step.get("error")), None)
     if failed:
@@ -117,48 +115,35 @@ def read_topology(image: str) -> str:
         raise ToolError(describe_error(error, "read_topology", DEFAULT_MODEL)) from error
 
 
-class RequireKey:
-    """Lets a web request through only with the MCP key, sent as "Authorization: Bearer <key>"."""
+# The tools over HTTP. Clients reach the backend by its real address, not localhost, so the SDK's
+# localhost-only host check is off. Its sessions run in main.py's lifespan.
+http_app = mcp.streamable_http_app(
+    streamable_http_path=MCP_PATH,
+    stateless_http=True,
+    json_response=True,
+    transport_security=TransportSecuritySettings(enable_dns_rebinding_protection=False),
+)
+
+
+class McpEndpoint:
+    """Sends requests for /mcp to the tools (with the MCP key, once one is set); everything else goes on
+    to the backend's own routes."""
 
     def __init__(self, app: ASGIApp, key: str):
         self.app = app
-        self.expected = f"Bearer {key}".encode()
+        self.key = key
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
-        if scope["type"] == "http":
-            given = dict(scope["headers"]).get(b"authorization", b"")
-            if not hmac.compare_digest(given, self.expected):
-                response = JSONResponse({"detail": "Send the MCP key as 'Authorization: Bearer <key>'"}, status_code=401)
-                return await response(scope, receive, send)
+        if scope["type"] != "http" or scope["path"].rstrip("/") != MCP_PATH:
+            return await self.app(scope, receive, send)
 
-        await self.app(scope, receive, send)
+        given = dict(scope["headers"]).get(b"authorization", b"")
+        if self.key and not hmac.compare_digest(given, f"Bearer {self.key}".encode()):
+            response = JSONResponse({"detail": "Send the MCP key as 'Authorization: Bearer <key>'"}, status_code=401)
+            return await response(scope, receive, send)
 
-
-def serve_http(host: str, port: int) -> None:
-    import uvicorn
-
-    key = os.environ.get("MCP_API_KEY", "")
-    if not key:
-        sys.exit("Set MCP_API_KEY (in MCP/.env or the environment) before serving over HTTP.")
-
-    # Clients reach it by its real address, not localhost, so the SDK's localhost-only
-    # host check is off; the key protects it instead
-    app = mcp.streamable_http_app(
-        stateless_http=True,
-        json_response=True,
-        transport_security=TransportSecuritySettings(enable_dns_rebinding_protection=False),
-    )
-    uvicorn.run(RequireKey(app, key), host=host, port=port)
+        await http_app({**scope, "path": MCP_PATH}, receive, send)
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="SLT Network Assistant tools over MCP")
-    parser.add_argument("--http", action="store_true", help="serve over HTTP at /mcp instead of stdin/stdout")
-    parser.add_argument("--host", default="0.0.0.0")
-    parser.add_argument("--port", type=int, default=int(os.environ.get("PORT", 8001)))
-    args = parser.parse_args()
-
-    if args.http:
-        serve_http(args.host, args.port)
-    else:
-        mcp.run()
+    mcp.run()
