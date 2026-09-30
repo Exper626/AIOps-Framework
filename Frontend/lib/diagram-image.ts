@@ -5,6 +5,7 @@ export type PlacedDevice = {
   id: string;
   name: string;
   type: string;
+  icon?: string;
   model: string;
   x: number;
   y: number;
@@ -25,9 +26,9 @@ function escapeXml(text: string) {
     .replaceAll('"', "&quot;");
 }
 
-async function iconDataUrl(type: string) {
+async function iconDataUrl(src: string) {
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-  const svg = await (await fetch(`${basePath}${iconFor(type)}`)).text();
+  const svg = await (await fetch(`${basePath}${src}`)).text();
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
 }
 
@@ -40,10 +41,10 @@ async function toSvg(devices: PlacedDevice[], links: NetworkLink[]) {
   const height =
     Math.max(...devices.map((d) => d.y + d.height)) - top + PADDING;
 
-  const types = [...new Set(devices.map((d) => d.type))];
+  const sources = [...new Set(devices.map((d) => iconFor(d.type, d.icon)))];
   const icons = new Map(
     await Promise.all(
-      types.map(async (type) => [type, await iconDataUrl(type)] as const)
+      sources.map(async (src) => [src, await iconDataUrl(src)] as const)
     )
   );
 
@@ -78,7 +79,7 @@ async function toSvg(devices: PlacedDevice[], links: NetworkLink[]) {
 
     return `<g transform="translate(${x} ${y})">
       <rect width="${d.width}" height="${d.height}" rx="12" fill="#ffffff" stroke="#e5e7eb"/>
-      <image href="${icons.get(d.type)}" x="${middle - ICON_SIZE / 2}" y="8" width="${ICON_SIZE}" height="${ICON_SIZE}"/>
+      <image href="${icons.get(iconFor(d.type, d.icon))}" x="${middle - ICON_SIZE / 2}" y="8" width="${ICON_SIZE}" height="${ICON_SIZE}"/>
       <text x="${middle}" y="58" text-anchor="middle" font-size="11" font-weight="600" fill="#111827">${escapeXml(d.name)}</text>
       ${model}
     </g>`;

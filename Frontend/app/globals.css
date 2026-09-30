@@ -127,7 +127,8 @@
   --composer: #2c2c2e;
   --suggestion: #1e1e20;
   --suggestion-hover: #262628;
-  --popover: #1f1f21;
+  /* Menus sit above dialogs */
+  --popover: #262628;
   --popover-foreground: oklch(0.94 0 0);
   --primary: oklch(0.94 0 0);
   --primary-foreground: #151517;
@@ -166,6 +167,21 @@
   --shadow-composer-focus:
     0 0 0 1px oklch(1 0 0 / 0.1), 0 4px 16px -4px oklch(0 0 0 / 0.3),
     inset 0 1px 0 oklch(1 0 0 / 0.04);
+}
+
+/* Dialogs sit a step above the page (the sidebar's shade), with the borders,
+   fields, buttons and selected rows inside raised to match (the class is on
+   the dialogs in components/ui/dialog.tsx and alert-dialog.tsx). The diagram
+   canvas sets its own "dark" class, so it is listed too. */
+.dark .raised,
+.raised .dark {
+  --background: #1b1b1d;
+  --card: #232325;
+  --secondary: #262628;
+  --accent: #262628;
+  --muted: #28282a;
+  --border: #2f2f31;
+  --input: #323234;
 }
 
 @layer base {

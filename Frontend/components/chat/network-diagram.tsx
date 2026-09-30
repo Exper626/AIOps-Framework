@@ -30,6 +30,7 @@ import {
   DownloadIcon,
   LayoutGridIcon,
   PlusIcon,
+  ShapesIcon,
   Trash2Icon,
 } from "lucide-react";
 import Image from "next/image";
@@ -56,17 +57,27 @@ import {
   nextDeviceName,
 } from "@/lib/diagram";
 import { downloadDiagramImage } from "@/lib/diagram-image";
+import {
+  getRecentIcons,
+  iconPrefix,
+  type NetworkIcon,
+  rememberIcon,
+} from "@/lib/network-icons";
 import { cn, generateUUID } from "@/lib/utils";
 import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { IconPicker, type PickedDevice } from "./icon-picker";
 import { WithTooltip } from "./with-tooltip";
 
-type DeviceData = { name: string; type: string; model: string };
+// icon is "" when the device has its kind's icon
+type DeviceData = { name: string; type: string; model: string; icon: string };
 type DeviceNode = Node<DeviceData, "device">;
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -89,7 +100,12 @@ function toNodes(diagram: NetworkDiagram): DeviceNode[] {
   const positions = layoutDiagram(diagram);
 
   return diagram.devices.map((device) => ({
-    data: { model: device.model ?? "", name: device.name, type: device.type },
+    data: {
+      icon: device.icon ?? "",
+      model: device.model ?? "",
+      name: device.name,
+      type: device.type,
+    },
     id: device.id,
     position: positions.get(device.id) ?? { x: 0, y: 0 },
     type: "device",
@@ -108,6 +124,7 @@ function toEdges(diagram: NetworkDiagram): Edge[] {
 function toDiagram(nodes: DeviceNode[], edges: Edge[]): NetworkDiagram {
   return {
     devices: nodes.map((node) => ({
+      ...(node.data.icon ? { icon: node.data.icon } : {}),
       id: node.id,
       model: node.data.model,
       name: node.data.name,
@@ -153,14 +170,22 @@ function freeSpot(point: { x: number; y: number }, nodes: DeviceNode[]) {
   return spot;
 }
 
-function DeviceIcon({ type, size }: { type: string; size: number }) {
+function DeviceIcon({
+  type,
+  icon,
+  size,
+}: {
+  type: string;
+  icon?: string;
+  size: number;
+}) {
   return (
     <Image
       alt=""
       className="pointer-events-none select-none object-contain"
       draggable={false}
       height={size}
-      src={`${BASE_PATH}${iconFor(type)}`}
+      src={`${BASE_PATH}${iconFor(type, icon)}`}
       style={{ height: size, width: size }}
       unoptimized
       width={size}
@@ -265,7 +290,7 @@ function DeviceNodeView({ id, data, selected }: NodeProps<DeviceNode>) {
       data-testid="diagram-device"
       style={{ width: DEVICE_WIDTH }}
     >
-      <DeviceIcon size={36} type={data.type} />
+      <DeviceIcon icon={data.icon} size={36} type={data.type} />
 
       {editingId === id ? (
         <DeviceForm data={data} id={id} />
@@ -430,8 +455,9 @@ function Editor({
     [getEdges]
   );
 
+  // A picked icon is kept for the Recent row in "Add device"
   const addDevice = useCallback(
-    (type: string) => {
+    ({ type, icon }: PickedDevice) => {
       const bounds = wrapperRef.current?.getBoundingClientRect();
       const centre = bounds
         ? screenToFlowPosition({
@@ -443,7 +469,12 @@ function Editor({
       setNodes((current) => {
         const devices = current.map((node) => ({ id: node.id, ...node.data }));
         const device: DeviceNode = {
-          data: { model: "", name: nextDeviceName(type, devices), type },
+          data: {
+            icon: icon?.id ?? "",
+            model: "",
+            name: nextDeviceName(type, devices, icon && iconPrefix(icon)),
+            type,
+          },
           id: generateUUID(),
           position: freeSpot(
             {
@@ -461,8 +492,68 @@ function Editor({
           device,
         ];
       });
+
+      if (icon) {
+        rememberIcon(icon);
+      }
     },
     [screenToFlowPosition]
+  );
+
+  // The Recent row is read each time the menu opens
+  const [recentIcons, setRecentIcons] = useState<NetworkIcon[]>([]);
+  const handleAddMenu = useCallback((open: boolean) => {
+    if (open) {
+      setRecentIcons(getRecentIcons());
+    }
+  }, []);
+
+  // "More devices" adds the picked device; "Change icon" gives the selected
+  // device the picked kind and icon, keeping its name, model and cables
+  const [picker, setPicker] = useState<"add" | "change" | null>(null);
+  const openMoreDevices = useCallback(() => setPicker("add"), []);
+  const openChangeIcon = useCallback(() => setPicker("change"), []);
+  const handlePickerOpen = useCallback((open: boolean) => {
+    if (!open) {
+      setPicker(null);
+    }
+  }, []);
+
+  const selectedDevices = nodes.filter((node) => node.selected);
+  const changingId =
+    selectedDevices.length === 1 ? selectedDevices[0].id : null;
+
+  const handlePick = useCallback(
+    (picked: PickedDevice) => {
+      if (picker === "add") {
+        addDevice(picked);
+        return;
+      }
+
+      if (!changingId) {
+        return;
+      }
+
+      setNodes((current) =>
+        current.map((node) =>
+          node.id === changingId
+            ? {
+                ...node,
+                data: {
+                  ...node.data,
+                  icon: picked.icon?.id ?? "",
+                  type: picked.type,
+                },
+              }
+            : node
+        )
+      );
+
+      if (picked.icon) {
+        rememberIcon(picked.icon);
+      }
+    },
+    [addDevice, changingId, picker]
   );
 
   const deleteSelected = useCallback(() => {
@@ -570,7 +661,7 @@ function Editor({
 
           {readOnly ? null : (
             <Panel className="flex gap-1.5" position="top-left">
-              <DropdownMenu>
+              <DropdownMenu onOpenChange={handleAddMenu}>
                 <DropdownMenuTrigger asChild>
                   <Button
                     className="h-7 gap-1 px-2 text-xs"
@@ -591,11 +682,55 @@ function Editor({
                       type={device.type}
                     />
                   ))}
+
+                  {recentIcons.length > 0 ? (
+                    <>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuLabel className="py-1 font-normal text-[11px] text-muted-foreground">
+                        Recent
+                      </DropdownMenuLabel>
+                      {recentIcons.map((icon) => (
+                        <AddDeviceItem
+                          icon={icon}
+                          key={icon.id}
+                          label={icon.name}
+                          onAdd={addDevice}
+                          type={icon.kind}
+                        />
+                      ))}
+                    </>
+                  ) : null}
+
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    className="gap-2 text-xs"
+                    data-testid="diagram-more-devices"
+                    onSelect={openMoreDevices}
+                  >
+                    <ShapesIcon className="size-[18px] p-px text-muted-foreground" />
+                    More devices…
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
 
+              <WithTooltip label="Pick another icon for the selected device">
+                <Button
+                  aria-label="Change icon"
+                  className="h-7 gap-1 px-2 text-xs"
+                  data-testid="diagram-change-icon"
+                  disabled={!changingId}
+                  onClick={openChangeIcon}
+                  size="sm"
+                  variant="outline"
+                >
+                  <ShapesIcon className="size-3.5" />
+                  <span className="hidden sm:inline">Change icon</span>
+                </Button>
+              </WithTooltip>
+
               <WithTooltip label="Delete the selected devices and cables">
                 <Button
+                  aria-label="Delete"
                   className="h-7 gap-1 px-2 text-xs"
                   data-testid="diagram-delete"
                   disabled={!hasSelection}
@@ -604,12 +739,13 @@ function Editor({
                   variant="outline"
                 >
                   <Trash2Icon className="size-3.5" />
-                  Delete
+                  <span className="hidden sm:inline">Delete</span>
                 </Button>
               </WithTooltip>
 
               <WithTooltip label="Arrange the devices automatically">
                 <Button
+                  aria-label="Tidy up"
                   className="h-7 gap-1 px-2 text-xs"
                   data-testid="diagram-tidy"
                   disabled={nodes.length === 0}
@@ -618,7 +754,7 @@ function Editor({
                   variant="outline"
                 >
                   <LayoutGridIcon className="size-3.5" />
-                  Tidy up
+                  <span className="hidden sm:inline">Tidy up</span>
                 </Button>
               </WithTooltip>
             </Panel>
@@ -667,6 +803,15 @@ function Editor({
           )}
         </ReactFlow>
       </div>
+
+      {readOnly ? null : (
+        <IconPicker
+          onOpenChange={handlePickerOpen}
+          onPick={handlePick}
+          open={picker !== null}
+          title={picker === "change" ? "Change icon" : "Add a device"}
+        />
+      )}
     </DiagramContext.Provider>
   );
 }
@@ -675,16 +820,21 @@ function AddDeviceItem({
   label,
   onAdd,
   type,
+  icon,
 }: {
   label: string;
-  onAdd: (type: string) => void;
+  onAdd: (picked: PickedDevice) => void;
   type: string;
+  icon?: NetworkIcon;
 }) {
-  const handleSelect = useCallback(() => onAdd(type), [onAdd, type]);
+  const handleSelect = useCallback(
+    () => onAdd({ icon, type }),
+    [icon, onAdd, type]
+  );
 
   return (
     <DropdownMenuItem className="gap-2 text-xs" onSelect={handleSelect}>
-      <DeviceIcon size={18} type={type} />
+      <DeviceIcon icon={icon?.id} size={18} type={type} />
       {label}
     </DropdownMenuItem>
   );

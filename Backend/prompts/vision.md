@@ -16,8 +16,11 @@ Output format:
 "devices": every device in the image, each one once.
 - "name": the SECOND line of the device's label, copied exactly ("Switch0", "Router2", "PC12", "Multilayer Switch5").
 - "model": the FIRST line of the label, copied exactly ("2950-24", "2621XM", "PC-PT", "3560-24PS").
-- "type": one of router, multilayer_switch, switch, firewall, access_point, server, pc, laptop, cloud, other.
-  Decide from the icon and the model: 3560-* and 3650-* are multilayer_switch, other switches are switch.
+- "type": one of router, multilayer_switch, switch, firewall, wlan_controller, hub, wireless_router, access_point,
+  server, modem, pc, laptop, tablet, ip_phone, printer, camera, cloud, other.
+  Decide from the icon and the model: 3560-* and 3650-* are multilayer_switch, other switches are switch;
+  HomeRouter-PT and WRT300N are wireless_router; 7960 and IP phones are ip_phone; SMARTPHONE-PT and TabletPC-PT are
+  tablet; DSL-Modem-PT and Cable-Modem-PT are modem; WLC-* is wlan_controller.
 - "ips": the IP addresses written in a note next to the device, copied exactly. A router can have several.
   Leave the field out when the image shows none.
 
@@ -31,7 +34,8 @@ Reading labels:
   model, write it in full: "Switch1" when only part of the "1" is hidden, "2960-24TT" when the last T is hidden.
 - Packet Tracer models, to complete a partly hidden model: 1841, 1941, 2620XM, 2621XM, 2811, 2901, 2911,
   ISR4321, ISR4331, CGR1240, Router-PT, Router-PT-Empty, 2950-24, 2950T-24, 2960-24TT, Switch-PT,
-  Switch-PT-Empty, 3560-24PS, 3650-24PS, PC-PT, Laptop-PT, Server-PT, AccessPoint-PT, Cloud-PT.
+  Switch-PT-Empty, 3560-24PS, 3650-24PS, PC-PT, Laptop-PT, Server-PT, AccessPoint-PT, Cloud-PT, Hub-PT,
+  HomeRouter-PT, WRT300N, WLC-2504, DSL-Modem-PT, Cable-Modem-PT, 7960, Printer-PT, SMARTPHONE-PT, TabletPC-PT.
   A label that clearly shows another model is copied as it is.
 - When a name or model can't be read at all, write "unknown-1", "unknown-2" and so on for names (so every name
   stays different), and "unknown" for models.
@@ -39,8 +43,8 @@ Reading labels:
   and "unknown" for what can't be read.
 
 Order (always the same, so the same image gives the same JSON):
-- Devices by type in this order: router, multilayer_switch, switch, firewall, access_point, server, pc, laptop,
-  cloud, other. Within a type, by the number in the name (Switch2 before Switch10), with unknown-N last.
+- Devices by type in the order of the list above: router, multilayer_switch, switch, firewall, wlan_controller, hub,
+  wireless_router, access_point, server, modem, pc, laptop, tablet, ip_phone, printer, camera, cloud, other. Within a type, by the number in the name (Switch2 before Switch10), with unknown-N last.
 - In each link, "from" is the device that comes first in that order. Links are ordered by "from", then by "to".
 
 Rules:

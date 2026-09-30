@@ -1,23 +1,144 @@
-// New devices are named with a word people know (Router1, Switch1), keeping
-// only the abbreviations everyone uses (PC, AP, L3)
-export const DEVICE_TYPES = [
-  { label: "Cloud / Internet", prefix: "Cloud", type: "cloud" },
-  { label: "Firewall", prefix: "Firewall", type: "firewall" },
-  { label: "Router", prefix: "Router", type: "router" },
-  { label: "Layer 3 switch", prefix: "L3Switch", type: "multilayer_switch" },
-  { label: "Switch", prefix: "Switch", type: "switch" },
-  { label: "Access point", prefix: "AP", type: "access_point" },
-  { label: "Server", prefix: "Server", type: "server" },
-  { label: "PC", prefix: "PC", type: "pc" },
-  { label: "Laptop", prefix: "Laptop", type: "laptop" },
-] as const;
+// The kinds of device a diagram has, as the backend knows them
+// (Backend/pipeline/devices.py): the AI picks one for each device, and it
+// decides the device's row, default icon and the start of its name. New
+// devices are named with a word people know (Router1, Switch1), keeping only
+// the abbreviations everyone uses (PC, AP, L3). A device can also get any icon
+// from lib/network-icons.json in the editor, and keeps its kind.
+type DeviceKind = { label: string; prefix: string; icon: string; row: number };
 
-export type DeviceType = (typeof DEVICE_TYPES)[number]["type"];
+const HOST_ROW = 6;
+
+export const DEVICE_KINDS: Record<string, DeviceKind> = {
+  access_point: {
+    icon: "access-point",
+    label: "Access point",
+    prefix: "AP",
+    row: 5,
+  },
+  building: { icon: "branch-office", label: "Site", prefix: "Site", row: 0 },
+  camera: {
+    icon: "video-camera",
+    label: "Camera",
+    prefix: "Camera",
+    row: HOST_ROW,
+  },
+  cloud: { icon: "cloud", label: "Cloud / Internet", prefix: "Cloud", row: 0 },
+  database: {
+    icon: "relational-database",
+    label: "Database",
+    prefix: "DB",
+    row: HOST_ROW,
+  },
+  firewall: { icon: "firewall", label: "Firewall", prefix: "Firewall", row: 1 },
+  hub: { icon: "hub", label: "Hub", prefix: "Hub", row: 4 },
+  ip_phone: {
+    icon: "ip-phone",
+    label: "IP phone",
+    prefix: "Phone",
+    row: HOST_ROW,
+  },
+  laptop: { icon: "laptop", label: "Laptop", prefix: "Laptop", row: HOST_ROW },
+  load_balancer: {
+    icon: "local-director",
+    label: "Load balancer",
+    prefix: "LB",
+    row: 3,
+  },
+  modem: { icon: "modem", label: "Modem", prefix: "Modem", row: 1 },
+  multilayer_switch: {
+    icon: "layer-3-switch",
+    label: "Layer 3 switch",
+    prefix: "L3Switch",
+    row: 3,
+  },
+  other: {
+    icon: "general-appliance",
+    label: "Other device",
+    prefix: "Device",
+    row: HOST_ROW,
+  },
+  pbx: { icon: "pbx", label: "Phone system", prefix: "PBX", row: HOST_ROW },
+  pc: { icon: "pc", label: "PC", prefix: "PC", row: HOST_ROW },
+  person: {
+    icon: "standing-man",
+    label: "User",
+    prefix: "User",
+    row: HOST_ROW,
+  },
+  printer: {
+    icon: "printer",
+    label: "Printer",
+    prefix: "Printer",
+    row: HOST_ROW,
+  },
+  router: { icon: "router", label: "Router", prefix: "Router", row: 2 },
+  server: {
+    icon: "file-server",
+    label: "Server",
+    prefix: "Server",
+    row: HOST_ROW,
+  },
+  storage: {
+    icon: "fc-storage",
+    label: "Storage",
+    prefix: "Storage",
+    row: HOST_ROW,
+  },
+  switch: {
+    icon: "workgroup-switch",
+    label: "Switch",
+    prefix: "Switch",
+    row: 4,
+  },
+  tablet: { icon: "tablet", label: "Tablet", prefix: "Tablet", row: HOST_ROW },
+  vpn_gateway: {
+    icon: "vpn-gateway",
+    label: "VPN gateway",
+    prefix: "VPN",
+    row: 1,
+  },
+  wan_equipment: {
+    icon: "csu-dsu",
+    label: "WAN device",
+    prefix: "WAN",
+    row: 1,
+  },
+  wireless_router: {
+    icon: "wireless-router",
+    label: "Wireless router",
+    prefix: "WRouter",
+    row: 4,
+  },
+  wlan_controller: {
+    icon: "wlan-controller",
+    label: "Wireless controller",
+    prefix: "WLC",
+    row: 3,
+  },
+};
+
+// The everyday devices, first in "Add device"; the rest are under "More devices"
+export const DEVICE_TYPES = [
+  "cloud",
+  "firewall",
+  "router",
+  "multilayer_switch",
+  "switch",
+  "access_point",
+  "wireless_router",
+  "server",
+  "pc",
+  "laptop",
+  "ip_phone",
+  "printer",
+].map((type) => ({ type, ...DEVICE_KINDS[type] }));
 
 export type NetworkDevice = {
   id: string;
   name: string;
   type: string;
+  // An icon picked in the editor instead of the kind's own
+  icon?: string;
   model?: string;
   x?: number | null;
   y?: number | null;
@@ -45,22 +166,26 @@ export const EMPTY_DIAGRAM: NetworkDiagram = { devices: [], links: [] };
 const COLUMN_WIDTH = 150;
 const ROW_HEIGHT = 130;
 
-function knownType(type: string) {
-  return DEVICE_TYPES.find((device) => device.type === type);
+function kindOf(type: string) {
+  return DEVICE_KINDS[type] ?? DEVICE_KINDS.other;
 }
 
-export function iconFor(type: string) {
-  return `/network-icons/${knownType(type)?.type ?? "router"}.svg`;
+// The picked icon, or else the kind's
+export function iconFor(type: string, icon?: string) {
+  return `/network-icons/${icon || kindOf(type).icon}.svg`;
 }
 
 // Hosts share the bottom row, so a PC and a server sit side by side
 function rowOf(type: string) {
-  const rank = DEVICE_TYPES.findIndex((device) => device.type === type);
-  return rank === -1 ? 2 : Math.min(rank, 6);
+  return kindOf(type).row;
 }
 
-export function nextDeviceName(type: string, devices: NetworkDevice[]) {
-  const prefix = knownType(type)?.prefix ?? "Device";
+// The kind's prefix ("Router1"), or the given one for a device added by its icon ("VPNGateway1")
+export function nextDeviceName(
+  type: string,
+  devices: NetworkDevice[],
+  prefix = kindOf(type).prefix
+) {
   const names = new Set(devices.map((device) => device.name));
   let number = 1;
 

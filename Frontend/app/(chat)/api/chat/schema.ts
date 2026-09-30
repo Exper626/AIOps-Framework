@@ -16,6 +16,8 @@ export const diagramSchema = z.object({
   devices: z
     .array(
       z.object({
+        // An icon picked in the diagram editor (lib/network-icons.json)
+        icon: z.string().max(80).optional(),
         id: z.string().min(1).max(100),
         model: z.string().max(100).optional(),
         name: z.string().max(100),

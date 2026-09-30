@@ -1,0 +1,2010 @@
+{
+  "categories": [
+    "Routers",
+    "Switches",
+    "Security",
+    "Wireless",
+    "Servers",
+    "Computers & devices",
+    "Phones & modems",
+    "Voice & video",
+    "Storage",
+    "Hubs & gateways",
+    "WAN & optical",
+    "Content & load balancing",
+    "Modules & controllers",
+    "Buildings",
+    "People",
+    "Other"
+  ],
+  "icons": [
+    {
+      "id": "10700",
+      "name": "10700",
+      "category": "Routers",
+      "kind": "router",
+      "source": "routers/10700.svg"
+    },
+    {
+      "id": "7500-ars-7513",
+      "name": "7500 ARS (7513)",
+      "category": "Routers",
+      "kind": "router",
+      "source": "misc/7500ars (7513).svg"
+    },
+    {
+      "id": "asr-1000-series",
+      "name": "ASR 1000 Series",
+      "category": "Routers",
+      "kind": "router",
+      "source": "misc/ASR 1000 Series.svg"
+    },
+    {
+      "id": "atm-router",
+      "name": "ATM Router",
+      "category": "Routers",
+      "kind": "router",
+      "source": "routers/ATM Router.svg"
+    },
+    {
+      "id": "atm-tag-switch-router",
+      "name": "ATM Tag Switch Router",
+      "category": "Routers",
+      "kind": "router",
+      "source": "routers/ATM Tag Switch Router.svg"
+    },
+    {
+      "id": "broadcast-router",
+      "name": "Broadcast Router",
+      "category": "Routers",
+      "kind": "router",
+      "source": "routers/Broadcast Router.svg"
+    },
+    {
+      "id": "carrier-routing-system",
+      "name": "Carrier Routing System",
+      "category": "Routers",
+      "kind": "router",
+      "source": "misc/Carrier Routing System.svg"
+    },
+    {
+      "id": "cisco-1000",
+      "name": "Cisco 1000",
+      "category": "Routers",
+      "kind": "router",
+      "source": "misc/Cisco 1000.svg"
+    },
+    {
+      "id": "content-switch-router",
+      "name": "Content Switch Router",
+      "category": "Routers",
+      "kind": "router",
+      "source": "routers/Content Switch Router.svg"
+    },
+    {
+      "id": "counter-service-router",
+      "name": "Counter Service Router",
+      "category": "Routers",
+      "kind": "router",
+      "source": "routers/Counter Service Router.svg"
+    },
+    {
+      "id": "gigabit-atm-switch-router",
+      "name": "Gigabit ATM Switch Router",
+      "category": "Routers",
+      "kind": "router",
+      "source": "routers/Gigabit ATM Switch Router.svg"
+    },
+    {
+      "id": "iad-router",
+      "name": "IAD Router",
+      "category": "Routers",
+      "kind": "router",
+      "source": "routers/IAD Router.svg"
+    },
+    {
+      "id": "ip-telephony-router",
+      "name": "IP Telephony Router",
+      "category": "Routers",
+      "kind": "router",
+      "source": "routers/IP Telephony Router.svg"
+    },
+    {
+      "id": "iscsi-router",
+      "name": "iSCSI Router",
+      "category": "Routers",
+      "kind": "router",
+      "source": "routers/ISCI Router.svg"
+    },
+    {
+      "id": "mobile-access-router",
+      "name": "Mobile Access Router",
+      "category": "Routers",
+      "kind": "router",
+      "source": "routers/Mobile Access Router.svg"
+    },
+    {
+      "id": "netflow-router",
+      "name": "NetFlow Router",
+      "category": "Routers",
+      "kind": "router",
+      "source": "routers/NetFlow Router.svg"
+    },
+    {
+      "id": "optical-services-router",
+      "name": "Optical Services Router",
+      "category": "Routers",
+      "kind": "router",
+      "source": "routers/Optical Services Router.svg"
+    },
+    {
+      "id": "router",
+      "name": "Router",
+      "category": "Routers",
+      "kind": "router",
+      "source": "routers/Router.svg"
+    },
+    {
+      "id": "router-in-building",
+      "name": "Router In Building",
+      "category": "Routers",
+      "kind": "router",
+      "source": "routers/Router In Building.svg"
+    },
+    {
+      "id": "router-with-silicon-switch",
+      "name": "Router With Silicon Switch",
+      "category": "Routers",
+      "kind": "router",
+      "source": "routers/Router With Silicon Switch.svg"
+    },
+    {
+      "id": "service-router",
+      "name": "Service Router",
+      "category": "Routers",
+      "kind": "router",
+      "source": "routers/Service Router.svg"
+    },
+    {
+      "id": "space-router",
+      "name": "Space Router",
+      "category": "Routers",
+      "kind": "router",
+      "source": "routers/Space Router.svg"
+    },
+    {
+      "id": "storage-router",
+      "name": "Storage Router",
+      "category": "Routers",
+      "kind": "router",
+      "source": "routers/Storage Router.svg"
+    },
+    {
+      "id": "tdm-router",
+      "name": "TDM Router",
+      "category": "Routers",
+      "kind": "router",
+      "source": "routers/TDM Router.svg"
+    },
+    {
+      "id": "ubr-910",
+      "name": "UBR 910",
+      "category": "Routers",
+      "kind": "router",
+      "source": "misc/UBR 910.svg"
+    },
+    {
+      "id": "voice-router",
+      "name": "Voice Router",
+      "category": "Routers",
+      "kind": "router",
+      "source": "routers/Voice Router.svg"
+    },
+    {
+      "id": "wavelength-router",
+      "name": "Wavelength Router",
+      "category": "Routers",
+      "kind": "router",
+      "source": "routers/Wavelength Router.svg"
+    },
+    {
+      "id": "wireless-router",
+      "name": "Wireless Router",
+      "category": "Routers",
+      "kind": "wireless_router",
+      "source": "routers/Wireless Router.svg"
+    },
+    {
+      "id": "6700-series",
+      "name": "6700 Series",
+      "category": "Switches",
+      "kind": "switch",
+      "source": "misc/6700 Series.svg"
+    },
+    {
+      "id": "atm-fast-gigabit-etherswitch",
+      "name": "ATM Fast Gigabit Etherswitch",
+      "category": "Switches",
+      "kind": "switch",
+      "source": "switches/ATM Fast Gigabit Etherswitch.svg"
+    },
+    {
+      "id": "atm-switch",
+      "name": "ATM Switch",
+      "category": "Switches",
+      "kind": "switch",
+      "source": "switches/ATM Switch.svg"
+    },
+    {
+      "id": "bridge",
+      "name": "Bridge",
+      "category": "Switches",
+      "kind": "switch",
+      "source": "misc/Bridge.svg"
+    },
+    {
+      "id": "class-4-5-switch",
+      "name": "Class 4/5 Switch",
+      "category": "Switches",
+      "kind": "pbx",
+      "source": "switches/Class 4_5 Switch.svg"
+    },
+    {
+      "id": "content-service-switch-700",
+      "name": "Content Service Switch 700",
+      "category": "Switches",
+      "kind": "load_balancer",
+      "source": "switches/Content Service Switch 700.svg"
+    },
+    {
+      "id": "content-switch",
+      "name": "Content Switch",
+      "category": "Switches",
+      "kind": "load_balancer",
+      "source": "switches/Content Switch.svg"
+    },
+    {
+      "id": "fibre-channel-fabric-switch",
+      "name": "Fibre Channel Fabric Switch",
+      "category": "Switches",
+      "kind": "switch",
+      "source": "switches/Fibre Channel Fabric Switch.svg"
+    },
+    {
+      "id": "generic-softswitch",
+      "name": "Generic Softswitch",
+      "category": "Switches",
+      "kind": "pbx",
+      "source": "switches/Generic Softswitch.svg"
+    },
+    {
+      "id": "intelliswitch-stack",
+      "name": "Intelliswitch Stack",
+      "category": "Switches",
+      "kind": "switch",
+      "source": "switches/Intelliswitch Stack.svg"
+    },
+    {
+      "id": "isdn-switch",
+      "name": "ISDN Switch",
+      "category": "Switches",
+      "kind": "switch",
+      "source": "switches/ISDN Switch.svg"
+    },
+    {
+      "id": "layer-2-remote-switch",
+      "name": "Layer 2 Remote Switch",
+      "category": "Switches",
+      "kind": "switch",
+      "source": "switches/Layer 2 Remote Switch.svg"
+    },
+    {
+      "id": "layer-3-switch",
+      "name": "Layer 3 Switch",
+      "category": "Switches",
+      "kind": "multilayer_switch",
+      "source": "switches/Layer 3 Switch.svg"
+    },
+    {
+      "id": "me1100",
+      "name": "ME1100",
+      "category": "Switches",
+      "kind": "switch",
+      "source": "misc/ME1100.svg"
+    },
+    {
+      "id": "mgx-8000-multiservice-switch",
+      "name": "MGX 8000 Multiservice Switch",
+      "category": "Switches",
+      "kind": "switch",
+      "source": "switches/MGX 8000 Multiservice Switch.svg"
+    },
+    {
+      "id": "multi-fabric-server-switch",
+      "name": "Multi Fabric Server Switch",
+      "category": "Switches",
+      "kind": "switch",
+      "source": "switches/Multi Fabric Server Switch.svg"
+    },
+    {
+      "id": "multilayer-remote-switch",
+      "name": "Multilayer Remote Switch",
+      "category": "Switches",
+      "kind": "multilayer_switch",
+      "source": "switches/Multilayer Remote Switch.svg"
+    },
+    {
+      "id": "multiswitch-device",
+      "name": "Multiswitch Device",
+      "category": "Switches",
+      "kind": "switch",
+      "source": "switches/Multiswitch Device.svg"
+    },
+    {
+      "id": "nexus-1000",
+      "name": "Nexus 1000",
+      "category": "Switches",
+      "kind": "switch",
+      "source": "misc/Nexus 1000.svg"
+    },
+    {
+      "id": "nexus-2000-fabric-extender",
+      "name": "Nexus 2000 Fabric Extender",
+      "category": "Switches",
+      "kind": "switch",
+      "source": "misc/Nexus 2000 Fabric Extender.svg"
+    },
+    {
+      "id": "nexus-5000",
+      "name": "Nexus 5000",
+      "category": "Switches",
+      "kind": "switch",
+      "source": "misc/Nexus 5000.svg"
+    },
+    {
+      "id": "nexus-7000",
+      "name": "Nexus 7000",
+      "category": "Switches",
+      "kind": "multilayer_switch",
+      "source": "misc/Nexus 7000.svg"
+    },
+    {
+      "id": "pbx-switch",
+      "name": "PBX Switch",
+      "category": "Switches",
+      "kind": "pbx",
+      "source": "switches/PBX Switch.svg"
+    },
+    {
+      "id": "programmable-switch",
+      "name": "Programmable Switch",
+      "category": "Switches",
+      "kind": "switch",
+      "source": "switches/Programmable Switch.svg"
+    },
+    {
+      "id": "server-switch",
+      "name": "Server Switch",
+      "category": "Switches",
+      "kind": "switch",
+      "source": "switches/Server Switch.svg"
+    },
+    {
+      "id": "simulit-layer-switch",
+      "name": "Simulit Layer Switch",
+      "category": "Switches",
+      "kind": "switch",
+      "source": "switches/SimulitLayer Switch.svg"
+    },
+    {
+      "id": "softswitch-pgw-mgc",
+      "name": "Softswitch PGW MGC",
+      "category": "Switches",
+      "kind": "pbx",
+      "source": "switches/Softswitch PGW MGC.svg"
+    },
+    {
+      "id": "virtual-layer-switch",
+      "name": "Virtual Layer Switch",
+      "category": "Switches",
+      "kind": "switch",
+      "source": "switches/Virtual Layer Switch.svg"
+    },
+    {
+      "id": "voice-atm-switch",
+      "name": "Voice ATM Switch",
+      "category": "Switches",
+      "kind": "pbx",
+      "source": "switches/Voice ATM Switch.svg"
+    },
+    {
+      "id": "voice-switch",
+      "name": "Voice Switch",
+      "category": "Switches",
+      "kind": "pbx",
+      "source": "switches/Voice Switch.svg"
+    },
+    {
+      "id": "vss",
+      "name": "VSS",
+      "category": "Switches",
+      "kind": "switch",
+      "source": "misc/VSS.svg"
+    },
+    {
+      "id": "workgroup-switch",
+      "name": "Workgroup Switch",
+      "category": "Switches",
+      "kind": "switch",
+      "source": "switches/Workgroup Switch.svg"
+    },
+    {
+      "id": "acs",
+      "name": "ACS",
+      "category": "Security",
+      "kind": "firewall",
+      "source": "misc/ACS.svg"
+    },
+    {
+      "id": "asa-5500",
+      "name": "ASA 5500",
+      "category": "Security",
+      "kind": "firewall",
+      "source": "misc/ASA 500.svg"
+    },
+    {
+      "id": "centri-firewall",
+      "name": "Centri Firewall",
+      "category": "Security",
+      "kind": "firewall",
+      "source": "security/Centir Firewall.svg"
+    },
+    {
+      "id": "cisco-ca",
+      "name": "Cisco CA",
+      "category": "Security",
+      "kind": "firewall",
+      "source": "misc/Cisco CA.svg"
+    },
+    {
+      "id": "cisco-security",
+      "name": "Cisco Security",
+      "category": "Security",
+      "kind": "firewall",
+      "source": "security/Cisco Security.svg"
+    },
+    {
+      "id": "cs-mars",
+      "name": "CS Mars",
+      "category": "Security",
+      "kind": "firewall",
+      "source": "misc/CS Mars.svg"
+    },
+    {
+      "id": "detector",
+      "name": "Detector",
+      "category": "Security",
+      "kind": "firewall",
+      "source": "misc/Detector.svg"
+    },
+    {
+      "id": "firewall",
+      "name": "Firewall",
+      "category": "Security",
+      "kind": "firewall",
+      "source": "security/Firewall.svg"
+    },
+    {
+      "id": "gatekeepers",
+      "name": "Gatekeepers",
+      "category": "Security",
+      "kind": "firewall",
+      "source": "security/Gatekeepers.svg"
+    },
+    {
+      "id": "guard",
+      "name": "Guard",
+      "category": "Security",
+      "kind": "firewall",
+      "source": "security/Guard.svg"
+    },
+    {
+      "id": "ios-firewall",
+      "name": "IOS Firewall",
+      "category": "Security",
+      "kind": "firewall",
+      "source": "security/IOS Firewall.svg"
+    },
+    {
+      "id": "key",
+      "name": "Key",
+      "category": "Security",
+      "kind": "other",
+      "source": "misc/Key.svg"
+    },
+    {
+      "id": "keys",
+      "name": "Keys",
+      "category": "Security",
+      "kind": "other",
+      "source": "misc/Keys.svg"
+    },
+    {
+      "id": "lock",
+      "name": "Lock",
+      "category": "Security",
+      "kind": "other",
+      "source": "security/Lock.svg"
+    },
+    {
+      "id": "nac-appliance",
+      "name": "NAC Appliance",
+      "category": "Security",
+      "kind": "firewall",
+      "source": "misc/NAC Appliance.svg"
+    },
+    {
+      "id": "net-ranger",
+      "name": "Net Ranger",
+      "category": "Security",
+      "kind": "firewall",
+      "source": "misc/Net Ranger.svg"
+    },
+    {
+      "id": "net-sonar",
+      "name": "Net Sonar",
+      "category": "Security",
+      "kind": "firewall",
+      "source": "misc/Net Sonar.svg"
+    },
+    {
+      "id": "network-security",
+      "name": "Network Security",
+      "category": "Security",
+      "kind": "firewall",
+      "source": "security/Network Security.svg"
+    },
+    {
+      "id": "pix-firewall",
+      "name": "Pix Firewall",
+      "category": "Security",
+      "kind": "firewall",
+      "source": "security/Pix Firewall.svg"
+    },
+    {
+      "id": "router-firewall",
+      "name": "Router Firewall",
+      "category": "Security",
+      "kind": "firewall",
+      "source": "security/Router Firewall.svg"
+    },
+    {
+      "id": "ssl-terminator",
+      "name": "SSL Terminator",
+      "category": "Security",
+      "kind": "firewall",
+      "source": "misc/SSL Terminator.svg"
+    },
+    {
+      "id": "vault",
+      "name": "Vault",
+      "category": "Security",
+      "kind": "firewall",
+      "source": "misc/Vault.svg"
+    },
+    {
+      "id": "vpn-concentrator",
+      "name": "VPN Concentrator",
+      "category": "Security",
+      "kind": "vpn_gateway",
+      "source": "misc/VPN Concenter.svg"
+    },
+    {
+      "id": "access-point",
+      "name": "Access Point",
+      "category": "Wireless",
+      "kind": "access_point",
+      "source": "misc/Access Points.svg"
+    },
+    {
+      "id": "antenna",
+      "name": "Antenna",
+      "category": "Wireless",
+      "kind": "wan_equipment",
+      "source": "wireless/Antenna.svg"
+    },
+    {
+      "id": "dual-mode-ap",
+      "name": "Dual Mode AP",
+      "category": "Wireless",
+      "kind": "access_point",
+      "source": "misc/Dual Mode.svg"
+    },
+    {
+      "id": "ground-terminal",
+      "name": "Ground Terminal",
+      "category": "Wireless",
+      "kind": "wan_equipment",
+      "source": "wireless/Ground Terminal.svg"
+    },
+    {
+      "id": "lightweight-ap",
+      "name": "Lightweight AP",
+      "category": "Wireless",
+      "kind": "access_point",
+      "source": "misc/Lightweight AP.svg"
+    },
+    {
+      "id": "mesh-ap",
+      "name": "Mesh AP",
+      "category": "Wireless",
+      "kind": "access_point",
+      "source": "misc/Mesh AP.svg"
+    },
+    {
+      "id": "mse",
+      "name": "MSE",
+      "category": "Wireless",
+      "kind": "server",
+      "source": "misc/MSE.svg"
+    },
+    {
+      "id": "radio-tower",
+      "name": "Radio Tower",
+      "category": "Wireless",
+      "kind": "wan_equipment",
+      "source": "wireless/Radio Tower.svg"
+    },
+    {
+      "id": "satellite",
+      "name": "Satellite",
+      "category": "Wireless",
+      "kind": "wan_equipment",
+      "source": "wireless/Satellite.svg"
+    },
+    {
+      "id": "satellite-dish",
+      "name": "Satellite Dish",
+      "category": "Wireless",
+      "kind": "wan_equipment",
+      "source": "wireless/Sattelite Dish.svg"
+    },
+    {
+      "id": "voice-location-appliance",
+      "name": "Voice Location Appliance",
+      "category": "Wireless",
+      "kind": "access_point",
+      "source": "wireless/Voice Location Appliance.svg"
+    },
+    {
+      "id": "wi-fi-tag",
+      "name": "Wi-Fi Tag",
+      "category": "Wireless",
+      "kind": "access_point",
+      "source": "wireless/Wifi Tag.svg"
+    },
+    {
+      "id": "wireless-bridge",
+      "name": "Wireless Bridge",
+      "category": "Wireless",
+      "kind": "access_point",
+      "source": "wireless/Wireless Bridge.svg"
+    },
+    {
+      "id": "wireless-device",
+      "name": "Wireless Device",
+      "category": "Wireless",
+      "kind": "access_point",
+      "source": "wireless/Wireless.svg"
+    },
+    {
+      "id": "wireless-transport",
+      "name": "Wireless Transport",
+      "category": "Wireless",
+      "kind": "wan_equipment",
+      "source": "wireless/Wireless Transport.svg"
+    },
+    {
+      "id": "wism",
+      "name": "WISM",
+      "category": "Wireless",
+      "kind": "wlan_controller",
+      "source": "misc/WISM.svg"
+    },
+    {
+      "id": "wlan-controller",
+      "name": "WLAN Controller",
+      "category": "Wireless",
+      "kind": "wlan_controller",
+      "source": "wireless/WLAN Controller.svg"
+    },
+    {
+      "id": "axp",
+      "name": "AXp",
+      "category": "Servers",
+      "kind": "server",
+      "source": "misc/AXp.svg"
+    },
+    {
+      "id": "bbsm",
+      "name": "BBSM",
+      "category": "Servers",
+      "kind": "server",
+      "source": "misc/BBSM.svg"
+    },
+    {
+      "id": "cisco-unified-presence-server",
+      "name": "Cisco Unified Presence Server",
+      "category": "Servers",
+      "kind": "server",
+      "source": "servers/Cisco Unified Presence Server.svg"
+    },
+    {
+      "id": "cisco-works",
+      "name": "Cisco Works",
+      "category": "Servers",
+      "kind": "server",
+      "source": "misc/Cisco Works.svg"
+    },
+    {
+      "id": "communication-server",
+      "name": "Communication Server",
+      "category": "Servers",
+      "kind": "server",
+      "source": "servers/Communication Server.svg"
+    },
+    {
+      "id": "directory-server",
+      "name": "Directory Server",
+      "category": "Servers",
+      "kind": "server",
+      "source": "servers/Directory Server.svg"
+    },
+    {
+      "id": "file-server",
+      "name": "File Server",
+      "category": "Servers",
+      "kind": "server",
+      "source": "servers/File Server.svg"
+    },
+    {
+      "id": "file-server-2",
+      "name": "File Server 2",
+      "category": "Servers",
+      "kind": "server",
+      "source": "servers/Fileserver.svg"
+    },
+    {
+      "id": "iptv-server",
+      "name": "IPTV Server",
+      "category": "Servers",
+      "kind": "server",
+      "source": "servers/IPTV Server.svg"
+    },
+    {
+      "id": "mediator",
+      "name": "Mediator",
+      "category": "Servers",
+      "kind": "server",
+      "source": "misc/Mediator.svg"
+    },
+    {
+      "id": "micro-web-server",
+      "name": "Micro Web Server",
+      "category": "Servers",
+      "kind": "server",
+      "source": "servers/Microwebserver.svg"
+    },
+    {
+      "id": "moh-server",
+      "name": "MOH Server",
+      "category": "Servers",
+      "kind": "server",
+      "source": "servers/MOH Server.svg"
+    },
+    {
+      "id": "nce",
+      "name": "NCE",
+      "category": "Servers",
+      "kind": "server",
+      "source": "misc/NCE.svg"
+    },
+    {
+      "id": "network-management",
+      "name": "Network Management",
+      "category": "Servers",
+      "kind": "server",
+      "source": "misc/Network Management.svg"
+    },
+    {
+      "id": "server-with-router",
+      "name": "Server With Router",
+      "category": "Servers",
+      "kind": "server",
+      "source": "servers/Server With Router.svg"
+    },
+    {
+      "id": "service-control",
+      "name": "Service Control",
+      "category": "Servers",
+      "kind": "server",
+      "source": "misc/Service Control.svg"
+    },
+    {
+      "id": "services",
+      "name": "Services",
+      "category": "Servers",
+      "kind": "server",
+      "source": "misc/Services.svg"
+    },
+    {
+      "id": "sip-proxy-server",
+      "name": "SIP Proxy Server",
+      "category": "Servers",
+      "kind": "server",
+      "source": "servers/SIP Proxy Server.svg"
+    },
+    {
+      "id": "software-based-server",
+      "name": "Software Based Server",
+      "category": "Servers",
+      "kind": "server",
+      "source": "servers/Software Based Server.svg"
+    },
+    {
+      "id": "standard-host",
+      "name": "Standard Host",
+      "category": "Servers",
+      "kind": "server",
+      "source": "servers/Standard Host.svg"
+    },
+    {
+      "id": "storage-server",
+      "name": "Storage Server",
+      "category": "Servers",
+      "kind": "server",
+      "source": "servers/Storage Server.svg"
+    },
+    {
+      "id": "unity-server",
+      "name": "Unity Server",
+      "category": "Servers",
+      "kind": "server",
+      "source": "servers/Unity Server.svg"
+    },
+    {
+      "id": "voice-comm-server",
+      "name": "Voice Comm Server",
+      "category": "Servers",
+      "kind": "server",
+      "source": "servers/Voice Comserver.svg"
+    },
+    {
+      "id": "www-server",
+      "name": "WWW Server",
+      "category": "Servers",
+      "kind": "server",
+      "source": "servers/WWW Server.svg"
+    },
+    {
+      "id": "x-25-host",
+      "name": "X.25 Host",
+      "category": "Servers",
+      "kind": "server",
+      "source": "servers/Host.svg"
+    },
+    {
+      "id": "front-end-processor",
+      "name": "Front End Processor",
+      "category": "Computers & devices",
+      "kind": "server",
+      "source": "misc/Front End Processor.svg"
+    },
+    {
+      "id": "handheld",
+      "name": "Handheld",
+      "category": "Computers & devices",
+      "kind": "tablet",
+      "source": "misc/Handheld.svg"
+    },
+    {
+      "id": "hp-mini",
+      "name": "HP Mini",
+      "category": "Computers & devices",
+      "kind": "server",
+      "source": "misc/HP Mini.svg"
+    },
+    {
+      "id": "ibm-mainframe",
+      "name": "IBM Mainframe",
+      "category": "Computers & devices",
+      "kind": "server",
+      "source": "computers_and_peripherals/IBM Mainframe.svg"
+    },
+    {
+      "id": "ibm-mini-as400",
+      "name": "IBM Mini AS400",
+      "category": "Computers & devices",
+      "kind": "server",
+      "source": "computers_and_peripherals/IBM Mini AS400.svg"
+    },
+    {
+      "id": "ibm-tower",
+      "name": "IBM Tower",
+      "category": "Computers & devices",
+      "kind": "pc",
+      "source": "computers_and_peripherals/IBM Tower.svg"
+    },
+    {
+      "id": "laptop",
+      "name": "Laptop",
+      "category": "Computers & devices",
+      "kind": "laptop",
+      "source": "computers_and_peripherals/Laptop.svg"
+    },
+    {
+      "id": "macintosh",
+      "name": "Macintosh",
+      "category": "Computers & devices",
+      "kind": "pc",
+      "source": "computers_and_peripherals/macintosh.svg"
+    },
+    {
+      "id": "microphone",
+      "name": "Microphone",
+      "category": "Computers & devices",
+      "kind": "other",
+      "source": "computers_and_peripherals/microphone.svg"
+    },
+    {
+      "id": "mini-vax",
+      "name": "Mini VAX",
+      "category": "Computers & devices",
+      "kind": "server",
+      "source": "misc/Mini VAX.svg"
+    },
+    {
+      "id": "network-cloud",
+      "name": "Network Cloud",
+      "category": "Computers & devices",
+      "kind": "cloud",
+      "source": "computers_and_peripherals/cloud.svg"
+    },
+    {
+      "id": "pc",
+      "name": "PC",
+      "category": "Computers & devices",
+      "kind": "pc",
+      "source": "computers_and_peripherals/PC.svg"
+    },
+    {
+      "id": "pc-adapter-card",
+      "name": "PC Adapter Card",
+      "category": "Computers & devices",
+      "kind": "other",
+      "source": "computers_and_peripherals/PC Adapter Card.svg"
+    },
+    {
+      "id": "pc-router-card",
+      "name": "PC Router Card",
+      "category": "Computers & devices",
+      "kind": "other",
+      "source": "computers_and_peripherals/PC Router Card.svg"
+    },
+    {
+      "id": "pc-software",
+      "name": "PC Software",
+      "category": "Computers & devices",
+      "kind": "other",
+      "source": "misc/PC Software.svg"
+    },
+    {
+      "id": "pda",
+      "name": "PDA",
+      "category": "Computers & devices",
+      "kind": "tablet",
+      "source": "misc/PDA.svg"
+    },
+    {
+      "id": "printer",
+      "name": "Printer",
+      "category": "Computers & devices",
+      "kind": "printer",
+      "source": "computers_and_peripherals/Printer.svg"
+    },
+    {
+      "id": "scanner",
+      "name": "Scanner",
+      "category": "Computers & devices",
+      "kind": "other",
+      "source": "computers_and_peripherals/Scanner.svg"
+    },
+    {
+      "id": "speaker",
+      "name": "Speaker",
+      "category": "Computers & devices",
+      "kind": "other",
+      "source": "computers_and_peripherals/Speaker.svg"
+    },
+    {
+      "id": "sun-workstation",
+      "name": "Sun Workstation",
+      "category": "Computers & devices",
+      "kind": "pc",
+      "source": "computers_and_peripherals/Sun Workstation.svg"
+    },
+    {
+      "id": "supercomputer",
+      "name": "Supercomputer",
+      "category": "Computers & devices",
+      "kind": "server",
+      "source": "computers_and_peripherals/Supercomputer.svg"
+    },
+    {
+      "id": "tablet",
+      "name": "Tablet",
+      "category": "Computers & devices",
+      "kind": "tablet",
+      "source": "computers_and_peripherals/Tablet.svg"
+    },
+    {
+      "id": "telecommuter",
+      "name": "Telecommuter",
+      "category": "Computers & devices",
+      "kind": "pc",
+      "source": "misc/Telecommuter Icon.svg"
+    },
+    {
+      "id": "terminal",
+      "name": "Terminal",
+      "category": "Computers & devices",
+      "kind": "pc",
+      "source": "computers_and_peripherals/Terminal.svg"
+    },
+    {
+      "id": "upc",
+      "name": "UPC",
+      "category": "Computers & devices",
+      "kind": "other",
+      "source": "computers_and_peripherals/UPC.svg"
+    },
+    {
+      "id": "video-camera",
+      "name": "Video Camera",
+      "category": "Computers & devices",
+      "kind": "camera",
+      "source": "computers_and_peripherals/Video Camera.svg"
+    },
+    {
+      "id": "web-browser",
+      "name": "Web Browser",
+      "category": "Computers & devices",
+      "kind": "other",
+      "source": "computers_and_peripherals/Web Browser.svg"
+    },
+    {
+      "id": "web-page",
+      "name": "Web Page",
+      "category": "Computers & devices",
+      "kind": "other",
+      "source": "misc/Page Icon.svg"
+    },
+    {
+      "id": "workstation",
+      "name": "Workstation",
+      "category": "Computers & devices",
+      "kind": "pc",
+      "source": "computers_and_peripherals/Workstation.svg"
+    },
+    {
+      "id": "cable-modem",
+      "name": "Cable Modem",
+      "category": "Phones & modems",
+      "kind": "modem",
+      "source": "modems_and_phone/cable modem.svg"
+    },
+    {
+      "id": "cell-phone",
+      "name": "Cell Phone",
+      "category": "Phones & modems",
+      "kind": "ip_phone",
+      "source": "modems_and_phone/cell phone.svg"
+    },
+    {
+      "id": "fax",
+      "name": "Fax",
+      "category": "Phones & modems",
+      "kind": "other",
+      "source": "modems_and_phone/fax.svg"
+    },
+    {
+      "id": "hoot-phone",
+      "name": "Hoot Phone",
+      "category": "Phones & modems",
+      "kind": "ip_phone",
+      "source": "modems_and_phone/hoot phone.svg"
+    },
+    {
+      "id": "ip-phone",
+      "name": "IP Phone",
+      "category": "Phones & modems",
+      "kind": "ip_phone",
+      "source": "modems_and_phone/IP Phone.svg"
+    },
+    {
+      "id": "mobile-access-ip-phone",
+      "name": "Mobile Access IP Phone",
+      "category": "Phones & modems",
+      "kind": "ip_phone",
+      "source": "modems_and_phone/Mobile Access IP Phone.svg"
+    },
+    {
+      "id": "modem",
+      "name": "Modem",
+      "category": "Phones & modems",
+      "kind": "modem",
+      "source": "modems_and_phone/Modem.svg"
+    },
+    {
+      "id": "phone",
+      "name": "Phone",
+      "category": "Phones & modems",
+      "kind": "ip_phone",
+      "source": "modems_and_phone/Phone.svg"
+    },
+    {
+      "id": "phone-fax",
+      "name": "Phone Fax",
+      "category": "Phones & modems",
+      "kind": "other",
+      "source": "modems_and_phone/Phone Fax.svg"
+    },
+    {
+      "id": "rf-modem",
+      "name": "RF Modem",
+      "category": "Phones & modems",
+      "kind": "modem",
+      "source": "modems_and_phone/RF Modem.svg"
+    },
+    {
+      "id": "soft-phone",
+      "name": "Soft Phone",
+      "category": "Phones & modems",
+      "kind": "ip_phone",
+      "source": "modems_and_phone/Soft Phone.svg"
+    },
+    {
+      "id": "bts-10200",
+      "name": "BTS 10200",
+      "category": "Voice & video",
+      "kind": "pbx",
+      "source": "misc/BTS 10200.svg"
+    },
+    {
+      "id": "call-manager",
+      "name": "Call Manager",
+      "category": "Voice & video",
+      "kind": "pbx",
+      "source": "misc/Call Manager.svg"
+    },
+    {
+      "id": "cisco-unity-express",
+      "name": "Cisco Unity Express",
+      "category": "Voice & video",
+      "kind": "pbx",
+      "source": "misc/Cisco Unity Express.svg"
+    },
+    {
+      "id": "contact-acquirer",
+      "name": "Contact Acquirer",
+      "category": "Voice & video",
+      "kind": "pbx",
+      "source": "misc/Contact Aquirer.svg"
+    },
+    {
+      "id": "contact-center",
+      "name": "Contact Center",
+      "category": "Voice & video",
+      "kind": "pbx",
+      "source": "misc/Contact Center.svg"
+    },
+    {
+      "id": "ip-communicator",
+      "name": "IP Communicator",
+      "category": "Voice & video",
+      "kind": "ip_phone",
+      "source": "misc/IP Communicator.svg"
+    },
+    {
+      "id": "iptc",
+      "name": "IPTC",
+      "category": "Voice & video",
+      "kind": "pbx",
+      "source": "misc/IPTC.svg"
+    },
+    {
+      "id": "iptv-content-manager",
+      "name": "IPTV Content Manager",
+      "category": "Voice & video",
+      "kind": "pbx",
+      "source": "misc/IPTV Content Manager.svg"
+    },
+    {
+      "id": "itp",
+      "name": "ITP",
+      "category": "Voice & video",
+      "kind": "pbx",
+      "source": "misc/ITP.svg"
+    },
+    {
+      "id": "mcu",
+      "name": "MCU",
+      "category": "Voice & video",
+      "kind": "pbx",
+      "source": "misc/MCU.svg"
+    },
+    {
+      "id": "meetingplace",
+      "name": "MeetingPlace",
+      "category": "Voice & video",
+      "kind": "pbx",
+      "source": "misc/Meetingplace.svg"
+    },
+    {
+      "id": "mobile-streamer",
+      "name": "Mobile Streamer",
+      "category": "Voice & video",
+      "kind": "other",
+      "source": "misc/Mobile Streamer.svg"
+    },
+    {
+      "id": "mxe",
+      "name": "MXE",
+      "category": "Voice & video",
+      "kind": "pbx",
+      "source": "misc/MXE.svg"
+    },
+    {
+      "id": "octel",
+      "name": "Octel",
+      "category": "Voice & video",
+      "kind": "pbx",
+      "source": "misc/Octel.svg"
+    },
+    {
+      "id": "pbx",
+      "name": "PBX",
+      "category": "Voice & video",
+      "kind": "pbx",
+      "source": "misc/PBX.svg"
+    },
+    {
+      "id": "pc-camera",
+      "name": "PC Camera",
+      "category": "Voice & video",
+      "kind": "camera",
+      "source": "misc/PC Camera.svg"
+    },
+    {
+      "id": "set-top-box",
+      "name": "Set Top Box",
+      "category": "Voice & video",
+      "kind": "other",
+      "source": "misc/Set Top Box.svg"
+    },
+    {
+      "id": "stp",
+      "name": "STP",
+      "category": "Voice & video",
+      "kind": "pbx",
+      "source": "misc/STP.svg"
+    },
+    {
+      "id": "streamer",
+      "name": "Streamer",
+      "category": "Voice & video",
+      "kind": "other",
+      "source": "misc/Streamer.svg"
+    },
+    {
+      "id": "telepresence",
+      "name": "Telepresence",
+      "category": "Voice & video",
+      "kind": "pbx",
+      "source": "misc/Telepresecense.svg"
+    },
+    {
+      "id": "tp-mcu",
+      "name": "TP MCU",
+      "category": "Voice & video",
+      "kind": "pbx",
+      "source": "misc/TP MCU.svg"
+    },
+    {
+      "id": "transpath",
+      "name": "Transpath",
+      "category": "Voice & video",
+      "kind": "pbx",
+      "source": "misc/Transpath.svg"
+    },
+    {
+      "id": "turret",
+      "name": "Turret",
+      "category": "Voice & video",
+      "kind": "ip_phone",
+      "source": "misc/Turret.svg"
+    },
+    {
+      "id": "tv",
+      "name": "TV",
+      "category": "Voice & video",
+      "kind": "other",
+      "source": "misc/TV.svg"
+    },
+    {
+      "id": "umg-series",
+      "name": "UMG Series",
+      "category": "Voice & video",
+      "kind": "pbx",
+      "source": "misc/UMG Series.svg"
+    },
+    {
+      "id": "cisco-file-engine",
+      "name": "Cisco File Engine",
+      "category": "Storage",
+      "kind": "storage",
+      "source": "Storage/Cisco File Engine.svg"
+    },
+    {
+      "id": "cloud",
+      "name": "Cloud",
+      "category": "Storage",
+      "kind": "cloud",
+      "source": "Storage/Cloud.svg"
+    },
+    {
+      "id": "diskette",
+      "name": "Diskette",
+      "category": "Storage",
+      "kind": "other",
+      "source": "Storage/Diskette.svg"
+    },
+    {
+      "id": "fc-storage",
+      "name": "FC Storage",
+      "category": "Storage",
+      "kind": "storage",
+      "source": "Storage/FC Storage.svg"
+    },
+    {
+      "id": "fibre-channel-disk-subsystem",
+      "name": "Fibre Channel Disk Subsystem",
+      "category": "Storage",
+      "kind": "storage",
+      "source": "Storage/Fibre Channel Disk Subsytem.svg"
+    },
+    {
+      "id": "file-cabinet",
+      "name": "File Cabinet",
+      "category": "Storage",
+      "kind": "other",
+      "source": "Storage/File Cabinet.svg"
+    },
+    {
+      "id": "jbod",
+      "name": "JBOD",
+      "category": "Storage",
+      "kind": "storage",
+      "source": "misc/JBOD.svg"
+    },
+    {
+      "id": "relational-database",
+      "name": "Relational Database",
+      "category": "Storage",
+      "kind": "database",
+      "source": "Storage/Relational Database.svg"
+    },
+    {
+      "id": "tape-array",
+      "name": "Tape Array",
+      "category": "Storage",
+      "kind": "storage",
+      "source": "Storage/Tappe Array.svg"
+    },
+    {
+      "id": "web-cluster",
+      "name": "Web Cluster",
+      "category": "Storage",
+      "kind": "server",
+      "source": "Storage/Web Cluster.svg"
+    },
+    {
+      "id": "100baset-hub",
+      "name": "100BaseT Hub",
+      "category": "Hubs & gateways",
+      "kind": "hub",
+      "source": "hubs_and_gateway/100BaseT Hub.svg"
+    },
+    {
+      "id": "cisco-hub",
+      "name": "Cisco Hub",
+      "category": "Hubs & gateways",
+      "kind": "hub",
+      "source": "hubs_and_gateway/Cisco Hub.svg"
+    },
+    {
+      "id": "generic-gateway",
+      "name": "Generic Gateway",
+      "category": "Hubs & gateways",
+      "kind": "router",
+      "source": "hubs_and_gateway/Generic Gateway.svg"
+    },
+    {
+      "id": "hub",
+      "name": "Hub",
+      "category": "Hubs & gateways",
+      "kind": "hub",
+      "source": "hubs_and_gateway/Hub.svg"
+    },
+    {
+      "id": "mas-gateway",
+      "name": "MAS Gateway",
+      "category": "Hubs & gateways",
+      "kind": "router",
+      "source": "hubs_and_gateway/MAS Gateway.svg"
+    },
+    {
+      "id": "small-hub",
+      "name": "Small Hub",
+      "category": "Hubs & gateways",
+      "kind": "hub",
+      "source": "hubs_and_gateway/Small Hub.svg"
+    },
+    {
+      "id": "universal-gateway",
+      "name": "Universal Gateway",
+      "category": "Hubs & gateways",
+      "kind": "router",
+      "source": "hubs_and_gateway/Universal Gateway.svg"
+    },
+    {
+      "id": "vpn-gateway",
+      "name": "VPN Gateway",
+      "category": "Hubs & gateways",
+      "kind": "vpn_gateway",
+      "source": "hubs_and_gateway/VPN Gateway.svg"
+    },
+    {
+      "id": "15200",
+      "name": "15200",
+      "category": "WAN & optical",
+      "kind": "wan_equipment",
+      "source": "misc/15200.svg"
+    },
+    {
+      "id": "adm",
+      "name": "ADM",
+      "category": "WAN & optical",
+      "kind": "wan_equipment",
+      "source": "misc/ADM.svg"
+    },
+    {
+      "id": "atm",
+      "name": "ATM",
+      "category": "WAN & optical",
+      "kind": "wan_equipment",
+      "source": "misc/ATM.svg"
+    },
+    {
+      "id": "atm-3080",
+      "name": "ATM 3080",
+      "category": "WAN & optical",
+      "kind": "wan_equipment",
+      "source": "misc/ATM 3080.svg"
+    },
+    {
+      "id": "csu-dsu",
+      "name": "CSU DSU",
+      "category": "WAN & optical",
+      "kind": "wan_equipment",
+      "source": "misc/CSU DSU.svg"
+    },
+    {
+      "id": "dpt",
+      "name": "DPT",
+      "category": "WAN & optical",
+      "kind": "wan_equipment",
+      "source": "misc/DPT.svg"
+    },
+    {
+      "id": "dslam",
+      "name": "DSLAM",
+      "category": "WAN & optical",
+      "kind": "wan_equipment",
+      "source": "misc/DSLAM.svg"
+    },
+    {
+      "id": "dwdm-filter",
+      "name": "DWDM Filter",
+      "category": "WAN & optical",
+      "kind": "wan_equipment",
+      "source": "misc/DWDM Filter.svg"
+    },
+    {
+      "id": "ip-dsl",
+      "name": "IP DSL",
+      "category": "WAN & optical",
+      "kind": "wan_equipment",
+      "source": "misc/IP DSL.svg"
+    },
+    {
+      "id": "lan-to-lan",
+      "name": "LAN To LAN",
+      "category": "WAN & optical",
+      "kind": "wan_equipment",
+      "source": "misc/LAN To LAN.svg"
+    },
+    {
+      "id": "longreach-cpe",
+      "name": "Longreach CPE",
+      "category": "WAN & optical",
+      "kind": "wan_equipment",
+      "source": "misc/Longreach CPE.svg"
+    },
+    {
+      "id": "metro-1500",
+      "name": "Metro 1500",
+      "category": "WAN & optical",
+      "kind": "wan_equipment",
+      "source": "misc/Metro 1500.svg"
+    },
+    {
+      "id": "mux",
+      "name": "MUX",
+      "category": "WAN & optical",
+      "kind": "wan_equipment",
+      "source": "misc/MUX.svg"
+    },
+    {
+      "id": "ons-15500",
+      "name": "ONS 15500",
+      "category": "WAN & optical",
+      "kind": "wan_equipment",
+      "source": "misc/ONS15500.svg"
+    },
+    {
+      "id": "optical-amplifier",
+      "name": "Optical Amplifier",
+      "category": "WAN & optical",
+      "kind": "wan_equipment",
+      "source": "misc/Optical Amplifier.svg"
+    },
+    {
+      "id": "optical-transport",
+      "name": "Optical Transport",
+      "category": "WAN & optical",
+      "kind": "wan_equipment",
+      "source": "misc/Optical Transport.svg"
+    },
+    {
+      "id": "pad",
+      "name": "PAD",
+      "category": "WAN & optical",
+      "kind": "wan_equipment",
+      "source": "misc/PAD.svg"
+    },
+    {
+      "id": "protocol-transfer",
+      "name": "Protocol Transfer",
+      "category": "WAN & optical",
+      "kind": "wan_equipment",
+      "source": "misc/Protocol Transfer.svg"
+    },
+    {
+      "id": "ratemux",
+      "name": "Ratemux",
+      "category": "WAN & optical",
+      "kind": "wan_equipment",
+      "source": "misc/Ratemux.svg"
+    },
+    {
+      "id": "repeater",
+      "name": "Repeater",
+      "category": "WAN & optical",
+      "kind": "wan_equipment",
+      "source": "misc/Repeater.svg"
+    },
+    {
+      "id": "ace",
+      "name": "ACE",
+      "category": "Content & load balancing",
+      "kind": "load_balancer",
+      "source": "misc/ACE.svg"
+    },
+    {
+      "id": "avs",
+      "name": "AVS",
+      "category": "Content & load balancing",
+      "kind": "load_balancer",
+      "source": "misc/AVS.svg"
+    },
+    {
+      "id": "cdm",
+      "name": "CDM",
+      "category": "Content & load balancing",
+      "kind": "load_balancer",
+      "source": "misc/CDM.svg"
+    },
+    {
+      "id": "content-engine-cache-director",
+      "name": "Content Engine (Cache Director)",
+      "category": "Content & load balancing",
+      "kind": "load_balancer",
+      "source": "directors/Content Engine (cache director).svg"
+    },
+    {
+      "id": "content-transformation-engine-cte",
+      "name": "Content Transformation Engine (CTE)",
+      "category": "Content & load balancing",
+      "kind": "load_balancer",
+      "source": "misc/Content Transformation Engine (CTE).svg"
+    },
+    {
+      "id": "csm-s",
+      "name": "CSM S",
+      "category": "Content & load balancing",
+      "kind": "load_balancer",
+      "source": "misc/CSM S.svg"
+    },
+    {
+      "id": "director-class-fiber-channel-director",
+      "name": "Director Class Fiber Channel Director",
+      "category": "Content & load balancing",
+      "kind": "load_balancer",
+      "source": "directors/Director Class Fiber Channel Director.svg"
+    },
+    {
+      "id": "distributed-director",
+      "name": "Distributed Director",
+      "category": "Content & load balancing",
+      "kind": "load_balancer",
+      "source": "directors/Distributed Center.svg"
+    },
+    {
+      "id": "local-director",
+      "name": "Local Director",
+      "category": "Content & load balancing",
+      "kind": "load_balancer",
+      "source": "directors/Local Director.svg"
+    },
+    {
+      "id": "wae",
+      "name": "WAE",
+      "category": "Content & load balancing",
+      "kind": "load_balancer",
+      "source": "misc/WAE.svg"
+    },
+    {
+      "id": "workgroup-director",
+      "name": "Workgroup Director",
+      "category": "Content & load balancing",
+      "kind": "load_balancer",
+      "source": "directors/Workgroup.svg"
+    },
+    {
+      "id": "10ge-fcoe",
+      "name": "10GE FCoE",
+      "category": "Modules & controllers",
+      "kind": "other",
+      "source": "controllers_and_modules/10GE FCoE.svg"
+    },
+    {
+      "id": "3174-desktop-cluster-controller",
+      "name": "3174 (Desktop) Cluster Controller",
+      "category": "Modules & controllers",
+      "kind": "other",
+      "source": "controllers_and_modules/3174 (Desktop) Cluster Controller.svg"
+    },
+    {
+      "id": "3174-floor-cluster-controller",
+      "name": "3174 (Floor) Cluster Controller",
+      "category": "Modules & controllers",
+      "kind": "other",
+      "source": "controllers_and_modules/3174 (Floor) Cluster Controller.svg"
+    },
+    {
+      "id": "asic-processor",
+      "name": "Asic Processor",
+      "category": "Modules & controllers",
+      "kind": "other",
+      "source": "misc/Asic Processor.svg"
+    },
+    {
+      "id": "content-switch-module",
+      "name": "Content Switch Module",
+      "category": "Modules & controllers",
+      "kind": "other",
+      "source": "controllers_and_modules/Content Switch Module.svg"
+    },
+    {
+      "id": "firewall-services-module-fwsm",
+      "name": "Firewall Services Module (FWSM)",
+      "category": "Modules & controllers",
+      "kind": "other",
+      "source": "controllers_and_modules/Firewall Service Module (FSWM).svg"
+    },
+    {
+      "id": "generic-processor",
+      "name": "Generic Processor",
+      "category": "Modules & controllers",
+      "kind": "other",
+      "source": "misc/Generic Processor.svg"
+    },
+    {
+      "id": "pmc",
+      "name": "PMC",
+      "category": "Modules & controllers",
+      "kind": "other",
+      "source": "misc/PMC.svg"
+    },
+    {
+      "id": "pxf",
+      "name": "PXF",
+      "category": "Modules & controllers",
+      "kind": "other",
+      "source": "misc/PXF.svg"
+    },
+    {
+      "id": "route-switch-processor",
+      "name": "Route Switch Processor",
+      "category": "Modules & controllers",
+      "kind": "other",
+      "source": "misc/Route Switch Processor.svg"
+    },
+    {
+      "id": "service-module",
+      "name": "Service Module",
+      "category": "Modules & controllers",
+      "kind": "other",
+      "source": "controllers_and_modules/Service Module.svg"
+    },
+    {
+      "id": "ssc",
+      "name": "SSC",
+      "category": "Modules & controllers",
+      "kind": "other",
+      "source": "misc/SSC.svg"
+    },
+    {
+      "id": "svx",
+      "name": "SVX",
+      "category": "Modules & controllers",
+      "kind": "other",
+      "source": "misc/SVX.svg"
+    },
+    {
+      "id": "system-controller",
+      "name": "System Controller",
+      "category": "Modules & controllers",
+      "kind": "other",
+      "source": "controllers_and_modules/System Controller.svg"
+    },
+    {
+      "id": "vip",
+      "name": "VIP",
+      "category": "Modules & controllers",
+      "kind": "other",
+      "source": "misc/VIP.svg"
+    },
+    {
+      "id": "virtual-switch-controller-vsc3000",
+      "name": "Virtual Switch Controller (VSC3000)",
+      "category": "Modules & controllers",
+      "kind": "other",
+      "source": "controllers_and_modules/Virtual Switch Controller (VSC3000).svg"
+    },
+    {
+      "id": "branch-office",
+      "name": "Branch Office",
+      "category": "Buildings",
+      "kind": "building",
+      "source": "buildings/Branch_office.svg"
+    },
+    {
+      "id": "end-office",
+      "name": "End Office",
+      "category": "Buildings",
+      "kind": "building",
+      "source": "buildings/End_Office.svg"
+    },
+    {
+      "id": "generic-building",
+      "name": "Generic Building",
+      "category": "Buildings",
+      "kind": "building",
+      "source": "buildings/Generic Buildings.svg"
+    },
+    {
+      "id": "government-building",
+      "name": "Government Building",
+      "category": "Buildings",
+      "kind": "building",
+      "source": "buildings/Government Buildings.svg"
+    },
+    {
+      "id": "mdu",
+      "name": "MDU",
+      "category": "Buildings",
+      "kind": "building",
+      "source": "buildings/MDU.svg"
+    },
+    {
+      "id": "small-business",
+      "name": "Small Business",
+      "category": "Buildings",
+      "kind": "building",
+      "source": "buildings/Small Business.svg"
+    },
+    {
+      "id": "telecommuter-house",
+      "name": "Telecommuter House",
+      "category": "Buildings",
+      "kind": "building",
+      "source": "buildings/Telecommuter House.svg"
+    },
+    {
+      "id": "telecommuter-house-pc",
+      "name": "Telecommuter House PC",
+      "category": "Buildings",
+      "kind": "building",
+      "source": "buildings/Telecommuter House PC.svg"
+    },
+    {
+      "id": "androgynous-person",
+      "name": "Androgynous Person",
+      "category": "People",
+      "kind": "person",
+      "source": "People/Androgenous Person.svg"
+    },
+    {
+      "id": "mac-woman",
+      "name": "Mac Woman",
+      "category": "People",
+      "kind": "person",
+      "source": "People/Mac woman.svg"
+    },
+    {
+      "id": "man-and-woman",
+      "name": "Man and Woman",
+      "category": "People",
+      "kind": "person",
+      "source": "People/Man woman.svg"
+    },
+    {
+      "id": "pc-man",
+      "name": "PC Man",
+      "category": "People",
+      "kind": "person",
+      "source": "People/PC Man.svg"
+    },
+    {
+      "id": "running-man",
+      "name": "Running Man",
+      "category": "People",
+      "kind": "person",
+      "source": "People/Running man.svg"
+    },
+    {
+      "id": "sitting-woman",
+      "name": "Sitting Woman",
+      "category": "People",
+      "kind": "person",
+      "source": "People/Sitting woman.svg"
+    },
+    {
+      "id": "standing-man",
+      "name": "Standing Man",
+      "category": "People",
+      "kind": "person",
+      "source": "People/Standing man.svg"
+    },
+    {
+      "id": "standing-woman",
+      "name": "Standing Woman",
+      "category": "People",
+      "kind": "person",
+      "source": "People/Standing woman.svg"
+    },
+    {
+      "id": "breakout-boss",
+      "name": "Breakout Boss",
+      "category": "Other",
+      "kind": "other",
+      "source": "misc/Breakout Boss.svg"
+    },
+    {
+      "id": "car",
+      "name": "Car",
+      "category": "Other",
+      "kind": "other",
+      "source": "misc/Car.svg"
+    },
+    {
+      "id": "cddi-fddi",
+      "name": "CDDI FDDI",
+      "category": "Other",
+      "kind": "other",
+      "source": "misc/CDDI FDDI.svg"
+    },
+    {
+      "id": "cube",
+      "name": "Cube",
+      "category": "Other",
+      "kind": "other",
+      "source": "misc/Cube.svg"
+    },
+    {
+      "id": "dot-dot",
+      "name": "Dot Dot",
+      "category": "Other",
+      "kind": "other",
+      "source": "misc/Dot Dot.svg"
+    },
+    {
+      "id": "fddi-ring",
+      "name": "FDDI Ring",
+      "category": "Other",
+      "kind": "other",
+      "source": "misc/FDDI Rring.svg"
+    },
+    {
+      "id": "general-appliance",
+      "name": "General Appliance",
+      "category": "Other",
+      "kind": "other",
+      "source": "misc/General Appliance.svg"
+    },
+    {
+      "id": "ip",
+      "name": "IP",
+      "category": "Other",
+      "kind": "other",
+      "source": "misc/IP.svg"
+    },
+    {
+      "id": "mau",
+      "name": "MAU",
+      "category": "Other",
+      "kind": "other",
+      "source": "misc/MAU.svg"
+    },
+    {
+      "id": "rps",
+      "name": "RPS",
+      "category": "Other",
+      "kind": "other",
+      "source": "misc/RPS.svg"
+    },
+    {
+      "id": "token-ring",
+      "name": "Token Ring",
+      "category": "Other",
+      "kind": "other",
+      "source": "misc/Token.svg"
+    },
+    {
+      "id": "truck",
+      "name": "Truck",
+      "category": "Other",
+      "kind": "other",
+      "source": "misc/Truck.svg"
+    },
+    {
+      "id": "ups",
+      "name": "UPS",
+      "category": "Other",
+      "kind": "other",
+      "source": "misc/UPS.svg"
+    }
+  ]
+}

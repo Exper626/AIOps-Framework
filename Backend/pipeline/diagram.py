@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field
 
 from pipeline.agent import call_agent
+from pipeline.devices import DEVICE_KINDS
 from pipeline.models import ModelRef
 from pipeline.trace import Trace, plural
 
@@ -8,8 +9,11 @@ from pipeline.trace import Trace, plural
 class Device(BaseModel):
     id: str = Field(min_length=1)
     name: str
+    # One of pipeline/devices.py's kinds; it places the device and gives its default icon
     type: str = "router"
     model: str = ""
+    # An icon picked in the diagram editor (Backend/icons/<icon>.png), instead of the kind's own
+    icon: str = ""
     x: float | None = None
     y: float | None = None
 
@@ -45,7 +49,10 @@ class DiagramReply(BaseModel):
 
 
 def to_diagram(content: DiagramContent) -> Diagram | None:
-    devices = {d.name: Device(id=d.name, name=d.name, type=d.type, model=d.model) for d in content.devices}
+    devices = {
+        d.name: Device(id=d.name, name=d.name, type=d.type if d.type in DEVICE_KINDS else "other", model=d.model)
+        for d in content.devices
+    }
     links = {
         tuple(sorted((link.source, link.target)))
         for link in content.links
@@ -66,10 +73,15 @@ def describe_diagram(diagram: Diagram) -> str:
 
 
 def keep_positions(diagram: Diagram, before: Diagram) -> None:
-    positions = {d.name: (d.x, d.y) for d in before.devices}
+    """Devices that were in the diagram before stay where they were, with the icon picked for them in the
+    editor, unless the change made them a different kind of device"""
+    earlier = {d.name: d for d in before.devices}
 
     for device in diagram.devices:
-        device.x, device.y = positions.get(device.name, (None, None))
+        old = earlier.get(device.name)
+        device.x, device.y = (old.x, old.y) if old else (None, None)
+        if old and old.icon and old.type == device.type:
+            device.icon = old.icon
 
 
 def describe_found_devices(passages: list[dict]) -> str:

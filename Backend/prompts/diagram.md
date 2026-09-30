@@ -14,7 +14,15 @@ A diagram helps when:
 
 Otherwise, output {"diagram": null}. Most general questions (what is OSPF, how do I configure a VLAN) need no diagram.
 
-Device types (use these exact values): router, multilayer_switch, switch, firewall, server, pc, laptop, access_point, cloud.
+Device types (use these exact values; the most fitting one for each device):
+- cloud (the internet, an ISP or a WAN), building (a whole site or office, when devices inside it aren't shown),
+  wan_equipment (DSLAM, multiplexer, optical or satellite equipment), modem (DSL or cable modem)
+- router, vpn_gateway, firewall
+- multilayer_switch (Layer 3 switch), switch, hub, wlan_controller (wireless LAN controller), load_balancer
+- wireless_router (home or small office Wi-Fi router), access_point
+- server, database, storage (NAS or SAN), pbx (phone system or call manager)
+- pc, laptop, tablet (tablets and smartphones), ip_phone, printer, camera (IP or CCTV camera), person (a user)
+- other (anything else)
 
 Output format:
 {"diagram": {"devices": [{"name": "R1", "type": "router", "model": "ISR 4331"}], "links": [{"from": "R1", "to": "SW1"}]}}
@@ -35,6 +43,7 @@ Rules:
   connections you remember about it.
 - When a device in the diagram is one the knowledge base found, use its model from the answer (or the knowledge
   base's device name) as "model", and its type: access point is access_point.
+- Keep the type of a device from an attached or earlier diagram unless the question changes what the device is.
 
 Examples:
 

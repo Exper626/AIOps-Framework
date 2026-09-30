@@ -7,11 +7,13 @@ from pathlib import Path
 
 from graphviz import ExecutableNotFound, Graph
 
+from pipeline.devices import device_kind
 from pipeline.diagram import Device, Diagram
 from pipeline.errors import PipelineError
 from pipeline.trace import Trace, plural
 
-# One PNG per device type, made from the Cisco icons in Image Generation/icons
+# One PNG per icon in Frontend/lib/network-icons.json, made from the Cisco icons in Image Generation/icons
+# by Frontend/scripts/build-network-icons.mjs
 ICONS_DIR = Path(__file__).parent.parent / "icons"
 # Icons are drawn this tall (in points); their width follows their shape
 ICON_HEIGHT = 42
@@ -22,17 +24,12 @@ WINDOWS_GRAPHVIZ = Path(os.environ.get("ProgramFiles", r"C:\Program Files")) / "
 if os.name == "nt" and not shutil.which("dot") and WINDOWS_GRAPHVIZ.is_dir():
     os.environ["PATH"] += os.pathsep + str(WINDOWS_GRAPHVIZ)
 
-# Graphviz draws each cable's first device above its second, so cables run from
-# the core of the network out to the end devices, and PCs end up at the bottom
-LEVELS = {"cloud": 0, "router": 1, "firewall": 1, "multilayer_switch": 2, "switch": 3, "access_point": 4, "server": 4}
-END_DEVICE_LEVEL = 5
+ICONS = {path.stem for path in ICONS_DIR.glob("*.png")}
 
 
-ICON_TYPES = {path.stem for path in ICONS_DIR.glob("*.png")}
-
-
-def icon_path(device_type: str) -> Path:
-    return ICONS_DIR / f"{device_type if device_type in ICON_TYPES else 'other'}.png"
+def icon_path(device: Device) -> Path:
+    """The icon picked for the device, or else its kind's"""
+    return ICONS_DIR / f"{device.icon if device.icon in ICONS else device_kind(device.type).icon}.png"
 
 
 def png_size(path: Path) -> tuple[int, int]:
@@ -42,7 +39,7 @@ def png_size(path: Path) -> tuple[int, int]:
 
 def device_label(device: Device) -> str:
     """The icon with the name underneath, and the model under that in grey"""
-    icon = icon_path(device.type)
+    icon = icon_path(device)
     width, height = png_size(icon)
     model = f'<TR><TD><FONT POINT-SIZE="9" COLOR="#666666">{escape(device.model)}</FONT></TD></TR>' if device.model else ""
 
@@ -61,12 +58,14 @@ def build_graph(diagram: Diagram) -> Graph:
     graph.attr("node", shape="none", margin="0", fontname="Helvetica")
     graph.attr("edge", color="#333333", penwidth="1.4")
 
-    levels = {device.id: LEVELS.get(device.type, END_DEVICE_LEVEL) for device in diagram.devices}
+    # Graphviz draws each cable's first device above its second, so cables run from the core of the
+    # network out to the end devices, and PCs end up at the bottom
+    levels = {device.id: device_kind(device.type).level for device in diagram.devices}
 
     for device in diagram.devices:
         graph.node(device.id, label=device_label(device))
     for link in diagram.links:
-        top, bottom = sorted((link.source, link.target), key=lambda device_id: levels.get(device_id, END_DEVICE_LEVEL))
+        top, bottom = sorted((link.source, link.target), key=lambda device_id: levels.get(device_id, 99))
         graph.edge(top, bottom)
 
     return graph

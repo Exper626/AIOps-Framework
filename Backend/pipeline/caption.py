@@ -1,23 +1,10 @@
 from pydantic import BaseModel
 
 from pipeline.agent import call_agent
+from pipeline.devices import device_kind
 from pipeline.diagram import Diagram
 from pipeline.models import ModelRef
 from pipeline.trace import Trace
-
-# How each device type is counted: "1 switch", "6 PCs"
-TYPE_NAMES = {
-    "router": ("router", "routers"),
-    "multilayer_switch": ("multilayer switch", "multilayer switches"),
-    "switch": ("switch", "switches"),
-    "firewall": ("firewall", "firewalls"),
-    "access_point": ("access point", "access points"),
-    "server": ("server", "servers"),
-    "pc": ("PC", "PCs"),
-    "laptop": ("laptop", "laptops"),
-    "cloud": ("cloud", "clouds"),
-}
-OTHER = ("other device", "other devices")
 
 
 class CaptionReply(BaseModel):
@@ -32,7 +19,7 @@ def count_diagram(diagram: Diagram) -> str:
     """Counted in code so the caption doesn't have to, like "2 switches, 6 PCs and 7 cables"."""
     counts: dict[tuple[str, str], int] = {}
     for device in diagram.devices:
-        names = TYPE_NAMES.get(device.type, OTHER)
+        names = device_kind(device.type).names
         counts[names] = counts.get(names, 0) + 1
 
     parts = [count(number, names) for names, number in counts.items()]
