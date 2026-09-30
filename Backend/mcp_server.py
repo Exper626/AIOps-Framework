@@ -91,18 +91,28 @@ def draw_network(devices: list[NetworkDevice], links: list[NetworkCable]) -> Ima
         raise ToolError("Graphviz isn't installed on this computer, so it can't draw (graphviz.org/download).") from error
 
 
+NOT_AN_IMAGE = (
+    "`image` must be the picture itself: an https link, a data URL or base64. This looks like a file path, and "
+    "this server can't open files on your computer. If you can see the image yourself, read its devices and "
+    "cables and call draw_network with them."
+)
+
+
 @mcp.tool()
 def read_topology(image: str) -> str:
     """Read a network topology image (a Cisco Packet Tracer screenshot works best) and return its devices
-    and cables as JSON: {"devices": [...], "links": [...]}, the shape draw_network takes. `image` is an
-    https URL of a PNG or JPEG, a data URL (data:image/png;base64,...) or plain base64."""
+    and cables as JSON: {"devices": [...], "links": [...]}, the shape draw_network takes. `image` is the
+    picture itself: an https URL of a PNG or JPEG, a data URL (data:image/png;base64,...) or plain base64.
+    Not a file path: this server runs online and can't open files on the user's computer. If you can see
+    the image yourself, you can read it and call draw_network directly."""
     image = image.strip()
 
     if not image.startswith(("https://", "data:image/")):
+        image = "".join(image.split())
         try:
-            jpeg = base64.b64decode(image[:24])[:2] == b"\xff\xd8"
-        except ValueError:
-            jpeg = False
+            jpeg = base64.b64decode(image, validate=True)[:2] == b"\xff\xd8"
+        except ValueError as error:
+            raise ToolError(NOT_AN_IMAGE) from error
         image = f"data:image/{'jpeg' if jpeg else 'png'};base64,{image}"
 
     content = [
