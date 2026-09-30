@@ -125,9 +125,9 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
 
   if (!user) {
     return (
-      <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+      <SidebarGroup className="px-[11px] pt-4 group-data-[collapsible=icon]:hidden">
         <SidebarGroupContent>
-          <div className="flex w-full flex-row items-center justify-center gap-2 px-1.5 text-[13px] text-sidebar-foreground/60">
+          <div className="flex w-full flex-row items-center justify-center gap-2 px-[10px] text-[13px] text-sidebar-foreground/60">
             Login to save and revisit previous chats!
           </div>
         </SidebarGroupContent>
@@ -137,15 +137,15 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
 
   if (isLoading) {
     return (
-      <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-        <SidebarGroupLabel className="px-1.5 font-medium text-[13px] text-sidebar-foreground normal-case tracking-normal">
+      <SidebarGroup className="px-[11px] pt-4 group-data-[collapsible=icon]:hidden">
+        <SidebarGroupLabel className="px-[10px] font-medium text-[13px] text-sidebar-foreground/50 normal-case tracking-normal">
           Chats
         </SidebarGroupLabel>
         <SidebarGroupContent>
           <div className="flex flex-col gap-0.5">
             {[44, 32, 28, 64, 52].map((item) => (
               <div
-                className="flex h-9 items-center gap-2 rounded-lg px-1.5"
+                className="flex h-9 items-center gap-2 rounded-lg px-[10px]"
                 key={item}
               >
                 <div
@@ -166,12 +166,12 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
 
   if (hasEmptyChatHistory) {
     return (
-      <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-        <SidebarGroupLabel className="px-1.5 font-medium text-[13px] text-sidebar-foreground normal-case tracking-normal">
+      <SidebarGroup className="px-[11px] pt-4 group-data-[collapsible=icon]:hidden">
+        <SidebarGroupLabel className="px-[10px] font-medium text-[13px] text-sidebar-foreground/50 normal-case tracking-normal">
           Chats
         </SidebarGroupLabel>
         <SidebarGroupContent>
-          <div className="flex w-full flex-row items-center justify-center gap-2 px-1.5 text-[13px] text-sidebar-foreground/60">
+          <div className="flex w-full flex-row items-center justify-center gap-2 px-[10px] text-[13px] text-sidebar-foreground/60">
             Your conversations will appear here once you start chatting!
           </div>
         </SidebarGroupContent>
@@ -181,8 +181,8 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
 
   return (
     <>
-      <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-        <SidebarGroupLabel className="px-1.5 font-medium text-[13px] text-sidebar-foreground normal-case tracking-normal">
+      <SidebarGroup className="px-[11px] pt-4 group-data-[collapsible=icon]:hidden">
+        <SidebarGroupLabel className="px-[10px] font-medium text-[13px] text-sidebar-foreground/50 normal-case tracking-normal">
           Chats
         </SidebarGroupLabel>
         <SidebarGroupContent>

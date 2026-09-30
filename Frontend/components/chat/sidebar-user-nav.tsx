@@ -2,7 +2,7 @@
 
 import type { User } from "next-auth";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import {
   SidebarMenu,
   SidebarMenuButton,
@@ -12,21 +12,13 @@ import { guestRegex } from "@/lib/constants";
 import { LoaderIcon } from "./icons";
 import { SettingsDialog } from "./settings-dialog";
 
-function emailToHue(email: string): number {
-  let hash = 0;
-  for (const char of email) {
-    hash = char.charCodeAt(0) + ((hash << 5) - hash);
-  }
-  return Math.abs(hash) % 360;
-}
-
 export function SidebarUserNav({ user }: { user: User }) {
   const { data, status } = useSession();
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const openSettings = useCallback(() => setSettingsOpen(true), []);
 
   const isGuest = guestRegex.test(data?.user?.email ?? "");
   const displayName = isGuest ? "Guest" : (user.name ?? user.email ?? "User");
-  const hue = emailToHue(user.email ?? "");
 
   if (status === "loading") {
     return (
@@ -51,32 +43,33 @@ export function SidebarUserNav({ user }: { user: User }) {
     );
   }
 
+  // A tall row with room around the avatar, like a card when hovered; closed,
+  // just the avatar, in the same place
   return (
-    <SidebarMenu className="group-data-[collapsible=icon]:items-center">
+    <SidebarMenu>
       <SidebarMenuItem>
         <SidebarMenuButton
-          className="h-10 rounded-lg bg-transparent px-1.5 transition-colors duration-150 hover:bg-foreground/10 group-data-[collapsible=icon]:size-10! group-data-[collapsible=icon]:rounded-xl group-data-[collapsible=icon]:px-1!"
+          className="h-14 gap-1.5 rounded-xl bg-transparent px-1 transition-colors duration-150 hover:bg-foreground/10 group-data-[collapsible=icon]:size-10! group-data-[collapsible=icon]:px-1!"
           data-testid="user-nav-button"
-          onClick={() => setSettingsOpen(true)}
+          onClick={openSettings}
           size="lg"
           tooltip="Settings"
         >
-          <div
-            className="flex size-7 shrink-0 items-center justify-center rounded-full font-medium text-[12px] text-white ring-1 ring-sidebar-border/50"
-            style={{
-              background: `linear-gradient(135deg, oklch(0.45 0.1 ${hue}), oklch(0.3 0.06 ${hue + 40}))`,
-            }}
-          >
-            {displayName.charAt(0).toUpperCase()}
+          <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-[#3b5b8f] font-semibold text-[14px] text-white">
+            {/* Trimmed to the capital letter's height, so it sits in the
+                middle of the circle whatever the font */}
+            <span className="leading-none [text-box:trim-both_cap_alphabetic]">
+              {displayName.charAt(0).toUpperCase()}
+            </span>
           </div>
           <div className="flex min-w-0 flex-col text-left leading-tight">
             <span
-              className="truncate font-medium text-[13px] text-sidebar-foreground"
+              className="truncate font-medium text-[14px] text-sidebar-foreground"
               data-testid="user-email"
             >
               {displayName}
             </span>
-            <span className="truncate text-[12px] text-sidebar-foreground/50">
+            <span className="truncate text-[12.5px] text-sidebar-foreground/55">
               Settings
             </span>
           </div>

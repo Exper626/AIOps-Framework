@@ -62,9 +62,9 @@ const modelChoiceSchema = z.object({
 });
 
 export const postRequestBodySchema = z.object({
-  // Settings → Knowledge Base: chunks the answer is written from
+  // Settings → Knowledge: chunks the answer is written from
   chunkCount: z.number().int().min(1).max(20).optional(),
-  // Settings → Knowledge Base: keyword + vector search, or vector only
+  // Settings → Knowledge: keyword + vector search, or vector only
   hybridSearch: z.boolean().optional(),
   id: z.uuid(),
   // Settings → Memory: use and update what the assistant remembers
@@ -83,7 +83,7 @@ export const postRequestBodySchema = z.object({
     })
     .partial()
     .optional(),
-  // Settings → Knowledge Base: re-order search results before answering
+  // Settings → Knowledge: re-order search results before answering
   reranker: z.boolean().optional(),
   selectedVisibilityType: z.enum(["public", "private"]),
 });

@@ -25,11 +25,17 @@ import { isPageRoute } from "@/lib/routes";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
+// A 40px row with the 20px icon in its middle, so the icon sits in the same
+// place whether the sidebar is open (full width) or closed (40px wide)
+const NAV_BUTTON =
+  "h-10 gap-3 rounded-xl px-[10px] text-sm [&>svg]:size-5 text-foreground transition-colors duration-150 hover:bg-foreground/10 hover:text-foreground group-data-[collapsible=icon]:size-10! group-data-[collapsible=icon]:px-[10px]!";
+
 export function AppSidebar({ user }: { user: User | undefined }) {
   const router = useRouter();
   const pathname = usePathname();
-  const { setOpenMobile, state, toggleSidebar } = useSidebar();
-  const collapsed = state === "collapsed";
+  const { isMobile, setOpenMobile, state, toggleSidebar } = useSidebar();
+  // On a phone the sidebar always opens full width
+  const collapsed = state === "collapsed" && !isMobile;
 
   const handleNewChat = useCallback(() => {
     setOpenMobile(false);
@@ -48,30 +54,33 @@ export function AppSidebar({ user }: { user: User | undefined }) {
           re-wrapping (and jumping) as it widens */}
       <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
         <div className="flex min-h-0 w-full flex-1 flex-col md:w-(--sidebar-width) md:group-data-[collapsible=icon]:w-(--sidebar-width-icon)">
-          <SidebarHeader className="pb-0 pt-3 group-data-[collapsible=icon]:pt-4">
+          {/* Open or closed, the logo, icons and avatar keep their places (11px in,
+              40px rows): the logo on its own, then New chat and Saved as a pair,
+              so opening the sidebar only shows the labels */}
+          <SidebarHeader className="px-[11px] pt-4 pb-0">
             <SidebarMenu>
-              {/* Open: "Sri Lanka Telecom" on the left, toggle on the right.
-              Collapsed: the SLT logo, which turns into the open icon on hover. */}
-              <SidebarMenuItem
-                className={cn(
-                  "flex flex-row items-center",
-                  collapsed ? "justify-center" : "justify-between"
-                )}
-              >
+              <SidebarMenuItem className="flex flex-row items-center justify-between">
                 {collapsed ? null : (
                   <button
-                    className="rounded-lg px-2 py-1 font-display font-semibold text-foreground text-lg tracking-normal"
+                    className="flex h-10 min-w-0 items-center gap-0.5 rounded-xl pr-2 font-display font-semibold text-[15px] text-foreground tracking-normal"
                     onClick={handleNewChat}
                     type="button"
                   >
-                    Sri Lanka Telecom
+                    <span className="flex size-10 shrink-0 items-center justify-center">
+                      <Image
+                        alt="SLT"
+                        className="size-7 rounded-full bg-white object-contain p-1"
+                        src={telecomIcon}
+                      />
+                    </span>
+                    <span className="truncate">Sri Lanka Telecom</span>
                   </button>
                 )}
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button
                       aria-label={collapsed ? "Open sidebar" : "Close sidebar"}
-                      className="sidebar-toggle group/toggle relative size-9 rounded-lg data-[collapsed=true]:size-10 data-[collapsed=true]:rounded-xl text-foreground transition-colors duration-150 hover:bg-foreground/10 hover:text-foreground [&_svg]:size-5!"
+                      className="sidebar-toggle group/toggle relative size-10 shrink-0 rounded-xl text-foreground transition-colors duration-150 hover:bg-foreground/10 hover:text-foreground [&_svg]:size-5!"
                       data-collapsed={collapsed}
                       onClick={toggleSidebar}
                       size="icon-sm"
@@ -95,7 +104,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                   <TooltipContent
                     className="hidden md:block"
                     side={collapsed ? "right" : "bottom"}
-                    sideOffset={0}
+                    sideOffset={collapsed ? 19 : 4}
                   >
                     {collapsed ? "Open sidebar" : "Close sidebar"}
                   </TooltipContent>
@@ -104,14 +113,14 @@ export function AppSidebar({ user }: { user: User | undefined }) {
             </SidebarMenu>
           </SidebarHeader>
           <SidebarContent>
-            <SidebarGroup className="pt-3 group-data-[collapsible=icon]:pt-4">
+            <SidebarGroup className="px-[11px] pt-4">
               <SidebarGroupContent>
-                <SidebarMenu className="group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:gap-[13px]">
+                <SidebarMenu className="gap-1">
                   <SidebarMenuItem>
                     <SidebarMenuButton
-                      className="h-9 rounded-lg px-1.5 text-sm [&>svg]:size-5 text-foreground transition-colors duration-150 hover:bg-foreground/10 hover:text-foreground group-data-[collapsible=icon]:size-10! group-data-[collapsible=icon]:rounded-xl group-data-[collapsible=icon]:px-[9px]!"
+                      className={NAV_BUTTON}
                       onClick={handleNewChat}
-                      tooltip="New Chat"
+                      tooltip="New chat"
                     >
                       <PenSquareIcon className="sidebar-icon-pencil" />
                       <span>New chat</span>
@@ -119,7 +128,10 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                   </SidebarMenuItem>
                   <SidebarMenuItem>
                     <SidebarMenuButton
-                      className="h-9 rounded-lg px-1.5 text-sm [&>svg]:size-5 text-foreground transition-colors duration-150 hover:bg-foreground/10 hover:text-foreground data-[active=true]:bg-foreground/10 group-data-[collapsible=icon]:size-10! group-data-[collapsible=icon]:rounded-xl group-data-[collapsible=icon]:px-[9px]!"
+                      className={cn(
+                        NAV_BUTTON,
+                        "data-[active=true]:bg-foreground/10"
+                      )}
                       data-testid="sidebar-saved-responses"
                       isActive={isPageRoute(pathname)}
                       onClick={handleSaved}
@@ -134,7 +146,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
             </SidebarGroup>
             <SidebarHistory user={user} />
           </SidebarContent>
-          <SidebarFooter className="px-1 pt-2 pb-3 group-data-[collapsible=icon]:pb-2">
+          <SidebarFooter className="px-[11px] pt-2 pb-2 group-data-[collapsible=icon]:pb-4">
             {user ? <SidebarUserNav user={user} /> : null}
           </SidebarFooter>
         </div>

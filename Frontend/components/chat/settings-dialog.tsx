@@ -86,7 +86,7 @@ const AGENT_ICONS: Record<AgentId, ReactNode> = {
 
 const OTHER_TABS: { id: Tab; label: string; icon: ReactNode }[] = [
   { icon: <BotIcon />, id: "agents", label: "Agents" },
-  { icon: <BookOpenIcon />, id: "knowledge", label: "Knowledge Base" },
+  { icon: <BookOpenIcon />, id: "knowledge", label: "Knowledge" },
   { icon: <BrainIcon />, id: "memory", label: "Memory" },
 ];
 
@@ -738,7 +738,7 @@ function KnowledgeBasePanel({
     <div className="flex flex-col gap-3 py-3">
       <SectionHeader
         description="Vendor documentation the assistant searches when answering."
-        title="Knowledge Base"
+        title="Knowledge base"
       />
       <ToggleRow
         checked={hybridSearch}

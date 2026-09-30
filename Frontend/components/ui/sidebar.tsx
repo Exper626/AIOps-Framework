@@ -497,7 +497,8 @@ function SidebarMenuButton({
       <TooltipContent
         side="right"
         align="center"
-        sideOffset={6}
+        // Past the closed sidebar's edge (buttons end 11px before it), not over its line
+        sideOffset={19}
         hidden={state !== "collapsed" || isMobile}
         {...tooltip}
       />
