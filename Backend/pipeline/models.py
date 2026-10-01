@@ -80,8 +80,16 @@ def discover_self_hosted_models() -> list[str]:
         for model_id in [m.id for m in known_models.values() if m.server not in servers]:
             del known_models[model_id]
 
-    with ThreadPoolExecutor(max_workers=max(len(servers), 1)) as pool:
-        replies = [(server, pool.submit(ask_server_for_models, server)) for server in servers]
+    # Servers whose models are already known aren't asked (and woken up) just to list them
+    for server in [server for server in servers if server.models]:
+        for model_id in [m.id for m in known_models.values() if m.server == server]:
+            del known_models[model_id]
+        for model_id in server.models:
+            known_models[model_id] = SelfHostedModel(id=model_id, server=server)
+
+    to_ask = [server for server in servers if not server.models]
+    with ThreadPoolExecutor(max_workers=max(len(to_ask), 1)) as pool:
+        replies = [(server, pool.submit(ask_server_for_models, server)) for server in to_ask]
 
     for server, reply in replies:
         if reply.exception():

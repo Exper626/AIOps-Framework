@@ -9,6 +9,9 @@ ModelKind = Literal["text", "vision"]
 class SelfHostedServer(BaseModel):
     base_url: str = Field(min_length=1)
     kinds: list[ModelKind] = ["text"]
+    # The models it serves, when they're known without asking it (from a Modal App's "model" tag), so a
+    # server that is asleep is listed without waking it up
+    models: list[str] = []
 
 
 class Settings(BaseSettings):

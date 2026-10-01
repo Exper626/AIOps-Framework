@@ -1,3 +1,4 @@
 .ipynb-checkpoints/
 .env
 *.zip
+__pycache__/
