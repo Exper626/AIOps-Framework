@@ -1,10 +1,12 @@
 import re
+import time
+from collections.abc import Iterable, Iterator
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from functools import cache
 from typing import Literal
 
-from openai import OpenAI
+from openai import APIStatusError, OpenAI
 from pydantic import BaseModel, Field
 
 from config import ModelKind, SelfHostedServer, settings
@@ -13,6 +15,11 @@ from pipeline.llm import gateway_client
 from pipeline.modal_servers import modal_servers
 
 DISCOVERY_TIMEOUT_SECONDS = 15
+# A self-hosted server that was asleep (a Modal server scaled to zero) answers 503 until it has started; a chat
+# waits this long for it, saying so every few seconds. One that answered lately isn't checked again.
+STARTUP_WAIT_SECONDS = 240
+STARTUP_CHECK_SECONDS = 5
+READY_SECONDS = 60
 
 MODAL_PROXY_TOKEN = re.compile(r"^(wk-[^.]+)\.(ws-.+)$")
 
@@ -141,3 +148,45 @@ def resolve_model(ref: ModelRef, kind: ModelKind) -> ResolvedModel:
         )
 
     return ResolvedModel(client=self_hosted_client(model.server.base_url), id=ref.id, source="self-hosted")
+
+
+_ready_at: dict[str, float] = {}
+
+
+def is_starting(server: SelfHostedServer) -> bool:
+    try:
+        ask_server_for_models(server)
+    except APIStatusError as error:
+        return error.status_code == 503
+    except Exception:  # noqa: BLE001 - any other failure shows when the model is called
+        return False
+    return False
+
+
+def wait_for_self_hosted(refs: Iterable[ModelRef | None]) -> Iterator[dict]:
+    """Wakes the self-hosted models a chat uses that are asleep and waits for them to start"""
+    servers: dict[str, tuple[str, SelfHostedServer]] = {}
+    for ref in refs:
+        if ref is None or ref.source != "self-hosted":
+            continue
+        if ref.id not in known_models:
+            discover_self_hosted_models()
+        if model := known_models.get(ref.id):
+            servers.setdefault(model.server.base_url, (ref.id, model.server))
+
+    for base_url, (model_id, server) in servers.items():
+        if time.monotonic() - _ready_at.get(base_url, float("-inf")) < READY_SECONDS:
+            continue
+
+        started = time.monotonic()
+        while is_starting(server):
+            waited = time.monotonic() - started
+            if waited >= STARTUP_WAIT_SECONDS:
+                raise ModelUnavailable(
+                    f"The self-hosted model '{model_id}' is still starting up; its first start after a while can "
+                    "take a few minutes. Send your message again shortly."
+                )
+            yield {"phase": "starting", "message": f"Starting {model_id}, which was asleep ({int(waited)} s)..."}
+            time.sleep(STARTUP_CHECK_SECONDS)
+
+        _ready_at[base_url] = time.monotonic()

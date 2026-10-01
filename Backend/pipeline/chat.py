@@ -12,7 +12,7 @@ from pipeline.diagram import Diagram, describe_diagram, run_diagram
 from pipeline.errors import describe_error
 from pipeline.knowledge import search_knowledge_base
 from pipeline.memory import format_memories, recall_memories, update_memories
-from pipeline.models import DEFAULT_MODEL, ModelRef, ResolvedModel
+from pipeline.models import DEFAULT_MODEL, ModelRef, ResolvedModel, wait_for_self_hosted
 from pipeline.router import run_router
 from pipeline.topology_image import draw_topology_image
 from pipeline.trace import Trace
@@ -59,6 +59,17 @@ def to_event(data: dict, trace: Trace | None = None) -> str:
 def run_steps(request: ChatRequest, answer_model: ResolvedModel, trace: Trace) -> Iterator[dict]:
     message = request.message.strip()
     history = [m.to_dict() for m in request.history]
+
+    # A self-hosted model this chat uses that is asleep is woken up and waited for first
+    yield from wait_for_self_hosted(
+        [
+            request.router_model,
+            request.answer_model,
+            request.retrieval_model,
+            request.context_model if history else None,
+            request.vision_model if request.images else None,
+        ]
+    )
 
     yield {"phase": "router", "message": "Planning the steps..."}
     plan = run_router(request.router_model or DEFAULT_MODEL, message, history, len(request.images), request.diagram is not None, trace)

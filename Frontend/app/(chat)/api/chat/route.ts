@@ -40,7 +40,9 @@ import { convertToUIMessages, generateUUID } from "@/lib/utils";
 import { generateTitleFromUserMessage } from "../../actions";
 import { type PostRequestBody, postRequestBodySchema } from "./schema";
 
-export const maxDuration = 60;
+// Long enough for a self-hosted model that was asleep to start (the backend
+// waits up to 4 minutes for it) before the answer is written
+export const maxDuration = 300;
 
 function describeError(error: unknown) {
   if (!(error instanceof Error)) {
